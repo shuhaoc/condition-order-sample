@@ -13,7 +13,12 @@ import java.util.Map;
 public class TestController {
     @RequestMapping("/index")
     public String index(Map<String, Object> model) {
-        model.put("x", 123);
-        return "hello";
+//        model.put("x", 123);
+        return "index";
+    }
+    @RequestMapping("/create")
+    public String create(Map<String, Object> model) {
+//        model.put("x", 123);
+        return "create";
     }
 }

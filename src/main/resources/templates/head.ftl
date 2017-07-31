@@ -1,10 +1,12 @@
+<#assign staticLocation="">
+<#macro head>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>条件单</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${staticLocation}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <#nested/>
 </head>
 <body>
 <nav class="navbar navbar-default" role="navigation">
@@ -22,14 +24,11 @@
         <div class="collapse navbar-collapse" id="example-navbar-collapse">
             <ul class="nav navbar-nav">
                 <li><a href="#">新建</a></li>
-                <li class="active"><a href="#">监控中</a></li>
+                <li class="active"><a href="index">监控中</a></li>
                 <li><a href="#">已委托</a></li>
                 <li><a href="#">历史记录</a></li>
             </ul>
         </div>
     </div>
 </nav>
-<script src="jquery/jquery.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-</body>
-</html>
+</#macro>
