@@ -1,4 +1,4 @@
-package me.caosh.condition;
+package me.caosh.condition.interfaces;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

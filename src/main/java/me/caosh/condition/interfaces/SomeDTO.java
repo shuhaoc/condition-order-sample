@@ -1,4 +1,4 @@
-package me.caosh.condition;
+package me.caosh.condition.interfaces;
 
 import com.google.common.base.MoreObjects;
 

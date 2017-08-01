@@ -1,3 +1,4 @@
+<#assign curNav="create">
 <#include "head.ftl">
 <@head>
 <title>条件单</title>

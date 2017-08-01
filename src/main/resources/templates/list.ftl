@@ -1,3 +1,4 @@
+<#assign curNav="list">
 <#include "head.ftl">
 <@head>
 <title>条件单</title>
@@ -10,7 +11,7 @@
 <div class="panel-group" id="accordion">
     <div class="panel panel-default">
         <div class="panel-heading" data-toggle="collapse" data-parent="#accordion"
-             href="#collapseOne">
+             href="#collapse1">
             <h4 class="panel-title">
                 <p class="panel-title">
                     <span class="security-id">浦发银行&nbsp;600000.SH</span>
@@ -18,7 +19,7 @@
             </h4>
         </div>
         <div class="panel-body" data-toggle="collapse" data-parent="#accordion"
-             href="#collapseOne">
+             href="#collapse1">
             <p style="font-weight: bold">格兰八法策略</p>
 
             <p style="color: grey">DIF: 2.34 DEA: 1.23 MACD: 1.11</p>
@@ -27,7 +28,7 @@
 
             <p>开始时间：14:50 截止时间：15:00</p>
         </div>
-        <div id="collapseOne" class="panel-collapse collapse in">
+        <div id="collapse1" class="panel-collapse collapse">
             <div class="panel-footer">
                 <a href="order-save.html">
                     <button type="button" class="btn btn-default">修改</button>

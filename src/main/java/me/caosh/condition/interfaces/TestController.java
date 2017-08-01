@@ -11,14 +11,20 @@ import java.util.Map;
 @Controller
 @RequestMapping("/test")
 public class TestController {
-    @RequestMapping("/index")
+    @RequestMapping("/list")
     public String index(Map<String, Object> model) {
 //        model.put("x", 123);
-        return "index";
+        return "list";
     }
     @RequestMapping("/create")
     public String create(Map<String, Object> model) {
 //        model.put("x", 123);
         return "create";
+    }
+
+    @RequestMapping("/entrusts")
+    public String entrusts(Map<String, Object> model) {
+//        model.put("x", 123);
+        return "entrusts";
     }
 }
