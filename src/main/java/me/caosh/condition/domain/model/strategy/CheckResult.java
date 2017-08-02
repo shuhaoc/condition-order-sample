@@ -1,7 +1,7 @@
-package me.caosh.condition.domain.strategy;
+package me.caosh.condition.domain.model.strategy;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.signal.TradeSignal;
+import me.caosh.condition.domain.model.signal.TradeSignal;
 
 /**
  * Created by caosh on 2017/8/1.

@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.signal;
+package me.caosh.condition.domain.model.signal;
 
 /**
  * Created by caosh on 2017/8/1.

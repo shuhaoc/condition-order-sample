@@ -1,6 +1,7 @@
-package me.caosh.condition.domain.strategy;
+package me.caosh.condition.domain.model.strategy;
 
 /**
+ * TODO: necessary??
  * Created by caosh on 2017/8/1.
  */
 public class PriceTradeStrategy extends AbstractNativeTradeStrategy {

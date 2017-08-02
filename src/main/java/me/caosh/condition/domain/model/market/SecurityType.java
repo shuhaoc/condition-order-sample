@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.market;
+package me.caosh.condition.domain.model.market;
 
 /**
  * Created by caosh on 2017/8/1.
