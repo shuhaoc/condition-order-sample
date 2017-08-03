@@ -29,6 +29,27 @@ public class TradePlan {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TradePlan)) return false;
+
+        TradePlan tradePlan = (TradePlan) o;
+
+        if (number != tradePlan.number) return false;
+        if (exchangeType != tradePlan.exchangeType) return false;
+        return entrustPriceStrategy == tradePlan.entrustPriceStrategy;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = exchangeType != null ? exchangeType.hashCode() : 0;
+        result = 31 * result + (entrustPriceStrategy != null ? entrustPriceStrategy.hashCode() : 0);
+        result = 31 * result + number;
+        return result;
+    }
+
+    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("exchangeType", exchangeType)

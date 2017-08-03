@@ -33,6 +33,29 @@ public class SecurityInfo {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SecurityInfo)) return false;
+
+        SecurityInfo that = (SecurityInfo) o;
+
+        if (type != that.type) return false;
+        if (code != null ? !code.equals(that.code) : that.code != null) return false;
+        if (exchange != that.exchange) return false;
+        return !(name != null ? !name.equals(that.name) : that.name != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = type != null ? type.hashCode() : 0;
+        result = 31 * result + (code != null ? code.hashCode() : 0);
+        result = 31 * result + (exchange != null ? exchange.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return type.name() + "(" + code + "." + exchange.name() + "," + name + ")";
     }

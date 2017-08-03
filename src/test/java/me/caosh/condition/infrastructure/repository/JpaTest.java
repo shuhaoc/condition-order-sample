@@ -14,14 +14,14 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by caosh on 2017/7/23.
  */
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class JpaTest {
 
     @Autowired
     private OrderRepository orderRepository;
 
-//    @Test
+    @Test
     public void testCurd() throws Exception {
         Order order = new Order(null, "a1");
         orderRepository.save(order);

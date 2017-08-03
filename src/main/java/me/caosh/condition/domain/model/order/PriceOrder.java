@@ -19,10 +19,12 @@ public class PriceOrder implements ConditionOrder {
         this.simplePriceCondition = simplePriceCondition;
     }
 
+    @Override
     public Integer getOrderId() {
         return orderId;
     }
 
+    @Override
     public SecurityInfo getSecurityInfo() {
         return securityInfo;
     }
