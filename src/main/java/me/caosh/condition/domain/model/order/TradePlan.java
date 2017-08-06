@@ -7,12 +7,12 @@ import com.google.common.base.MoreObjects;
  */
 public class TradePlan {
     private final ExchangeType exchangeType;
-    private final EntrustPriceStrategy entrustPriceStrategy;
+    private final EntrustStrategy entrustStrategy;
     private final int number;
 
-    public TradePlan(ExchangeType exchangeType, EntrustPriceStrategy entrustPriceStrategy, int number) {
+    public TradePlan(ExchangeType exchangeType, EntrustStrategy entrustStrategy, int number) {
         this.exchangeType = exchangeType;
-        this.entrustPriceStrategy = entrustPriceStrategy;
+        this.entrustStrategy = entrustStrategy;
         this.number = number;
     }
 
@@ -20,8 +20,8 @@ public class TradePlan {
         return exchangeType;
     }
 
-    public EntrustPriceStrategy getEntrustPriceStrategy() {
-        return entrustPriceStrategy;
+    public EntrustStrategy getEntrustStrategy() {
+        return entrustStrategy;
     }
 
     public int getNumber() {
@@ -37,14 +37,14 @@ public class TradePlan {
 
         if (number != tradePlan.number) return false;
         if (exchangeType != tradePlan.exchangeType) return false;
-        return entrustPriceStrategy == tradePlan.entrustPriceStrategy;
+        return entrustStrategy == tradePlan.entrustStrategy;
 
     }
 
     @Override
     public int hashCode() {
         int result = exchangeType != null ? exchangeType.hashCode() : 0;
-        result = 31 * result + (entrustPriceStrategy != null ? entrustPriceStrategy.hashCode() : 0);
+        result = 31 * result + (entrustStrategy != null ? entrustStrategy.hashCode() : 0);
         result = 31 * result + number;
         return result;
     }
@@ -53,7 +53,7 @@ public class TradePlan {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("exchangeType", exchangeType)
-                .add("entrustPriceStrategy", entrustPriceStrategy)
+                .add("entrustPriceStrategy", entrustStrategy)
                 .add("number", number)
                 .toString();
     }

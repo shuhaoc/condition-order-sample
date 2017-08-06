@@ -3,15 +3,16 @@ package me.caosh.condition.domain.model.order;
 import me.caosh.condition.domain.model.share.ValuedEnum;
 
 /**
- * Created by caosh on 2017/8/2.
+ * Created by caosh on 2017/8/6.
  */
-public enum PriceDirection implements ValuedEnum<Integer> {
-    UPWARD(1),
-    DOWNWARD(2);
+public enum OrderState implements ValuedEnum<Integer> {
+    ACTIVE(1),
+    PAUSED(2),
+    TERMINATED(3);
 
     int value;
 
-    PriceDirection(int value) {
+    OrderState(int value) {
         this.value = value;
     }
 

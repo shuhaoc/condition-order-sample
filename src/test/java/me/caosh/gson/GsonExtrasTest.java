@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 
@@ -28,16 +29,17 @@ public class GsonExtrasTest {
                         .registerSubtype(PriceOrder.class)
         ).create();
 
-        PriceOrder priceOrder = new PriceOrder(123,
+        PriceOrder priceOrder = new PriceOrder(123L, OrderState.ACTIVE,
                 new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH"),
-                new TradePlan(ExchangeType.BUY, EntrustPriceStrategy.CURRENT_PRICE, 100),
-                new SimplePriceCondition(PriceDirection.DOWNWARD, new BigDecimal("13.00")));
+                new SimplePriceCondition(PriceDirection.DOWNWARD, new BigDecimal("13.00")),
+                new TradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, 100),
+                LocalDateTime.now(), LocalDateTime.now());
         String json = gson.toJson(priceOrder);
         logger.info(json);
         PriceOrder recovered = (PriceOrder) gson.fromJson(json, ConditionOrder.class);
         assertEquals(priceOrder.getOrderId(), recovered.getOrderId());
         assertEquals(priceOrder.getSecurityInfo(), recovered.getSecurityInfo());
-        assertEquals(priceOrder.getTradePlan(), recovered.getTradePlan());
         assertEquals(priceOrder.getSimplePriceCondition(), recovered.getSimplePriceCondition());
+        assertEquals(priceOrder.getTradePlan(), recovered.getTradePlan());
     }
 }

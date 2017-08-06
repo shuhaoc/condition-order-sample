@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 /**
  * Created by caosh on 2017/8/2.
  */
-public class SimplePriceCondition {
+public class SimplePriceCondition implements Condition {
     private final PriceDirection priceDirection;
     private final BigDecimal targetPrice;
 

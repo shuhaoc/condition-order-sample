@@ -3,15 +3,16 @@ package me.caosh.condition.infrastructure.repository.model;
 import com.google.common.base.MoreObjects;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by caosh on 2017/8/3.
+ * Created by caosh on 2017/8/6.
  */
 @Entity
-@Table(name = "condition_order")
+@Table(name = "condition_order", schema = "", catalog = "test")
 public class ConditionOrderDO {
-    private Integer orderId;
+    private Long orderId;
     private Integer securityType;
     private String securityCode;
     private String securityExchange;
@@ -19,17 +20,19 @@ public class ConditionOrderDO {
     private Integer orderState;
     private String inputArguments;
     private String dynamicProperties;
-    private Timestamp gmtCreate;
-    private Timestamp gmtModify;
+    private Integer exchangeType;
+    private Integer entrustStrategy;
+    private BigDecimal entrustAmount;
+    private Timestamp createTime;
+    private Timestamp updateTime;
 
     @Id
-    @GeneratedValue
     @Column(name = "order_id")
-    public Integer getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
@@ -104,23 +107,53 @@ public class ConditionOrderDO {
     }
 
     @Basic
-    @Column(name = "gmt_create")
-    public Timestamp getGmtCreate() {
-        return gmtCreate;
+    @Column(name = "exchange_type")
+    public Integer getExchangeType() {
+        return exchangeType;
     }
 
-    public void setGmtCreate(Timestamp gmtCreate) {
-        this.gmtCreate = gmtCreate;
+    public void setExchangeType(Integer exchangeType) {
+        this.exchangeType = exchangeType;
     }
 
     @Basic
-    @Column(name = "gmt_modify")
-    public Timestamp getGmtModify() {
-        return gmtModify;
+    @Column(name = "entrust_strategy")
+    public Integer getEntrustStrategy() {
+        return entrustStrategy;
     }
 
-    public void setGmtModify(Timestamp gmtModify) {
-        this.gmtModify = gmtModify;
+    public void setEntrustStrategy(Integer entrustStrategy) {
+        this.entrustStrategy = entrustStrategy;
+    }
+
+    @Basic
+    @Column(name = "entrust_amount")
+    public BigDecimal getEntrustAmount() {
+        return entrustAmount;
+    }
+
+    public void setEntrustAmount(BigDecimal entrustAmount) {
+        this.entrustAmount = entrustAmount;
+    }
+
+    @Basic
+    @Column(name = "create_time")
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
+
+    @Basic
+    @Column(name = "update_time")
+    public Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
@@ -141,8 +174,13 @@ public class ConditionOrderDO {
             return false;
         if (dynamicProperties != null ? !dynamicProperties.equals(that.dynamicProperties) : that.dynamicProperties != null)
             return false;
-        if (gmtCreate != null ? !gmtCreate.equals(that.gmtCreate) : that.gmtCreate != null) return false;
-        if (gmtModify != null ? !gmtModify.equals(that.gmtModify) : that.gmtModify != null) return false;
+        if (exchangeType != null ? !exchangeType.equals(that.exchangeType) : that.exchangeType != null) return false;
+        if (entrustStrategy != null ? !entrustStrategy.equals(that.entrustStrategy) : that.entrustStrategy != null)
+            return false;
+        if (entrustAmount != null ? !entrustAmount.equals(that.entrustAmount) : that.entrustAmount != null)
+            return false;
+        if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
+        if (updateTime != null ? !updateTime.equals(that.updateTime) : that.updateTime != null) return false;
 
         return true;
     }
@@ -157,8 +195,11 @@ public class ConditionOrderDO {
         result = 31 * result + (orderState != null ? orderState.hashCode() : 0);
         result = 31 * result + (inputArguments != null ? inputArguments.hashCode() : 0);
         result = 31 * result + (dynamicProperties != null ? dynamicProperties.hashCode() : 0);
-        result = 31 * result + (gmtCreate != null ? gmtCreate.hashCode() : 0);
-        result = 31 * result + (gmtModify != null ? gmtModify.hashCode() : 0);
+        result = 31 * result + (exchangeType != null ? exchangeType.hashCode() : 0);
+        result = 31 * result + (entrustStrategy != null ? entrustStrategy.hashCode() : 0);
+        result = 31 * result + (entrustAmount != null ? entrustAmount.hashCode() : 0);
+        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
+        result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
         return result;
     }
 
@@ -173,8 +214,11 @@ public class ConditionOrderDO {
                 .add("orderState", orderState)
                 .add("inputArguments", inputArguments)
                 .add("dynamicProperties", dynamicProperties)
-                .add("gmtCreate", gmtCreate)
-                .add("gmtModify", gmtModify)
+                .add("exchangeType", exchangeType)
+                .add("entrustStrategy", entrustStrategy)
+                .add("entrustAmount", entrustAmount)
+                .add("createTime", createTime)
+                .add("updateTime", updateTime)
                 .toString();
     }
 }
