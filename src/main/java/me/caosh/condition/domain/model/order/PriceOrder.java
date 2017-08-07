@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 /**
  * Created by caosh on 2017/8/1.
  */
-public class PriceOrder extends ConditionOrder implements MarketTickListener {
+public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven {
     private static final Logger logger = LoggerFactory.getLogger(PriceOrder.class);
 
     public PriceOrder(Long orderId, OrderState orderState, SecurityInfo securityInfo, SimplePriceCondition simplePriceCondition,
@@ -27,7 +27,7 @@ public class PriceOrder extends ConditionOrder implements MarketTickListener {
     }
 
     @Override
-    public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
+    public TradeSignal onRealTimeMarketUpdate(RealTimeMarket realTimeMarket) {
         BigDecimal currentPrice = realTimeMarket.getCurrentPrice();
         logger.debug("Check price condition, currentPrice={}, condition={}", currentPrice, getCondition());
         if (getSimplePriceCondition().isSatisfiedBy(currentPrice)) {
