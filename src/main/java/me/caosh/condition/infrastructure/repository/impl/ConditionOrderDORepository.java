@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * Created by caosh on 2017/8/3.
  */
-interface ConditionOrderDORepository extends CrudRepository<ConditionOrderDO, Integer> {
+interface ConditionOrderDORepository extends CrudRepository<ConditionOrderDO, Long> {
 }

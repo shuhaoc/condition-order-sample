@@ -1,5 +1,6 @@
 package me.caosh.condition.infrastructure.repository;
 
+import com.google.common.base.Optional;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 
 /**
@@ -8,7 +9,9 @@ import me.caosh.condition.domain.model.order.ConditionOrder;
 public interface ConditionOrderRepository {
     void save(ConditionOrder conditionOrder);
 
-    void remove(Integer orderId);
+    void remove(Long orderId);
+
+    Optional<ConditionOrder> findOne(Long orderId);
 
 
 }

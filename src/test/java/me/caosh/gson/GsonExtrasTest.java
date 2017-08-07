@@ -31,7 +31,7 @@ public class GsonExtrasTest {
 
         PriceOrder priceOrder = new PriceOrder(123L, OrderState.ACTIVE,
                 new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH"),
-                new SimplePriceCondition(PriceDirection.DOWNWARD, new BigDecimal("13.00")),
+                new SimplePriceCondition(CompareCondition.LESS_THAN_OR_EQUALS, new BigDecimal("13.00")),
                 new TradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, 100),
                 LocalDateTime.now(), LocalDateTime.now());
         String json = gson.toJson(priceOrder);
@@ -39,7 +39,7 @@ public class GsonExtrasTest {
         PriceOrder recovered = (PriceOrder) gson.fromJson(json, ConditionOrder.class);
         assertEquals(priceOrder.getOrderId(), recovered.getOrderId());
         assertEquals(priceOrder.getSecurityInfo(), recovered.getSecurityInfo());
-        assertEquals(priceOrder.getSimplePriceCondition(), recovered.getSimplePriceCondition());
+        assertEquals(priceOrder.getCondition(), recovered.getCondition());
         assertEquals(priceOrder.getTradePlan(), recovered.getTradePlan());
     }
 }
