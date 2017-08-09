@@ -46,8 +46,8 @@ public class ConditionOrderDOAssembler {
         Condition condition = ConditionOrderGsonUtils.getGSON().fromJson(conditionOrderDO.getConditionProperties(), Condition.class);
         LocalDateTime createTime = conditionOrderDO.getCreateTime().toLocalDateTime();
         LocalDateTime updateTime = conditionOrderDO.getUpdateTime().toLocalDateTime();
-        return new ConditionOrder(conditionOrderDO.getOrderId(), orderState, securityInfo, nativeStrategyInfo, condition, tradePlan,
-                createTime, updateTime);
+        return ConditionOrderFactory.getInstance().create(conditionOrderDO.getOrderId(), orderState, securityInfo,
+                nativeStrategyInfo, condition, tradePlan, createTime, updateTime);
     }
 
     private ConditionOrderDOAssembler() {

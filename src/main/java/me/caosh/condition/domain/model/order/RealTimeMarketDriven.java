@@ -8,6 +8,4 @@ import me.caosh.condition.domain.model.signal.TradeSignal;
  */
 public interface RealTimeMarketDriven {
     TradeSignal onRealTimeMarketUpdate(RealTimeMarket realTimeMarket);
-
-//    boolean onClockTick();
 }
