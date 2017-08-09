@@ -30,7 +30,7 @@ public class ConditionOrderCheckServiceImpl implements ConditionOrderCheckServic
 
     @Override
     public void checkWithRealTimeMarkets(List<RealTimeMarket> realTimeMarketList) {
-        List<ConditionOrder> conditionOrders = conditionOrderRepository.findAll();
+        List<ConditionOrder> conditionOrders = conditionOrderRepository.findAllActive();
         conditionOrders.forEach(conditionOrder -> {
             if (conditionOrder instanceof RealTimeMarketDriven) {
                 Optional<RealTimeMarket> matchedMarket = Iterables.tryFind(realTimeMarketList, realTimeMarket ->

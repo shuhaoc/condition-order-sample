@@ -15,5 +15,5 @@ public interface ConditionOrderRepository {
 
     Optional<ConditionOrder> findOne(Long orderId);
 
-    List<ConditionOrder> findAll();
+    List<ConditionOrder> findAllActive();
 }
