@@ -1,6 +1,9 @@
 package me.caosh.condition.infrastructure.repository.impl;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
 import me.caosh.condition.infrastructure.repository.model.ConditionOrderDO;
@@ -10,6 +13,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
 
 /**
  * Created by caosh on 2017/8/3.
@@ -38,5 +43,11 @@ public class ConditionOrderRepositoryImpl implements ConditionOrderRepository {
         }
         ConditionOrder conditionOrder = ConditionOrderDOAssembler.fromDO(conditionOrderDO);
         return Optional.of(conditionOrder);
+    }
+
+    @Override
+    public List<ConditionOrder> findAll() {
+        Iterable<ConditionOrderDO> conditionOrderDOs = conditionOrderDORepository.findAll();
+        return Lists.newArrayList(Iterables.transform(conditionOrderDOs, ConditionOrderDOAssembler::fromDO));
     }
 }

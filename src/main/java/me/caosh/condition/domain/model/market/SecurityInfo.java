@@ -41,8 +41,7 @@ public class SecurityInfo {
 
         if (type != that.type) return false;
         if (code != null ? !code.equals(that.code) : that.code != null) return false;
-        if (exchange != that.exchange) return false;
-        return !(name != null ? !name.equals(that.name) : that.name != null);
+        return exchange == that.exchange;
 
     }
 
@@ -51,7 +50,6 @@ public class SecurityInfo {
         int result = type != null ? type.hashCode() : 0;
         result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (exchange != null ? exchange.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 
