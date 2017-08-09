@@ -1,4 +1,4 @@
-package me.caosh.condition.interfaces;
+package me.caosh.condition.interfaces.test;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

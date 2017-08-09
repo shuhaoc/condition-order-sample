@@ -5,6 +5,7 @@ import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.market.SecurityType;
 import me.caosh.condition.domain.model.order.*;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
+import me.caosh.condition.domain.model.strategy.NativeStrategyInfo;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -22,7 +23,8 @@ public class ConditionOrderDOAssembler {
         conditionOrderDO.setSecurityCode(conditionOrder.getSecurityInfo().getCode());
         conditionOrderDO.setSecurityExchange(conditionOrder.getSecurityInfo().getExchange().name());
         conditionOrderDO.setSecurityName(conditionOrder.getSecurityInfo().getName());
-        conditionOrderDO.setInputArguments(ConditionOrderGsonUtils.getGSON().toJson(conditionOrder.getCondition()));
+        conditionOrderDO.setStrategyId(conditionOrder.getStrategyInfo().getStrategyId());
+        conditionOrderDO.setConditionProperties(ConditionOrderGsonUtils.getGSON().toJson(conditionOrder.getCondition()));
         conditionOrderDO.setExchangeType(conditionOrder.getTradePlan().getExchangeType().getValue());
         conditionOrderDO.setEntrustStrategy(conditionOrder.getTradePlan().getEntrustStrategy().getValue());
         conditionOrderDO.setEntrustAmount(BigDecimal.valueOf(conditionOrder.getTradePlan().getNumber()));
@@ -37,13 +39,14 @@ public class ConditionOrderDOAssembler {
         SecurityExchange securityExchange = SecurityExchange.valueOf(conditionOrderDO.getSecurityExchange());
         SecurityInfo securityInfo = new SecurityInfo(securityType, conditionOrderDO.getSecurityCode(), securityExchange,
                 conditionOrderDO.getSecurityName());
+        NativeStrategyInfo nativeStrategyInfo = ValuedEnumUtil.valueOf(conditionOrderDO.getStrategyId(), NativeStrategyInfo.class);
         ExchangeType exchangeType = ValuedEnumUtil.valueOf(conditionOrderDO.getExchangeType(), ExchangeType.class);
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(conditionOrderDO.getEntrustStrategy(), EntrustStrategy.class);
         TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, conditionOrderDO.getEntrustAmount().intValue());
-        Condition condition = ConditionOrderGsonUtils.getGSON().fromJson(conditionOrderDO.getInputArguments(), Condition.class);
+        Condition condition = ConditionOrderGsonUtils.getGSON().fromJson(conditionOrderDO.getConditionProperties(), Condition.class);
         LocalDateTime createTime = conditionOrderDO.getCreateTime().toLocalDateTime();
         LocalDateTime updateTime = conditionOrderDO.getUpdateTime().toLocalDateTime();
-        return new ConditionOrder(conditionOrderDO.getOrderId(), orderState, securityInfo, condition, tradePlan,
+        return new ConditionOrder(conditionOrderDO.getOrderId(), orderState, securityInfo, nativeStrategyInfo, condition, tradePlan,
                 createTime, updateTime);
     }
 

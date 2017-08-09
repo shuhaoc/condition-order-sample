@@ -1,24 +1,23 @@
 package me.caosh.condition.infrastructure.repository.model;
 
-import com.google.common.base.MoreObjects;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by caosh on 2017/8/6.
+ * Created by caosh on 2017/8/9.
  */
 @Entity
 @Table(name = "condition_order", schema = "", catalog = "test")
 public class ConditionOrderDO {
     private Long orderId;
+    private Integer orderState;
     private Integer securityType;
     private String securityCode;
     private String securityExchange;
     private String securityName;
-    private Integer orderState;
-    private String inputArguments;
+    private Integer strategyId;
+    private String conditionProperties;
     private String dynamicProperties;
     private Integer exchangeType;
     private Integer entrustStrategy;
@@ -87,13 +86,23 @@ public class ConditionOrderDO {
     }
 
     @Basic
-    @Column(name = "input_arguments")
-    public String getInputArguments() {
-        return inputArguments;
+    @Column(name = "strategy_id")
+    public Integer getStrategyId() {
+        return strategyId;
     }
 
-    public void setInputArguments(String inputArguments) {
-        this.inputArguments = inputArguments;
+    public void setStrategyId(Integer strategyId) {
+        this.strategyId = strategyId;
+    }
+
+    @Basic
+    @Column(name = "condition_properties")
+    public String getConditionProperties() {
+        return conditionProperties;
+    }
+
+    public void setConditionProperties(String conditionProperties) {
+        this.conditionProperties = conditionProperties;
     }
 
     @Basic
@@ -159,18 +168,19 @@ public class ConditionOrderDO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof ConditionOrderDO)) return false;
 
         ConditionOrderDO that = (ConditionOrderDO) o;
 
         if (orderId != null ? !orderId.equals(that.orderId) : that.orderId != null) return false;
+        if (orderState != null ? !orderState.equals(that.orderState) : that.orderState != null) return false;
         if (securityType != null ? !securityType.equals(that.securityType) : that.securityType != null) return false;
         if (securityCode != null ? !securityCode.equals(that.securityCode) : that.securityCode != null) return false;
         if (securityExchange != null ? !securityExchange.equals(that.securityExchange) : that.securityExchange != null)
             return false;
         if (securityName != null ? !securityName.equals(that.securityName) : that.securityName != null) return false;
-        if (orderState != null ? !orderState.equals(that.orderState) : that.orderState != null) return false;
-        if (inputArguments != null ? !inputArguments.equals(that.inputArguments) : that.inputArguments != null)
+        if (strategyId != null ? !strategyId.equals(that.strategyId) : that.strategyId != null) return false;
+        if (conditionProperties != null ? !conditionProperties.equals(that.conditionProperties) : that.conditionProperties != null)
             return false;
         if (dynamicProperties != null ? !dynamicProperties.equals(that.dynamicProperties) : that.dynamicProperties != null)
             return false;
@@ -180,20 +190,20 @@ public class ConditionOrderDO {
         if (entrustAmount != null ? !entrustAmount.equals(that.entrustAmount) : that.entrustAmount != null)
             return false;
         if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
-        if (updateTime != null ? !updateTime.equals(that.updateTime) : that.updateTime != null) return false;
+        return !(updateTime != null ? !updateTime.equals(that.updateTime) : that.updateTime != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
         int result = orderId != null ? orderId.hashCode() : 0;
+        result = 31 * result + (orderState != null ? orderState.hashCode() : 0);
         result = 31 * result + (securityType != null ? securityType.hashCode() : 0);
         result = 31 * result + (securityCode != null ? securityCode.hashCode() : 0);
         result = 31 * result + (securityExchange != null ? securityExchange.hashCode() : 0);
         result = 31 * result + (securityName != null ? securityName.hashCode() : 0);
-        result = 31 * result + (orderState != null ? orderState.hashCode() : 0);
-        result = 31 * result + (inputArguments != null ? inputArguments.hashCode() : 0);
+        result = 31 * result + (strategyId != null ? strategyId.hashCode() : 0);
+        result = 31 * result + (conditionProperties != null ? conditionProperties.hashCode() : 0);
         result = 31 * result + (dynamicProperties != null ? dynamicProperties.hashCode() : 0);
         result = 31 * result + (exchangeType != null ? exchangeType.hashCode() : 0);
         result = 31 * result + (entrustStrategy != null ? entrustStrategy.hashCode() : 0);
@@ -201,24 +211,5 @@ public class ConditionOrderDO {
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("orderId", orderId)
-                .add("securityType", securityType)
-                .add("securityCode", securityCode)
-                .add("securityExchange", securityExchange)
-                .add("securityName", securityName)
-                .add("orderState", orderState)
-                .add("inputArguments", inputArguments)
-                .add("dynamicProperties", dynamicProperties)
-                .add("exchangeType", exchangeType)
-                .add("entrustStrategy", entrustStrategy)
-                .add("entrustAmount", entrustAmount)
-                .add("createTime", createTime)
-                .add("updateTime", updateTime)
-                .toString();
     }
 }

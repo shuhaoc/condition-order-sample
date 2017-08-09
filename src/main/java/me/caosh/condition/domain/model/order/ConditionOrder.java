@@ -2,6 +2,7 @@ package me.caosh.condition.domain.model.order;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.model.market.SecurityInfo;
+import me.caosh.condition.domain.model.strategy.StrategyInfo;
 
 import java.time.LocalDateTime;
 
@@ -12,16 +13,18 @@ public class ConditionOrder {
     private final Long orderId;
     private OrderState orderState;
     private final SecurityInfo securityInfo;
+    private final StrategyInfo strategyInfo;
     private final Condition condition;
     private final TradePlan tradePlan;
     private final LocalDateTime createTime;
     private LocalDateTime updateTime;
 
-    public ConditionOrder(Long orderId, OrderState orderState, SecurityInfo securityInfo, Condition condition,
-                          TradePlan tradePlan, LocalDateTime createTime, LocalDateTime updateTime) {
+    public ConditionOrder(Long orderId, OrderState orderState, SecurityInfo securityInfo, StrategyInfo strategyInfo,
+                          Condition condition, TradePlan tradePlan, LocalDateTime createTime, LocalDateTime updateTime) {
         this.orderId = orderId;
         this.orderState = orderState;
         this.securityInfo = securityInfo;
+        this.strategyInfo = strategyInfo;
         this.condition = condition;
         this.tradePlan = tradePlan;
         this.createTime = createTime;
@@ -42,6 +45,10 @@ public class ConditionOrder {
 
     public SecurityInfo getSecurityInfo() {
         return securityInfo;
+    }
+
+    public StrategyInfo getStrategyInfo() {
+        return strategyInfo;
     }
 
     public Condition getCondition() {
@@ -70,6 +77,7 @@ public class ConditionOrder {
                 .add("orderId", orderId)
                 .add("orderState", orderState)
                 .add("securityInfo", securityInfo)
+                .add("strategyInfo", strategyInfo)
                 .add("condition", condition)
                 .add("tradePlan", tradePlan)
                 .add("createTime", createTime)
