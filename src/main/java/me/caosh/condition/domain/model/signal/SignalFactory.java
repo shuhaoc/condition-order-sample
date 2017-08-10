@@ -10,15 +10,15 @@ public class SignalFactory {
         return INSTANCE;
     }
 
-    private static final TBD tbd = new TBD();
+    private static final General general = new General();
     private static final None none = new None();
 
     public None none() {
         return none;
     }
 
-    public TBD toBeDetermined() {
-        return tbd;
+    public General general() {
+        return general;
     }
 
     private SignalFactory() {

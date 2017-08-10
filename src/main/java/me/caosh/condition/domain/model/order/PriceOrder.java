@@ -33,7 +33,7 @@ public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven, 
         BigDecimal currentPrice = realTimeMarket.getCurrentPrice();
         logger.debug("Check price condition, currentPrice={}, condition={}", currentPrice, getCondition());
         if (getSimplePriceCondition().isSatisfiedBy(currentPrice)) {
-            return SignalFactory.getInstance().toBeDetermined();
+            return SignalFactory.getInstance().general();
         }
         return SignalFactory.getInstance().none();
     }
