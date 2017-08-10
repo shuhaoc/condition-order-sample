@@ -1,7 +1,7 @@
 package me.caosh.condition.interfaces;
 
 import com.google.common.collect.Lists;
-import me.caosh.condition.application.order.ConditionOrderCheckService;
+import me.caosh.condition.application.order.MonitorService;
 import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityExchange;
@@ -31,7 +31,7 @@ public class PriceOrderController {
     private ConditionOrderCommandService conditionOrderCommandService;
 
     @Autowired
-    private ConditionOrderCheckService conditionOrderCheckService;
+    private MonitorService monitorService;
 
     @RequestMapping("/create")
     public Integer create(PriceOrderCreateCommand command) {
@@ -45,7 +45,7 @@ public class PriceOrderController {
     public int check(BigDecimal price) {
         RealTimeMarket realTimeMarket = new RealTimeMarket(
                 new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "浦发银行"), price);
-        conditionOrderCheckService.checkWithRealTimeMarkets(Lists.newArrayList(realTimeMarket));
+        monitorService.run(Lists.newArrayList(realTimeMarket));
         return 1;
     }
 }

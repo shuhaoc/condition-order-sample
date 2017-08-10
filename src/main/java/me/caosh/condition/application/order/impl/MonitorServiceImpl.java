@@ -2,7 +2,7 @@ package me.caosh.condition.application.order.impl;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
-import me.caosh.condition.application.order.ConditionOrderCheckService;
+import me.caosh.condition.application.order.MonitorService;
 import me.caosh.condition.domain.model.entrust.EntrustCommand;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
@@ -22,14 +22,14 @@ import java.util.List;
  * Created by caosh on 2017/8/9.
  */
 @Service
-public class ConditionOrderCheckServiceImpl implements ConditionOrderCheckService {
-    private static final Logger logger = LoggerFactory.getLogger(ConditionOrderCheckServiceImpl.class);
+public class MonitorServiceImpl implements MonitorService {
+    private static final Logger logger = LoggerFactory.getLogger(MonitorServiceImpl.class);
 
     @Autowired
     private ConditionOrderRepository conditionOrderRepository;
 
     @Override
-    public void checkWithRealTimeMarkets(List<RealTimeMarket> realTimeMarketList) {
+    public void run(List<RealTimeMarket> realTimeMarketList) {
         List<ConditionOrder> conditionOrders = conditionOrderRepository.findAllActive();
         conditionOrders.forEach(conditionOrder -> {
             if (conditionOrder instanceof RealTimeMarketDriven) {

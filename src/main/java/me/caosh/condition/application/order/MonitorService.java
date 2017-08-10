@@ -7,6 +7,6 @@ import java.util.List;
 /**
  * Created by caosh on 2017/8/9.
  */
-public interface ConditionOrderCheckService {
-    void checkWithRealTimeMarkets(List<RealTimeMarket> realTimeMarketList);
+public interface MonitorService {
+    void run(List<RealTimeMarket> realTimeMarketList);
 }
