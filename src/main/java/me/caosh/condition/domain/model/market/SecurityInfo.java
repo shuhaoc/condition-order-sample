@@ -1,5 +1,7 @@
 package me.caosh.condition.domain.model.market;
 
+import me.caosh.condition.domain.model.trade.SecurityID;
+
 /**
  * Created by caosh on 2017/8/1.
  */
@@ -30,6 +32,14 @@ public class SecurityInfo {
 
     public String getName() {
         return name;
+    }
+
+    public MarketID asMarketID() {
+        return new MarketID(type, code);
+    }
+
+    public SecurityID asSecurityID() {
+        return new SecurityID(code, exchange);
     }
 
     @Override

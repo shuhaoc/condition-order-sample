@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.model.order;
 
-import me.caosh.condition.domain.model.entrust.EntrustCommand;
+import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 

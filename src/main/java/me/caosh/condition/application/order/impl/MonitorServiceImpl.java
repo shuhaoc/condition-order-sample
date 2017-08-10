@@ -3,7 +3,7 @@ package me.caosh.condition.application.order.impl;
 import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 import me.caosh.condition.application.order.MonitorService;
-import me.caosh.condition.domain.model.entrust.EntrustCommand;
+import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.RealTimeMarketDriven;
