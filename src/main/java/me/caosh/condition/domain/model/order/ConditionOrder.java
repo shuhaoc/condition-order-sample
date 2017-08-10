@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 /**
  * Created by caosh on 2017/8/2.
  */
-public class ConditionOrder {
+public abstract class ConditionOrder {
     private final Long orderId;
     private OrderState orderState;
     private final SecurityInfo securityInfo;
