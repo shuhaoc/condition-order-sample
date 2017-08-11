@@ -5,6 +5,7 @@ import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by caosh on 2017/8/9.
@@ -15,8 +16,10 @@ public class ConditionOrderCommandServiceImpl implements ConditionOrderCommandSe
     @Autowired
     private ConditionOrderRepository conditionOrderRepository;
 
+    @Transactional
     @Override
     public void save(ConditionOrder conditionOrder) {
         conditionOrderRepository.save(conditionOrder);
+
     }
 }
