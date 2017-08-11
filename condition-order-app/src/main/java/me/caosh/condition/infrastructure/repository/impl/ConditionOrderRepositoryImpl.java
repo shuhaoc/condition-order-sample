@@ -1,6 +1,5 @@
 package me.caosh.condition.infrastructure.repository.impl;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import me.caosh.condition.domain.model.order.ConditionOrder;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by caosh on 2017/8/3.
@@ -35,7 +35,7 @@ public class ConditionOrderRepositoryImpl implements ConditionOrderRepository {
     public Optional<ConditionOrder> findOne(Long orderId) {
         ConditionOrderDO conditionOrderDO = conditionOrderDORepository.findOne(orderId);
         if (conditionOrderDO == null) {
-            return Optional.absent();
+            return Optional.empty();
         }
         ConditionOrder conditionOrder = ConditionOrderDOAssembler.fromDO(conditionOrderDO);
         return Optional.of(conditionOrder);

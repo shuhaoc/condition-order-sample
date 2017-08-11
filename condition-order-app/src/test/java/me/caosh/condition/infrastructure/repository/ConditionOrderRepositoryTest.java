@@ -1,10 +1,16 @@
 package me.caosh.condition.infrastructure.repository;
 
-import com.google.common.base.Optional;
 import me.caosh.condition.domain.model.market.SecurityExchange;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.market.SecurityType;
-import me.caosh.condition.domain.model.order.*;
+import me.caosh.condition.domain.model.order.CompareCondition;
+import me.caosh.condition.domain.model.order.ConditionOrder;
+import me.caosh.condition.domain.model.order.EntrustStrategy;
+import me.caosh.condition.domain.model.order.ExchangeType;
+import me.caosh.condition.domain.model.order.OrderState;
+import me.caosh.condition.domain.model.order.PriceOrder;
+import me.caosh.condition.domain.model.order.SimplePriceCondition;
+import me.caosh.condition.domain.model.order.TradePlan;
 import me.caosh.condition.infrastructure.repository.impl.ConditionOrderIdGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,8 +22,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
-import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
 /**

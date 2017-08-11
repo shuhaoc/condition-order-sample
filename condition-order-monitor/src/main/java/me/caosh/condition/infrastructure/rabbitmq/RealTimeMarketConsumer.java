@@ -18,7 +18,7 @@ import java.util.Collections;
 /**
  * Created by caosh on 2017/8/9.
  */
-//@Component
+@Component
 public class RealTimeMarketConsumer {
     private static final Logger logger = LoggerFactory.getLogger(RealTimeMarketConsumer.class);
 
