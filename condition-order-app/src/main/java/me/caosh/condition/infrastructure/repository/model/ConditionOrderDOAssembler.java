@@ -30,8 +30,6 @@ public class ConditionOrderDOAssembler {
         conditionOrderDO.setExchangeType(conditionOrder.getTradePlan().getExchangeType().getValue());
         conditionOrderDO.setEntrustStrategy(conditionOrder.getTradePlan().getEntrustStrategy().getValue());
         conditionOrderDO.setEntrustAmount(BigDecimal.valueOf(conditionOrder.getTradePlan().getNumber()));
-        conditionOrderDO.setCreateTime(new Timestamp(new Date().getTime()));
-        conditionOrderDO.setUpdateTime(new Timestamp(new Date().getTime())); // TODO: not right
         return conditionOrderDO;
     }
 
@@ -46,8 +44,6 @@ public class ConditionOrderDOAssembler {
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(conditionOrderDO.getEntrustStrategy(), EntrustStrategy.class);
         TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, conditionOrderDO.getEntrustAmount().intValue());
         Condition condition = ConditionOrderGSONUtils.getGSON().fromJson(conditionOrderDO.getConditionProperties(), Condition.class);
-        LocalDateTime createTime = conditionOrderDO.getCreateTime().toLocalDateTime();
-        LocalDateTime updateTime = conditionOrderDO.getUpdateTime().toLocalDateTime();
         return ConditionOrderFactory.getInstance().create(conditionOrderDO.getOrderId(), orderState, securityInfo,
                 nativeStrategyInfo, condition, tradePlan);
     }
