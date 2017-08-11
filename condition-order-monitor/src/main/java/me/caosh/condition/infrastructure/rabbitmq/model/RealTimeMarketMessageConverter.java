@@ -25,7 +25,7 @@ public class RealTimeMarketMessageConverter implements MessageConverter {
     @Override
     public Object fromMessage(Message message) throws MessageConversionException {
         String json = new String(message.getBody(), Charset.forName("utf-8"));
-        return ConditionOrderGSONUtils.getMarketGSON().fromJson(json, new TypeToken<HashMap<String, RealTimeMarketDTO>>(){
+        return ConditionOrderGSONUtils.getMarketGSON().fromJson(json, new TypeToken<HashMap<String, RealTimeMarketSimpleDTO>>(){
         }.getType());
     }
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Created by caosh on 2017/8/9.
  */
-public class RealTimeMarketDTO implements Serializable {
+public class RealTimeMarketSimpleDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String c; // code
@@ -222,8 +222,8 @@ public class RealTimeMarketDTO implements Serializable {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(RealTimeMarketDTO.class).omitNullValues()
-                .addValue(RealTimeMarketDTO.class.getSuperclass() != Object.class ? super.toString() : null)
+        return MoreObjects.toStringHelper(RealTimeMarketSimpleDTO.class).omitNullValues()
+                .addValue(RealTimeMarketSimpleDTO.class.getSuperclass() != Object.class ? super.toString() : null)
                 .add("c", c)
                 .add("n", n)
                 .add("s", s)
