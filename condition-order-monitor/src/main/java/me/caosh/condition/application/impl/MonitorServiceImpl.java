@@ -1,8 +1,8 @@
-package me.caosh.condition.application.order.impl;
+package me.caosh.condition.application.impl;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
-import me.caosh.condition.application.order.MonitorService;
+import me.caosh.condition.application.MonitorService;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
@@ -10,7 +10,6 @@ import me.caosh.condition.domain.model.order.RealTimeMarketDriven;
 import me.caosh.condition.domain.model.order.TradeSignalDriven;
 import me.caosh.condition.domain.model.signal.SignalFactory;
 import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +24,11 @@ import java.util.List;
 public class MonitorServiceImpl implements MonitorService {
     private static final Logger logger = LoggerFactory.getLogger(MonitorServiceImpl.class);
 
-    @Autowired
-    private ConditionOrderRepository conditionOrderRepository;
+//    @Autowired
+//    private ConditionOrderRepository conditionOrderRepository;
 
     @Override
-    public void run(List<RealTimeMarket> realTimeMarketList) {
+    public void run(List<RealTimeMarket> realTimeMarketList) {/*
         List<ConditionOrder> conditionOrders = conditionOrderRepository.findAllActive();
         conditionOrders.forEach(conditionOrder -> {
             if (conditionOrder instanceof RealTimeMarketDriven) {
@@ -45,6 +44,6 @@ public class MonitorServiceImpl implements MonitorService {
                     }
                 }
             }
-        });
+        });*/
     }
 }

@@ -1,4 +1,4 @@
-package me.caosh.condition.application.order;
+package me.caosh.condition.application;
 
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 
