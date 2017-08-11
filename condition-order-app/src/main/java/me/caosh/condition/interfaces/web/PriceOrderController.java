@@ -1,4 +1,4 @@
-package me.caosh.condition.interfaces;
+package me.caosh.condition.interfaces.web;
 
 import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.domain.model.order.PriceOrder;
