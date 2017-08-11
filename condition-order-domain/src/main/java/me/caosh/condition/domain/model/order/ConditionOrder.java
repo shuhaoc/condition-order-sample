@@ -57,7 +57,8 @@ public abstract class ConditionOrder {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects.toStringHelper(ConditionOrder.class).omitNullValues()
+                .addValue(ConditionOrder.class.getSuperclass() != Object.class ? super.toString() : null)
                 .add("orderId", orderId)
                 .add("orderState", orderState)
                 .add("securityInfo", securityInfo)

@@ -1,4 +1,6 @@
-package me.caosh.condition.domain.model.market;
+package me.caosh.condition.domain.model.market.event;
+
+import me.caosh.condition.domain.model.market.RealTimeMarket;
 
 import java.util.Map;
 

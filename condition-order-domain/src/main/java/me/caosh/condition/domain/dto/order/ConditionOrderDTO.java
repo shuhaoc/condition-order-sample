@@ -1,5 +1,6 @@
 package me.caosh.condition.domain.dto.order;
 
+import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
 
 import java.io.Serializable;
@@ -74,6 +75,19 @@ public class ConditionOrderDTO implements Serializable {
 
     public TradePlanDTO getTradePlanDTO() {
         return tradePlanDTO;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(ConditionOrderDTO.class).omitNullValues()
+                .addValue(ConditionOrderDTO.class.getSuperclass() != Object.class ? super.toString() : null)
+                .add("orderId", orderId)
+                .add("orderState", orderState)
+                .add("securityInfo", securityInfo)
+                .add("strategyId", strategyId)
+                .add("condition", condition)
+                .add("tradePlanDTO", tradePlanDTO)
+                .toString();
     }
 
     public void setTradePlanDTO(TradePlanDTO tradePlanDTO) {
