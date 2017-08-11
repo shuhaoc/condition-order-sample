@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 /**
  * Created by caosh on 2017/8/9.
  */
-public class PriceOrderAssembler {
+public class PriceOrderCommandAssembler {
     public static PriceOrder assemblePriceOrder(Long orderId, PriceOrderCreateCommand command) {
         OrderState orderState = OrderState.ACTIVE;
         SecurityType securityType = ValuedEnumUtil.valueOf(command.getSecurityType(), SecurityType.class);
@@ -31,6 +31,6 @@ public class PriceOrderAssembler {
         return new PriceOrder(orderId, orderState, securityInfo, simplePriceCondition, tradePlan, createTime, updateTime);
     }
 
-    private PriceOrderAssembler() {
+    private PriceOrderCommandAssembler() {
     }
 }
