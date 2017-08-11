@@ -9,7 +9,7 @@ import me.caosh.condition.domain.model.order.EntrustStrategy;
 import me.caosh.condition.domain.model.order.ExchangeType;
 import me.caosh.condition.domain.model.order.OrderState;
 import me.caosh.condition.domain.model.order.PriceOrder;
-import me.caosh.condition.domain.model.order.SimplePriceCondition;
+import me.caosh.condition.domain.model.order.PriceCondition;
 import me.caosh.condition.domain.model.order.TradePlan;
 import me.caosh.condition.infrastructure.repository.impl.ConditionOrderIdGenerator;
 import org.junit.Test;
@@ -21,7 +21,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static junit.framework.TestCase.assertTrue;
@@ -43,9 +42,9 @@ public class ConditionOrderRepositoryTest {
     public void test() throws Exception {
         PriceOrder priceOrder = new PriceOrder(conditionOrderIdGenerator.nextId(), OrderState.ACTIVE,
                 new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH"),
-                new SimplePriceCondition(CompareCondition.LESS_THAN_OR_EQUALS, new BigDecimal("13.00")),
-                new TradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, 100),
-                LocalDateTime.now(), LocalDateTime.now());
+                new PriceCondition(CompareCondition.LESS_THAN_OR_EQUALS, new BigDecimal("13.00")),
+                new TradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, 100)
+        );
         conditionOrderRepository.save(priceOrder);
 
         Optional<ConditionOrder> another = conditionOrderRepository.findOne(priceOrder.getOrderId());

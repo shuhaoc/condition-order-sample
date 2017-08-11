@@ -16,19 +16,15 @@ public abstract class ConditionOrder {
     private final StrategyInfo strategyInfo;
     private final Condition condition;
     private final TradePlan tradePlan;
-    private final LocalDateTime createTime;
-    private LocalDateTime updateTime;
 
     public ConditionOrder(Long orderId, OrderState orderState, SecurityInfo securityInfo, StrategyInfo strategyInfo,
-                          Condition condition, TradePlan tradePlan, LocalDateTime createTime, LocalDateTime updateTime) {
+                          Condition condition, TradePlan tradePlan) {
         this.orderId = orderId;
         this.orderState = orderState;
         this.securityInfo = securityInfo;
         this.strategyInfo = strategyInfo;
         this.condition = condition;
         this.tradePlan = tradePlan;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
     }
 
     public Long getOrderId() {
@@ -59,18 +55,6 @@ public abstract class ConditionOrder {
         return tradePlan;
     }
 
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -80,8 +64,6 @@ public abstract class ConditionOrder {
                 .add("strategyInfo", strategyInfo)
                 .add("condition", condition)
                 .add("tradePlan", tradePlan)
-                .add("createTime", createTime)
-                .add("updateTime", updateTime)
                 .toString();
     }
 }

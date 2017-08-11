@@ -23,8 +23,8 @@ import java.util.Collections;
 /**
  * Created by caosh on 2017/7/23.
  */
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class RabbitMQTest {
     private static final Logger logger = LoggerFactory.getLogger(RabbitMQTest.class);
 

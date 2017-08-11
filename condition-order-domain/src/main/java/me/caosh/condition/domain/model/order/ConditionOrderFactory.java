@@ -4,8 +4,6 @@ import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.strategy.NativeStrategyInfo;
 import me.caosh.condition.domain.model.strategy.StrategyInfo;
 
-import java.time.LocalDateTime;
-
 /**
  * Created by caosh on 2017/8/9.
  */
@@ -17,9 +15,9 @@ public class ConditionOrderFactory {
     }
 
     public ConditionOrder create(Long orderId, OrderState orderState, SecurityInfo securityInfo, StrategyInfo strategyInfo,
-                                 Condition condition, TradePlan tradePlan, LocalDateTime createTime, LocalDateTime updateTime) {
+                                 Condition condition, TradePlan tradePlan) {
         if (strategyInfo == NativeStrategyInfo.PRICE) {
-            return new PriceOrder(orderId, orderState, securityInfo, (SimplePriceCondition) condition, tradePlan, createTime, updateTime);
+            return new PriceOrder(orderId, orderState, securityInfo, (PriceCondition) condition, tradePlan);
         }
         throw new IllegalArgumentException("strategyInfo=" + strategyInfo);
     }

@@ -22,13 +22,13 @@ public class PriceOrderCommandAssembler {
                 command.getSecurityName());
         CompareCondition compareCondition = ValuedEnumUtil.valueOf(command.getCompareCondition(), CompareCondition.class);
         BigDecimal targetPrice = command.getTargetPrice();
-        SimplePriceCondition simplePriceCondition = new SimplePriceCondition(compareCondition, targetPrice);
+        PriceCondition priceCondition = new PriceCondition(compareCondition, targetPrice);
         ExchangeType exchangeType = ValuedEnumUtil.valueOf(command.getExchangeType(), ExchangeType.class);
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
         TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, command.getEntrustNumber());
         LocalDateTime createTime = LocalDateTime.now();
         LocalDateTime updateTime = LocalDateTime.now();
-        return new PriceOrder(orderId, orderState, securityInfo, simplePriceCondition, tradePlan, createTime, updateTime);
+        return new PriceOrder(orderId, orderState, securityInfo, priceCondition, tradePlan);
     }
 
     private PriceOrderCommandAssembler() {

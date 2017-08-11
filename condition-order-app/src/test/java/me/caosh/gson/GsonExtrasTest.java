@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 
@@ -31,9 +30,9 @@ public class GsonExtrasTest {
 
         PriceOrder priceOrder = new PriceOrder(123L, OrderState.ACTIVE,
                 new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH"),
-                new SimplePriceCondition(CompareCondition.LESS_THAN_OR_EQUALS, new BigDecimal("13.00")),
-                new TradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, 100),
-                LocalDateTime.now(), LocalDateTime.now());
+                new PriceCondition(CompareCondition.LESS_THAN_OR_EQUALS, new BigDecimal("13.00")),
+                new TradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, 100)
+        );
         String json = gson.toJson(priceOrder);
         logger.info(json);
         PriceOrder recovered = (PriceOrder) gson.fromJson(json, ConditionOrder.class);

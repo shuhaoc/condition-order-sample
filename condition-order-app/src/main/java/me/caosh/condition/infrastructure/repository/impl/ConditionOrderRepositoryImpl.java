@@ -23,7 +23,7 @@ public class ConditionOrderRepositoryImpl implements ConditionOrderRepository {
     @Override
     public void save(ConditionOrder conditionOrder) {
         ConditionOrderDO conditionOrderDO = ConditionOrderDOAssembler.toDO(conditionOrder);
-        conditionOrderDORepository.save(conditionOrderDO);
+//        conditionOrderDORepository.save(conditionOrderDO);
     }
 
     @Override

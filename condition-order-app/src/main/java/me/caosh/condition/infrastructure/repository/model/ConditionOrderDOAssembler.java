@@ -6,10 +6,12 @@ import me.caosh.condition.domain.model.market.SecurityType;
 import me.caosh.condition.domain.model.order.*;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 import me.caosh.condition.domain.model.strategy.NativeStrategyInfo;
+import me.caosh.condition.domain.util.ConditionOrderGSONUtils;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by caosh on 2017/8/3.
@@ -24,12 +26,12 @@ public class ConditionOrderDOAssembler {
         conditionOrderDO.setSecurityExchange(conditionOrder.getSecurityInfo().getExchange().name());
         conditionOrderDO.setSecurityName(conditionOrder.getSecurityInfo().getName());
         conditionOrderDO.setStrategyId(conditionOrder.getStrategyInfo().getStrategyId());
-        conditionOrderDO.setConditionProperties(ConditionOrderGsonUtils.getGSON().toJson(conditionOrder.getCondition()));
+        conditionOrderDO.setConditionProperties(ConditionOrderGSONUtils.getGSON().toJson(conditionOrder.getCondition()));
         conditionOrderDO.setExchangeType(conditionOrder.getTradePlan().getExchangeType().getValue());
         conditionOrderDO.setEntrustStrategy(conditionOrder.getTradePlan().getEntrustStrategy().getValue());
         conditionOrderDO.setEntrustAmount(BigDecimal.valueOf(conditionOrder.getTradePlan().getNumber()));
-        conditionOrderDO.setCreateTime(Timestamp.valueOf(conditionOrder.getCreateTime()));
-        conditionOrderDO.setUpdateTime(Timestamp.valueOf(conditionOrder.getUpdateTime()));
+        conditionOrderDO.setCreateTime(new Timestamp(new Date().getTime()));
+        conditionOrderDO.setUpdateTime(new Timestamp(new Date().getTime())); // TODO: not right
         return conditionOrderDO;
     }
 
@@ -43,11 +45,11 @@ public class ConditionOrderDOAssembler {
         ExchangeType exchangeType = ValuedEnumUtil.valueOf(conditionOrderDO.getExchangeType(), ExchangeType.class);
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(conditionOrderDO.getEntrustStrategy(), EntrustStrategy.class);
         TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, conditionOrderDO.getEntrustAmount().intValue());
-        Condition condition = ConditionOrderGsonUtils.getGSON().fromJson(conditionOrderDO.getConditionProperties(), Condition.class);
+        Condition condition = ConditionOrderGSONUtils.getGSON().fromJson(conditionOrderDO.getConditionProperties(), Condition.class);
         LocalDateTime createTime = conditionOrderDO.getCreateTime().toLocalDateTime();
         LocalDateTime updateTime = conditionOrderDO.getUpdateTime().toLocalDateTime();
         return ConditionOrderFactory.getInstance().create(conditionOrderDO.getOrderId(), orderState, securityInfo,
-                nativeStrategyInfo, condition, tradePlan, createTime, updateTime);
+                nativeStrategyInfo, condition, tradePlan);
     }
 
     private ConditionOrderDOAssembler() {

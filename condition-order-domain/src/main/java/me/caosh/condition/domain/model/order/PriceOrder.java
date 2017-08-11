@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 /**
  * Created by caosh on 2017/8/1.
@@ -19,13 +18,13 @@ import java.time.LocalDateTime;
 public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven, TradeSignalDriven {
     private static final Logger logger = LoggerFactory.getLogger(PriceOrder.class);
 
-    public PriceOrder(Long orderId, OrderState orderState, SecurityInfo securityInfo, SimplePriceCondition simplePriceCondition,
-                      TradePlan tradePlan, LocalDateTime createTime, LocalDateTime updateTime) {
-        super(orderId, orderState, securityInfo, NativeStrategyInfo.PRICE, simplePriceCondition, tradePlan, createTime, updateTime);
+    public PriceOrder(Long orderId, OrderState orderState, SecurityInfo securityInfo, PriceCondition priceCondition,
+                      TradePlan tradePlan) {
+        super(orderId, orderState, securityInfo, NativeStrategyInfo.PRICE, priceCondition, tradePlan);
     }
 
-    public SimplePriceCondition getSimplePriceCondition() {
-        return (SimplePriceCondition) getCondition();
+    public PriceCondition getSimplePriceCondition() {
+        return (PriceCondition) getCondition();
     }
 
     @Override

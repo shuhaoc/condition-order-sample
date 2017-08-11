@@ -1,30 +1,35 @@
-package me.caosh.condition.infrastructure.repository.model;
+package me.caosh.condition.domain.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 import me.caosh.condition.domain.model.order.Condition;
-import me.caosh.condition.domain.model.order.SimplePriceCondition;
+import me.caosh.condition.domain.model.order.PriceCondition;
 
 /**
  * Created by caosh on 2017/8/6.
  */
-public class ConditionOrderGsonUtils {
+public class ConditionOrderGSONUtils {
 
     private static final Gson GSON = createSpecialGson();
+    private static final Gson MARKET_GSON = new GsonBuilder().setDateFormat("yyyyMMddHHmmss").create();
 
     public static Gson getGSON() {
         return GSON;
+    }
+
+    public static Gson getMarketGSON() {
+        return MARKET_GSON;
     }
 
     private static Gson createSpecialGson() {
         return new GsonBuilder()
                 .registerTypeAdapterFactory(
                         RuntimeTypeAdapterFactory.of(Condition.class)
-                                .registerSubtype(SimplePriceCondition.class)
+                                .registerSubtype(PriceCondition.class)
                 ).create();
     }
 
-    private ConditionOrderGsonUtils() {
+    private ConditionOrderGSONUtils() {
     }
 }

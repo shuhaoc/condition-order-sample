@@ -8,11 +8,11 @@ import java.math.BigDecimal;
 /**
  * Created by caosh on 2017/8/2.
  */
-public class SimplePriceCondition implements Condition {
+public class PriceCondition implements Condition {
     private final CompareCondition compareCondition;
     private final BigDecimal targetPrice;
 
-    public SimplePriceCondition(CompareCondition compareCondition, BigDecimal targetPrice) {
+    public PriceCondition(CompareCondition compareCondition, BigDecimal targetPrice) {
         this.compareCondition = compareCondition;
         this.targetPrice = targetPrice;
     }
@@ -26,11 +26,16 @@ public class SimplePriceCondition implements Condition {
     }
 
     @Override
+    public void accept(ConditionVisitor visitor) {
+        visitor.visitPriceCondition(this);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SimplePriceCondition)) return false;
+        if (!(o instanceof PriceCondition)) return false;
 
-        SimplePriceCondition that = (SimplePriceCondition) o;
+        PriceCondition that = (PriceCondition) o;
 
         if (compareCondition != that.compareCondition) return false;
         return !(targetPrice != null ? !targetPrice.equals(that.targetPrice) : that.targetPrice != null);
