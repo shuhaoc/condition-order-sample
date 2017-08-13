@@ -8,4 +8,7 @@ import me.caosh.condition.domain.model.order.ConditionOrder;
 public interface ConditionOrderCommandService {
     void save(ConditionOrder conditionOrder);
 
+    void update(ConditionOrder conditionOrder);
+
+    void remove(Long orderId);
 }

@@ -1,7 +1,9 @@
 package me.caosh.condition.infrastructure.rabbitmq.impl;
 
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
+import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
+import me.caosh.condition.domain.dto.order.constants.OrderCommandType;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderDTOMessageConverter;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
@@ -57,10 +59,28 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
     }
 
     @Override
-    public void send(ConditionOrder conditionOrder) {
+    public void save(ConditionOrder conditionOrder) {
+        send(exchangeName, routingKey, OrderCommandType.CREATE, conditionOrder);
+    }
+
+    @Override
+    public void update(ConditionOrder conditionOrder) {
+        send(exchangeName, routingKey, OrderCommandType.UPDATE, conditionOrder);
+    }
+
+    private void send(String exchangeName, String routingKey, OrderCommandType update, ConditionOrder conditionOrder) {
         ConditionOrderDTO conditionOrderDTO = ConditionOrderDTOAssembler.toDTO(conditionOrder);
-        Message message = messageConverter.toMessage(conditionOrderDTO, new MessageProperties());
+        ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(update, conditionOrderDTO);
+        Message message = messageConverter.toMessage(conditionOrderMonitorDTO, new MessageProperties());
         amqpTemplate.send(exchangeName, routingKey, message);
         logger.info("Send condition order ==> {}", conditionOrderDTO);
+    }
+
+    @Override
+    public void remove(Long orderId) {
+        ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(OrderCommandType.DELETE, orderId);
+        Message message = messageConverter.toMessage(conditionOrderMonitorDTO, new MessageProperties());
+        amqpTemplate.send(exchangeName, routingKey, message);
+        logger.info("Send <DELETE> command ==> {}", orderId);
     }
 }

@@ -42,4 +42,10 @@ public class MonitorRepositoryMemoryImpl implements MonitorRepository {
         monitorRepository.update(conditionOrder);
         monitorOrders.put(conditionOrder.getOrderId(), conditionOrder);
     }
+
+    @Override
+    public void remove(Long orderId) {
+        monitorRepository.remove(orderId);
+        monitorOrders.remove(orderId);
+    }
 }

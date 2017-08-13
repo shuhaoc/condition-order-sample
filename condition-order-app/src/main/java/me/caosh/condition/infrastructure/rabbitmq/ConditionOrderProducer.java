@@ -8,5 +8,9 @@ import me.caosh.condition.domain.model.order.ConditionOrder;
  * @author caoshuhao@touker.com
  */
 public interface ConditionOrderProducer {
-    void send(ConditionOrder conditionOrder);
+    void save(ConditionOrder conditionOrder);
+
+    void update(ConditionOrder conditionOrder);
+
+    void remove(Long orderId);
 }

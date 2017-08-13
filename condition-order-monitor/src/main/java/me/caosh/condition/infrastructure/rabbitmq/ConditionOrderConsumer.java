@@ -1,10 +1,13 @@
 package me.caosh.condition.infrastructure.rabbitmq;
 
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
+import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
+import me.caosh.condition.domain.dto.order.constants.OrderCommandType;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderDTOMessageConverter;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.event.ConditionOrderCommandEvent;
+import me.caosh.condition.domain.model.order.event.ConditionOrderDeleteCommandEvent;
 import me.caosh.condition.domain.util.EventBuses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,10 +71,14 @@ public class ConditionOrderConsumer {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
         container.addQueues(queue);
         container.setMessageListener((MessageListener) message -> {
-            ConditionOrderDTO conditionOrderDTO = (ConditionOrderDTO) messageConverter.fromMessage(message);
-            logger.debug("Receive condition order message <== {}", conditionOrderDTO);
-            ConditionOrder conditionOrder = ConditionOrderDTOAssembler.fromDTO(conditionOrderDTO);
-            EventBuses.DEFAULT.post(new ConditionOrderCommandEvent(conditionOrder));
+            ConditionOrderMonitorDTO conditionOrderMonitorDTO = (ConditionOrderMonitorDTO) messageConverter.fromMessage(message);
+            logger.debug("Receive condition order message <== {}", conditionOrderMonitorDTO);
+            if (conditionOrderMonitorDTO.getConditionOrderDTO() != null) {
+                ConditionOrder conditionOrder = ConditionOrderDTOAssembler.fromDTO(conditionOrderMonitorDTO.getConditionOrderDTO());
+                EventBuses.DEFAULT.post(new ConditionOrderCommandEvent(conditionOrderMonitorDTO.getOrderCommandType(), conditionOrder));
+            } else {
+                EventBuses.DEFAULT.post(new ConditionOrderDeleteCommandEvent(conditionOrderMonitorDTO.getOrderId()));
+            }
         });
         container.start();
     }

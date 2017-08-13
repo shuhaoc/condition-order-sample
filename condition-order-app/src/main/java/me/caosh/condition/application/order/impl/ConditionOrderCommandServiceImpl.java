@@ -27,6 +27,20 @@ public class ConditionOrderCommandServiceImpl implements ConditionOrderCommandSe
     @Override
     public void save(ConditionOrder conditionOrder) {
         conditionOrderRepository.save(conditionOrder);
-        conditionOrderProducer.send(conditionOrder);
+        conditionOrderProducer.save(conditionOrder);
+    }
+
+    @Transactional
+    @Override
+    public void update(ConditionOrder conditionOrder) {
+        conditionOrderRepository.save(conditionOrder);
+        conditionOrderProducer.save(conditionOrder);
+    }
+
+    @Transactional
+    @Override
+    public void remove(Long orderId) {
+        conditionOrderRepository.remove(orderId);
+        conditionOrderProducer.remove(orderId);
     }
 }

@@ -5,11 +5,13 @@ import com.google.common.eventbus.Subscribe;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
+import me.caosh.condition.domain.dto.order.constants.OrderCommandType;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.event.RealTimeMarketPushEvent;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.RealTimeMarketDriven;
 import me.caosh.condition.domain.model.order.event.ConditionOrderCommandEvent;
+import me.caosh.condition.domain.model.order.event.ConditionOrderDeleteCommandEvent;
 import me.caosh.condition.domain.model.signal.SignalFactory;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.util.EventBuses;
@@ -73,8 +75,18 @@ public class ConditionOrderMonitor {
 
     @Subscribe
     public void onConditionOrderCommand(ConditionOrderCommandEvent e) {
+        if (e.getOrderCommandType() != OrderCommandType.CREATE && e.getOrderCommandType() != OrderCommandType.UPDATE) {
+            return;
+        }
         ConditionOrder conditionOrder = e.getConditionOrder();
         monitorRepository.update(conditionOrder);
         logger.info("Update condition order ==> {}", conditionOrder);
+    }
+
+    @Subscribe
+    public void onConditionOrderDeleteCommand(ConditionOrderDeleteCommandEvent e) {
+        Long orderId = e.getOrderId();
+        monitorRepository.remove(orderId);
+        logger.info("Remove condition order ==> {}", orderId);
     }
 }

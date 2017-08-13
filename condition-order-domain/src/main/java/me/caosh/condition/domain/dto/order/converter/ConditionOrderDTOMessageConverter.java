@@ -2,6 +2,7 @@ package me.caosh.condition.domain.dto.order.converter;
 
 
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
+import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
 import me.caosh.condition.domain.util.ConditionOrderGSONUtils;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;
@@ -26,6 +27,6 @@ public class ConditionOrderDTOMessageConverter implements MessageConverter {
     @Override
     public Object fromMessage(Message message) throws MessageConversionException {
         String json = new String(message.getBody(), Charset.forName("utf-8"));
-        return ConditionOrderGSONUtils.getGSON().fromJson(json, ConditionOrderDTO.class);
+        return ConditionOrderGSONUtils.getGSON().fromJson(json, ConditionOrderMonitorDTO.class);
     }
 }

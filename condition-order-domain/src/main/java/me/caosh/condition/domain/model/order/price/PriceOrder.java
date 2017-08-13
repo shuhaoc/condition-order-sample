@@ -31,7 +31,8 @@ public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven, 
     @Override
     public TradeSignal onRealTimeMarketUpdate(RealTimeMarket realTimeMarket) {
         BigDecimal currentPrice = realTimeMarket.getCurrentPrice();
-        logger.debug("Check price condition, currentPrice={}, condition={}", currentPrice, getCondition());
+        logger.debug("Check price condition, orderId={}, currentPrice={}, condition={}",
+                getOrderId(), currentPrice, getCondition());
         if (getSimplePriceCondition().isSatisfiedBy(currentPrice)) {
             return SignalFactory.getInstance().general();
         }
