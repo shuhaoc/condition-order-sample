@@ -6,7 +6,7 @@ import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 import me.caosh.condition.domain.dto.order.ConditionDTO;
 import me.caosh.condition.domain.dto.order.PriceConditionDTO;
 import me.caosh.condition.domain.model.order.Condition;
-import me.caosh.condition.domain.model.order.PriceCondition;
+import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.signal.General;
 import me.caosh.condition.domain.model.signal.None;
 import me.caosh.condition.domain.model.signal.TradeSignal;

@@ -5,7 +5,7 @@ import me.caosh.condition.domain.dto.order.ConditionDTOVisitor;
 import me.caosh.condition.domain.dto.order.PriceConditionDTO;
 import me.caosh.condition.domain.model.order.CompareCondition;
 import me.caosh.condition.domain.model.order.Condition;
-import me.caosh.condition.domain.model.order.PriceCondition;
+import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 
 /**

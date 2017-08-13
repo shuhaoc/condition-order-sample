@@ -1,8 +1,11 @@
 package me.caosh.condition.domain.model.order;
 
 import com.google.common.base.MoreObjects;
+import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
+import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.StrategyInfo;
+import me.caosh.condition.domain.model.trade.EntrustCommand;
 
 import java.time.LocalDateTime;
 
@@ -55,6 +58,8 @@ public abstract class ConditionOrder {
     public TradePlan getTradePlan() {
         return tradePlan;
     }
+
+    public abstract EntrustCommand onTradeSignal(TradeSignal signal, RealTimeMarket realTimeMarket);
 
     @Override
     public String toString() {

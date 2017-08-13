@@ -1,7 +1,7 @@
-package me.caosh.condition.domain.model.order;
+package me.caosh.condition.domain.model.order.price;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Preconditions;
+import me.caosh.condition.domain.model.order.*;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 /**
  * Created by caosh on 2017/8/1.
  */
-public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven, TradeSignalDriven {
+public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven, TriggerOnce {
     private static final Logger logger = LoggerFactory.getLogger(PriceOrder.class);
 
     public PriceOrder(Long orderId, OrderState orderState, SecurityInfo securityInfo, PriceCondition priceCondition,
@@ -39,7 +39,7 @@ public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven, 
     }
 
     @Override
-    public EntrustCommand onTradeSignal(TradeSignal tradeSignal, RealTimeMarket realTimeMarket) {
+    public EntrustCommand onTradeSignal(TradeSignal signal, RealTimeMarket realTimeMarket) {
         return new EntrustCommand(getSecurityInfo().asSecurityID(), getTradePlan().getExchangeType(),
                 realTimeMarket.getCurrentPrice(), getTradePlan().getNumber());
     }

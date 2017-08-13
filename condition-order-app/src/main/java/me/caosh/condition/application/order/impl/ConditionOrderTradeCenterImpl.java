@@ -6,7 +6,7 @@ import me.caosh.condition.application.order.ConditionOrderTradeCenter;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.OrderState;
-import me.caosh.condition.domain.model.order.TradeSignalDriven;
+import me.caosh.condition.domain.model.order.TriggerOnce;
 import me.caosh.condition.domain.model.signal.General;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
@@ -33,14 +33,13 @@ public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter 
     @Override
     public void handleTriggerMessage(TradeSignal signal, ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {
         if (signal instanceof General) {
-            if (conditionOrder instanceof TradeSignalDriven) {
-                Preconditions.checkNotNull(realTimeMarket);
-                TradeSignalDriven tradeSignalDriven = (TradeSignalDriven) conditionOrder;
-                EntrustCommand entrustCommand = tradeSignalDriven.onTradeSignal(signal, realTimeMarket);
-                securityEntrustService.execute(entrustCommand);
+            Preconditions.checkNotNull(realTimeMarket);
+            EntrustCommand entrustCommand = conditionOrder.onTradeSignal(signal, realTimeMarket);
+            securityEntrustService.execute(entrustCommand);
+            if (conditionOrder instanceof TriggerOnce) {
                 conditionOrder.setOrderState(OrderState.TERMINATED);
-                conditionOrderCommandService.save(conditionOrder);
             }
+            conditionOrderCommandService.save(conditionOrder);
         }
     }
 }

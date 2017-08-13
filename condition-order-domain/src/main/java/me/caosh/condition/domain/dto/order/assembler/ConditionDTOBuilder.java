@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.dto.order.ConditionDTO;
 import me.caosh.condition.domain.dto.order.PriceConditionDTO;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
-import me.caosh.condition.domain.model.order.PriceCondition;
+import me.caosh.condition.domain.model.order.price.PriceCondition;
 
 /**
  * Created by caosh on 2017/8/11.
