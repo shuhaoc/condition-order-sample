@@ -74,7 +74,7 @@ public class RealTimeMarketConsumer {
         container.addQueues(queue);
         container.setMessageListener((MessageListener) message -> {
             HashMap<String, RealTimeMarketSimpleDTO> marketMap = (HashMap<String, RealTimeMarketSimpleDTO>) messageConverter.fromMessage(message);
-            logger.debug("Receive market message <== {}", marketMap);
+            logger.debug("Receive market message <== size={}", marketMap.size());
             Map<String, RealTimeMarket> realTimeMarketMap = RealTimeMarketSimpleDTOAssembler.transformMap(SecurityType.STOCK, marketMap);
             EventBuses.DEFAULT.post(new RealTimeMarketPushEvent(realTimeMarketMap));
         });

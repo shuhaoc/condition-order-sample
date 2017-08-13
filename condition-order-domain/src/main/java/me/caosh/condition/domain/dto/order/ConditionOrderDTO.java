@@ -77,10 +77,13 @@ public class ConditionOrderDTO implements Serializable {
         return tradePlanDTO;
     }
 
+    public void setTradePlanDTO(TradePlanDTO tradePlanDTO) {
+        this.tradePlanDTO = tradePlanDTO;
+    }
+
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(ConditionOrderDTO.class).omitNullValues()
-                .addValue(ConditionOrderDTO.class.getSuperclass() != Object.class ? super.toString() : null)
+        return MoreObjects.toStringHelper(this)
                 .add("orderId", orderId)
                 .add("orderState", orderState)
                 .add("securityInfo", securityInfo)
@@ -88,9 +91,5 @@ public class ConditionOrderDTO implements Serializable {
                 .add("condition", condition)
                 .add("tradePlanDTO", tradePlanDTO)
                 .toString();
-    }
-
-    public void setTradePlanDTO(TradePlanDTO tradePlanDTO) {
-        this.tradePlanDTO = tradePlanDTO;
     }
 }

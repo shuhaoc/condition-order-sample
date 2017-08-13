@@ -8,16 +8,16 @@ import java.math.BigDecimal;
  * Created by caosh on 2017/8/7.
  */
 public class RealTimeMarket {
-    private final SecurityInfo securityInfo;
+    private final MarketID marketID;
     private final BigDecimal currentPrice;
 
-    public RealTimeMarket(SecurityInfo securityInfo, BigDecimal currentPrice) {
-        this.securityInfo = securityInfo;
+    public RealTimeMarket(MarketID marketID, BigDecimal currentPrice) {
+        this.marketID = marketID;
         this.currentPrice = currentPrice;
     }
 
-    public SecurityInfo getSecurityInfo() {
-        return securityInfo;
+    public MarketID getMarketID() {
+        return marketID;
     }
 
     public BigDecimal getCurrentPrice() {
@@ -27,7 +27,7 @@ public class RealTimeMarket {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("securityInfo", securityInfo)
+                .add("marketID", marketID)
                 .add("currentPrice", currentPrice)
                 .toString();
     }

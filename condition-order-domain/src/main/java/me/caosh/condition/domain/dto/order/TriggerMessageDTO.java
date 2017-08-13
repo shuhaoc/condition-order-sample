@@ -10,6 +10,14 @@ public class TriggerMessageDTO {
     private TradeSignal tradeSignal;
     private ConditionOrderDTO conditionOrderDTO;
 
+    public TriggerMessageDTO() {
+    }
+
+    public TriggerMessageDTO(TradeSignal tradeSignal, ConditionOrderDTO conditionOrderDTO) {
+        this.tradeSignal = tradeSignal;
+        this.conditionOrderDTO = conditionOrderDTO;
+    }
+
     public TradeSignal getTradeSignal() {
         return tradeSignal;
     }

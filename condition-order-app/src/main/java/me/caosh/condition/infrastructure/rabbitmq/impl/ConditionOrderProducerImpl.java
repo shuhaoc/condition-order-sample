@@ -7,10 +7,7 @@ import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +27,6 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
     private static final Logger logger = LoggerFactory.getLogger(ConditionOrderProducerImpl.class);
 
     private String exchangeName;
-    private String queueName;
     private String routingKey;
 
     private final AmqpAdmin amqpAdmin;
@@ -48,10 +44,6 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
         this.exchangeName = exchangeName;
     }
 
-    public void setQueueName(String queueName) {
-        this.queueName = queueName;
-    }
-
     public void setRoutingKey(String routingKey) {
         this.routingKey = routingKey;
     }
@@ -67,7 +59,8 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
     @Override
     public void send(ConditionOrder conditionOrder) {
         ConditionOrderDTO conditionOrderDTO = ConditionOrderDTOAssembler.toDTO(conditionOrder);
-        Message message = messageConverter.toMessage(conditionOrderDTO, null);
+        Message message = messageConverter.toMessage(conditionOrderDTO, new MessageProperties());
         amqpTemplate.send(exchangeName, routingKey, message);
+        logger.info("Send condition order ==> {}", conditionOrderDTO);
     }
 }

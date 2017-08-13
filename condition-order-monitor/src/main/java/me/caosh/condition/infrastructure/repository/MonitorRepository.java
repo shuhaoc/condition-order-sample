@@ -8,5 +8,9 @@ import java.util.Map;
  * Created by caosh on 2017/8/11.
  */
 public interface MonitorRepository {
+    Iterable<ConditionOrder> getAllOrders();
+    
     Map<Long, ConditionOrder> getAll();
+
+    void update(ConditionOrder conditionOrder);
 }

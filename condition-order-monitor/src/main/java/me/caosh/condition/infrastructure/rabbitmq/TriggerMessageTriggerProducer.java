@@ -5,6 +5,6 @@ import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
 /**
  * Created by caosh on 2017/8/11.
  */
-public interface ConditionOrderTriggerProducer {
+public interface TriggerMessageTriggerProducer {
     void send(TriggerMessageDTO triggerMessageDTO);
 }
