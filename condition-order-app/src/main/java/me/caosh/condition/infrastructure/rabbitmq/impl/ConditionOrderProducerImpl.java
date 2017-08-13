@@ -1,11 +1,13 @@
 package me.caosh.condition.infrastructure.rabbitmq.impl;
 
+import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
 import me.caosh.condition.domain.dto.order.constants.OrderCommandType;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderDTOMessageConverter;
 import me.caosh.condition.domain.model.order.ConditionOrder;
+import me.caosh.condition.domain.model.order.OrderState;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,11 +62,13 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
 
     @Override
     public void save(ConditionOrder conditionOrder) {
+        Preconditions.checkArgument(conditionOrder.getOrderState() == OrderState.ACTIVE);
         send(exchangeName, routingKey, OrderCommandType.CREATE, conditionOrder);
     }
 
     @Override
     public void update(ConditionOrder conditionOrder) {
+        Preconditions.checkArgument(conditionOrder.getOrderState() == OrderState.ACTIVE);
         send(exchangeName, routingKey, OrderCommandType.UPDATE, conditionOrder);
     }
 

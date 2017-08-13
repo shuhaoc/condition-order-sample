@@ -2,6 +2,7 @@ package me.caosh.condition.application.order.impl;
 
 import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.domain.model.order.ConditionOrder;
+import me.caosh.condition.domain.model.order.OrderState;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
 import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,11 @@ public class ConditionOrderCommandServiceImpl implements ConditionOrderCommandSe
     @Override
     public void update(ConditionOrder conditionOrder) {
         conditionOrderRepository.save(conditionOrder);
-        conditionOrderProducer.save(conditionOrder);
+        if (conditionOrder.getOrderState() == OrderState.ACTIVE) {
+            conditionOrderProducer.update(conditionOrder);
+        } else {
+            conditionOrderProducer.remove(conditionOrder.getOrderId());
+        }
     }
 
     @Transactional

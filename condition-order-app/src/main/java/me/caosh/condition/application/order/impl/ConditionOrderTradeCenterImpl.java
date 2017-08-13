@@ -39,7 +39,7 @@ public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter 
             if (conditionOrder instanceof TriggerOnce) {
                 conditionOrder.setOrderState(OrderState.TERMINATED);
             }
-            conditionOrderCommandService.save(conditionOrder);
+            conditionOrderCommandService.update(conditionOrder);
         }
     }
 }

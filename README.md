@@ -11,7 +11,7 @@ DDD sample, a minimized condition order system.
 
 ## TODO
 
-- remove order cache
+- pause/resume
 - monitor context(delay sync, trigger lock)
 - trigger context
 - turn up buy order

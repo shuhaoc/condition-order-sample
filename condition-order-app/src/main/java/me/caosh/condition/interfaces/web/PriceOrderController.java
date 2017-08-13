@@ -51,7 +51,7 @@ public class PriceOrderController {
         }
         PriceOrder oldPriceOrder = (PriceOrder) conditionOrderOptional.get();
         PriceOrder newPriceOlder = PriceOrderCommandAssembler.mergePriceOrder(oldPriceOrder, command);
-        conditionOrderCommandService.save(newPriceOlder);
+        conditionOrderCommandService.update(newPriceOlder);
         return orderId;
     }
 }
