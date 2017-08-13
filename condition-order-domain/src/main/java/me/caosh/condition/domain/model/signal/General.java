@@ -6,6 +6,6 @@ package me.caosh.condition.domain.model.signal;
 public final class General implements TradeSignal {
     @Override
     public String toString() {
-        return "[TBD]";
+        return "[General]";
     }
 }
