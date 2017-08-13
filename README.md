@@ -11,6 +11,7 @@ DDD sample, a minimized condition order system.
 
 ## TODO
 
+- soft delete
 - pause/resume
 - monitor context(delay sync, trigger lock)
 - trigger context
