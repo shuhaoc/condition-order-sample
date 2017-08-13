@@ -66,7 +66,7 @@ public class ConditionOrderMonitor {
         TradeSignal tradeSignal = ((RealTimeMarketDriven) conditionOrder).onRealTimeMarketUpdate(realTimeMarket);
         if (tradeSignal == SignalFactory.getInstance().general()) {
             ConditionOrderDTO conditionOrderDTO = ConditionOrderDTOAssembler.toDTO(conditionOrder);
-            TriggerMessageDTO triggerMessageDTO = new TriggerMessageDTO(tradeSignal, conditionOrderDTO);
+            TriggerMessageDTO triggerMessageDTO = new TriggerMessageDTO(tradeSignal, conditionOrderDTO, realTimeMarket);
             triggerMessageTriggerProducer.send(triggerMessageDTO);
         }
     }

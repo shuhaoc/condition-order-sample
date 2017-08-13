@@ -7,6 +7,9 @@ import me.caosh.condition.domain.dto.order.ConditionDTO;
 import me.caosh.condition.domain.dto.order.PriceConditionDTO;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.PriceCondition;
+import me.caosh.condition.domain.model.signal.General;
+import me.caosh.condition.domain.model.signal.None;
+import me.caosh.condition.domain.model.signal.TradeSignal;
 
 /**
  * Created by caosh on 2017/8/6.
@@ -26,13 +29,13 @@ public class ConditionOrderGSONUtils {
 
     private static Gson createSpecialGson() {
         return new GsonBuilder()
-                .registerTypeAdapterFactory(
-                        RuntimeTypeAdapterFactory.of(Condition.class)
-                                .registerSubtype(PriceCondition.class))
-                .registerTypeAdapterFactory(
-                        RuntimeTypeAdapterFactory.of(ConditionDTO.class)
-                                .registerSubtype(PriceConditionDTO.class)
-                )
+                .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(Condition.class)
+                        .registerSubtype(PriceCondition.class))
+                .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(ConditionDTO.class)
+                        .registerSubtype(PriceConditionDTO.class))
+                .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(TradeSignal.class)
+                        .registerSubtype(None.class)
+                        .registerSubtype(General.class))
                 .create();
     }
 
