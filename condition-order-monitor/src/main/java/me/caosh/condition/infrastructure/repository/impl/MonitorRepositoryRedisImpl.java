@@ -8,7 +8,9 @@ import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.util.ConditionOrderGSONUtils;
 import me.caosh.condition.infrastructure.repository.MonitorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -32,15 +34,19 @@ public class MonitorRepositoryRedisImpl implements MonitorRepository {
 
     private String monitorOrdersKey;
 
-    @Autowired
-    public MonitorRepositoryRedisImpl(RedisConnectionFactory redisConnectionFactory) {
-        redisTemplate = new RedisTemplate<>();
+    @Bean("monitorOrdersRedisTemplate")
+    public static RedisTemplate createRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, ConditionOrder> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new ConditionOrderRedisSerializer());
         redisTemplate.setHashKeySerializer(new GenericToStringSerializer<>(Long.class));
         redisTemplate.setHashValueSerializer(new ConditionOrderRedisSerializer());
-        redisTemplate.afterPropertiesSet();
+        return redisTemplate;
+    }
+
+    public MonitorRepositoryRedisImpl(@Qualifier("monitorOrdersRedisTemplate") RedisTemplate<String, ConditionOrder> redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
 
     public void setMonitorOrdersKey(String monitorOrdersKey) {
