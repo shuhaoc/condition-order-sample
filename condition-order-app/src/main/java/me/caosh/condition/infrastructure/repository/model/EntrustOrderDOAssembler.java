@@ -9,6 +9,7 @@ import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.trade.EntrustOrder;
 import me.caosh.condition.domain.model.trade.EntrustResult;
+import me.caosh.condition.domain.model.trade.OrderType;
 
 /**
  * Created by caosh on 2017/8/14.
@@ -29,6 +30,7 @@ public class EntrustOrderDOAssembler {
         entrustOrderDO.setExchangeType(entrustOrder.getEntrustCommand().getExchangeType().getValue());
         entrustOrderDO.setEntrustPrice(entrustOrder.getEntrustCommand().getEntrustPrice());
         entrustOrderDO.setEntrustNumber(entrustOrder.getEntrustCommand().getEntrustNumber());
+        entrustOrderDO.setOrderType(entrustOrder.getEntrustCommand().getOrderType().getValue());
         entrustOrderDO.setEntrustState(entrustOrder.getEntrustResult().getEntrustState());
         entrustOrderDO.setEntrustMessage(entrustOrder.getEntrustResult().getEntrustMessage());
         entrustOrderDO.setEntrustCode(entrustOrder.getEntrustResult().getEntrustCode());
@@ -42,8 +44,9 @@ public class EntrustOrderDOAssembler {
         SecurityInfo securityInfo = new SecurityInfo(securityType, entrustOrderDO.getSecurityCode(), securityExchange,
                 entrustOrderDO.getSecurityName());
         ExchangeType exchangeType = ValuedEnumUtil.valueOf(entrustOrderDO.getExchangeType(), ExchangeType.class);
+        OrderType orderType = ValuedEnumUtil.valueOf(entrustOrderDO.getOrderType(), OrderType.class);
         EntrustCommand entrustCommand = new EntrustCommand(customerIdentity, securityInfo, exchangeType,
-                entrustOrderDO.getEntrustPrice(), entrustOrderDO.getEntrustNumber());
+                entrustOrderDO.getEntrustPrice(), entrustOrderDO.getEntrustNumber(), orderType);
         EntrustResult entrustResult = new EntrustResult(entrustOrderDO.getEntrustState(), entrustOrderDO.getEntrustMessage(),
                 entrustOrderDO.getEntrustCode());
         return new EntrustOrder(entrustOrderDO.getEntrustId(), entrustOrderDO.getOrderId(), entrustCommand, entrustResult);

@@ -27,6 +27,7 @@ public class EntrustOrderDO {
     private Integer exchangeType;
     private BigDecimal entrustPrice;
     private Integer entrustNumber;
+    private Integer orderType;
     private Integer entrustState;
     private String entrustMessage;
     private Integer entrustCode;
@@ -141,6 +142,16 @@ public class EntrustOrderDO {
 
     public void setEntrustNumber(Integer entrustNumber) {
         this.entrustNumber = entrustNumber;
+    }
+
+    @Basic
+    @Column(name = "order_type")
+    public Integer getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(Integer orderType) {
+        this.orderType = orderType;
     }
 
     @Basic

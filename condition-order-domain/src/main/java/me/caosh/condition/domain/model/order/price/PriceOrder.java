@@ -8,6 +8,7 @@ import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.signal.SignalFactory;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.NativeStrategyInfo;
+import me.caosh.condition.domain.model.trade.OrderType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +43,7 @@ public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven {
     @Override
     public EntrustCommand onTradeSignal(TradeSignal signal, RealTimeMarket realTimeMarket) {
         return new EntrustCommand(getCustomerIdentity(), getSecurityInfo(), getTradePlan().getExchangeType(),
-                realTimeMarket.getCurrentPrice(), getTradePlan().getNumber());
+                realTimeMarket.getCurrentPrice(), getTradePlan().getNumber(), OrderType.LIMITED);
     }
 
     @Override

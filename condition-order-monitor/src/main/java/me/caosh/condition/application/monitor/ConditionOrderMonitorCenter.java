@@ -23,6 +23,8 @@ import me.caosh.condition.domain.util.EventBuses;
 import me.caosh.condition.infrastructure.rabbitmq.TriggerMessageTriggerProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -66,8 +68,12 @@ public class ConditionOrderMonitorCenter {
                 }
             }
         });
-
         logger.info("---------------- Finish checking, count={} ----------------", Iterables.size(monitorContexts));
+    }
+
+    @Scheduled(cron = "0/1 * 9-23 * *  1-5")
+    public void onTimer() {
+        logger.info("tick");
     }
 
     private void checkWithRealTimeMarket(ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {
