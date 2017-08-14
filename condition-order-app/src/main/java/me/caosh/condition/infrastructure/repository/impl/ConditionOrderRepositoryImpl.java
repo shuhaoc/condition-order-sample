@@ -33,7 +33,7 @@ public class ConditionOrderRepositoryImpl implements ConditionOrderRepository {
 
     @Override
     public Optional<ConditionOrder> findOne(Long orderId) {
-        ConditionOrderDO conditionOrderDO = conditionOrderDORepository.findOne(orderId);
+        ConditionOrderDO conditionOrderDO = conditionOrderDORepository.findNotDeleted(orderId);
         if (conditionOrderDO == null) {
             return Optional.empty();
         }

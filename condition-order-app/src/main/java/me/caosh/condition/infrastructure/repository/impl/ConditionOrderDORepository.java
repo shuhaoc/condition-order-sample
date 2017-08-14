@@ -11,6 +11,9 @@ import java.util.List;
  */
 interface ConditionOrderDORepository extends CrudRepository<ConditionOrderDO, Long> {
 
-    @Query("select c from ConditionOrderDO c where c.orderState = 1")
+    @Query("select c from ConditionOrderDO c where c.deleted = 0 and c.orderId = ?1")
+    ConditionOrderDO findNotDeleted(Long orderId);
+
+    @Query("select c from ConditionOrderDO c where c.deleted = 0 and c.orderState = 1")
     List<ConditionOrderDO> findAllActive();
 }

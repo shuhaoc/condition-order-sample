@@ -6,12 +6,14 @@ import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.TradePlanDTO;
 
 /**
- * Created by caosh on 2017/8/11.
+ * Created by caosh on 2017/8/14.
  *
  * @author caoshuhao@touker.com
  */
 public final class ConditionOrderDTOBuilder {
     private Long orderId;
+    private Integer userId;
+    private String customerNo;
     private Integer orderState;
     private SecurityInfoDTO securityInfo;
     private Integer strategyId;
@@ -27,6 +29,16 @@ public final class ConditionOrderDTOBuilder {
 
     public ConditionOrderDTOBuilder withOrderId(Long orderId) {
         this.orderId = orderId;
+        return this;
+    }
+
+    public ConditionOrderDTOBuilder withUserId(Integer userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public ConditionOrderDTOBuilder withCustomerNo(String customerNo) {
+        this.customerNo = customerNo;
         return this;
     }
 
@@ -58,6 +70,8 @@ public final class ConditionOrderDTOBuilder {
     public ConditionOrderDTO build() {
         ConditionOrderDTO conditionOrderDTO = new ConditionOrderDTO();
         conditionOrderDTO.setOrderId(orderId);
+        conditionOrderDTO.setUserId(userId);
+        conditionOrderDTO.setCustomerNo(customerNo);
         conditionOrderDTO.setOrderState(orderState);
         conditionOrderDTO.setSecurityInfo(securityInfo);
         conditionOrderDTO.setStrategyId(strategyId);

@@ -16,7 +16,7 @@ import java.math.BigDecimal;
  * Created by caosh on 2017/8/9.
  */
 public class PriceOrderCommandAssembler {
-    public static PriceOrder assemblePriceOrder(Long orderId, PriceOrderCreateCommand command) {
+    public static PriceOrder assemblePriceOrder(Long orderId, TradeCustomerIdentity customerIdentity, PriceOrderCreateCommand command) {
         OrderState orderState = OrderState.ACTIVE;
         SecurityType securityType = ValuedEnumUtil.valueOf(command.getSecurityType(), SecurityType.class);
         SecurityExchange securityExchange = SecurityExchange.valueOf(command.getSecurityExchange());
@@ -28,7 +28,7 @@ public class PriceOrderCommandAssembler {
         ExchangeType exchangeType = ValuedEnumUtil.valueOf(command.getExchangeType(), ExchangeType.class);
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
         TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, command.getEntrustNumber());
-        return new PriceOrder(orderId, orderState, securityInfo, priceCondition, tradePlan);
+        return new PriceOrder(orderId, customerIdentity, orderState, securityInfo, priceCondition, tradePlan);
     }
 
     public static PriceOrder mergePriceOrder(PriceOrder oldPriceOrder, PriceOrderUpdateCommand command) {
@@ -39,7 +39,8 @@ public class PriceOrderCommandAssembler {
         ExchangeType exchangeType = ValuedEnumUtil.valueOf(command.getExchangeType(), ExchangeType.class);
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
         TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, command.getEntrustNumber());
-        return new PriceOrder(oldPriceOrder.getOrderId(), orderState, oldPriceOrder.getSecurityInfo(), priceCondition, tradePlan);
+        return new PriceOrder(oldPriceOrder.getOrderId(), oldPriceOrder.getCustomerIdentity(), orderState,
+                oldPriceOrder.getSecurityInfo(), priceCondition, tradePlan);
     }
 
     private PriceOrderCommandAssembler() {

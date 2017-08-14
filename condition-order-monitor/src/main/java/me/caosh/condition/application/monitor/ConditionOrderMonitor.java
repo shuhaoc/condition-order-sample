@@ -53,7 +53,7 @@ public class ConditionOrderMonitor {
     @Subscribe
     public void onRealTimeMarketPushEvent(RealTimeMarketPushEvent e) {
         Map<String, RealTimeMarket> realTimeMarketMap = e.getMarketMap();
-        logger.info("Start checking =============>>");
+        logger.info("---------------- Start checking ----------------");
 
         Iterable<ConditionOrder> conditionOrders = monitorRepository.getAllOrders();
         conditionOrders.forEach(conditionOrder -> {
@@ -65,7 +65,7 @@ public class ConditionOrderMonitor {
             }
         });
 
-        logger.info("Finish checking <<============= count={}", Iterables.size(conditionOrders));
+        logger.info("---------------- Finish checking, count={} ----------------", Iterables.size(conditionOrders));
     }
 
     private void checkWithRealTimeMarket(ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {

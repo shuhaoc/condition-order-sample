@@ -19,9 +19,9 @@ import java.math.BigDecimal;
 public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven, TriggerOnce {
     private static final Logger logger = LoggerFactory.getLogger(PriceOrder.class);
 
-    public PriceOrder(Long orderId, OrderState orderState, SecurityInfo securityInfo, PriceCondition priceCondition,
-                      TradePlan tradePlan) {
-        super(orderId, orderState, securityInfo, NativeStrategyInfo.PRICE, priceCondition, tradePlan);
+    public PriceOrder(Long orderId, TradeCustomerIdentity customerIdentity, OrderState orderState,
+                      SecurityInfo securityInfo, PriceCondition priceCondition, TradePlan tradePlan) {
+        super(orderId, customerIdentity, orderState, securityInfo, NativeStrategyInfo.PRICE, priceCondition, tradePlan);
     }
 
     public PriceCondition getSimplePriceCondition() {

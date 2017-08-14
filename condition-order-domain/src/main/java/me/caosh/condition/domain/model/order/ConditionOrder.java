@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
  */
 public abstract class ConditionOrder {
     private final Long orderId;
+    private final TradeCustomerIdentity customerIdentity;
     private OrderState orderState;
     private final SecurityInfo securityInfo;
     private final StrategyInfo strategyInfo;
@@ -21,9 +22,10 @@ public abstract class ConditionOrder {
     private final TradePlan tradePlan;
     // TODO: add create/update time fields
 
-    public ConditionOrder(Long orderId, OrderState orderState, SecurityInfo securityInfo, StrategyInfo strategyInfo,
-                          Condition condition, TradePlan tradePlan) {
+    public ConditionOrder(Long orderId, TradeCustomerIdentity customerIdentity, OrderState orderState,
+                          SecurityInfo securityInfo, StrategyInfo strategyInfo, Condition condition, TradePlan tradePlan) {
         this.orderId = orderId;
+        this.customerIdentity = customerIdentity;
         this.orderState = orderState;
         this.securityInfo = securityInfo;
         this.strategyInfo = strategyInfo;
@@ -33,6 +35,10 @@ public abstract class ConditionOrder {
 
     public Long getOrderId() {
         return orderId;
+    }
+
+    public TradeCustomerIdentity getCustomerIdentity() {
+        return customerIdentity;
     }
 
     public OrderState getOrderState() {
@@ -66,6 +72,7 @@ public abstract class ConditionOrder {
         return MoreObjects.toStringHelper(ConditionOrder.class).omitNullValues()
                 .addValue(ConditionOrder.class.getSuperclass() != Object.class ? super.toString() : null)
                 .add("orderId", orderId)
+                .add("customerIdentity", customerIdentity)
                 .add("orderState", orderState)
                 .add("securityInfo", securityInfo)
                 .add("strategyInfo", strategyInfo)

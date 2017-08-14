@@ -11,6 +11,7 @@ import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.ConditionOrderFactory;
 import me.caosh.condition.domain.model.order.OrderState;
+import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
 import me.caosh.condition.domain.model.order.TradePlan;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 import me.caosh.condition.domain.model.strategy.NativeStrategyInfo;
@@ -28,6 +29,8 @@ public class ConditionOrderDTOAssembler {
 
         return ConditionOrderDTOBuilder.aConditionOrderDTO()
                 .withOrderId(conditionOrder.getOrderId())
+                .withUserId(conditionOrder.getCustomerIdentity().getUserId())
+                .withCustomerNo(conditionOrder.getCustomerIdentity().getCustomerNo())
                 .withOrderState(conditionOrder.getOrderState().getValue())
                 .withSecurityInfo(SecurityInfoDTO.fromDomain(conditionOrder.getSecurityInfo()))
                 .withStrategyId(conditionOrder.getStrategyInfo().getStrategyId())
@@ -37,17 +40,17 @@ public class ConditionOrderDTOAssembler {
     }
 
     public static ConditionOrder fromDTO(ConditionOrderDTO dto) {
-        ConditionBuilder conditionBuilder = new ConditionBuilder(dto.getCondition());
-        Condition condition = conditionBuilder.build();
-
+        TradeCustomerIdentity customerIdentity = new TradeCustomerIdentity(dto.getUserId(), dto.getCustomerNo());
         OrderState orderState = ValuedEnumUtil.valueOf(dto.getOrderState(), OrderState.class);
         SecurityType securityType = ValuedEnumUtil.valueOf(dto.getSecurityInfo().getType(), SecurityType.class);
         SecurityExchange securityExchange = SecurityExchange.valueOf(dto.getSecurityInfo().getExchange());
         SecurityInfo securityInfo = new SecurityInfo(securityType, dto.getSecurityInfo().getCode(), securityExchange,
                 dto.getSecurityInfo().getName());
         StrategyInfo strategyInfo = ValuedEnumUtil.valueOf(dto.getStrategyId(), NativeStrategyInfo.class);
+        Condition condition = new ConditionBuilder(dto.getCondition()).build();
         TradePlan tradePlan = TradePlanDTO.toDomain(dto.getTradePlanDTO());
-        return ConditionOrderFactory.getInstance().create(dto.getOrderId(), orderState, securityInfo, strategyInfo, condition, tradePlan);
+        return ConditionOrderFactory.getInstance().create(dto.getOrderId(), customerIdentity, orderState, securityInfo,
+                strategyInfo, condition, tradePlan);
     }
 
     private ConditionOrderDTOAssembler() {

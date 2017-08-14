@@ -1,16 +1,27 @@
 package me.caosh.condition.infrastructure.repository.model;
 
-import javax.persistence.*;
+import com.google.common.base.MoreObjects;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by caosh on 2017/8/9.
+ * Created by caosh on 2017/8/14.
+ *
+ * @author caoshuhao@touker.com
  */
 @Entity
-@Table(name = "condition_order", schema = "", catalog = "test")
+@Table(name = "condition_order", schema = "test", catalog = "")
 public class ConditionOrderDO {
     private Long orderId;
+    private Integer userId;
+    private String customerNo;
+    private Boolean isDeleted;
     private Integer orderState;
     private Integer securityType;
     private String securityCode;
@@ -33,6 +44,46 @@ public class ConditionOrderDO {
 
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
+    }
+
+    @Basic
+    @Column(name = "user_id")
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    @Basic
+    @Column(name = "customer_no")
+    public String getCustomerNo() {
+        return customerNo;
+    }
+
+    public void setCustomerNo(String customerNo) {
+        this.customerNo = customerNo;
+    }
+
+    @Basic
+    @Column(name = "is_deleted")
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    @Basic
+    @Column(name = "order_state")
+    public Integer getOrderState() {
+        return orderState;
+    }
+
+    public void setOrderState(Integer orderState) {
+        this.orderState = orderState;
     }
 
     @Basic
@@ -73,16 +124,6 @@ public class ConditionOrderDO {
 
     public void setSecurityName(String securityName) {
         this.securityName = securityName;
-    }
-
-    @Basic
-    @Column(name = "order_state")
-    public Integer getOrderState() {
-        return orderState;
-    }
-
-    public void setOrderState(Integer orderState) {
-        this.orderState = orderState;
     }
 
     @Basic
@@ -168,11 +209,14 @@ public class ConditionOrderDO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ConditionOrderDO)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         ConditionOrderDO that = (ConditionOrderDO) o;
 
         if (orderId != null ? !orderId.equals(that.orderId) : that.orderId != null) return false;
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
+        if (customerNo != null ? !customerNo.equals(that.customerNo) : that.customerNo != null) return false;
+        if (isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null) return false;
         if (orderState != null ? !orderState.equals(that.orderState) : that.orderState != null) return false;
         if (securityType != null ? !securityType.equals(that.securityType) : that.securityType != null) return false;
         if (securityCode != null ? !securityCode.equals(that.securityCode) : that.securityCode != null) return false;
@@ -190,13 +234,17 @@ public class ConditionOrderDO {
         if (entrustAmount != null ? !entrustAmount.equals(that.entrustAmount) : that.entrustAmount != null)
             return false;
         if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
-        return !(updateTime != null ? !updateTime.equals(that.updateTime) : that.updateTime != null);
+        if (updateTime != null ? !updateTime.equals(that.updateTime) : that.updateTime != null) return false;
 
+        return true;
     }
 
     @Override
     public int hashCode() {
         int result = orderId != null ? orderId.hashCode() : 0;
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + (customerNo != null ? customerNo.hashCode() : 0);
+        result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
         result = 31 * result + (orderState != null ? orderState.hashCode() : 0);
         result = 31 * result + (securityType != null ? securityType.hashCode() : 0);
         result = 31 * result + (securityCode != null ? securityCode.hashCode() : 0);
@@ -211,5 +259,29 @@ public class ConditionOrderDO {
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(ConditionOrderDO.class).omitNullValues()
+                .addValue(ConditionOrderDO.class.getSuperclass() != Object.class ? super.toString() : null)
+                .add("orderId", orderId)
+                .add("userId", userId)
+                .add("customerNo", customerNo)
+                .add("isDeleted", isDeleted)
+                .add("orderState", orderState)
+                .add("securityType", securityType)
+                .add("securityCode", securityCode)
+                .add("securityExchange", securityExchange)
+                .add("securityName", securityName)
+                .add("strategyId", strategyId)
+                .add("conditionProperties", conditionProperties)
+                .add("dynamicProperties", dynamicProperties)
+                .add("exchangeType", exchangeType)
+                .add("entrustStrategy", entrustStrategy)
+                .add("entrustAmount", entrustAmount)
+                .add("createTime", createTime)
+                .add("updateTime", updateTime)
+                .toString();
     }
 }

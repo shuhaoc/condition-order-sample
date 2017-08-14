@@ -17,6 +17,9 @@ public class ConditionOrderDOAssembler {
     public static ConditionOrderDO toDO(ConditionOrder conditionOrder) {
         ConditionOrderDO conditionOrderDO = new ConditionOrderDO();
         conditionOrderDO.setOrderId(conditionOrder.getOrderId());
+        conditionOrderDO.setUserId(conditionOrder.getCustomerIdentity().getUserId());
+        conditionOrderDO.setCustomerNo(conditionOrder.getCustomerIdentity().getCustomerNo());
+        conditionOrderDO.setDeleted(false);
         conditionOrderDO.setOrderState(conditionOrder.getOrderState().getValue());
         conditionOrderDO.setSecurityType(conditionOrder.getSecurityInfo().getType().getValue());
         conditionOrderDO.setSecurityCode(conditionOrder.getSecurityInfo().getCode());
@@ -31,6 +34,7 @@ public class ConditionOrderDOAssembler {
     }
 
     public static ConditionOrder fromDO(ConditionOrderDO conditionOrderDO) {
+        TradeCustomerIdentity customerIdentity = new TradeCustomerIdentity(conditionOrderDO.getUserId(), conditionOrderDO.getCustomerNo());
         OrderState orderState = ValuedEnumUtil.valueOf(conditionOrderDO.getOrderState(), OrderState.class);
         SecurityType securityType = ValuedEnumUtil.valueOf(conditionOrderDO.getSecurityType(), SecurityType.class);
         SecurityExchange securityExchange = SecurityExchange.valueOf(conditionOrderDO.getSecurityExchange());
@@ -41,7 +45,7 @@ public class ConditionOrderDOAssembler {
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(conditionOrderDO.getEntrustStrategy(), EntrustStrategy.class);
         TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, conditionOrderDO.getEntrustAmount().intValue());
         Condition condition = ConditionOrderGSONUtils.getConditionGSON().fromJson(conditionOrderDO.getConditionProperties(), Condition.class);
-        return ConditionOrderFactory.getInstance().create(conditionOrderDO.getOrderId(), orderState, securityInfo,
+        return ConditionOrderFactory.getInstance().create(conditionOrderDO.getOrderId(), customerIdentity, orderState, securityInfo,
                 nativeStrategyInfo, condition, tradePlan);
     }
 

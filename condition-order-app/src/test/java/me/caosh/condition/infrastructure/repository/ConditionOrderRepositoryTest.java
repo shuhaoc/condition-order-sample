@@ -8,6 +8,7 @@ import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.EntrustStrategy;
 import me.caosh.condition.domain.model.order.ExchangeType;
 import me.caosh.condition.domain.model.order.OrderState;
+import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.order.TradePlan;
@@ -40,7 +41,8 @@ public class ConditionOrderRepositoryTest {
 
     @Test
     public void test() throws Exception {
-        PriceOrder priceOrder = new PriceOrder(conditionOrderIdGenerator.nextId(), OrderState.ACTIVE,
+        TradeCustomerIdentity customerIdentity = new TradeCustomerIdentity(303348, "010000061086");
+        PriceOrder priceOrder = new PriceOrder(conditionOrderIdGenerator.nextId(), customerIdentity, OrderState.ACTIVE,
                 new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH"),
                 new PriceCondition(CompareCondition.LESS_THAN_OR_EQUALS, new BigDecimal("13.00")),
                 new TradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, 100)
