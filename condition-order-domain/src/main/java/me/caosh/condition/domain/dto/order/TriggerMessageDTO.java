@@ -1,32 +1,35 @@
 package me.caosh.condition.domain.dto.order;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
-import me.caosh.condition.domain.model.signal.TradeSignal;
+import me.caosh.condition.domain.dto.market.RealTimeMarketDTO;
+
+import java.io.Serializable;
 
 /**
  * Created by caosh on 2017/8/11.
  */
-public class TriggerMessageDTO {
-    private TradeSignal tradeSignal;
+public class TriggerMessageDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private TradeSignalDTO tradeSignalDTO;
     private ConditionOrderDTO conditionOrderDTO;
-    private RealTimeMarket realTimeMarket;
+    private RealTimeMarketDTO realTimeMarketDTO;
 
     public TriggerMessageDTO() {
     }
 
-    public TriggerMessageDTO(TradeSignal tradeSignal, ConditionOrderDTO conditionOrderDTO, RealTimeMarket realTimeMarket) {
-        this.tradeSignal = tradeSignal;
+    public TriggerMessageDTO(TradeSignalDTO tradeSignalDTO, ConditionOrderDTO conditionOrderDTO, RealTimeMarketDTO realTimeMarketDTO) {
+        this.tradeSignalDTO = tradeSignalDTO;
         this.conditionOrderDTO = conditionOrderDTO;
-        this.realTimeMarket = realTimeMarket;
+        this.realTimeMarketDTO = realTimeMarketDTO;
     }
 
-    public TradeSignal getTradeSignal() {
-        return tradeSignal;
+    public TradeSignalDTO getTradeSignalDTO() {
+        return tradeSignalDTO;
     }
 
-    public void setTradeSignal(TradeSignal tradeSignal) {
-        this.tradeSignal = tradeSignal;
+    public void setTradeSignalDTO(TradeSignalDTO tradeSignalDTO) {
+        this.tradeSignalDTO = tradeSignalDTO;
     }
 
     public ConditionOrderDTO getConditionOrderDTO() {
@@ -37,20 +40,21 @@ public class TriggerMessageDTO {
         this.conditionOrderDTO = conditionOrderDTO;
     }
 
-    public RealTimeMarket getRealTimeMarket() {
-        return realTimeMarket;
+    public RealTimeMarketDTO getRealTimeMarketDTO() {
+        return realTimeMarketDTO;
     }
 
-    public void setRealTimeMarket(RealTimeMarket realTimeMarket) {
-        this.realTimeMarket = realTimeMarket;
+    public void setRealTimeMarketDTO(RealTimeMarketDTO realTimeMarketDTO) {
+        this.realTimeMarketDTO = realTimeMarketDTO;
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("tradeSignal", tradeSignal)
+        return MoreObjects.toStringHelper(TriggerMessageDTO.class).omitNullValues()
+                .addValue(TriggerMessageDTO.class.getSuperclass() != Object.class ? super.toString() : null)
+                .add("tradeSignalDTO", tradeSignalDTO)
                 .add("conditionOrderDTO", conditionOrderDTO)
-                .add("realTimeMarket", realTimeMarket)
+                .add("realTimeMarketDTO", realTimeMarketDTO)
                 .toString();
     }
 }

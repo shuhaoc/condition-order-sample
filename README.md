@@ -6,11 +6,13 @@ DDD sample, a minimized condition order system.
 
 - spring-boot
 - guava(event bus)/gson
-- spring-jpa(using hibernate)/spring-data-redis/spring-rabbit
+- spring-jpa(using hibernate)/spring-data-redis/spring-rabbitmq
 - mysql/redis/rabbitmq
 
 ## TODO
 
+- move dto package out
+- user id/customer no key
 - soft delete
 - pause/resume
 - monitor context(delay sync, trigger lock)

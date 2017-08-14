@@ -1,10 +1,16 @@
 package me.caosh.condition.infrastructure.rabbitmq;
 
 import me.caosh.condition.application.order.ConditionOrderTradeCenter;
+import me.caosh.condition.domain.dto.market.assembler.RealTimeMarketDTOAssembler;
+import me.caosh.condition.domain.dto.order.TradeSignalDTO;
 import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
-import me.caosh.condition.domain.dto.order.converter.TriggerMessageDTOMessageConverter;
+import me.caosh.condition.domain.dto.order.assembler.TradeSignalBuilder;
+import me.caosh.condition.domain.dto.order.assembler.TradeSignalDTOBuilder;
+import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
+import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
+import me.caosh.condition.domain.model.signal.TradeSignal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpAdmin;
@@ -37,7 +43,7 @@ public class TriggerMessageConsumer {
     private final ConnectionFactory connectionFactory;
     private final AmqpAdmin amqpAdmin;
     private final ConditionOrderTradeCenter conditionOrderTradeCenter;
-    private final MessageConverter messageConverter = new TriggerMessageDTOMessageConverter();
+    private final MessageConverter messageConverter = new ConditionOrderGSONMessageConverter<>(TriggerMessageDTO.class);
 
     public void setExchangeName(String exchangeName) {
         this.exchangeName = exchangeName;
@@ -72,10 +78,10 @@ public class TriggerMessageConsumer {
         container.setMessageListener((MessageListener) message -> {
             TriggerMessageDTO triggerMessageDTO = (TriggerMessageDTO) messageConverter.fromMessage(message);
             logger.debug("Receive trigger message <== {}", triggerMessageDTO);
+            TradeSignal tradeSignal = new TradeSignalBuilder(triggerMessageDTO.getTradeSignalDTO()).build();
             ConditionOrder conditionOrder = ConditionOrderDTOAssembler.fromDTO(triggerMessageDTO.getConditionOrderDTO());
-            conditionOrderTradeCenter.handleTriggerMessage(triggerMessageDTO.getTradeSignal(),
-                    conditionOrder,
-                    triggerMessageDTO.getRealTimeMarket());
+            RealTimeMarket realTimeMarket = RealTimeMarketDTOAssembler.fromDTO(triggerMessageDTO.getRealTimeMarketDTO());
+            conditionOrderTradeCenter.handleTriggerMessage(tradeSignal, conditionOrder, realTimeMarket);
         });
         container.start();
     }

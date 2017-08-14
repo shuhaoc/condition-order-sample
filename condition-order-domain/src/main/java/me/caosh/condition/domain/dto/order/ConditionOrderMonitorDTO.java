@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.dto.order;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.dto.order.constants.OrderCommandType;
+import me.caosh.condition.domain.model.constants.OrderCommandType;
 
 import java.io.Serializable;
 
@@ -11,29 +11,29 @@ import java.io.Serializable;
 public class ConditionOrderMonitorDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private OrderCommandType orderCommandType;
+    private Integer orderCommandType;
     private Long orderId;
     private ConditionOrderDTO conditionOrderDTO;
 
     public ConditionOrderMonitorDTO() {
     }
 
-    public ConditionOrderMonitorDTO(OrderCommandType orderCommandType, Long orderId) {
+    public ConditionOrderMonitorDTO(Integer orderCommandType, Long orderId) {
         this.orderCommandType = orderCommandType;
         this.orderId = orderId;
     }
 
-    public ConditionOrderMonitorDTO(OrderCommandType orderCommandType, ConditionOrderDTO conditionOrderDTO) {
+    public ConditionOrderMonitorDTO(Integer orderCommandType, ConditionOrderDTO conditionOrderDTO) {
         this.orderCommandType = orderCommandType;
         this.orderId = conditionOrderDTO.getOrderId();
         this.conditionOrderDTO = conditionOrderDTO;
     }
 
-    public OrderCommandType getOrderCommandType() {
+    public Integer getOrderCommandType() {
         return orderCommandType;
     }
 
-    public void setOrderCommandType(OrderCommandType orderCommandType) {
+    public void setOrderCommandType(Integer orderCommandType) {
         this.orderCommandType = orderCommandType;
     }
 
@@ -55,8 +55,10 @@ public class ConditionOrderMonitorDTO implements Serializable {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("monitorCommand", orderCommandType)
+        return MoreObjects.toStringHelper(ConditionOrderMonitorDTO.class).omitNullValues()
+                .addValue(ConditionOrderMonitorDTO.class.getSuperclass() != Object.class ? super.toString() : null)
+                .add("orderCommandType", orderCommandType)
+                .add("orderId", orderId)
                 .add("conditionOrderDTO", conditionOrderDTO)
                 .toString();
     }

@@ -3,9 +3,9 @@ package me.caosh.condition.domain.model.signal;
 /**
  * Created by caosh on 2017/8/1.
  */
-public final class General implements TradeSignal {
+public class General extends AbstractTradeSignal {
     @Override
-    public String toString() {
-        return "[General]";
+    public void accept(TradeSignalVisitor visitor) {
+        visitor.visitGeneral(this);
     }
 }

@@ -1,8 +1,5 @@
 package me.caosh.condition.domain.dto.order.converter;
 
-
-import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
-import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
 import me.caosh.condition.domain.util.ConditionOrderGSONUtils;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;
@@ -13,20 +10,28 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import java.nio.charset.Charset;
 
 /**
- * Created by caosh on 2017/8/11.
+ * Created by caosh on 2017/8/14.
  *
  * @author caoshuhao@touker.com
  */
-public class ConditionOrderDTOMessageConverter implements MessageConverter {
+public class ConditionOrderGSONMessageConverter<T> implements MessageConverter {
+
+    private final Class<T> clazz;
+    private final Charset charset = Charset.forName("utf-8");;
+
+    public ConditionOrderGSONMessageConverter(Class<T> clazz) {
+        this.clazz = clazz;
+    }
+
     @Override
     public Message toMessage(Object o, MessageProperties messageProperties) throws MessageConversionException {
-        String json = ConditionOrderGSONUtils.getGSON().toJson(o);
-        return MessageBuilder.withBody(json.getBytes(Charset.forName("utf-8"))).build();
+        String json = ConditionOrderGSONUtils.getConditionGSON().toJson(o);
+        return MessageBuilder.withBody(json.getBytes(charset)).build();
     }
 
     @Override
     public Object fromMessage(Message message) throws MessageConversionException {
         String json = new String(message.getBody(), Charset.forName("utf-8"));
-        return ConditionOrderGSONUtils.getGSON().fromJson(json, ConditionOrderMonitorDTO.class);
+        return ConditionOrderGSONUtils.getConditionGSON().fromJson(json, clazz);
     }
 }

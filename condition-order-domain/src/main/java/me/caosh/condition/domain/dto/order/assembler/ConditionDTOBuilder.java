@@ -3,6 +3,7 @@ package me.caosh.condition.domain.dto.order.assembler;
 import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.dto.order.ConditionDTO;
 import me.caosh.condition.domain.dto.order.PriceConditionDTO;
+import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
 
@@ -14,6 +15,10 @@ import me.caosh.condition.domain.model.order.price.PriceCondition;
 public class ConditionDTOBuilder implements ConditionVisitor {
 
     private ConditionDTO conditionDTO;
+
+    public ConditionDTOBuilder(Condition condition) {
+        condition.accept(this);
+    }
 
     public ConditionDTO build() {
         return Preconditions.checkNotNull(conditionDTO);

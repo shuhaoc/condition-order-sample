@@ -4,14 +4,18 @@ import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
-import me.caosh.condition.domain.dto.order.constants.OrderCommandType;
-import me.caosh.condition.domain.dto.order.converter.ConditionOrderDTOMessageConverter;
+import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
+import me.caosh.condition.domain.model.constants.OrderCommandType;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.OrderState;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +41,7 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
 
     private final AmqpTemplate amqpTemplate;
 
-    private final MessageConverter messageConverter = new ConditionOrderDTOMessageConverter();
+    private final MessageConverter messageConverter = new ConditionOrderGSONMessageConverter<>(ConditionOrderMonitorDTO.class);
 
     public ConditionOrderProducerImpl(AmqpAdmin amqpAdmin, AmqpTemplate amqpTemplate) {
         this.amqpAdmin = amqpAdmin;
@@ -74,7 +78,7 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
 
     private void send(String exchangeName, String routingKey, OrderCommandType update, ConditionOrder conditionOrder) {
         ConditionOrderDTO conditionOrderDTO = ConditionOrderDTOAssembler.toDTO(conditionOrder);
-        ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(update, conditionOrderDTO);
+        ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(update.getValue(), conditionOrderDTO);
         Message message = messageConverter.toMessage(conditionOrderMonitorDTO, new MessageProperties());
         amqpTemplate.send(exchangeName, routingKey, message);
         logger.info("Send condition order ==> {}", conditionOrderDTO);
@@ -82,7 +86,7 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
 
     @Override
     public void remove(Long orderId) {
-        ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(OrderCommandType.DELETE, orderId);
+        ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(OrderCommandType.DELETE.getValue(), orderId);
         Message message = messageConverter.toMessage(conditionOrderMonitorDTO, new MessageProperties());
         amqpTemplate.send(exchangeName, routingKey, message);
         logger.info("Send <DELETE> command ==> {}", orderId);

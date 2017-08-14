@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.dto.order.serializer;
+package me.caosh.condition.domain.model.order.serializer;
 
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
@@ -16,14 +16,14 @@ public class ConditionOrderRedisSerializer implements RedisSerializer<ConditionO
     @Override
     public byte[] serialize(ConditionOrder conditionOrder) throws SerializationException {
         ConditionOrderDTO conditionOrderDTO = ConditionOrderDTOAssembler.toDTO(conditionOrder);
-        String json = ConditionOrderGSONUtils.getGSON().toJson(conditionOrderDTO);
+        String json = ConditionOrderGSONUtils.getConditionGSON().toJson(conditionOrderDTO);
         return json.getBytes(Charset.forName("utf-8"));
     }
 
     @Override
     public ConditionOrder deserialize(byte[] bytes) throws SerializationException {
         String json = new String(bytes, Charset.forName("utf-8"));
-        ConditionOrderDTO conditionOrderDTO = ConditionOrderGSONUtils.getGSON().fromJson(json, ConditionOrderDTO.class);
+        ConditionOrderDTO conditionOrderDTO = ConditionOrderGSONUtils.getConditionGSON().fromJson(json, ConditionOrderDTO.class);
         return ConditionOrderDTOAssembler.fromDTO(conditionOrderDTO);
     }
 }

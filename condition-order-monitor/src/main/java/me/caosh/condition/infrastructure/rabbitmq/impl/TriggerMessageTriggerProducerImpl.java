@@ -1,11 +1,15 @@
 package me.caosh.condition.infrastructure.rabbitmq.impl;
 
 import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
-import me.caosh.condition.domain.dto.order.converter.TriggerMessageDTOMessageConverter;
+import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
 import me.caosh.condition.infrastructure.rabbitmq.TriggerMessageTriggerProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +32,7 @@ public class TriggerMessageTriggerProducerImpl implements TriggerMessageTriggerP
     private final AmqpAdmin amqpAdmin;
     private final AmqpTemplate amqpTemplate;
 
-    private final MessageConverter messageConverter = new TriggerMessageDTOMessageConverter();
+    private final MessageConverter messageConverter = new ConditionOrderGSONMessageConverter<>(TriggerMessageDTO.class);
 
     public TriggerMessageTriggerProducerImpl(AmqpAdmin amqpAdmin, AmqpTemplate amqpTemplate) {
         this.amqpAdmin = amqpAdmin;

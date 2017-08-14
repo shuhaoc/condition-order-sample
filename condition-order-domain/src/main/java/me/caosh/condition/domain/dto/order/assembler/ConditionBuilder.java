@@ -1,6 +1,7 @@
 package me.caosh.condition.domain.dto.order.assembler;
 
 import com.google.common.base.Preconditions;
+import me.caosh.condition.domain.dto.order.ConditionDTO;
 import me.caosh.condition.domain.dto.order.ConditionDTOVisitor;
 import me.caosh.condition.domain.dto.order.PriceConditionDTO;
 import me.caosh.condition.domain.model.order.CompareCondition;
@@ -16,6 +17,10 @@ import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 public class ConditionBuilder implements ConditionDTOVisitor {
 
     private Condition condition;
+
+    public ConditionBuilder (ConditionDTO conditionDTO) {
+        conditionDTO.accept(this);
+    }
 
     public Condition build() {
         return Preconditions.checkNotNull(condition);

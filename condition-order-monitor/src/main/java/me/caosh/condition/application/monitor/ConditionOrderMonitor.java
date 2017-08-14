@@ -2,10 +2,14 @@ package me.caosh.condition.application.monitor;
 
 import com.google.common.collect.Iterables;
 import com.google.common.eventbus.Subscribe;
+import me.caosh.condition.domain.dto.market.RealTimeMarketDTO;
+import me.caosh.condition.domain.dto.market.assembler.RealTimeMarketDTOAssembler;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
+import me.caosh.condition.domain.dto.order.TradeSignalDTO;
 import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
-import me.caosh.condition.domain.dto.order.constants.OrderCommandType;
+import me.caosh.condition.domain.dto.order.assembler.TradeSignalDTOBuilder;
+import me.caosh.condition.domain.model.constants.OrderCommandType;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.event.RealTimeMarketPushEvent;
 import me.caosh.condition.domain.model.order.ConditionOrder;
@@ -67,8 +71,10 @@ public class ConditionOrderMonitor {
     private void checkWithRealTimeMarket(ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {
         TradeSignal tradeSignal = ((RealTimeMarketDriven) conditionOrder).onRealTimeMarketUpdate(realTimeMarket);
         if (tradeSignal == SignalFactory.getInstance().general()) {
+            TradeSignalDTO tradeSignalDTO = new TradeSignalDTOBuilder(tradeSignal).build();
             ConditionOrderDTO conditionOrderDTO = ConditionOrderDTOAssembler.toDTO(conditionOrder);
-            TriggerMessageDTO triggerMessageDTO = new TriggerMessageDTO(tradeSignal, conditionOrderDTO, realTimeMarket);
+            RealTimeMarketDTO realTimeMarketDTO = RealTimeMarketDTOAssembler.toDTO(realTimeMarket);
+            TriggerMessageDTO triggerMessageDTO = new TriggerMessageDTO(tradeSignalDTO, conditionOrderDTO, realTimeMarketDTO);
             triggerMessageTriggerProducer.send(triggerMessageDTO);
         }
     }

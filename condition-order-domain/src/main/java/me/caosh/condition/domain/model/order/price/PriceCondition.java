@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 
 /**
  * Created by caosh on 2017/8/2.
+ *
+ * @implNote renaming this class must cause read DB failure
  */
 public class PriceCondition implements Condition {
     private final CompareCondition compareCondition;
