@@ -1,8 +1,13 @@
 package me.caosh.condition.interfaces.web;
 
+import com.google.common.collect.Lists;
+import me.caosh.condition.application.ConditionOrderQueryService;
 import me.caosh.condition.application.order.ConditionOrderCommandService;
+import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
+import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
+import me.caosh.condition.domain.model.trade.EntrustOrder;
 import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
 import me.caosh.condition.infrastructure.repository.impl.ConditionOrderIdGenerator;
 import me.caosh.condition.interfaces.assembler.PriceOrderCommandAssembler;
@@ -12,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -22,9 +28,12 @@ import java.util.Optional;
 public class ConditionOrderController {
 
     private final ConditionOrderCommandService conditionOrderCommandService;
+    private final ConditionOrderQueryService conditionOrderQueryService;
 
-    public ConditionOrderController(ConditionOrderCommandService conditionOrderCommandService) {
+    public ConditionOrderController(ConditionOrderCommandService conditionOrderCommandService,
+                                    ConditionOrderQueryService conditionOrderQueryService) {
         this.conditionOrderCommandService = conditionOrderCommandService;
+        this.conditionOrderQueryService = conditionOrderQueryService;
     }
 
     @RequestMapping("/remove")
@@ -32,4 +41,16 @@ public class ConditionOrderController {
         conditionOrderCommandService.remove(orderId);
         return 1;
     }
+
+    @RequestMapping("/monitoring")
+    public List<ConditionOrderDTO> monitoring(String customerNo) {
+        List<ConditionOrder> conditionOrders = conditionOrderQueryService.listMonitoringOrders(customerNo);
+        return Lists.transform(conditionOrders, ConditionOrderDTOAssembler::toDTO);
+    }
+
+//    @RequestMapping("/entrusts")
+//    public List<EntrustOrder> entrusts(String customerNo) {
+//        List<ConditionOrder> conditionOrders = conditionOrderQueryService.listEntrustOrders(customerNo);
+//        return Lists.transform(conditionOrders, ConditionOrderDTOAssembler::toDTO);
+//    }
 }

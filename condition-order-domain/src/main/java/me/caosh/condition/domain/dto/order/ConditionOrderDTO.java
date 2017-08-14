@@ -20,7 +20,7 @@ public class ConditionOrderDTO implements Serializable {
     private SecurityInfoDTO securityInfo;
     private Integer strategyId;
     private ConditionDTO condition;
-    private TradePlanDTO tradePlanDTO;
+    private TradePlanDTO tradePlanDTO; // TODO: naming strange
 
     public ConditionOrderDTO() {
     }

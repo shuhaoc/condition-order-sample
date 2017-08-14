@@ -3,10 +3,12 @@ package me.caosh.condition.infrastructure.repository.impl;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import me.caosh.condition.domain.model.order.ConditionOrder;
+import me.caosh.condition.domain.model.trade.EntrustOrder;
 import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
 import me.caosh.condition.infrastructure.repository.model.ConditionOrderDO;
 import me.caosh.condition.infrastructure.repository.model.ConditionOrderDOAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -43,7 +45,13 @@ public class ConditionOrderRepositoryImpl implements ConditionOrderRepository {
 
     @Override
     public List<ConditionOrder> findAllActive() {
-        Iterable<ConditionOrderDO> conditionOrderDOs = conditionOrderDORepository.findAllActive();
-        return Lists.newArrayList(Iterables.transform(conditionOrderDOs, ConditionOrderDOAssembler::fromDO));
+        List<ConditionOrderDO> conditionOrderDOs = conditionOrderDORepository.findAllActive();
+        return Lists.transform(conditionOrderDOs, ConditionOrderDOAssembler::fromDO);
+    }
+
+    @Override
+    public List<ConditionOrder> findMonitoringOrders(String customerNo) {
+        List<ConditionOrderDO> monitoring = conditionOrderDORepository.findMonitoring(customerNo);
+        return Lists.transform(monitoring, ConditionOrderDOAssembler::fromDO);
     }
 }

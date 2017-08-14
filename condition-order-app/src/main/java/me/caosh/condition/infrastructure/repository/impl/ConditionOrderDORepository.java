@@ -1,6 +1,8 @@
 package me.caosh.condition.infrastructure.repository.impl;
 
 import me.caosh.condition.infrastructure.repository.model.ConditionOrderDO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -16,4 +18,7 @@ interface ConditionOrderDORepository extends CrudRepository<ConditionOrderDO, Lo
 
     @Query("select c from ConditionOrderDO c where c.deleted = 0 and c.orderState = 1")
     List<ConditionOrderDO> findAllActive();
+
+    @Query("select c from ConditionOrderDO c where customerNo = ?1 and c.deleted = 0 and c.orderState in (1,2)")
+    List<ConditionOrderDO> findMonitoring(String customerNo);
 }
