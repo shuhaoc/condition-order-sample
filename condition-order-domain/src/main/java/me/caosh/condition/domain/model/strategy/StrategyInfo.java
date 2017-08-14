@@ -7,4 +7,6 @@ public interface StrategyInfo {
     SystemType getSystemType();
 
     int getStrategyId();
+
+    LifeCircle getLifeCircle();
 }

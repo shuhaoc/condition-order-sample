@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 /**
  * Created by caosh on 2017/8/1.
  */
-public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven, TriggerOnce {
+public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven {
     private static final Logger logger = LoggerFactory.getLogger(PriceOrder.class);
 
     public PriceOrder(Long orderId, TradeCustomerIdentity customerIdentity, OrderState orderState,

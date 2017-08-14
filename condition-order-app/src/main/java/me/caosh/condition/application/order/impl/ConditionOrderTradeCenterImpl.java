@@ -9,6 +9,7 @@ import me.caosh.condition.domain.model.order.OrderState;
 import me.caosh.condition.domain.model.order.TriggerOnce;
 import me.caosh.condition.domain.model.signal.General;
 import me.caosh.condition.domain.model.signal.TradeSignal;
+import me.caosh.condition.domain.model.strategy.LifeCircle;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.service.SecurityEntrustService;
 import org.slf4j.Logger;
@@ -36,7 +37,7 @@ public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter 
             Preconditions.checkNotNull(realTimeMarket);
             EntrustCommand entrustCommand = conditionOrder.onTradeSignal(signal, realTimeMarket);
             securityEntrustService.execute(entrustCommand);
-            if (conditionOrder instanceof TriggerOnce) {
+            if (conditionOrder.getStrategyInfo().getLifeCircle() == LifeCircle.ONCE) {
                 conditionOrder.setOrderState(OrderState.TERMINATED);
             }
             conditionOrderCommandService.update(conditionOrder);
