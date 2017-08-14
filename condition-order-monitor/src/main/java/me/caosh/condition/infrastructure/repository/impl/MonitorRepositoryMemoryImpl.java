@@ -8,11 +8,13 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by caosh on 2017/8/12.
  */
-@Repository("memory")
+@Deprecated
+//@Repository("memory")
 public class MonitorRepositoryMemoryImpl implements MonitorRepository {
 
     private final MonitorRepository monitorRepository;
@@ -24,7 +26,7 @@ public class MonitorRepositoryMemoryImpl implements MonitorRepository {
 
     @PostConstruct
     public void init() {
-        monitorOrders = monitorRepository.getAll();
+        monitorOrders = new ConcurrentHashMap<>(monitorRepository.getAll());
     }
 
     @Override
@@ -38,9 +40,14 @@ public class MonitorRepositoryMemoryImpl implements MonitorRepository {
     }
 
     @Override
+    public void save(ConditionOrder conditionOrder) {
+        monitorRepository.save(conditionOrder);
+        monitorOrders.put(conditionOrder.getOrderId(), conditionOrder);
+    }
+
+    @Override
     public void update(ConditionOrder conditionOrder) {
         monitorRepository.update(conditionOrder);
-        monitorOrders.put(conditionOrder.getOrderId(), conditionOrder);
     }
 
     @Override

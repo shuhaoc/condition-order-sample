@@ -11,7 +11,7 @@ DDD sample, a minimized condition order system.
 
 ## TODO
 
-- use life circle field instead of TriggerOnce tag interface
+- use domain services
 - monitor context(delay sync, trigger lock)
 - trigger context
 - entrust orders

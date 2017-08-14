@@ -1,13 +1,9 @@
 package me.caosh.condition.infrastructure.rabbitmq;
 
 import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
-import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
+import me.caosh.condition.domain.dto.order.assembler.ConditionOrderCommandEventFactory;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
-import me.caosh.condition.domain.model.constants.OrderCommandType;
-import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.event.ConditionOrderCommandEvent;
-import me.caosh.condition.domain.model.order.event.ConditionOrderDeleteCommandEvent;
-import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 import me.caosh.condition.domain.util.EventBuses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,14 +69,8 @@ public class ConditionOrderConsumer {
         container.setMessageListener((MessageListener) message -> {
             ConditionOrderMonitorDTO conditionOrderMonitorDTO = (ConditionOrderMonitorDTO) messageConverter.fromMessage(message);
             logger.debug("Receive condition order message <== {}", conditionOrderMonitorDTO);
-            if (conditionOrderMonitorDTO.getConditionOrderDTO() != null) {
-                OrderCommandType orderCommandType = ValuedEnumUtil.valueOf(conditionOrderMonitorDTO.getOrderCommandType(),
-                        OrderCommandType.class);
-                ConditionOrder conditionOrder = ConditionOrderDTOAssembler.fromDTO(conditionOrderMonitorDTO.getConditionOrderDTO());
-                EventBuses.DEFAULT.post(new ConditionOrderCommandEvent(orderCommandType, conditionOrder));
-            } else {
-                EventBuses.DEFAULT.post(new ConditionOrderDeleteCommandEvent(conditionOrderMonitorDTO.getOrderId()));
-            }
+            ConditionOrderCommandEvent event = ConditionOrderCommandEventFactory.getInstance().create(conditionOrderMonitorDTO);
+            EventBuses.DEFAULT.post(event);
         });
         container.start();
     }

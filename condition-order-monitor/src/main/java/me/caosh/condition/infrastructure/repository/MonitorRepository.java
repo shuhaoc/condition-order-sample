@@ -12,6 +12,8 @@ public interface MonitorRepository {
     
     Map<Long, ConditionOrder> getAll();
 
+    void save(ConditionOrder conditionOrder);
+
     void update(ConditionOrder conditionOrder);
 
     void remove(Long orderId);

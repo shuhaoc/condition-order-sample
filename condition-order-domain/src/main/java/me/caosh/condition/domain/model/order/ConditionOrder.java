@@ -65,6 +65,7 @@ public abstract class ConditionOrder {
         return tradePlan;
     }
 
+    // TODO: use interface
     public abstract EntrustCommand onTradeSignal(TradeSignal signal, RealTimeMarket realTimeMarket);
 
     @Override

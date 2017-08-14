@@ -9,21 +9,20 @@ import me.caosh.condition.domain.dto.order.TradeSignalDTO;
 import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
 import me.caosh.condition.domain.dto.order.assembler.TradeSignalDTOBuilder;
-import me.caosh.condition.domain.model.constants.OrderCommandType;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.event.RealTimeMarketPushEvent;
 import me.caosh.condition.domain.model.order.ConditionOrder;
+import me.caosh.condition.domain.model.order.MonitorContext;
 import me.caosh.condition.domain.model.order.RealTimeMarketDriven;
-import me.caosh.condition.domain.model.order.event.ConditionOrderCommandEvent;
+import me.caosh.condition.domain.model.order.event.ConditionOrderCreateCommandEvent;
 import me.caosh.condition.domain.model.order.event.ConditionOrderDeleteCommandEvent;
+import me.caosh.condition.domain.model.order.event.ConditionOrderUpdateCommandEvent;
 import me.caosh.condition.domain.model.signal.SignalFactory;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.util.EventBuses;
 import me.caosh.condition.infrastructure.rabbitmq.TriggerMessageTriggerProducer;
-import me.caosh.condition.infrastructure.repository.MonitorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -33,15 +32,15 @@ import java.util.Map;
  * Created by caosh on 2017/8/9.
  */
 @Component
-public class ConditionOrderMonitor {
-    private static final Logger logger = LoggerFactory.getLogger(ConditionOrderMonitor.class);
+public class ConditionOrderMonitorCenter {
+    private static final Logger logger = LoggerFactory.getLogger(ConditionOrderMonitorCenter.class);
 
-    private final MonitorRepository monitorRepository;
+    private final MonitorContextManage monitorContextManage;
     private final TriggerMessageTriggerProducer triggerMessageTriggerProducer;
 
-    public ConditionOrderMonitor(@Qualifier("memory") MonitorRepository monitorRepository,
-                                 TriggerMessageTriggerProducer triggerMessageTriggerProducer) {
-        this.monitorRepository = monitorRepository;
+    public ConditionOrderMonitorCenter(MonitorContextManage monitorContextManage,
+                                       TriggerMessageTriggerProducer triggerMessageTriggerProducer) {
+        this.monitorContextManage = monitorContextManage;
         this.triggerMessageTriggerProducer = triggerMessageTriggerProducer;
     }
 
@@ -55,8 +54,9 @@ public class ConditionOrderMonitor {
         Map<String, RealTimeMarket> realTimeMarketMap = e.getMarketMap();
         logger.info("---------------- Start checking ----------------");
 
-        Iterable<ConditionOrder> conditionOrders = monitorRepository.getAllOrders();
-        conditionOrders.forEach(conditionOrder -> {
+        Iterable<MonitorContext> monitorContexts = monitorContextManage.getAll();
+        monitorContexts.forEach(monitorContext -> {
+            ConditionOrder conditionOrder = monitorContext.getConditionOrder();
             if (conditionOrder instanceof RealTimeMarketDriven) {
                 RealTimeMarket realTimeMarket = realTimeMarketMap.get(conditionOrder.getSecurityInfo().getCode());
                 if (realTimeMarket != null) {
@@ -65,7 +65,7 @@ public class ConditionOrderMonitor {
             }
         });
 
-        logger.info("---------------- Finish checking, count={} ----------------", Iterables.size(conditionOrders));
+        logger.info("---------------- Finish checking, count={} ----------------", Iterables.size(monitorContexts));
     }
 
     private void checkWithRealTimeMarket(ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {
@@ -80,19 +80,23 @@ public class ConditionOrderMonitor {
     }
 
     @Subscribe
-    public void onConditionOrderCommand(ConditionOrderCommandEvent e) {
-        if (e.getOrderCommandType() != OrderCommandType.CREATE && e.getOrderCommandType() != OrderCommandType.UPDATE) {
-            return;
-        }
+    public void onConditionOrderCreateCommand(ConditionOrderCreateCommandEvent e) {
         ConditionOrder conditionOrder = e.getConditionOrder();
-        monitorRepository.update(conditionOrder);
+        monitorContextManage.save(new MonitorContext(conditionOrder));
+        logger.info("Create condition order ==> {}", conditionOrder);
+    }
+
+    @Subscribe
+    public void onConditionOrderUpdateCommand(ConditionOrderUpdateCommandEvent e) {
+        ConditionOrder conditionOrder = e.getConditionOrder();
+        monitorContextManage.update(new MonitorContext(conditionOrder));
         logger.info("Update condition order ==> {}", conditionOrder);
     }
 
     @Subscribe
     public void onConditionOrderDeleteCommand(ConditionOrderDeleteCommandEvent e) {
         Long orderId = e.getOrderId();
-        monitorRepository.remove(orderId);
+        monitorContextManage.remove(orderId);
         logger.info("Remove condition order ==> {}", orderId);
     }
 }

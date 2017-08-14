@@ -57,6 +57,11 @@ public class MonitorRepositoryRedisImpl implements MonitorRepository {
     }
 
     @Override
+    public void save(ConditionOrder conditionOrder) {
+        update(conditionOrder);
+    }
+
+    @Override
     public void update(ConditionOrder conditionOrder) {
         redisTemplate.<Long, ConditionOrder>opsForHash().put(monitorOrdersKey, conditionOrder.getOrderId(), conditionOrder);
     }

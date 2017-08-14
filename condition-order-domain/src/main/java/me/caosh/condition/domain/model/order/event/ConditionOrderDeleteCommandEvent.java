@@ -7,7 +7,7 @@ import com.google.common.base.MoreObjects;
  *
  * @author caoshuhao@touker.com
  */
-public class ConditionOrderDeleteCommandEvent {
+public class ConditionOrderDeleteCommandEvent implements ConditionOrderCommandEvent {
     private final Long orderId;
 
     public ConditionOrderDeleteCommandEvent(Long orderId) {
