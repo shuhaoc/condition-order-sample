@@ -2,14 +2,13 @@ package me.caosh.condition.infrastructure.rabbitmq;
 
 import me.caosh.condition.application.order.ConditionOrderTradeCenter;
 import me.caosh.condition.domain.dto.market.assembler.RealTimeMarketDTOAssembler;
-import me.caosh.condition.domain.dto.order.TradeSignalDTO;
 import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
 import me.caosh.condition.domain.dto.order.assembler.TradeSignalBuilder;
-import me.caosh.condition.domain.dto.order.assembler.TradeSignalDTOBuilder;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
+import me.caosh.condition.domain.model.order.TriggerContext;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,7 +80,8 @@ public class TriggerMessageConsumer {
             TradeSignal tradeSignal = new TradeSignalBuilder(triggerMessageDTO.getTradeSignalDTO()).build();
             ConditionOrder conditionOrder = ConditionOrderDTOAssembler.fromDTO(triggerMessageDTO.getConditionOrderDTO());
             RealTimeMarket realTimeMarket = RealTimeMarketDTOAssembler.fromDTO(triggerMessageDTO.getRealTimeMarketDTO());
-            conditionOrderTradeCenter.handleTriggerMessage(tradeSignal, conditionOrder, realTimeMarket);
+            TriggerContext triggerContext = new TriggerContext(tradeSignal, conditionOrder, realTimeMarket);
+            conditionOrderTradeCenter.handleTriggerContext(triggerContext);
         });
         container.start();
     }
