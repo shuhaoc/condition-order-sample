@@ -24,7 +24,7 @@ public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven {
         super(orderId, customerIdentity, orderState, securityInfo, NativeStrategyInfo.PRICE, priceCondition, tradePlan);
     }
 
-    public PriceCondition getSimplePriceCondition() {
+    public PriceCondition getPriceCondition() {
         return (PriceCondition) getCondition();
     }
 
@@ -33,7 +33,7 @@ public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven {
         BigDecimal currentPrice = realTimeMarket.getCurrentPrice();
         logger.debug("Check price condition, orderId={}, currentPrice={}, condition={}",
                 getOrderId(), currentPrice, getCondition());
-        if (getSimplePriceCondition().isSatisfiedBy(currentPrice)) {
+        if (getPriceCondition().isSatisfiedBy(currentPrice)) {
             return SignalFactory.getInstance().general();
         }
         return SignalFactory.getInstance().none();
@@ -41,7 +41,7 @@ public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven {
 
     @Override
     public EntrustCommand onTradeSignal(TradeSignal signal, RealTimeMarket realTimeMarket) {
-        return new EntrustCommand(getSecurityInfo().asSecurityID(), getTradePlan().getExchangeType(),
+        return new EntrustCommand(getCustomerIdentity(), getSecurityInfo(), getTradePlan().getExchangeType(),
                 realTimeMarket.getCurrentPrice(), getTradePlan().getNumber());
     }
 

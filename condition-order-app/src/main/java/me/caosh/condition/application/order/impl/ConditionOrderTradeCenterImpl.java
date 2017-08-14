@@ -11,10 +11,15 @@ import me.caosh.condition.domain.model.signal.General;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.LifeCircle;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
+import me.caosh.condition.domain.model.trade.EntrustOrder;
+import me.caosh.condition.domain.model.trade.EntrustResult;
 import me.caosh.condition.domain.service.SecurityEntrustService;
+import me.caosh.condition.infrastructure.repository.EntrustOrderRepository;
+import me.caosh.condition.infrastructure.repository.impl.EntrustOrderIdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by caosh on 2017/8/13.
@@ -25,12 +30,18 @@ public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter 
 
     private final SecurityEntrustService securityEntrustService;
     private final ConditionOrderCommandService conditionOrderCommandService;
+    private final EntrustOrderRepository entrustOrderRepository;
+    private final EntrustOrderIdGenerator entrustOrderIdGenerator;
 
-    public ConditionOrderTradeCenterImpl(SecurityEntrustService securityEntrustService, ConditionOrderCommandService conditionOrderCommandService) {
+    public ConditionOrderTradeCenterImpl(SecurityEntrustService securityEntrustService, ConditionOrderCommandService conditionOrderCommandService,
+                                         EntrustOrderRepository entrustOrderRepository, EntrustOrderIdGenerator entrustOrderIdGenerator) {
         this.securityEntrustService = securityEntrustService;
         this.conditionOrderCommandService = conditionOrderCommandService;
+        this.entrustOrderRepository = entrustOrderRepository;
+        this.entrustOrderIdGenerator = entrustOrderIdGenerator;
     }
 
+    @Transactional
     @Override
     public void handleTriggerContext(TriggerContext triggerContext) {
         TradeSignal signal = triggerContext.getTradeSignal();
@@ -39,7 +50,12 @@ public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter 
         if (signal instanceof General) {
             Preconditions.checkNotNull(realTimeMarket);
             EntrustCommand entrustCommand = conditionOrder.onTradeSignal(signal, realTimeMarket);
-            securityEntrustService.execute(entrustCommand);
+            EntrustResult entrustResult = securityEntrustService.execute(entrustCommand);
+            logger.info("Entrust result <== {}", entrustResult);
+
+            EntrustOrder entrustOrder = new EntrustOrder(entrustOrderIdGenerator.nextId(), conditionOrder.getOrderId(), entrustCommand, entrustResult);
+            entrustOrderRepository.save(entrustOrder);
+
             if (conditionOrder.getStrategyInfo().getLifeCircle() == LifeCircle.ONCE) {
                 conditionOrder.setOrderState(OrderState.TERMINATED);
             }

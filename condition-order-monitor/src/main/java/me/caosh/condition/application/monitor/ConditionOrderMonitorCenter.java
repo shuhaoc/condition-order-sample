@@ -30,6 +30,8 @@ import java.util.Map;
 
 /**
  * Created by caosh on 2017/8/9.
+ *
+ * @implNote 由于是demo，此模块没有解决并发问题，生产环境中请勿使用
  */
 @Component
 public class ConditionOrderMonitorCenter {
@@ -70,13 +72,17 @@ public class ConditionOrderMonitorCenter {
 
     private void checkWithRealTimeMarket(ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {
         TradeSignal tradeSignal = ((RealTimeMarketDriven) conditionOrder).onRealTimeMarketUpdate(realTimeMarket);
-        if (tradeSignal == SignalFactory.getInstance().general()) {
-            TradeSignalDTO tradeSignalDTO = new TradeSignalDTOBuilder(tradeSignal).build();
-            ConditionOrderDTO conditionOrderDTO = ConditionOrderDTOAssembler.toDTO(conditionOrder);
-            RealTimeMarketDTO realTimeMarketDTO = RealTimeMarketDTOAssembler.toDTO(realTimeMarket);
-            TriggerMessageDTO triggerMessageDTO = new TriggerMessageDTO(tradeSignalDTO, conditionOrderDTO, realTimeMarketDTO);
-            triggerMessageTriggerProducer.send(triggerMessageDTO);
+        if (tradeSignal != SignalFactory.getInstance().none()) {
+            triggerSignal(tradeSignal, conditionOrder, realTimeMarket);
         }
+    }
+
+    private void triggerSignal(TradeSignal tradeSignal, ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {
+        TradeSignalDTO tradeSignalDTO = new TradeSignalDTOBuilder(tradeSignal).build();
+        ConditionOrderDTO conditionOrderDTO = ConditionOrderDTOAssembler.toDTO(conditionOrder);
+        RealTimeMarketDTO realTimeMarketDTO = RealTimeMarketDTOAssembler.toDTO(realTimeMarket);
+        TriggerMessageDTO triggerMessageDTO = new TriggerMessageDTO(tradeSignalDTO, conditionOrderDTO, realTimeMarketDTO);
+        triggerMessageTriggerProducer.send(triggerMessageDTO);
     }
 
     @Subscribe
