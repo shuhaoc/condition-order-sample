@@ -14,7 +14,6 @@ DDD sample, a minimized condition order system.
 - use domain services
 - order by amount
 - monitor context(delay sync, trigger lock)
-- queries
 - turn up buy order(dynamic properties)
 - time order
 - grid trade order
