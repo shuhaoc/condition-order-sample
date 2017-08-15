@@ -2,6 +2,7 @@ package me.caosh.condition.domain.model.order.price;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.model.order.*;
+import me.caosh.condition.domain.model.strategy.StrategyInfo;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
@@ -23,6 +24,11 @@ public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven {
     public PriceOrder(Long orderId, TradeCustomerIdentity customerIdentity, OrderState orderState,
                       SecurityInfo securityInfo, PriceCondition priceCondition, TradePlan tradePlan) {
         super(orderId, customerIdentity, orderState, securityInfo, NativeStrategyInfo.PRICE, priceCondition, tradePlan);
+    }
+
+    public PriceOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, OrderState orderState,
+                      SecurityInfo securityInfo, StrategyInfo strategyInfo, PriceCondition condition, TradePlan tradePlan) {
+        super(orderId, customerIdentity, deleted, securityInfo, strategyInfo, condition, tradePlan, orderState);
     }
 
     public PriceCondition getPriceCondition() {

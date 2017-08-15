@@ -49,7 +49,7 @@ public class ConditionOrderDTOAssembler {
         StrategyInfo strategyInfo = ValuedEnumUtil.valueOf(dto.getStrategyId(), NativeStrategyInfo.class);
         Condition condition = new ConditionBuilder(dto.getConditionDTO()).build();
         TradePlan tradePlan = TradePlanDTO.toDomain(dto.getTradePlanDTO());
-        return ConditionOrderFactory.getInstance().create(dto.getOrderId(), customerIdentity, orderState, securityInfo,
+        return ConditionOrderFactory.getInstance().create(dto.getOrderId(), customerIdentity, false, orderState, securityInfo,
                 strategyInfo, condition, tradePlan);
     }
 

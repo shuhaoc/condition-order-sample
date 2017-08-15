@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public abstract class ConditionOrder {
     private final Long orderId;
     private final TradeCustomerIdentity customerIdentity;
+    private final boolean deleted;
     private OrderState orderState;
     private final SecurityInfo securityInfo;
     private final StrategyInfo strategyInfo;
@@ -26,11 +27,24 @@ public abstract class ConditionOrder {
                           SecurityInfo securityInfo, StrategyInfo strategyInfo, Condition condition, TradePlan tradePlan) {
         this.orderId = orderId;
         this.customerIdentity = customerIdentity;
+        this.deleted = false;
         this.orderState = orderState;
         this.securityInfo = securityInfo;
         this.strategyInfo = strategyInfo;
         this.condition = condition;
         this.tradePlan = tradePlan;
+    }
+
+    public ConditionOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
+                          StrategyInfo strategyInfo, Condition condition, TradePlan tradePlan, OrderState orderState) {
+        this.orderId = orderId;
+        this.customerIdentity = customerIdentity;
+        this.deleted = deleted;
+        this.securityInfo = securityInfo;
+        this.strategyInfo = strategyInfo;
+        this.condition = condition;
+        this.tradePlan = tradePlan;
+        this.orderState = orderState;
     }
 
     public Long getOrderId() {
@@ -39,6 +53,10 @@ public abstract class ConditionOrder {
 
     public TradeCustomerIdentity getCustomerIdentity() {
         return customerIdentity;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
     }
 
     public OrderState getOrderState() {
@@ -70,10 +88,10 @@ public abstract class ConditionOrder {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(ConditionOrder.class).omitNullValues()
-                .addValue(ConditionOrder.class.getSuperclass() != Object.class ? super.toString() : null)
+        return MoreObjects.toStringHelper(this)
                 .add("orderId", orderId)
                 .add("customerIdentity", customerIdentity)
+                .add("deleted", deleted)
                 .add("orderState", orderState)
                 .add("securityInfo", securityInfo)
                 .add("strategyInfo", strategyInfo)

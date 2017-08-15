@@ -20,7 +20,7 @@ public class ConditionOrderDOAssembler {
         conditionOrderDO.setOrderId(conditionOrder.getOrderId());
         conditionOrderDO.setUserId(conditionOrder.getCustomerIdentity().getUserId());
         conditionOrderDO.setCustomerNo(conditionOrder.getCustomerIdentity().getCustomerNo());
-        conditionOrderDO.setDeleted(false);
+        conditionOrderDO.setDeleted(conditionOrder.isDeleted());
         conditionOrderDO.setOrderState(conditionOrder.getOrderState().getValue());
         conditionOrderDO.setSecurityType(conditionOrder.getSecurityInfo().getType().getValue());
         conditionOrderDO.setSecurityCode(conditionOrder.getSecurityInfo().getCode());
@@ -48,8 +48,8 @@ public class ConditionOrderDOAssembler {
         TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, conditionOrderDO.getEntrustAmount().intValue());
         ConditionDO conditionDO = ConditionOrderDOGSONUtils.getGSON().fromJson(conditionOrderDO.getConditionProperties(), ConditionDO.class);
         Condition condition = new ConditionBuilder(conditionDO).build();
-        return ConditionOrderFactory.getInstance().create(conditionOrderDO.getOrderId(), customerIdentity, orderState, securityInfo,
-                nativeStrategyInfo, condition, tradePlan);
+        return ConditionOrderFactory.getInstance().create(conditionOrderDO.getOrderId(), customerIdentity, conditionOrderDO.getDeleted(),
+                orderState, securityInfo, nativeStrategyInfo, condition, tradePlan);
     }
 
     private ConditionOrderDOAssembler() {
