@@ -7,6 +7,7 @@ import me.caosh.condition.domain.model.order.*;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 import me.caosh.condition.domain.model.strategy.NativeStrategyInfo;
 import me.caosh.condition.domain.util.ConditionOrderGSONUtils;
+import me.caosh.condition.infrastructure.repository.impl.ConditionOrderDOGSONUtils;
 
 import java.math.BigDecimal;
 
@@ -26,7 +27,8 @@ public class ConditionOrderDOAssembler {
         conditionOrderDO.setSecurityExchange(conditionOrder.getSecurityInfo().getExchange().name());
         conditionOrderDO.setSecurityName(conditionOrder.getSecurityInfo().getName());
         conditionOrderDO.setStrategyId(conditionOrder.getStrategyInfo().getStrategyId());
-        conditionOrderDO.setConditionProperties(ConditionOrderGSONUtils.getConditionGSON().toJson(conditionOrder.getCondition()));
+        ConditionDO conditionDO = new ConditionDOBuilder(conditionOrder.getCondition()).build();
+        conditionOrderDO.setConditionProperties(ConditionOrderDOGSONUtils.getGSON().toJson(conditionDO));
         conditionOrderDO.setExchangeType(conditionOrder.getTradePlan().getExchangeType().getValue());
         conditionOrderDO.setEntrustStrategy(conditionOrder.getTradePlan().getEntrustStrategy().getValue());
         conditionOrderDO.setEntrustAmount(BigDecimal.valueOf(conditionOrder.getTradePlan().getNumber()));
@@ -44,7 +46,8 @@ public class ConditionOrderDOAssembler {
         ExchangeType exchangeType = ValuedEnumUtil.valueOf(conditionOrderDO.getExchangeType(), ExchangeType.class);
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(conditionOrderDO.getEntrustStrategy(), EntrustStrategy.class);
         TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, conditionOrderDO.getEntrustAmount().intValue());
-        Condition condition = ConditionOrderGSONUtils.getConditionGSON().fromJson(conditionOrderDO.getConditionProperties(), Condition.class);
+        ConditionDO conditionDO = ConditionOrderDOGSONUtils.getGSON().fromJson(conditionOrderDO.getConditionProperties(), ConditionDO.class);
+        Condition condition = new ConditionBuilder(conditionDO).build();
         return ConditionOrderFactory.getInstance().create(conditionOrderDO.getOrderId(), customerIdentity, orderState, securityInfo,
                 nativeStrategyInfo, condition, tradePlan);
     }
