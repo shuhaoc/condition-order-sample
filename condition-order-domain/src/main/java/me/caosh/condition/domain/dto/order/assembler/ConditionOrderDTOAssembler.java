@@ -42,12 +42,12 @@ public class ConditionOrderDTOAssembler {
     public static ConditionOrder fromDTO(ConditionOrderDTO dto) {
         TradeCustomerIdentity customerIdentity = new TradeCustomerIdentity(dto.getUserId(), dto.getCustomerNo());
         OrderState orderState = ValuedEnumUtil.valueOf(dto.getOrderState(), OrderState.class);
-        SecurityType securityType = ValuedEnumUtil.valueOf(dto.getSecurityInfo().getType(), SecurityType.class);
-        SecurityExchange securityExchange = SecurityExchange.valueOf(dto.getSecurityInfo().getExchange());
-        SecurityInfo securityInfo = new SecurityInfo(securityType, dto.getSecurityInfo().getCode(), securityExchange,
-                dto.getSecurityInfo().getName());
+        SecurityType securityType = ValuedEnumUtil.valueOf(dto.getSecurityInfoDTO().getType(), SecurityType.class);
+        SecurityExchange securityExchange = SecurityExchange.valueOf(dto.getSecurityInfoDTO().getExchange());
+        SecurityInfo securityInfo = new SecurityInfo(securityType, dto.getSecurityInfoDTO().getCode(), securityExchange,
+                dto.getSecurityInfoDTO().getName());
         StrategyInfo strategyInfo = ValuedEnumUtil.valueOf(dto.getStrategyId(), NativeStrategyInfo.class);
-        Condition condition = new ConditionBuilder(dto.getCondition()).build();
+        Condition condition = new ConditionBuilder(dto.getConditionDTO()).build();
         TradePlan tradePlan = TradePlanDTO.toDomain(dto.getTradePlanDTO());
         return ConditionOrderFactory.getInstance().create(dto.getOrderId(), customerIdentity, orderState, securityInfo,
                 strategyInfo, condition, tradePlan);
