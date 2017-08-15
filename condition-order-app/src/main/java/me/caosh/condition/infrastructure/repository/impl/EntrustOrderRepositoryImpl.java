@@ -30,7 +30,7 @@ public class EntrustOrderRepositoryImpl implements EntrustOrderRepository {
 
     @Override
     public Page<EntrustOrder> findByCustomerNo(String customerNo, Pageable pageable) {
-        Page<EntrustOrderDO> entrustOrderDOPage = entrustOrderDORepository.findByCustomerNo(customerNo, pageable);
+        Page<EntrustOrderDO> entrustOrderDOPage = entrustOrderDORepository.findByCustomerNoOrderByEntrustIdDesc(customerNo, pageable);
         return entrustOrderDOPage.map(EntrustOrderDOAssembler::fromDO);
     }
 }

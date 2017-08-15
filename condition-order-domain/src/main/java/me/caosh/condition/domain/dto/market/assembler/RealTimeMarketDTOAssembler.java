@@ -17,13 +17,14 @@ public class RealTimeMarketDTOAssembler {
         dto.setType(realTimeMarket.getMarketID().getType().getValue());
         dto.setCode(realTimeMarket.getMarketID().getCode());
         dto.setCurrentPrice(realTimeMarket.getCurrentPrice());
+        dto.setOfferedPrices(realTimeMarket.getOfferedPrices());
         return dto;
     }
 
     public static RealTimeMarket fromDTO(RealTimeMarketDTO realTimeMarketDTO) {
         SecurityType securityType = ValuedEnumUtil.valueOf(realTimeMarketDTO.getType(), SecurityType.class);
         MarketID marketID = new MarketID(securityType, realTimeMarketDTO.getCode());
-        return new RealTimeMarket(marketID, realTimeMarketDTO.getCurrentPrice());
+        return new RealTimeMarket(marketID, realTimeMarketDTO.getCurrentPrice(), realTimeMarketDTO.getOfferedPrices());
     }
 
     private RealTimeMarketDTOAssembler() {
