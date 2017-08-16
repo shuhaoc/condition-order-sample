@@ -73,9 +73,9 @@ public final class ConditionOrderDTOBuilder {
         conditionOrderDTO.setUserId(userId);
         conditionOrderDTO.setCustomerNo(customerNo);
         conditionOrderDTO.setOrderState(orderState);
-        conditionOrderDTO.setSecurityInfo(securityInfo);
+        conditionOrderDTO.setSecurityInfoDTO(securityInfo);
         conditionOrderDTO.setStrategyId(strategyId);
-        conditionOrderDTO.setCondition(condition);
+        conditionOrderDTO.setConditionDTO(condition);
         conditionOrderDTO.setTradePlanDTO(tradePlanDTO);
         return conditionOrderDTO;
     }

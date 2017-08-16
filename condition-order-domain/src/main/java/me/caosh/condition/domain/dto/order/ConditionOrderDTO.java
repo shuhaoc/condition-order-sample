@@ -17,23 +17,23 @@ public class ConditionOrderDTO implements Serializable {
     private Integer userId;
     private String customerNo;
     private Integer orderState;
-    private SecurityInfoDTO securityInfo;
+    private SecurityInfoDTO securityInfoDTO;
     private Integer strategyId;
-    private ConditionDTO condition;
-    private TradePlanDTO tradePlanDTO; // TODO: naming strange
+    private ConditionDTO conditionDTO;
+    private TradePlanDTO tradePlanDTO;
 
     public ConditionOrderDTO() {
     }
 
-    public ConditionOrderDTO(Long orderId, Integer userId, String customerNo, Integer orderState, SecurityInfoDTO securityInfo,
-                             Integer strategyId, ConditionDTO condition, TradePlanDTO tradePlanDTO) {
+    public ConditionOrderDTO(Long orderId, Integer userId, String customerNo, Integer orderState, SecurityInfoDTO securityInfoDTO,
+                             Integer strategyId, ConditionDTO conditionDTO, TradePlanDTO tradePlanDTO) {
         this.orderId = orderId;
         this.userId = userId;
         this.customerNo = customerNo;
         this.orderState = orderState;
-        this.securityInfo = securityInfo;
+        this.securityInfoDTO = securityInfoDTO;
         this.strategyId = strategyId;
-        this.condition = condition;
+        this.conditionDTO = conditionDTO;
         this.tradePlanDTO = tradePlanDTO;
     }
 
@@ -69,12 +69,12 @@ public class ConditionOrderDTO implements Serializable {
         this.orderState = orderState;
     }
 
-    public SecurityInfoDTO getSecurityInfo() {
-        return securityInfo;
+    public SecurityInfoDTO getSecurityInfoDTO() {
+        return securityInfoDTO;
     }
 
-    public void setSecurityInfo(SecurityInfoDTO securityInfo) {
-        this.securityInfo = securityInfo;
+    public void setSecurityInfoDTO(SecurityInfoDTO securityInfoDTO) {
+        this.securityInfoDTO = securityInfoDTO;
     }
 
     public Integer getStrategyId() {
@@ -85,12 +85,12 @@ public class ConditionOrderDTO implements Serializable {
         this.strategyId = strategyId;
     }
 
-    public ConditionDTO getCondition() {
-        return condition;
+    public ConditionDTO getConditionDTO() {
+        return conditionDTO;
     }
 
-    public void setCondition(ConditionDTO condition) {
-        this.condition = condition;
+    public void setConditionDTO(ConditionDTO conditionDTO) {
+        this.conditionDTO = conditionDTO;
     }
 
     public TradePlanDTO getTradePlanDTO() {
@@ -109,9 +109,9 @@ public class ConditionOrderDTO implements Serializable {
                 .add("userId", userId)
                 .add("customerNo", customerNo)
                 .add("orderState", orderState)
-                .add("securityInfo", securityInfo)
+                .add("securityInfo", securityInfoDTO)
                 .add("strategyId", strategyId)
-                .add("condition", condition)
+                .add("condition", conditionDTO)
                 .add("tradePlanDTO", tradePlanDTO)
                 .toString();
     }

@@ -2,12 +2,14 @@ package me.caosh.condition.domain.model.order.price;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.model.order.*;
+import me.caosh.condition.domain.model.strategy.StrategyInfo;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.signal.SignalFactory;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.NativeStrategyInfo;
+import me.caosh.condition.domain.model.trade.EntrustPriceSelector;
 import me.caosh.condition.domain.model.trade.OrderType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,11 @@ public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven {
     public PriceOrder(Long orderId, TradeCustomerIdentity customerIdentity, OrderState orderState,
                       SecurityInfo securityInfo, PriceCondition priceCondition, TradePlan tradePlan) {
         super(orderId, customerIdentity, orderState, securityInfo, NativeStrategyInfo.PRICE, priceCondition, tradePlan);
+    }
+
+    public PriceOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, OrderState orderState,
+                      SecurityInfo securityInfo, StrategyInfo strategyInfo, PriceCondition condition, TradePlan tradePlan) {
+        super(orderId, customerIdentity, deleted, securityInfo, strategyInfo, condition, tradePlan, orderState);
     }
 
     public PriceCondition getPriceCondition() {
@@ -42,8 +49,9 @@ public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven {
 
     @Override
     public EntrustCommand onTradeSignal(TradeSignal signal, RealTimeMarket realTimeMarket) {
+        BigDecimal entrustPrice = EntrustPriceSelector.selectPrice(realTimeMarket, getTradePlan().getEntrustStrategy());
         return new EntrustCommand(getCustomerIdentity(), getSecurityInfo(), getTradePlan().getExchangeType(),
-                realTimeMarket.getCurrentPrice(), getTradePlan().getNumber(), OrderType.LIMITED);
+                entrustPrice, getTradePlan().getNumber(), OrderType.LIMITED);
     }
 
     @Override

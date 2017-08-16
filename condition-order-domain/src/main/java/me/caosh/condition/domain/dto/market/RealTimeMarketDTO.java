@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by caosh on 2017/8/14.
@@ -16,14 +17,16 @@ public class RealTimeMarketDTO implements Serializable {
     private Integer type;
     private String code;
     private BigDecimal currentPrice;
+    private List<BigDecimal> offeredPrices;
 
     public RealTimeMarketDTO() {
     }
 
-    public RealTimeMarketDTO(Integer type, String code, BigDecimal currentPrice) {
+    public RealTimeMarketDTO(Integer type, String code, BigDecimal currentPrice, List<BigDecimal> offeredPrices) {
         this.type = type;
         this.code = code;
         this.currentPrice = currentPrice;
+        this.offeredPrices = offeredPrices;
     }
 
     public Integer getType() {
@@ -50,13 +53,21 @@ public class RealTimeMarketDTO implements Serializable {
         this.currentPrice = currentPrice;
     }
 
+    public List<BigDecimal> getOfferedPrices() {
+        return offeredPrices;
+    }
+
+    public void setOfferedPrices(List<BigDecimal> offeredPrices) {
+        this.offeredPrices = offeredPrices;
+    }
+
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(RealTimeMarketDTO.class).omitNullValues()
-                .addValue(RealTimeMarketDTO.class.getSuperclass() != Object.class ? super.toString() : null)
+        return MoreObjects.toStringHelper(this)
                 .add("type", type)
                 .add("code", code)
                 .add("currentPrice", currentPrice)
+                .add("offeredPrices", offeredPrices)
                 .toString();
     }
 }

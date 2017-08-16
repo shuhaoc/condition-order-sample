@@ -5,15 +5,21 @@ import me.caosh.condition.application.ConditionOrderQueryService;
 import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
+import me.caosh.condition.domain.dto.trade.EntrustOrderDTO;
+import me.caosh.condition.domain.dto.trade.EntrustOrderDTOAssembler;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
 import me.caosh.condition.domain.model.trade.EntrustOrder;
 import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
 import me.caosh.condition.infrastructure.repository.impl.ConditionOrderIdGenerator;
 import me.caosh.condition.interfaces.assembler.PriceOrderCommandAssembler;
+import me.caosh.condition.interfaces.command.PageRequestDTO;
 import me.caosh.condition.interfaces.command.PriceOrderCreateCommand;
 import me.caosh.condition.interfaces.command.PriceOrderUpdateCommand;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,9 +54,9 @@ public class ConditionOrderController {
         return Lists.transform(conditionOrders, ConditionOrderDTOAssembler::toDTO);
     }
 
-//    @RequestMapping("/entrusts")
-//    public List<EntrustOrder> entrusts(String customerNo) {
-//        List<ConditionOrder> conditionOrders = conditionOrderQueryService.listEntrustOrders(customerNo);
-//        return Lists.transform(conditionOrders, ConditionOrderDTOAssembler::toDTO);
-//    }
+    @RequestMapping("/entrusts")
+    public List<EntrustOrderDTO> entrusts(String customerNo, PageRequestDTO pageRequestDTO) {
+        Page<EntrustOrder> entrustOrders = conditionOrderQueryService.listEntrustOrders(customerNo, pageRequestDTO.asPageable());
+        return Lists.transform(entrustOrders.getContent(), EntrustOrderDTOAssembler::toDTO);
+    }
 }
