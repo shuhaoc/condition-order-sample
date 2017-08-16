@@ -20,10 +20,12 @@ import me.caosh.condition.domain.model.order.event.ConditionOrderUpdateCommandEv
 import me.caosh.condition.domain.model.signal.SignalFactory;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.util.EventBuses;
+import me.caosh.condition.infrastructure.cache.MonitorContextManage;
+import me.caosh.condition.infrastructure.eventbus.MonitorEntrustBus;
 import me.caosh.condition.infrastructure.rabbitmq.TriggerMessageTriggerProducer;
+import me.caosh.condition.infrastructure.timer.event.TimerEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -32,8 +34,6 @@ import java.util.Map;
 
 /**
  * Created by caosh on 2017/8/9.
- *
- * @implNote 由于是demo，此模块没有解决并发问题，生产环境中请勿使用
  */
 @Component
 public class ConditionOrderMonitorCenter {
@@ -50,7 +50,7 @@ public class ConditionOrderMonitorCenter {
 
     @PostConstruct
     public void init() {
-        EventBuses.DEFAULT.register(this);
+        MonitorEntrustBus.EVENT_SERIALIZED.register(this);
     }
 
     @Subscribe
@@ -69,11 +69,6 @@ public class ConditionOrderMonitorCenter {
             }
         });
         logger.info("---------------- Finish checking, count={} ----------------", Iterables.size(monitorContexts));
-    }
-
-    @Scheduled(cron = "0/1 * 9-23 * *  1-5")
-    public void onTimer() {
-        logger.info("tick");
     }
 
     private void checkWithRealTimeMarket(ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {
@@ -110,5 +105,10 @@ public class ConditionOrderMonitorCenter {
         Long orderId = e.getOrderId();
         monitorContextManage.remove(orderId);
         logger.info("Remove condition order ==> {}", orderId);
+    }
+
+    @Subscribe
+    public void onTimer(TimerEvent e) {
+        logger.debug("tick...");
     }
 }
