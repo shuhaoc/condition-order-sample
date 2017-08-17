@@ -1,6 +1,6 @@
 package me.caosh.condition.infrastructure.cache;
 
-import me.caosh.condition.domain.model.order.MonitorContext;
+import me.caosh.condition.application.monitor.MonitorContext;
 
 /**
  * Created by caosh on 2017/8/14.

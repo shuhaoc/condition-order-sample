@@ -12,21 +12,18 @@ import me.caosh.condition.domain.dto.order.assembler.TradeSignalDTOBuilder;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.event.RealTimeMarketPushEvent;
 import me.caosh.condition.domain.model.order.ConditionOrder;
-import me.caosh.condition.domain.model.order.MonitorContext;
 import me.caosh.condition.domain.model.order.RealTimeMarketDriven;
 import me.caosh.condition.domain.model.order.event.ConditionOrderCreateCommandEvent;
 import me.caosh.condition.domain.model.order.event.ConditionOrderDeleteCommandEvent;
 import me.caosh.condition.domain.model.order.event.ConditionOrderUpdateCommandEvent;
 import me.caosh.condition.domain.model.signal.SignalFactory;
 import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.domain.util.EventBuses;
 import me.caosh.condition.infrastructure.cache.MonitorContextManage;
 import me.caosh.condition.infrastructure.eventbus.MonitorEntrustBus;
 import me.caosh.condition.infrastructure.rabbitmq.TriggerMessageTriggerProducer;
 import me.caosh.condition.infrastructure.timer.event.TimerEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -64,17 +61,24 @@ public class ConditionOrderMonitorCenter {
             if (conditionOrder instanceof RealTimeMarketDriven) {
                 RealTimeMarket realTimeMarket = realTimeMarketMap.get(conditionOrder.getSecurityInfo().getCode());
                 if (realTimeMarket != null) {
-                    checkWithRealTimeMarket(conditionOrder, realTimeMarket);
+                    checkWithRealTimeMarket(monitorContext, realTimeMarket);
                 }
             }
         });
         logger.info("---------------- Finish checking, count={} ----------------", Iterables.size(monitorContexts));
     }
 
-    private void checkWithRealTimeMarket(ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {
+    private void checkWithRealTimeMarket(MonitorContext monitorContext, RealTimeMarket realTimeMarket) {
+        if (monitorContext.getTriggerLock().isPresent() && monitorContext.getTriggerLock().get().isLocked()) {
+            logger.warn("Trigger locked, orderId={}, lockedDuration={}", monitorContext.getOrderId(),
+                    monitorContext.getTriggerLock().get().lockedDuration());
+            return;
+        }
+        ConditionOrder conditionOrder = monitorContext.getConditionOrder();
         TradeSignal tradeSignal = ((RealTimeMarketDriven) conditionOrder).onRealTimeMarketUpdate(realTimeMarket);
         if (tradeSignal != SignalFactory.getInstance().none()) {
             triggerSignal(tradeSignal, conditionOrder, realTimeMarket);
+            monitorContext.lockTriggering();
         }
     }
 
