@@ -30,7 +30,11 @@ public class ConditionOrderRepositoryImpl implements ConditionOrderRepository {
 
     @Override
     public void remove(Long orderId) {
-        conditionOrderDORepository.delete(orderId);
+        ConditionOrderDO conditionOrderDO = conditionOrderDORepository.findOne(orderId);
+        if (conditionOrderDO != null) {
+            conditionOrderDO.setDeleted(true);
+            conditionOrderDORepository.save(conditionOrderDO);
+        }
     }
 
     @Override
