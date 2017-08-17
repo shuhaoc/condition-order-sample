@@ -1,6 +1,6 @@
 package me.caosh.condition.application.order.impl;
 
-import me.caosh.condition.application.ConditionOrderQueryService;
+import me.caosh.condition.application.order.ConditionOrderQueryService;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.trade.EntrustOrder;
 import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;

@@ -1,4 +1,4 @@
-package me.caosh.condition.application;
+package me.caosh.condition.application.order;
 
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.trade.EntrustOrder;
