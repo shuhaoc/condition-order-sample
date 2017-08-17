@@ -23,18 +23,6 @@ public abstract class ConditionOrder {
     private final TradePlan tradePlan;
     // TODO: add create/update time fields
 
-    public ConditionOrder(Long orderId, TradeCustomerIdentity customerIdentity, OrderState orderState,
-                          SecurityInfo securityInfo, StrategyInfo strategyInfo, Condition condition, TradePlan tradePlan) {
-        this.orderId = orderId;
-        this.customerIdentity = customerIdentity;
-        this.deleted = false;
-        this.orderState = orderState;
-        this.securityInfo = securityInfo;
-        this.strategyInfo = strategyInfo;
-        this.condition = condition;
-        this.tradePlan = tradePlan;
-    }
-
     public ConditionOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
                           StrategyInfo strategyInfo, Condition condition, TradePlan tradePlan, OrderState orderState) {
         this.orderId = orderId;

@@ -31,7 +31,7 @@ public class GsonExtrasTest {
         ).create();
 
         TradeCustomerIdentity customerIdentity = new TradeCustomerIdentity(303348, "010000061086");
-        PriceOrder priceOrder = new PriceOrder(123L, customerIdentity, OrderState.ACTIVE,
+        PriceOrder priceOrder = new PriceOrder(123L, customerIdentity, false, OrderState.ACTIVE,
                 new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH"),
                 new PriceCondition(CompareCondition.LESS_THAN_OR_EQUALS, new BigDecimal("13.00")),
                 new TradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, 100)

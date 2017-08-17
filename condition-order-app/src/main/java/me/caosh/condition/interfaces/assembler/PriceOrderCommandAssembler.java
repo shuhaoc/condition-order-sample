@@ -28,7 +28,7 @@ public class PriceOrderCommandAssembler {
         ExchangeType exchangeType = ValuedEnumUtil.valueOf(command.getExchangeType(), ExchangeType.class);
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
         TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, command.getEntrustNumber());
-        return new PriceOrder(orderId, customerIdentity, orderState, securityInfo, priceCondition, tradePlan);
+        return new PriceOrder(orderId, customerIdentity, false, orderState, securityInfo, priceCondition, tradePlan);
     }
 
     public static PriceOrder mergePriceOrder(PriceOrder oldPriceOrder, PriceOrderUpdateCommand command) {
@@ -39,7 +39,7 @@ public class PriceOrderCommandAssembler {
         ExchangeType exchangeType = ValuedEnumUtil.valueOf(command.getExchangeType(), ExchangeType.class);
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
         TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, command.getEntrustNumber());
-        return new PriceOrder(oldPriceOrder.getOrderId(), oldPriceOrder.getCustomerIdentity(), orderState,
+        return new PriceOrder(oldPriceOrder.getOrderId(), oldPriceOrder.getCustomerIdentity(), false, orderState,
                 oldPriceOrder.getSecurityInfo(), priceCondition, tradePlan);
     }
 

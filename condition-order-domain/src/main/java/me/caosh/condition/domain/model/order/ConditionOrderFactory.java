@@ -19,7 +19,7 @@ public class ConditionOrderFactory {
     public ConditionOrder create(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, OrderState orderState,
                                  SecurityInfo securityInfo, StrategyInfo strategyInfo, Condition condition, TradePlan tradePlan) {
         if (strategyInfo == NativeStrategyInfo.PRICE) {
-            return new PriceOrder(orderId, customerIdentity, deleted, orderState, securityInfo, NativeStrategyInfo.PRICE,
+            return new PriceOrder(orderId, customerIdentity, deleted, orderState, securityInfo,
                     (PriceCondition) condition, tradePlan);
         }
         throw new IllegalArgumentException("strategyInfo=" + strategyInfo);

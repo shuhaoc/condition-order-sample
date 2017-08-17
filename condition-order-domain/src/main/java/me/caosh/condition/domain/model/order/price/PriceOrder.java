@@ -22,14 +22,9 @@ import java.math.BigDecimal;
 public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven {
     private static final Logger logger = LoggerFactory.getLogger(PriceOrder.class);
 
-    public PriceOrder(Long orderId, TradeCustomerIdentity customerIdentity, OrderState orderState,
-                      SecurityInfo securityInfo, PriceCondition priceCondition, TradePlan tradePlan) {
-        super(orderId, customerIdentity, orderState, securityInfo, NativeStrategyInfo.PRICE, priceCondition, tradePlan);
-    }
-
     public PriceOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, OrderState orderState,
-                      SecurityInfo securityInfo, StrategyInfo strategyInfo, PriceCondition condition, TradePlan tradePlan) {
-        super(orderId, customerIdentity, deleted, securityInfo, strategyInfo, condition, tradePlan, orderState);
+                      SecurityInfo securityInfo,PriceCondition condition, TradePlan tradePlan) {
+        super(orderId, customerIdentity, deleted, securityInfo, NativeStrategyInfo.PRICE, condition, tradePlan, orderState);
     }
 
     public PriceCondition getPriceCondition() {
