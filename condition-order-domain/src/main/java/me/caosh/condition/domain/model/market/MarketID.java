@@ -1,5 +1,7 @@
 package me.caosh.condition.domain.model.market;
 
+import me.caosh.condition.domain.model.constants.SecurityType;
+
 /**
  * Created by caosh on 2017/8/1.
  */

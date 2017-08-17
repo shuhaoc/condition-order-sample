@@ -1,9 +1,9 @@
 package me.caosh.condition.infrastructure.repository.model;
 
-import me.caosh.condition.domain.model.market.SecurityExchange;
+import me.caosh.condition.domain.model.constants.SecurityExchange;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.market.SecurityType;
-import me.caosh.condition.domain.model.order.ExchangeType;
+import me.caosh.condition.domain.model.constants.SecurityType;
+import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 import me.caosh.condition.domain.model.trade.EntrustCommand;

@@ -1,9 +1,15 @@
 package me.caosh.condition.interfaces.assembler;
 
-import me.caosh.condition.domain.model.market.SecurityExchange;
+import me.caosh.condition.domain.model.constants.SecurityExchange;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.market.SecurityType;
+import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.order.*;
+import me.caosh.condition.domain.model.order.constant.CompareCondition;
+import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
+import me.caosh.condition.domain.model.order.constant.ExchangeType;
+import me.caosh.condition.domain.model.order.constant.OrderState;
+import me.caosh.condition.domain.model.order.plan.TradeNumberDirect;
+import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
@@ -27,7 +33,7 @@ public class PriceOrderCommandAssembler {
         PriceCondition priceCondition = new PriceCondition(compareCondition, targetPrice);
         ExchangeType exchangeType = ValuedEnumUtil.valueOf(command.getExchangeType(), ExchangeType.class);
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
-        TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, command.getEntrustNumber());
+        TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, new TradeNumberDirect(command.getEntrustNumber()));
         return new PriceOrder(orderId, customerIdentity, false, orderState, securityInfo, priceCondition, tradePlan);
     }
 
@@ -38,7 +44,7 @@ public class PriceOrderCommandAssembler {
         PriceCondition priceCondition = new PriceCondition(compareCondition, targetPrice);
         ExchangeType exchangeType = ValuedEnumUtil.valueOf(command.getExchangeType(), ExchangeType.class);
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
-        TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, command.getEntrustNumber());
+        TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, new TradeNumberDirect(command.getEntrustNumber()));
         return new PriceOrder(oldPriceOrder.getOrderId(), oldPriceOrder.getCustomerIdentity(), false, orderState,
                 oldPriceOrder.getSecurityInfo(), priceCondition, tradePlan);
     }

@@ -1,6 +1,8 @@
-package me.caosh.condition.domain.model.order;
+package me.caosh.condition.domain.model.order.plan;
 
 import com.google.common.base.MoreObjects;
+import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
+import me.caosh.condition.domain.model.order.constant.ExchangeType;
 
 /**
  * Created by caosh on 2017/8/2.
@@ -8,12 +10,12 @@ import com.google.common.base.MoreObjects;
 public class TradePlan {
     private final ExchangeType exchangeType;
     private final EntrustStrategy entrustStrategy;
-    private final int number;
+    private final TradeNumber tradeNumber;
 
-    public TradePlan(ExchangeType exchangeType, EntrustStrategy entrustStrategy, int number) {
+    public TradePlan(ExchangeType exchangeType, EntrustStrategy entrustStrategy, TradeNumber tradeNumber) {
         this.exchangeType = exchangeType;
         this.entrustStrategy = entrustStrategy;
-        this.number = number;
+        this.tradeNumber = tradeNumber;
     }
 
     public ExchangeType getExchangeType() {
@@ -24,8 +26,8 @@ public class TradePlan {
         return entrustStrategy;
     }
 
-    public int getNumber() {
-        return number;
+    public TradeNumber getTradeNumber() {
+        return tradeNumber;
     }
 
     @Override
@@ -35,9 +37,9 @@ public class TradePlan {
 
         TradePlan tradePlan = (TradePlan) o;
 
-        if (number != tradePlan.number) return false;
         if (exchangeType != tradePlan.exchangeType) return false;
-        return entrustStrategy == tradePlan.entrustStrategy;
+        if (entrustStrategy != tradePlan.entrustStrategy) return false;
+        return !(tradeNumber != null ? !tradeNumber.equals(tradePlan.tradeNumber) : tradePlan.tradeNumber != null);
 
     }
 
@@ -45,7 +47,7 @@ public class TradePlan {
     public int hashCode() {
         int result = exchangeType != null ? exchangeType.hashCode() : 0;
         result = 31 * result + (entrustStrategy != null ? entrustStrategy.hashCode() : 0);
-        result = 31 * result + number;
+        result = 31 * result + (tradeNumber != null ? tradeNumber.hashCode() : 0);
         return result;
     }
 
@@ -53,8 +55,8 @@ public class TradePlan {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("exchangeType", exchangeType)
-                .add("entrustPriceStrategy", entrustStrategy)
-                .add("number", number)
+                .add("entrustStrategy", entrustStrategy)
+                .add("tradeNumber", tradeNumber)
                 .toString();
     }
 }

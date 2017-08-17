@@ -1,5 +1,7 @@
 package me.caosh.condition.domain.model.market;
 
+import me.caosh.condition.domain.model.constants.SecurityExchange;
+import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.trade.SecurityID;
 
 /**

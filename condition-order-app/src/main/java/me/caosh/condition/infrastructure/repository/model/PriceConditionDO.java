@@ -1,7 +1,6 @@
 package me.caosh.condition.infrastructure.repository.model;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.model.order.CompareCondition;
 
 import java.math.BigDecimal;
 

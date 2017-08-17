@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import me.caosh.condition.domain.model.market.MarketID;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
-import me.caosh.condition.domain.model.market.SecurityType;
+import me.caosh.condition.domain.model.constants.SecurityType;
 
 import java.util.Map;
 

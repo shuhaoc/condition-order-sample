@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.order.serializer;
+package me.caosh.condition.domain.dto.order.serializer;
 
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;

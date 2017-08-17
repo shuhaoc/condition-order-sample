@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.model.trade;
 
-import me.caosh.condition.domain.model.market.SecurityExchange;
+import me.caosh.condition.domain.model.constants.SecurityExchange;
 
 /**
  * Created by caosh on 2017/8/10.

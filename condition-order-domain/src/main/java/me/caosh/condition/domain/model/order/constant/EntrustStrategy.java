@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.order;
+package me.caosh.condition.domain.model.order.constant;
 
 import me.caosh.condition.domain.model.share.ValuedEnum;
 

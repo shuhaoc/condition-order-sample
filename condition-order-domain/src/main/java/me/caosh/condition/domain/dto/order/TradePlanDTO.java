@@ -1,9 +1,10 @@
 package me.caosh.condition.domain.dto.order;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.model.order.EntrustStrategy;
-import me.caosh.condition.domain.model.order.ExchangeType;
-import me.caosh.condition.domain.model.order.TradePlan;
+import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
+import me.caosh.condition.domain.model.order.constant.ExchangeType;
+import me.caosh.condition.domain.model.order.plan.TradeNumberDirect;
+import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 
 import java.io.Serializable;
@@ -32,13 +33,13 @@ public class TradePlanDTO implements Serializable {
     public static TradePlanDTO fromDomain(TradePlan tradePlan) {
         return new TradePlanDTO(tradePlan.getExchangeType().getValue(),
                 tradePlan.getEntrustStrategy().getValue(),
-                tradePlan.getNumber());
+                tradePlan.getTradeNumber().getNumber(null));
     }
 
     public static TradePlan toDomain(TradePlanDTO tradePlanDTO) {
         ExchangeType exchangeType = ValuedEnumUtil.valueOf(tradePlanDTO.getExchangeType(), ExchangeType.class);
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(tradePlanDTO.getEntrustStrategy(), EntrustStrategy.class);
-        return new TradePlan(exchangeType, entrustStrategy, tradePlanDTO.getNumber());
+        return new TradePlan(exchangeType, entrustStrategy, new TradeNumberDirect(tradePlanDTO.getNumber()));
     }
 
     public Integer getExchangeType() {

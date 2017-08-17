@@ -5,7 +5,7 @@ import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.application.order.ConditionOrderTradeCenter;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
-import me.caosh.condition.domain.model.order.OrderState;
+import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.TriggerContext;
 import me.caosh.condition.domain.model.signal.General;
 import me.caosh.condition.domain.model.signal.TradeSignal;

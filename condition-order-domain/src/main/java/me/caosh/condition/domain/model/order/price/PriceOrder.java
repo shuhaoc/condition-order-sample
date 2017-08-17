@@ -2,7 +2,8 @@ package me.caosh.condition.domain.model.order.price;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.model.order.*;
-import me.caosh.condition.domain.model.strategy.StrategyInfo;
+import me.caosh.condition.domain.model.order.constant.OrderState;
+import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
@@ -46,7 +47,7 @@ public class PriceOrder extends ConditionOrder implements RealTimeMarketDriven {
     public EntrustCommand onTradeSignal(TradeSignal signal, RealTimeMarket realTimeMarket) {
         BigDecimal entrustPrice = EntrustPriceSelector.selectPrice(realTimeMarket, getTradePlan().getEntrustStrategy());
         return new EntrustCommand(getCustomerIdentity(), getSecurityInfo(), getTradePlan().getExchangeType(),
-                entrustPrice, getTradePlan().getNumber(), OrderType.LIMITED);
+                entrustPrice, getTradePlan().getTradeNumber().getNumber(entrustPrice), OrderType.LIMITED);
     }
 
     @Override

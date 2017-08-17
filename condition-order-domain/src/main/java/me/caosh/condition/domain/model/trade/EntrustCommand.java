@@ -2,7 +2,7 @@ package me.caosh.condition.domain.model.trade;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.order.ExchangeType;
+import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
 
 import java.math.BigDecimal;

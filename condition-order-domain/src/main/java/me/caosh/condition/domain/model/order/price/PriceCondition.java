@@ -2,7 +2,7 @@ package me.caosh.condition.domain.model.order.price;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
-import me.caosh.condition.domain.model.order.CompareCondition;
+import me.caosh.condition.domain.model.order.constant.CompareCondition;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
 

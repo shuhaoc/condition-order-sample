@@ -1,17 +1,18 @@
 package me.caosh.condition.infrastructure.repository;
 
-import me.caosh.condition.domain.model.market.SecurityExchange;
+import me.caosh.condition.domain.model.constants.SecurityExchange;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.market.SecurityType;
-import me.caosh.condition.domain.model.order.CompareCondition;
+import me.caosh.condition.domain.model.constants.SecurityType;
+import me.caosh.condition.domain.model.order.constant.CompareCondition;
 import me.caosh.condition.domain.model.order.ConditionOrder;
-import me.caosh.condition.domain.model.order.EntrustStrategy;
-import me.caosh.condition.domain.model.order.ExchangeType;
-import me.caosh.condition.domain.model.order.OrderState;
+import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
+import me.caosh.condition.domain.model.order.constant.ExchangeType;
+import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
+import me.caosh.condition.domain.model.order.plan.TradeNumberDirect;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
-import me.caosh.condition.domain.model.order.TradePlan;
+import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.infrastructure.repository.impl.ConditionOrderIdGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,7 +46,7 @@ public class ConditionOrderRepositoryTest {
         PriceOrder priceOrder = new PriceOrder(conditionOrderIdGenerator.nextId(), customerIdentity, false, OrderState.ACTIVE,
                 new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH"),
                 new PriceCondition(CompareCondition.LESS_THAN_OR_EQUALS, new BigDecimal("13.00")),
-                new TradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, 100)
+                new TradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100))
         );
         conditionOrderRepository.save(priceOrder);
 

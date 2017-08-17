@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.market;
+package me.caosh.condition.domain.model.constants;
 
 import me.caosh.condition.domain.model.share.ValuedEnum;
 
