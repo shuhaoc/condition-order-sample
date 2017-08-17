@@ -4,7 +4,7 @@ import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderCommandEventFactory;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
 import me.caosh.condition.domain.model.order.event.ConditionOrderCommandEvent;
-import me.caosh.condition.domain.util.EventBuses;
+import me.caosh.condition.infrastructure.eventbus.MonitorEntrustBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpAdmin;
@@ -70,7 +70,7 @@ public class ConditionOrderConsumer {
             ConditionOrderMonitorDTO conditionOrderMonitorDTO = (ConditionOrderMonitorDTO) messageConverter.fromMessage(message);
             logger.debug("Receive condition order message <== {}", conditionOrderMonitorDTO);
             ConditionOrderCommandEvent event = ConditionOrderCommandEventFactory.getInstance().create(conditionOrderMonitorDTO);
-            EventBuses.DEFAULT.post(event);
+            MonitorEntrustBus.EVENT_SERIALIZED.post(event);
         });
         container.start();
     }
