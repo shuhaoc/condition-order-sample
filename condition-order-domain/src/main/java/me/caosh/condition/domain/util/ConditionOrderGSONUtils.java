@@ -14,6 +14,7 @@ import me.caosh.condition.domain.model.signal.None;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 
 /**
+ * TODO: rename this
  * Created by caosh on 2017/8/6.
  */
 public class ConditionOrderGSONUtils {
@@ -31,13 +32,8 @@ public class ConditionOrderGSONUtils {
 
     private static Gson createConditionGSON() {
         return new GsonBuilder()
-                .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(Condition.class)
-                        .registerSubtype(PriceCondition.class))
                 .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(ConditionDTO.class)
                         .registerSubtype(PriceConditionDTO.class))
-                .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(TradeSignal.class)
-                        .registerSubtype(None.class)
-                        .registerSubtype(General.class))
                 .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(TradeSignalDTO.class)
                         .registerSubtype(GeneralSignalDTO.class))
                 .create();

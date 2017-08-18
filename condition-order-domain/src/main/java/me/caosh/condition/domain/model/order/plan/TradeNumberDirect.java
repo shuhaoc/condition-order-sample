@@ -1,6 +1,7 @@
 package me.caosh.condition.domain.model.order.plan;
 
 import com.google.common.base.MoreObjects;
+import me.caosh.condition.domain.model.constants.EntrustMethod;
 
 import java.math.BigDecimal;
 
@@ -15,7 +16,16 @@ public class TradeNumberDirect implements TradeNumber {
     }
 
     @Override
+    public EntrustMethod getEntrustMethod() {
+        return EntrustMethod.NUMBER;
+    }
+
+    @Override
     public int getNumber(BigDecimal price) {
+        return number;
+    }
+
+    public int getNumber() {
         return number;
     }
 
@@ -40,5 +50,10 @@ public class TradeNumberDirect implements TradeNumber {
         return MoreObjects.toStringHelper(this)
                 .add("number", number)
                 .toString();
+    }
+
+    @Override
+    public void accept(TradeNumberVisitor visitor) {
+        visitor.visitTradeNumberDirect(this);
     }
 }

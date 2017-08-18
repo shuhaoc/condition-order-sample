@@ -8,7 +8,9 @@ import me.caosh.condition.domain.model.order.constant.CompareCondition;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.OrderState;
+import me.caosh.condition.domain.model.order.plan.TradeNumber;
 import me.caosh.condition.domain.model.order.plan.TradeNumberDirect;
+import me.caosh.condition.domain.model.order.plan.TradeNumberFactory;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
@@ -33,7 +35,9 @@ public class PriceOrderCommandAssembler {
         PriceCondition priceCondition = new PriceCondition(compareCondition, targetPrice);
         ExchangeType exchangeType = ValuedEnumUtil.valueOf(command.getExchangeType(), ExchangeType.class);
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
-        TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, new TradeNumberDirect(command.getEntrustNumber()));
+        TradeNumber tradeNumber = TradeNumberFactory.getInstance()
+                .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
+        TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, tradeNumber);
         return new PriceOrder(orderId, customerIdentity, false, orderState, securityInfo, priceCondition, tradePlan);
     }
 
@@ -44,7 +48,9 @@ public class PriceOrderCommandAssembler {
         PriceCondition priceCondition = new PriceCondition(compareCondition, targetPrice);
         ExchangeType exchangeType = ValuedEnumUtil.valueOf(command.getExchangeType(), ExchangeType.class);
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
-        TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, new TradeNumberDirect(command.getEntrustNumber()));
+        TradeNumber tradeNumber = TradeNumberFactory.getInstance()
+                .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
+        TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, tradeNumber);
         return new PriceOrder(oldPriceOrder.getOrderId(), oldPriceOrder.getCustomerIdentity(), false, orderState,
                 oldPriceOrder.getSecurityInfo(), priceCondition, tradePlan);
     }

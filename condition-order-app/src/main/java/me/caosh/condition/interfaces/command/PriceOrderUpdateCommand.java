@@ -1,7 +1,11 @@
 package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -11,12 +15,27 @@ import java.math.BigDecimal;
 public class PriceOrderUpdateCommand implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @NotNull
     private Long orderId;
+    @NotNull
+    @Range(min = 1, max = 2)
     private Integer compareCondition;
+    @NotNull
+    @DecimalMin("0")
     private BigDecimal targetPrice;
+    @NotNull
+    @Range(min = 1, max = 2)
     private Integer exchangeType;
+    @NotNull
+    @Range(min = 1, max = 11)
     private Integer entrustStrategy;
+//    @NotNull
+    @Range(min = 0, max = 1)
+    private Integer entrustMethod;
+    @Min(100)
     private Integer entrustNumber;
+    @DecimalMin("1")
+    private BigDecimal entrustAmount;
 
     public Long getOrderId() {
         return orderId;
@@ -66,6 +85,22 @@ public class PriceOrderUpdateCommand implements Serializable {
         this.entrustNumber = entrustNumber;
     }
 
+    public Integer getEntrustMethod() {
+        return entrustMethod;
+    }
+
+    public void setEntrustMethod(Integer entrustMethod) {
+        this.entrustMethod = entrustMethod;
+    }
+
+    public BigDecimal getEntrustAmount() {
+        return entrustAmount;
+    }
+
+    public void setEntrustAmount(BigDecimal entrustAmount) {
+        this.entrustAmount = entrustAmount;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -74,7 +109,9 @@ public class PriceOrderUpdateCommand implements Serializable {
                 .add("targetPrice", targetPrice)
                 .add("exchangeType", exchangeType)
                 .add("entrustStrategy", entrustStrategy)
+                .add("entrustMethod", entrustMethod)
                 .add("entrustNumber", entrustNumber)
+                .add("entrustAmount", entrustAmount)
                 .toString();
     }
 }

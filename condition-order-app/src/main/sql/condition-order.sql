@@ -42,3 +42,7 @@ CREATE TABLE `entrust_order` (
   INDEX `index_order_id` (order_id),
   INDEX `index_customer_no` (customer_no)
 );
+
+/***********************************************************************************************/
+
+ALTER TABLE `condition_order` ADD COLUMN `entrust_method` INT NOT NULL DEFAULT 0 AFTER entrust_strategy;

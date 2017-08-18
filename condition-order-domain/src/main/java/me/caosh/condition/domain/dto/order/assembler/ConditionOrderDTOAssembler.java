@@ -3,7 +3,6 @@ package me.caosh.condition.domain.dto.order.assembler;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
 import me.caosh.condition.domain.dto.order.ConditionDTO;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
-import me.caosh.condition.domain.dto.order.TradePlanDTO;
 import me.caosh.condition.domain.model.constants.SecurityExchange;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.constants.SecurityType;
@@ -35,7 +34,7 @@ public class ConditionOrderDTOAssembler {
                 .withSecurityInfo(SecurityInfoDTO.fromDomain(conditionOrder.getSecurityInfo()))
                 .withStrategyId(conditionOrder.getStrategyInfo().getStrategyId())
                 .withCondition(conditionDTO)
-                .withTradePlanDTO(TradePlanDTO.fromDomain(conditionOrder.getTradePlan()))
+                .withTradePlanDTO(TradePlanDTOAssembler.fromDomain(conditionOrder.getTradePlan()))
                 .build();
     }
 
@@ -48,7 +47,7 @@ public class ConditionOrderDTOAssembler {
                 dto.getSecurityInfoDTO().getName());
         StrategyInfo strategyInfo = ValuedEnumUtil.valueOf(dto.getStrategyId(), NativeStrategyInfo.class);
         Condition condition = new ConditionBuilder(dto.getConditionDTO()).build();
-        TradePlan tradePlan = TradePlanDTO.toDomain(dto.getTradePlanDTO());
+        TradePlan tradePlan = TradePlanDTOAssembler.toDomain(dto.getTradePlanDTO());
         return ConditionOrderFactory.getInstance().create(dto.getOrderId(), customerIdentity, false, orderState, securityInfo,
                 strategyInfo, condition, tradePlan);
     }

@@ -32,6 +32,7 @@ public class ConditionOrderDO {
     private String dynamicProperties;
     private Integer exchangeType;
     private Integer entrustStrategy;
+    private Integer entrustMethod;
     private BigDecimal entrustAmount;
     private Timestamp createTime;
     private Timestamp updateTime;
@@ -174,6 +175,16 @@ public class ConditionOrderDO {
 
     public void setEntrustStrategy(Integer entrustStrategy) {
         this.entrustStrategy = entrustStrategy;
+    }
+
+    @Basic
+    @Column(name = "entrust_method")
+    public Integer getEntrustMethod() {
+        return entrustMethod;
+    }
+
+    public void setEntrustMethod(Integer entrustMethod) {
+        this.entrustMethod = entrustMethod;
     }
 
     @Basic

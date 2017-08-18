@@ -13,13 +13,14 @@ DDD sample, a minimized condition order system.
 
 - use domain services
 - order by amount
-- monitor context(delay sync, trigger lock)
+- monitor context(delay sync)
 - turn up buy order(dynamic properties)
 - time order
 - grid trade order
 - batching order (abort state)
 - mock entrust interface
 - new shares purchase order
+- trade center concurrence control
 - move dto package out
 - pause/resume
 - using DUBBO(split api layer and biz layer)

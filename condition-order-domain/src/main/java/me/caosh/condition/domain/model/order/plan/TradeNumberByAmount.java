@@ -1,6 +1,7 @@
 package me.caosh.condition.domain.model.order.plan;
 
 import com.google.common.base.MoreObjects;
+import me.caosh.condition.domain.model.constants.EntrustMethod;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -13,6 +14,15 @@ public class TradeNumberByAmount implements TradeNumber {
 
     public TradeNumberByAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    @Override
+    public EntrustMethod getEntrustMethod() {
+        return EntrustMethod.AMOUNT;
     }
 
     @Override
@@ -43,5 +53,10 @@ public class TradeNumberByAmount implements TradeNumber {
         return MoreObjects.toStringHelper(this)
                 .add("amount", amount)
                 .toString();
+    }
+
+    @Override
+    public void accept(TradeNumberVisitor visitor) {
+        visitor.visitTradeNumberByAmount(this);
     }
 }

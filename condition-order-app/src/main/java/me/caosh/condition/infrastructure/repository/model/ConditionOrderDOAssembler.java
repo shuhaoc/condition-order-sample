@@ -7,8 +7,7 @@ import me.caosh.condition.domain.model.order.*;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.OrderState;
-import me.caosh.condition.domain.model.order.plan.TradeNumberDirect;
-import me.caosh.condition.domain.model.order.plan.TradePlan;
+import me.caosh.condition.domain.model.order.plan.*;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 import me.caosh.condition.domain.model.strategy.NativeStrategyInfo;
 import me.caosh.condition.infrastructure.repository.impl.ConditionOrderDOGSONUtils;
@@ -35,7 +34,19 @@ public class ConditionOrderDOAssembler {
         conditionOrderDO.setConditionProperties(ConditionOrderDOGSONUtils.getGSON().toJson(conditionDO));
         conditionOrderDO.setExchangeType(conditionOrder.getTradePlan().getExchangeType().getValue());
         conditionOrderDO.setEntrustStrategy(conditionOrder.getTradePlan().getEntrustStrategy().getValue());
-        conditionOrderDO.setEntrustAmount(BigDecimal.valueOf(conditionOrder.getTradePlan().getTradeNumber().getNumber(null)));
+        conditionOrderDO.setEntrustMethod(conditionOrder.getTradePlan().getTradeNumber().getEntrustMethod().getValue());
+        conditionOrder.getTradePlan().getTradeNumber().accept(new TradeNumberVisitor() {
+            @Override
+            public void visitTradeNumberDirect(TradeNumberDirect tradeNumberDirect) {
+                conditionOrderDO.setEntrustAmount(BigDecimal.valueOf(tradeNumberDirect.getNumber()));
+            }
+
+            @Override
+            public void visitTradeNumberByAmount(TradeNumberByAmount tradeNumberByAmount) {
+                conditionOrderDO.setEntrustAmount(tradeNumberByAmount.getAmount());
+
+            }
+        });
         return conditionOrderDO;
     }
 
@@ -49,7 +60,9 @@ public class ConditionOrderDOAssembler {
         NativeStrategyInfo nativeStrategyInfo = ValuedEnumUtil.valueOf(conditionOrderDO.getStrategyId(), NativeStrategyInfo.class);
         ExchangeType exchangeType = ValuedEnumUtil.valueOf(conditionOrderDO.getExchangeType(), ExchangeType.class);
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(conditionOrderDO.getEntrustStrategy(), EntrustStrategy.class);
-        TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, new TradeNumberDirect(conditionOrderDO.getEntrustAmount().intValue()));
+        TradeNumber tradeNumber = TradeNumberFactory.getInstance().create(conditionOrderDO.getEntrustMethod(),
+                conditionOrderDO.getEntrustAmount().intValue(), conditionOrderDO.getEntrustAmount());
+        TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, tradeNumber);
         ConditionDO conditionDO = ConditionOrderDOGSONUtils.getGSON().fromJson(conditionOrderDO.getConditionProperties(), ConditionDO.class);
         Condition condition = new ConditionBuilder(conditionDO).build();
         return ConditionOrderFactory.getInstance().create(conditionOrderDO.getOrderId(), customerIdentity, conditionOrderDO.getDeleted(),

@@ -1,13 +1,10 @@
 package me.caosh.condition.domain.dto.order;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
-import me.caosh.condition.domain.model.order.constant.ExchangeType;
-import me.caosh.condition.domain.model.order.plan.TradeNumberDirect;
-import me.caosh.condition.domain.model.order.plan.TradePlan;
-import me.caosh.condition.domain.model.share.ValuedEnumUtil;
+import me.caosh.condition.domain.model.constants.EntrustMethod;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * Created by caosh on 2017/8/11.
@@ -19,48 +16,64 @@ public class TradePlanDTO implements Serializable {
 
     private Integer exchangeType;
     private Integer entrustStrategy;
+    /**
+     * @see EntrustMethod
+     */
+    private Integer entrustMethod;
     private Integer number;
+    private BigDecimal entrustAmount;
 
     public TradePlanDTO() {
-    }
-
-    private TradePlanDTO(Integer exchangeType, Integer entrustStrategy, Integer number) {
-        this.exchangeType = exchangeType;
-        this.entrustStrategy = entrustStrategy;
-        this.number = number;
-    }
-
-    public static TradePlanDTO fromDomain(TradePlan tradePlan) {
-        return new TradePlanDTO(tradePlan.getExchangeType().getValue(),
-                tradePlan.getEntrustStrategy().getValue(),
-                tradePlan.getTradeNumber().getNumber(null));
-    }
-
-    public static TradePlan toDomain(TradePlanDTO tradePlanDTO) {
-        ExchangeType exchangeType = ValuedEnumUtil.valueOf(tradePlanDTO.getExchangeType(), ExchangeType.class);
-        EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(tradePlanDTO.getEntrustStrategy(), EntrustStrategy.class);
-        return new TradePlan(exchangeType, entrustStrategy, new TradeNumberDirect(tradePlanDTO.getNumber()));
     }
 
     public Integer getExchangeType() {
         return exchangeType;
     }
 
+    public void setExchangeType(Integer exchangeType) {
+        this.exchangeType = exchangeType;
+    }
+
     public Integer getEntrustStrategy() {
         return entrustStrategy;
+    }
+
+    public void setEntrustStrategy(Integer entrustStrategy) {
+        this.entrustStrategy = entrustStrategy;
+    }
+
+    public Integer getEntrustMethod() {
+        return entrustMethod;
+    }
+
+    public void setEntrustMethod(Integer entrustMethod) {
+        this.entrustMethod = entrustMethod;
     }
 
     public Integer getNumber() {
         return number;
     }
 
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public BigDecimal getEntrustAmount() {
+        return entrustAmount;
+    }
+
+    public void setEntrustAmount(BigDecimal entrustAmount) {
+        this.entrustAmount = entrustAmount;
+    }
+
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(TradePlanDTO.class).omitNullValues()
-                .addValue(TradePlanDTO.class.getSuperclass() != Object.class ? super.toString() : null)
+        return MoreObjects.toStringHelper(this)
                 .add("exchangeType", exchangeType)
                 .add("entrustStrategy", entrustStrategy)
+                .add("entrustMethod", entrustMethod)
                 .add("number", number)
+                .add("entrustAmount", entrustAmount)
                 .toString();
     }
 }
