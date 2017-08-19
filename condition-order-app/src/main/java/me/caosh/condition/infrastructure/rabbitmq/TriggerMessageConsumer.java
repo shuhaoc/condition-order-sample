@@ -64,7 +64,6 @@ public class TriggerMessageConsumer {
 
     @PostConstruct
     public void init() {
-        // TODO: 样板代码
         Queue queue = new Queue(queueName, false, false, false);
         Binding binding = new Binding(queue.getName(), Binding.DestinationType.QUEUE, exchangeName, routingKey, Collections.emptyMap());
 

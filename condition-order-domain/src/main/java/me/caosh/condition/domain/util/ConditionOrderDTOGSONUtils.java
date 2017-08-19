@@ -11,10 +11,9 @@ import me.caosh.condition.domain.model.signal.None;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 
 /**
- * TODO: rename this
  * Created by caosh on 2017/8/6.
  */
-public class ConditionOrderGSONUtils {
+public class ConditionOrderDTOGSONUtils {
 
     private static final Gson CONDITION_GSON = createConditionGSON();
     private static final Gson MARKET_GSON = new GsonBuilder().setDateFormat("yyyyMMddHHmmss").create();
@@ -38,6 +37,6 @@ public class ConditionOrderGSONUtils {
                 .create();
     }
 
-    private ConditionOrderGSONUtils() {
+    private ConditionOrderDTOGSONUtils() {
     }
 }
