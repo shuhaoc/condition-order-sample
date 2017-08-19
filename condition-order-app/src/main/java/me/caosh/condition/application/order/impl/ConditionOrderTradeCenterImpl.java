@@ -5,8 +5,8 @@ import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.application.order.ConditionOrderTradeCenter;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
-import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.TriggerContext;
+import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.signal.CacheSync;
 import me.caosh.condition.domain.model.signal.General;
 import me.caosh.condition.domain.model.signal.TradeSignal;
@@ -48,6 +48,7 @@ public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter 
         TradeSignal signal = triggerContext.getTradeSignal();
         ConditionOrder conditionOrder = triggerContext.getConditionOrder();
         if (signal instanceof General) {
+            // TODO: use responsibility chain pattern
             RealTimeMarket realTimeMarket = triggerContext.getTriggerRealTimeMarket();
             Preconditions.checkNotNull(realTimeMarket);
             EntrustCommand entrustCommand = conditionOrder.onTradeSignal(signal, realTimeMarket);

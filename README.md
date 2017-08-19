@@ -11,11 +11,9 @@ DDD sample, a minimized condition order system.
 
 ## TODO
 
-- use domain services
 - time order
 - grid trade order
 - batching order (abort state)
-- mock entrust interface
 - new shares purchase order
 - pause/resume
 - using DUBBO(split api layer and biz layer)

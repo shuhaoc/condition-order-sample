@@ -8,9 +8,19 @@ import com.google.common.base.MoreObjects;
  * @author caoshuhao@touker.com
  */
 public class EntrustResult {
+    public static final int SUCCESS = 1;
+
     private final Integer entrustState;
     private final String entrustMessage;
     private final Integer entrustCode;
+
+    public static EntrustResult ofSuccess(String entrustMessage, Integer entrustCode) {
+        return new EntrustResult(SUCCESS, entrustMessage, entrustCode);
+    }
+
+    public static EntrustResult ofFail(Integer entrustState, String entrustMessage) {
+        return new EntrustResult(entrustState, entrustMessage, null);
+    }
 
     public EntrustResult(Integer entrustState, String entrustMessage, Integer entrustCode) {
         this.entrustState = entrustState;

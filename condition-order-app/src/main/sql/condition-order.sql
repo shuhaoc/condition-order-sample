@@ -36,7 +36,7 @@ CREATE TABLE `entrust_order` (
   `order_type` INT NOT NULL,
   `entrust_state` INT NOT NULL,
   `entrust_message` VARCHAR(64) NOT NULL,
-  `entrust_code` INT NOT NULL,
+  `entrust_code` INT,
   `create_time` TIMESTAMP DEFAULT current_timestamp(),
   `update_time` TIMESTAMP DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
   INDEX `index_order_id` (order_id),
