@@ -12,9 +12,6 @@ DDD sample, a minimized condition order system.
 ## TODO
 
 - use domain services
-- order by amount
-- monitor context(delay sync)
-- turn up buy order(dynamic properties)
 - time order
 - grid trade order
 - batching order (abort state)

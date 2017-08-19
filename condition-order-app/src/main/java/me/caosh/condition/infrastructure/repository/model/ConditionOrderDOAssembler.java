@@ -32,6 +32,8 @@ public class ConditionOrderDOAssembler {
         conditionOrderDO.setStrategyId(conditionOrder.getStrategyInfo().getStrategyId());
         ConditionDO conditionDO = new ConditionDOBuilder(conditionOrder.getCondition()).build();
         conditionOrderDO.setConditionProperties(ConditionOrderDOGSONUtils.getGSON().toJson(conditionDO));
+        DynamicPropertiesDO dynamicPropertiesDO = new DynamicPropertiesDOBuilder(conditionOrder.getCondition()).build();
+        conditionOrderDO.setDynamicProperties(ConditionOrderDOGSONUtils.getGSON().toJson(dynamicPropertiesDO));
         conditionOrderDO.setExchangeType(conditionOrder.getTradePlan().getExchangeType().getValue());
         conditionOrderDO.setEntrustStrategy(conditionOrder.getTradePlan().getEntrustStrategy().getValue());
         conditionOrderDO.setEntrustMethod(conditionOrder.getTradePlan().getTradeNumber().getEntrustMethod().getValue());
@@ -44,7 +46,6 @@ public class ConditionOrderDOAssembler {
             @Override
             public void visitTradeNumberByAmount(TradeNumberByAmount tradeNumberByAmount) {
                 conditionOrderDO.setEntrustAmount(tradeNumberByAmount.getAmount());
-
             }
         });
         return conditionOrderDO;
@@ -64,7 +65,8 @@ public class ConditionOrderDOAssembler {
                 conditionOrderDO.getEntrustAmount().intValue(), conditionOrderDO.getEntrustAmount());
         TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, tradeNumber);
         ConditionDO conditionDO = ConditionOrderDOGSONUtils.getGSON().fromJson(conditionOrderDO.getConditionProperties(), ConditionDO.class);
-        Condition condition = new ConditionBuilder(conditionDO).build();
+        DynamicPropertiesDO dynamicPropertiesDO = ConditionOrderDOGSONUtils.getGSON().fromJson(conditionOrderDO.getDynamicProperties(), DynamicPropertiesDO.class);
+        Condition condition = new ConditionBuilder(conditionDO, dynamicPropertiesDO).build();
         return ConditionOrderFactory.getInstance().create(conditionOrderDO.getOrderId(), customerIdentity, conditionOrderDO.getDeleted(),
                 orderState, securityInfo, nativeStrategyInfo, condition, tradePlan);
     }

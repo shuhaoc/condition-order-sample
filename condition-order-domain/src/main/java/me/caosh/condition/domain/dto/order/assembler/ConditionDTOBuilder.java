@@ -3,9 +3,11 @@ package me.caosh.condition.domain.dto.order.assembler;
 import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.dto.order.ConditionDTO;
 import me.caosh.condition.domain.dto.order.PriceConditionDTO;
+import me.caosh.condition.domain.dto.order.TurnUpConditionDTO;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
+import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
 
 /**
  * Created by caosh on 2017/8/11.
@@ -26,6 +28,13 @@ public class ConditionDTOBuilder implements ConditionVisitor {
 
     @Override
     public void visitPriceCondition(PriceCondition priceCondition) {
-        this.conditionDTO = PriceConditionDTO.fromDomain(priceCondition);
+        this.conditionDTO = new PriceConditionDTO(priceCondition.getCompareCondition().getValue(),
+                priceCondition.getTargetPrice());
+    }
+
+    @Override
+    public void visitTurnUpCondition(TurnUpCondition turnUpCondition) {
+        this.conditionDTO = new TurnUpConditionDTO(turnUpCondition.getBreakPrice(), turnUpCondition.getTurnUpPercent(),
+                turnUpCondition.getBroken(), turnUpCondition.getLowestPrice().orElse(null));
     }
 }

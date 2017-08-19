@@ -7,6 +7,7 @@ import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.TriggerContext;
+import me.caosh.condition.domain.model.signal.CacheSync;
 import me.caosh.condition.domain.model.signal.General;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.LifeCircle;
@@ -46,8 +47,8 @@ public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter 
     public void handleTriggerContext(TriggerContext triggerContext) {
         TradeSignal signal = triggerContext.getTradeSignal();
         ConditionOrder conditionOrder = triggerContext.getConditionOrder();
-        RealTimeMarket realTimeMarket = triggerContext.getTriggerRealTimeMarket();
         if (signal instanceof General) {
+            RealTimeMarket realTimeMarket = triggerContext.getTriggerRealTimeMarket();
             Preconditions.checkNotNull(realTimeMarket);
             EntrustCommand entrustCommand = conditionOrder.onTradeSignal(signal, realTimeMarket);
             EntrustResult entrustResult = securityEntrustService.execute(entrustCommand);
@@ -60,6 +61,10 @@ public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter 
                 conditionOrder.setOrderState(OrderState.TERMINATED);
             }
             conditionOrderCommandService.update(conditionOrder);
+        } else if (signal instanceof CacheSync) {
+            // TODO: use visitor pattern
+            conditionOrderCommandService.updateDynamicProperties(conditionOrder);
+            logger.info("Sync dynamic properties, orderId={}, condition={}", conditionOrder.getOrderId(), conditionOrder.getCondition());
         }
     }
 }

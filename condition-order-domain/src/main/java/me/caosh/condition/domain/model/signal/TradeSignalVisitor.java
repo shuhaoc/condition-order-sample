@@ -8,4 +8,5 @@ package me.caosh.condition.domain.model.signal;
 public interface TradeSignalVisitor {
     void visitNone(None none);
     void visitGeneral(General general);
+    void visitCacheSync(CacheSync cacheSync);
 }

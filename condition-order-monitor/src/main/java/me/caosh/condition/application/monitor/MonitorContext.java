@@ -12,6 +12,7 @@ import java.util.Optional;
 public class MonitorContext {
     private final ConditionOrder conditionOrder;
     private TriggerLock triggerLock;
+    private DelaySyncMarker delaySyncMarker;
 
     public MonitorContext(ConditionOrder conditionOrder) {
         this.conditionOrder = conditionOrder;
@@ -31,5 +32,17 @@ public class MonitorContext {
 
     public Optional<TriggerLock> getTriggerLock() {
         return Optional.ofNullable(triggerLock);
+    }
+
+    public void markDelaySync() {
+        delaySyncMarker = new DelaySyncMarker(4);
+    }
+
+    public void clearDelaySyncMarker() {
+        delaySyncMarker = null;
+    }
+
+    public Optional<DelaySyncMarker> getDelaySyncMarker() {
+        return Optional.ofNullable(delaySyncMarker);
     }
 }

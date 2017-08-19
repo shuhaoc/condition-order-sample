@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.model.order.constant.CompareCondition;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
+import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 
 /**
@@ -11,12 +12,15 @@ import me.caosh.condition.domain.model.share.ValuedEnumUtil;
  *
  * @author caoshuhao@touker.com
  */
-public class ConditionBuilder implements ConditionDOVisitor {
+public class ConditionBuilder implements ConditionDOVisitor, DynamicPropertiesDOVisitor {
 
     private Condition condition;
 
-    public ConditionBuilder(ConditionDO conditionDO) {
+    public ConditionBuilder(ConditionDO conditionDO, DynamicPropertiesDO dynamicPropertiesDO) {
         conditionDO.accept(this);
+        if (dynamicPropertiesDO != null) {
+            dynamicPropertiesDO.accept(this);
+        }
     }
 
     public Condition build() {
@@ -27,5 +31,18 @@ public class ConditionBuilder implements ConditionDOVisitor {
     public void visitPriceConditionDO(PriceConditionDO priceConditionDO) {
         CompareCondition compareCondition = ValuedEnumUtil.valueOf(priceConditionDO.getCompareCondition(), CompareCondition.class);
         this.condition = new PriceCondition(compareCondition, priceConditionDO.getTargetPrice());
+    }
+
+    @Override
+    public void visitTurnUpConditionDO(TurnUpConditionDO turnUpConditionDO) {
+        this.condition = new TurnUpCondition(turnUpConditionDO.getBreakPrice(), turnUpConditionDO.getTurnUpPercent());
+    }
+
+    @Override
+    public void visitTurnUpDynamicPropertiesDO(TurnUpDynamicPropertiesDO turnUpDynamicPropertiesDO) {
+        Preconditions.checkNotNull(condition);
+        TurnUpCondition turnUpCondition = (TurnUpCondition) condition;
+        this.condition = new TurnUpCondition(turnUpCondition.getBreakPrice(), turnUpCondition.getTurnUpPercent(),
+                turnUpDynamicPropertiesDO.getBroken(), turnUpDynamicPropertiesDO.getLowestPrice());
     }
 }

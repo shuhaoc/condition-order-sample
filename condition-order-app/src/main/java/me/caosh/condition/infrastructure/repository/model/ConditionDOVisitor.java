@@ -5,4 +5,6 @@ package me.caosh.condition.infrastructure.repository.model;
  */
 public interface ConditionDOVisitor {
     void visitPriceConditionDO(PriceConditionDO priceConditionDO);
+
+    void visitTurnUpConditionDO(TurnUpConditionDO turnUpConditionDO);
 }

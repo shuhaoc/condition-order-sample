@@ -12,6 +12,7 @@ public class SignalFactory {
 
     private static final General general = new General();
     private static final None none = new None();
+    private static final CacheSync cacheSync = new CacheSync();
 
     public None none() {
         return none;
@@ -19,6 +20,10 @@ public class SignalFactory {
 
     public General general() {
         return general;
+    }
+
+    public CacheSync cacheSync() {
+        return cacheSync;
     }
 
     private SignalFactory() {

@@ -42,6 +42,11 @@ public class ConditionOrderCommandServiceImpl implements ConditionOrderCommandSe
         }
     }
 
+    @Override
+    public void updateDynamicProperties(ConditionOrder conditionOrder) {
+        conditionOrderRepository.save(conditionOrder);
+    }
+
     @Transactional
     @Override
     public void remove(Long orderId) {

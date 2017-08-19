@@ -7,4 +7,6 @@ package me.caosh.condition.domain.dto.order;
  */
 public interface ConditionDTOVisitor {
     void visitPriceConditionDTO(PriceConditionDTO priceConditionDTO);
+
+    void visitTurnUpConditionDTO(TurnUpConditionDTO turnUpConditionDTO);
 }

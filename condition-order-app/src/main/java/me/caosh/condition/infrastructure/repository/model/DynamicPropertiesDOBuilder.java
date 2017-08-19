@@ -8,25 +8,24 @@ import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
 /**
  * Created by caosh on 2017/8/15.
  */
-public class ConditionDOBuilder implements ConditionVisitor {
+public class DynamicPropertiesDOBuilder implements ConditionVisitor {
 
-    private ConditionDO conditionDO;
+    private DynamicPropertiesDO dynamicPropertiesDO;
 
-    public ConditionDOBuilder(Condition condition) {
+    public DynamicPropertiesDOBuilder(Condition condition) {
         condition.accept(this);
     }
 
-    public ConditionDO build() {
-        return conditionDO;
+    public DynamicPropertiesDO build() {
+        return dynamicPropertiesDO;
     }
 
     @Override
     public void visitPriceCondition(PriceCondition priceCondition) {
-        this.conditionDO = new PriceConditionDO(priceCondition.getCompareCondition().getValue(), priceCondition.getTargetPrice());
     }
 
     @Override
     public void visitTurnUpCondition(TurnUpCondition turnUpCondition) {
-        this.conditionDO = new TurnUpConditionDO(turnUpCondition.getBreakPrice(), turnUpCondition.getTurnUpPercent());
+        this.dynamicPropertiesDO = new TurnUpDynamicPropertiesDO(turnUpCondition.getBroken(), turnUpCondition.getLowestPrice().orElse(null));
     }
 }

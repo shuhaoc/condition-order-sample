@@ -11,7 +11,9 @@ import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
 import me.caosh.condition.domain.dto.order.assembler.TradeSignalDTOBuilder;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.event.RealTimeMarketPushEvent;
+import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.ConditionOrder;
+import me.caosh.condition.domain.model.order.DynamicCondition;
 import me.caosh.condition.domain.model.order.RealTimeMarketDriven;
 import me.caosh.condition.domain.model.order.event.ConditionOrderCreateCommandEvent;
 import me.caosh.condition.domain.model.order.event.ConditionOrderDeleteCommandEvent;
@@ -71,7 +73,7 @@ public class ConditionOrderMonitorCenter {
     private void checkWithRealTimeMarket(MonitorContext monitorContext, RealTimeMarket realTimeMarket) {
         if (monitorContext.getTriggerLock().isPresent() && monitorContext.getTriggerLock().get().isLocked()) {
             logger.warn("Trigger locked, orderId={}, lockedDuration={}", monitorContext.getOrderId(),
-                    monitorContext.getTriggerLock().get().lockedDuration());
+                    monitorContext.getTriggerLock().get().getLockedDuration());
             return;
         }
         ConditionOrder conditionOrder = monitorContext.getConditionOrder();
@@ -79,7 +81,30 @@ public class ConditionOrderMonitorCenter {
         if (tradeSignal != SignalFactory.getInstance().none()) {
             triggerSignal(tradeSignal, conditionOrder, realTimeMarket);
             monitorContext.lockTriggering();
+        } else {
+            Condition condition = conditionOrder.getCondition();
+            if (condition instanceof DynamicCondition) {
+                DynamicCondition dynamicCondition = (DynamicCondition) condition;
+                if (dynamicCondition.isDirty()) {
+                    monitorContext.markDelaySync();
+                    dynamicCondition.clearDirty();
+                    logger.info("Mark delay sync, orderId={}, condition={}", conditionOrder.getOrderId(), condition);
+                }
+            }
         }
+    }
+
+    @Subscribe
+    public void onTimer(TimerEvent e) {
+        logger.debug("tick...");
+        Iterable<MonitorContext> monitorContexts = monitorContextManage.getAll();
+        monitorContexts.forEach(monitorContext -> {
+            if (monitorContext.getDelaySyncMarker().isPresent() && monitorContext.getDelaySyncMarker().get().isTimesUp()) {
+                ConditionOrder conditionOrder = monitorContext.getConditionOrder();
+                triggerSignal(SignalFactory.getInstance().cacheSync(), conditionOrder);
+                monitorContext.clearDelaySyncMarker();
+            }
+        });
     }
 
     private void triggerSignal(TradeSignal tradeSignal, ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {
@@ -87,6 +112,13 @@ public class ConditionOrderMonitorCenter {
         ConditionOrderDTO conditionOrderDTO = ConditionOrderDTOAssembler.toDTO(conditionOrder);
         RealTimeMarketDTO realTimeMarketDTO = RealTimeMarketDTOAssembler.toDTO(realTimeMarket);
         TriggerMessageDTO triggerMessageDTO = new TriggerMessageDTO(tradeSignalDTO, conditionOrderDTO, realTimeMarketDTO);
+        triggerMessageTriggerProducer.send(triggerMessageDTO);
+    }
+
+    private void triggerSignal(TradeSignal tradeSignal, ConditionOrder conditionOrder) {
+        TradeSignalDTO tradeSignalDTO = new TradeSignalDTOBuilder(tradeSignal).build();
+        ConditionOrderDTO conditionOrderDTO = ConditionOrderDTOAssembler.toDTO(conditionOrder);
+        TriggerMessageDTO triggerMessageDTO = new TriggerMessageDTO(tradeSignalDTO, conditionOrderDTO, null);
         triggerMessageTriggerProducer.send(triggerMessageDTO);
     }
 
@@ -109,10 +141,5 @@ public class ConditionOrderMonitorCenter {
         Long orderId = e.getOrderId();
         monitorContextManage.remove(orderId);
         logger.info("Remove condition order ==> {}", orderId);
-    }
-
-    @Subscribe
-    public void onTimer(TimerEvent e) {
-        logger.debug("tick...");
     }
 }

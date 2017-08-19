@@ -3,10 +3,7 @@ package me.caosh.condition.domain.util;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
-import me.caosh.condition.domain.dto.order.ConditionDTO;
-import me.caosh.condition.domain.dto.order.GeneralSignalDTO;
-import me.caosh.condition.domain.dto.order.PriceConditionDTO;
-import me.caosh.condition.domain.dto.order.TradeSignalDTO;
+import me.caosh.condition.domain.dto.order.*;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.signal.General;
@@ -33,9 +30,11 @@ public class ConditionOrderGSONUtils {
     private static Gson createConditionGSON() {
         return new GsonBuilder()
                 .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(ConditionDTO.class)
-                        .registerSubtype(PriceConditionDTO.class))
+                        .registerSubtype(PriceConditionDTO.class)
+                        .registerSubtype(TurnUpConditionDTO.class))
                 .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(TradeSignalDTO.class)
-                        .registerSubtype(GeneralSignalDTO.class))
+                        .registerSubtype(GeneralSignalDTO.class)
+                        .registerSubtype(CacheSyncSignalDTO.class))
                 .create();
     }
 

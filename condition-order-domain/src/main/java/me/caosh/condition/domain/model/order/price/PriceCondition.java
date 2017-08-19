@@ -2,9 +2,12 @@ package me.caosh.condition.domain.model.order.price;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
-import me.caosh.condition.domain.model.order.constant.CompareCondition;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
+import me.caosh.condition.domain.model.order.MarketCondition;
+import me.caosh.condition.domain.model.order.constant.CompareCondition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 
@@ -13,7 +16,7 @@ import java.math.BigDecimal;
  *
  * @implNote renaming this class must cause read DB failure
  */
-public class PriceCondition implements Condition {
+public class PriceCondition implements MarketCondition {
     private final CompareCondition compareCondition;
     private final BigDecimal targetPrice;
 
@@ -62,6 +65,7 @@ public class PriceCondition implements Condition {
                 .toString();
     }
 
+    @Override
     public boolean isSatisfiedBy(BigDecimal price) {
         if (compareCondition == CompareCondition.GREATER_THAN_OR_EQUALS) {
             return price.compareTo(targetPrice) >= 0;

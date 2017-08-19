@@ -15,11 +15,11 @@ public class TriggerLock {
         this.autoReleaseSeconds = autoReleaseSeconds;
     }
 
-    public Duration lockedDuration() {
+    public Duration getLockedDuration() {
         return Duration.between(triggerLockTime, LocalDateTime.now());
     }
 
     public boolean isLocked() {
-        return lockedDuration().getSeconds() < autoReleaseSeconds;
+        return getLockedDuration().getSeconds() < autoReleaseSeconds;
     }
 }

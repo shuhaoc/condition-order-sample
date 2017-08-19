@@ -79,7 +79,10 @@ public class TriggerMessageConsumer {
             logger.debug("Receive trigger message <== {}", triggerMessageDTO);
             TradeSignal tradeSignal = new TradeSignalBuilder(triggerMessageDTO.getTradeSignalDTO()).build();
             ConditionOrder conditionOrder = ConditionOrderDTOAssembler.fromDTO(triggerMessageDTO.getConditionOrderDTO());
-            RealTimeMarket realTimeMarket = RealTimeMarketDTOAssembler.fromDTO(triggerMessageDTO.getRealTimeMarketDTO());
+            RealTimeMarket realTimeMarket = null;
+            if (triggerMessageDTO.getRealTimeMarketDTO() != null) {
+                realTimeMarket = RealTimeMarketDTOAssembler.fromDTO(triggerMessageDTO.getRealTimeMarketDTO());
+            }
             TriggerContext triggerContext = new TriggerContext(tradeSignal, conditionOrder, realTimeMarket);
             conditionOrderTradeCenter.handleTriggerContext(triggerContext);
         });

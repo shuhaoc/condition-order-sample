@@ -21,19 +21,9 @@ public class PriceConditionDTO implements ConditionDTO {
     public PriceConditionDTO() {
     }
 
-    private PriceConditionDTO(Integer compareCondition, BigDecimal targetPrice) {
+    public PriceConditionDTO(Integer compareCondition, BigDecimal targetPrice) {
         this.compareCondition = compareCondition;
         this.targetPrice = targetPrice;
-    }
-
-    public static PriceConditionDTO fromDomain(PriceCondition priceCondition) {
-        return new PriceConditionDTO(priceCondition.getCompareCondition().getValue(),
-                priceCondition.getTargetPrice());
-    }
-
-    public static PriceCondition toDomain(PriceConditionDTO dto) {
-        CompareCondition compareCondition = ValuedEnumUtil.valueOf(dto.getCompareCondition(), CompareCondition.class);
-        return new PriceCondition(compareCondition, dto.getTargetPrice());
     }
 
     public Integer getCompareCondition() {
