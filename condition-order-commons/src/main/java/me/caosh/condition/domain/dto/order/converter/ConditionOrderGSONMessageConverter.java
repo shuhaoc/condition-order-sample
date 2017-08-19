@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.dto.order.converter;
 
-import me.caosh.condition.domain.util.ConditionOrderDTOGSONUtils;
+import me.caosh.condition.domain.dto.util.ConditionOrderDTOGSONUtils;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.core.MessageProperties;

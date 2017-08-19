@@ -1,7 +1,6 @@
 package me.caosh.condition.domain.dto.order;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.model.constants.OrderCommandType;
 
 import java.io.Serializable;
 

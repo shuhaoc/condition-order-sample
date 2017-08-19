@@ -1,14 +1,9 @@
-package me.caosh.condition.domain.util;
+package me.caosh.condition.domain.dto.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 import me.caosh.condition.domain.dto.order.*;
-import me.caosh.condition.domain.model.order.Condition;
-import me.caosh.condition.domain.model.order.price.PriceCondition;
-import me.caosh.condition.domain.model.signal.General;
-import me.caosh.condition.domain.model.signal.None;
-import me.caosh.condition.domain.model.signal.TradeSignal;
 
 /**
  * Created by caosh on 2017/8/6.

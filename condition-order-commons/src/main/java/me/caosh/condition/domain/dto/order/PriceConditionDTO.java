@@ -1,9 +1,6 @@
 package me.caosh.condition.domain.dto.order;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.model.order.constant.CompareCondition;
-import me.caosh.condition.domain.model.order.price.PriceCondition;
-import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 
 import java.math.BigDecimal;
 

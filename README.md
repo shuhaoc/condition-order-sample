@@ -17,6 +17,5 @@ DDD sample, a minimized condition order system.
 - batching order (abort state)
 - mock entrust interface
 - new shares purchase order
-- move dto package out
 - pause/resume
 - using DUBBO(split api layer and biz layer)

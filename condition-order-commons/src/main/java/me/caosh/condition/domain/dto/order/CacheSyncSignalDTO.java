@@ -1,7 +1,5 @@
 package me.caosh.condition.domain.dto.order;
 
-import me.caosh.condition.domain.model.signal.TradeSignalVisitor;
-
 /**
  * Created by caosh on 2017/8/19.
  */

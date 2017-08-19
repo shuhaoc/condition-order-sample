@@ -15,6 +15,7 @@
     </properties>
     <modules>
         <module>condition-order-domain</module>
+        <module>condition-order-commons</module>
         <module>condition-order-app</module>
         <module>condition-order-monitor</module>
     </modules>

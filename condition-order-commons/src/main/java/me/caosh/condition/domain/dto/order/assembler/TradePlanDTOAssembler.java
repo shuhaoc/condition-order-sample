@@ -1,7 +1,6 @@
 package me.caosh.condition.domain.dto.order.assembler;
 
 import me.caosh.condition.domain.dto.order.TradePlanDTO;
-import me.caosh.condition.domain.model.constants.EntrustMethod;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.plan.*;

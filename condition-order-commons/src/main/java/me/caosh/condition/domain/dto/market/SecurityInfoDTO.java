@@ -2,8 +2,8 @@ package me.caosh.condition.domain.dto.market;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.model.constants.SecurityExchange;
-import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.constants.SecurityType;
+import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 
 import java.io.Serializable;

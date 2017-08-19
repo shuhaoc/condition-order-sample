@@ -2,8 +2,8 @@ package me.caosh.condition.domain.dto.order.serializer;
 
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
+import me.caosh.condition.domain.dto.util.ConditionOrderDTOGSONUtils;
 import me.caosh.condition.domain.model.order.ConditionOrder;
-import me.caosh.condition.domain.util.ConditionOrderDTOGSONUtils;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 
