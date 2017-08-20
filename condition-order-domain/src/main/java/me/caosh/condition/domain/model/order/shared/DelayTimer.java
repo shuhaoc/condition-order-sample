@@ -1,4 +1,4 @@
-package me.caosh.condition.application.monitor;
+package me.caosh.condition.domain.model.order.shared;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
