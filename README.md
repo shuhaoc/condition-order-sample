@@ -11,7 +11,6 @@ DDD sample, a minimized condition order system.
 
 ## TODO
 
-- time order
 - grid trade order
 - batching order (abort state)
 - new shares purchase order

@@ -10,7 +10,6 @@ import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.plan.TradeNumber;
 import me.caosh.condition.domain.model.order.plan.TradeNumberFactory;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
-import me.caosh.condition.domain.model.order.price.PriceOrder;
 import me.caosh.condition.domain.model.order.time.SimpleTimeCondition;
 import me.caosh.condition.domain.model.order.time.TimeOrder;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
@@ -37,7 +36,7 @@ public class TimeOrderCommandAssembler {
         return new TimeOrder(orderId, customerIdentity, false, securityInfo, simpleTimeCondition, tradePlan, orderState);
     }
 
-    public static TimeOrder mergePriceOrder(PriceOrder oldPriceOrder, TimeOrderUpdateCommand command) {
+    public static TimeOrder merge(TimeOrder oldOrder, TimeOrderUpdateCommand command) {
         OrderState orderState = OrderState.ACTIVE;
         SimpleTimeCondition simpleTimeCondition = new SimpleTimeCondition(InstantUtils.toLocalDateTime(command.getTargetTime()));
         ExchangeType exchangeType = ValuedEnumUtil.valueOf(command.getExchangeType(), ExchangeType.class);
@@ -45,8 +44,8 @@ public class TimeOrderCommandAssembler {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
         TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, tradeNumber);
-        return new TimeOrder(oldPriceOrder.getOrderId(), oldPriceOrder.getCustomerIdentity(), false,
-                oldPriceOrder.getSecurityInfo(), simpleTimeCondition, tradePlan, orderState);
+        return new TimeOrder(oldOrder.getOrderId(), oldOrder.getCustomerIdentity(), false,
+                oldOrder.getSecurityInfo(), simpleTimeCondition, tradePlan, orderState);
     }
 
     private TimeOrderCommandAssembler() {
