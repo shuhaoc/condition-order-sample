@@ -7,4 +7,6 @@ public interface ConditionDOVisitor {
     void visitPriceConditionDO(PriceConditionDO priceConditionDO);
 
     void visitTurnUpConditionDO(TurnUpConditionDO turnUpConditionDO);
+
+    void visitSimpleTimeConditionDO(SimpleTimeConditionDO simpleTimeConditionDO);
 }

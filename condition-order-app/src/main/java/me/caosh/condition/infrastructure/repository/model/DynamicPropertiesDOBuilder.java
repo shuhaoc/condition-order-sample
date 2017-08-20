@@ -3,6 +3,7 @@ package me.caosh.condition.infrastructure.repository.model;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
+import me.caosh.condition.domain.model.order.time.SimpleTimeCondition;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
 
 /**
@@ -27,5 +28,9 @@ public class DynamicPropertiesDOBuilder implements ConditionVisitor {
     @Override
     public void visitTurnUpCondition(TurnUpCondition turnUpCondition) {
         this.dynamicPropertiesDO = new TurnUpDynamicPropertiesDO(turnUpCondition.getBroken(), turnUpCondition.getLowestPrice().orElse(null));
+    }
+
+    @Override
+    public void visitSimpleTimeCondition(SimpleTimeCondition simpleTimeCondition) {
     }
 }

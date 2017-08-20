@@ -1,6 +1,7 @@
 package me.caosh.condition.domain.model.order;
 
 import me.caosh.condition.domain.model.order.price.PriceCondition;
+import me.caosh.condition.domain.model.order.time.SimpleTimeCondition;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
 
 /**
@@ -12,4 +13,6 @@ public interface ConditionVisitor {
     void visitPriceCondition(PriceCondition priceCondition);
 
     void visitTurnUpCondition(TurnUpCondition turnUpCondition);
+
+    void visitSimpleTimeCondition(SimpleTimeCondition simpleTimeCondition);
 }

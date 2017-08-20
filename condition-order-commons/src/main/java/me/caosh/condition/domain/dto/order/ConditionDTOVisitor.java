@@ -9,4 +9,6 @@ public interface ConditionDTOVisitor {
     void visitPriceConditionDTO(PriceConditionDTO priceConditionDTO);
 
     void visitTurnUpConditionDTO(TurnUpConditionDTO turnUpConditionDTO);
+
+    void visitSimpleTimeConditionDTO(SimpleTimeConditionDTO simpleTimeConditionDTO);
 }

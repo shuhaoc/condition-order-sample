@@ -5,6 +5,8 @@ import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
+import me.caosh.condition.domain.model.order.time.SimpleTimeCondition;
+import me.caosh.condition.domain.model.order.time.TimeOrder;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpBuyOrder;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
 import me.caosh.condition.domain.model.strategy.NativeStrategyInfo;
@@ -28,6 +30,9 @@ public class ConditionOrderFactory {
         } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {
             return new TurnUpBuyOrder(orderId, customerIdentity, deleted, orderState, securityInfo,
                     (TurnUpCondition) condition, tradePlan);
+        } else if (strategyInfo == NativeStrategyInfo.TIME) {
+            return new TimeOrder(orderId, customerIdentity, deleted, securityInfo, (SimpleTimeCondition) condition,
+                    tradePlan, orderState);
         }
         throw new IllegalArgumentException("strategyInfo=" + strategyInfo);
     }

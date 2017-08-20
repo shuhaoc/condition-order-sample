@@ -1,15 +1,14 @@
 package me.caosh.condition.domain.dto.order.assembler;
 
 import com.google.common.base.Preconditions;
-import me.caosh.condition.domain.dto.order.ConditionDTO;
-import me.caosh.condition.domain.dto.order.ConditionDTOVisitor;
-import me.caosh.condition.domain.dto.order.PriceConditionDTO;
-import me.caosh.condition.domain.dto.order.TurnUpConditionDTO;
+import me.caosh.condition.domain.dto.order.*;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.constant.CompareCondition;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
+import me.caosh.condition.domain.model.order.time.SimpleTimeCondition;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
+import me.caosh.condition.domain.util.InstantUtils;
 
 /**
  * Created by caosh on 2017/8/11.
@@ -38,5 +37,10 @@ public class ConditionBuilder implements ConditionDTOVisitor {
     public void visitTurnUpConditionDTO(TurnUpConditionDTO turnUpConditionDTO) {
         this.condition = new TurnUpCondition(turnUpConditionDTO.getBreakPrice(), turnUpConditionDTO.getTurnUpPercent(),
                 turnUpConditionDTO.getBroken(), turnUpConditionDTO.getLowestPrice());
+    }
+
+    @Override
+    public void visitSimpleTimeConditionDTO(SimpleTimeConditionDTO simpleTimeConditionDTO) {
+        this.condition = new SimpleTimeCondition(InstantUtils.toLocalDateTime(simpleTimeConditionDTO.getTargetTime()));
     }
 }

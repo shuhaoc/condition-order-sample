@@ -34,6 +34,10 @@ public class MonitorContext {
         return Optional.ofNullable(triggerLock);
     }
 
+    public boolean isTriggerLocked() {
+        return triggerLock != null && !triggerLock.isTimesUp();
+    }
+
     public void markDelaySync() {
         delaySyncMarker = new DelayTimer(4);
     }
@@ -42,7 +46,7 @@ public class MonitorContext {
         delaySyncMarker = null;
     }
 
-    public Optional<DelayTimer> getDelaySyncMarker() {
-        return Optional.ofNullable(delaySyncMarker);
+    public boolean isDelaySyncTimesUp() {
+        return delaySyncMarker != null && delaySyncMarker.isTimesUp();
     }
 }

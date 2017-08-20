@@ -23,9 +23,11 @@ public class ConditionOrderDTOGSONUtils {
 
     private static Gson createConditionGSON() {
         return new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(ConditionDTO.class)
                         .registerSubtype(PriceConditionDTO.class)
-                        .registerSubtype(TurnUpConditionDTO.class))
+                        .registerSubtype(TurnUpConditionDTO.class)
+                        .registerSubtype(SimpleTimeConditionDTO.class))
                 .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(TradeSignalDTO.class)
                         .registerSubtype(GeneralSignalDTO.class)
                         .registerSubtype(CacheSyncSignalDTO.class))

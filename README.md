@@ -16,4 +16,5 @@ DDD sample, a minimized condition order system.
 - batching order (abort state)
 - new shares purchase order
 - pause/resume
+- consumers exception handler
 - using DUBBO(split api layer and biz layer)

@@ -14,6 +14,7 @@ import me.caosh.condition.domain.model.strategy.LifeCircle;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.trade.EntrustOrder;
 import me.caosh.condition.domain.model.trade.EntrustResult;
+import me.caosh.condition.domain.service.RealTimeMarketService;
 import me.caosh.condition.domain.service.SecurityEntrustService;
 import me.caosh.condition.infrastructure.repository.EntrustOrderRepository;
 import me.caosh.condition.infrastructure.repository.impl.EntrustOrderIdGenerator;
@@ -33,24 +34,34 @@ public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter 
     private final ConditionOrderCommandService conditionOrderCommandService;
     private final EntrustOrderRepository entrustOrderRepository;
     private final EntrustOrderIdGenerator entrustOrderIdGenerator;
+    private final RealTimeMarketService realTimeMarketService;
 
-    public ConditionOrderTradeCenterImpl(SecurityEntrustService securityEntrustService, ConditionOrderCommandService conditionOrderCommandService,
-                                         EntrustOrderRepository entrustOrderRepository, EntrustOrderIdGenerator entrustOrderIdGenerator) {
+    public ConditionOrderTradeCenterImpl(SecurityEntrustService securityEntrustService,
+                                         ConditionOrderCommandService conditionOrderCommandService,
+                                         EntrustOrderRepository entrustOrderRepository,
+                                         EntrustOrderIdGenerator entrustOrderIdGenerator,
+                                         RealTimeMarketService realTimeMarketService) {
         this.securityEntrustService = securityEntrustService;
         this.conditionOrderCommandService = conditionOrderCommandService;
         this.entrustOrderRepository = entrustOrderRepository;
         this.entrustOrderIdGenerator = entrustOrderIdGenerator;
+        this.realTimeMarketService = realTimeMarketService;
     }
 
     @Transactional
     @Override
     public void handleTriggerContext(TriggerContext triggerContext) {
+        // TODO: exception handler strategy: retry times? exception type?
         TradeSignal signal = triggerContext.getTradeSignal();
         ConditionOrder conditionOrder = triggerContext.getConditionOrder();
         if (signal instanceof General) {
             // TODO: use responsibility chain pattern
             RealTimeMarket realTimeMarket = triggerContext.getTriggerRealTimeMarket();
-            Preconditions.checkNotNull(realTimeMarket);
+            if (realTimeMarket == null) {
+                realTimeMarket = realTimeMarketService.getCurrentMarket(conditionOrder.getSecurityInfo().asMarketID());
+                logger.info("Get real-time market <== {}", realTimeMarket);
+                Preconditions.checkNotNull(realTimeMarket);
+            }
             EntrustCommand entrustCommand = conditionOrder.onTradeSignal(signal, realTimeMarket);
             EntrustResult entrustResult = securityEntrustService.execute(entrustCommand);
             logger.info("Entrust result <== {}", entrustResult);

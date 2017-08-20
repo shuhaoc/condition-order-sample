@@ -55,20 +55,19 @@ public class ConditionOrderMonitorCenter {
         logger.info("---------------- Start checking ----------------");
 
         Iterable<MonitorContext> monitorContexts = monitorContextManage.getAll();
-        monitorContexts.forEach(monitorContext -> {
-            ConditionOrder conditionOrder = monitorContext.getConditionOrder();
-            if (conditionOrder instanceof RealTimeMarketDriven) {
-                RealTimeMarket realTimeMarket = realTimeMarketMap.get(conditionOrder.getSecurityInfo().getCode());
-                if (realTimeMarket != null) {
-                    checkWithRealTimeMarket(monitorContext, realTimeMarket);
-                }
-            }
-        });
+        Iterables.filter(monitorContexts, monitorContext -> monitorContext.getConditionOrder() instanceof RealTimeMarketDriven)
+                .forEach(monitorContext -> {
+                    ConditionOrder conditionOrder = monitorContext.getConditionOrder();
+                    RealTimeMarket realTimeMarket = realTimeMarketMap.get(conditionOrder.getSecurityInfo().getCode());
+                    if (realTimeMarket != null) {
+                        checkWithRealTimeMarket(monitorContext, realTimeMarket);
+                    }
+                });
         logger.info("---------------- Finish checking, count={} ----------------", Iterables.size(monitorContexts));
     }
 
     private void checkWithRealTimeMarket(MonitorContext monitorContext, RealTimeMarket realTimeMarket) {
-        if (monitorContext.getTriggerLock().isPresent() && !monitorContext.getTriggerLock().get().isTimesUp()) {
+        if (monitorContext.isTriggerLocked()) {
             logger.warn("Trigger locked, orderId={}, lockedDuration={}", monitorContext.getOrderId(),
                     monitorContext.getTriggerLock().get().getCurrentDuration());
             return;
@@ -95,13 +94,21 @@ public class ConditionOrderMonitorCenter {
     public void onTimer(TimerEvent e) {
         logger.debug("tick...");
         Iterable<MonitorContext> monitorContexts = monitorContextManage.getAll();
-        monitorContexts.forEach(monitorContext -> {
-            if (monitorContext.getDelaySyncMarker().isPresent() && monitorContext.getDelaySyncMarker().get().isTimesUp()) {
-                ConditionOrder conditionOrder = monitorContext.getConditionOrder();
-                triggerSignal(SignalFactory.getInstance().cacheSync(), conditionOrder);
-                monitorContext.clearDelaySyncMarker();
-            }
-        });
+        Iterables.filter(monitorContexts, monitorContext -> monitorContext.getConditionOrder() instanceof TimeDriven)
+                .forEach(monitorContext -> {
+                    ConditionOrder conditionOrder = monitorContext.getConditionOrder();
+                    TradeSignal tradeSignal = ((TimeDriven) conditionOrder).onSecondTick();
+                    if (tradeSignal != SignalFactory.getInstance().none()) {
+                        triggerSignal(tradeSignal, conditionOrder);
+                        monitorContext.lockTriggering();
+                    }
+                });
+        Iterables.filter(monitorContexts, MonitorContext::isDelaySyncTimesUp)
+                .forEach(monitorContext -> {
+                    ConditionOrder conditionOrder = monitorContext.getConditionOrder();
+                    triggerSignal(SignalFactory.getInstance().cacheSync(), conditionOrder);
+                    monitorContext.clearDelaySyncMarker();
+                });
     }
 
     private void triggerSignal(TradeSignal tradeSignal, ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {

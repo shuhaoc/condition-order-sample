@@ -18,9 +18,11 @@ public class ConditionOrderDOGSONUtils {
 
     private static Gson createConditionGSON() {
         return new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(ConditionDO.class)
                         .registerSubtype(PriceConditionDO.class)
-                        .registerSubtype(TurnUpConditionDO.class))
+                        .registerSubtype(TurnUpConditionDO.class)
+                        .registerSubtype(SimpleTimeConditionDO.class))
                 .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(DynamicPropertiesDO.class)
                         .registerSubtype(TurnUpDynamicPropertiesDO.class))
                 .create();
