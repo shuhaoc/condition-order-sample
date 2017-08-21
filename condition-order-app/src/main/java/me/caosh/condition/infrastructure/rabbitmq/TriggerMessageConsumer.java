@@ -42,6 +42,7 @@ public class TriggerMessageConsumer {
     private final ConnectionFactory connectionFactory;
     private final AmqpAdmin amqpAdmin;
     private final ConditionOrderTradeCenter conditionOrderTradeCenter;
+    // TODO: converter to domain model
     private final MessageConverter messageConverter = new ConditionOrderGSONMessageConverter<>(TriggerMessageDTO.class);
 
     public void setExchangeName(String exchangeName) {

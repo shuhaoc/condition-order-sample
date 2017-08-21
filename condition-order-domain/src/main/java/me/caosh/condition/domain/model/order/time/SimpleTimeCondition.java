@@ -21,6 +21,22 @@ public class SimpleTimeCondition implements TimeCondition {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SimpleTimeCondition)) return false;
+
+        SimpleTimeCondition that = (SimpleTimeCondition) o;
+
+        return !(targetTime != null ? !targetTime.equals(that.targetTime) : that.targetTime != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return targetTime != null ? targetTime.hashCode() : 0;
+    }
+
+    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("targetTime", targetTime)

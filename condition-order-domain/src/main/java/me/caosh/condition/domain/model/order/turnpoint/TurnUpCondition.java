@@ -102,6 +102,30 @@ public class TurnUpCondition implements MarketCondition, DynamicCondition {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TurnUpCondition)) return false;
+
+        TurnUpCondition that = (TurnUpCondition) o;
+
+        if (breakPrice != null ? !breakPrice.equals(that.breakPrice) : that.breakPrice != null) return false;
+        if (turnUpPercent != null ? !turnUpPercent.equals(that.turnUpPercent) : that.turnUpPercent != null)
+            return false;
+        if (broken != null ? !broken.equals(that.broken) : that.broken != null) return false;
+        return !(lowestPrice != null ? !lowestPrice.equals(that.lowestPrice) : that.lowestPrice != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = breakPrice != null ? breakPrice.hashCode() : 0;
+        result = 31 * result + (turnUpPercent != null ? turnUpPercent.hashCode() : 0);
+        result = 31 * result + (broken != null ? broken.hashCode() : 0);
+        result = 31 * result + (lowestPrice != null ? lowestPrice.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("breakPrice", breakPrice)
