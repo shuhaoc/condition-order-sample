@@ -23,6 +23,6 @@ public abstract class OnceMarketConditionOrder extends MarketConditionOrder {
 
     @Override
     public EntrustCommand onTradeSignal(TradeSignal signal, RealTimeMarket realTimeMarket) {
-        return OnceOrders.createEntrustCommand(this, signal, realTimeMarket);
+        return OnceOrders.createEntrustCommand(this, realTimeMarket);
     }
 }

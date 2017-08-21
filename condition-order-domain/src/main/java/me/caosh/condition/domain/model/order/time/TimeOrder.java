@@ -33,6 +33,6 @@ public class TimeOrder extends ConditionOrder implements TimeDriven {
 
     @Override
     public EntrustCommand onTradeSignal(TradeSignal signal, RealTimeMarket realTimeMarket) {
-        return OnceOrders.createEntrustCommand(this, signal, realTimeMarket);
+        return OnceOrders.createEntrustCommand(this, realTimeMarket);
     }
 }
