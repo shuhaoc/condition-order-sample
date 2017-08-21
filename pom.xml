@@ -15,6 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <modules>
+        <module>condition-order-framework</module>
         <module>condition-order-domain</module>
         <module>condition-order-commons</module>
         <module>condition-order-app</module>
