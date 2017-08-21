@@ -14,8 +14,8 @@ import me.caosh.condition.domain.model.strategy.NativeStrategyInfo;
  */
 public class TurnUpBuyOrder extends OnceMarketConditionOrder implements RealTimeMarketDriven {
 
-    public TurnUpBuyOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, OrderState orderState, SecurityInfo securityInfo,
-                          TurnUpCondition condition, TradePlan tradePlan) {
+    public TurnUpBuyOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
+                          TurnUpCondition condition, TradePlan tradePlan, OrderState orderState) {
         super(orderId, customerIdentity, deleted, securityInfo, NativeStrategyInfo.TURN_UP, condition, tradePlan, orderState);
     }
 

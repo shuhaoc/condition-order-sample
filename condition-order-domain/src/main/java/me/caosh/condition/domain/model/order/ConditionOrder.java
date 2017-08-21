@@ -16,11 +16,11 @@ public abstract class ConditionOrder {
     private final Long orderId;
     private final TradeCustomerIdentity customerIdentity;
     private final boolean deleted;
-    private OrderState orderState;
     private final SecurityInfo securityInfo;
     private final StrategyInfo strategyInfo;
     private final Condition condition;
     private final TradePlan tradePlan;
+    private OrderState orderState;
     // TODO: add create/update time fields
 
     public ConditionOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,

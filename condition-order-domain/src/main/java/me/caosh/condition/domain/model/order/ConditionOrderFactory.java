@@ -25,11 +25,11 @@ public class ConditionOrderFactory {
     public ConditionOrder create(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, OrderState orderState,
                                  SecurityInfo securityInfo, StrategyInfo strategyInfo, Condition condition, TradePlan tradePlan) {
         if (strategyInfo == NativeStrategyInfo.PRICE) {
-            return new PriceOrder(orderId, customerIdentity, deleted, orderState, securityInfo,
-                    (PriceCondition) condition, tradePlan);
+            return new PriceOrder(orderId, customerIdentity, deleted, securityInfo, (PriceCondition) condition, tradePlan, orderState
+            );
         } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {
-            return new TurnUpBuyOrder(orderId, customerIdentity, deleted, orderState, securityInfo,
-                    (TurnUpCondition) condition, tradePlan);
+            return new TurnUpBuyOrder(orderId, customerIdentity, deleted, securityInfo, (TurnUpCondition) condition, tradePlan, orderState
+            );
         } else if (strategyInfo == NativeStrategyInfo.TIME) {
             return new TimeOrder(orderId, customerIdentity, deleted, securityInfo, (SimpleTimeCondition) condition,
                     tradePlan, orderState);

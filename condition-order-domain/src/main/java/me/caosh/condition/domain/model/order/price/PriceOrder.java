@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 public class PriceOrder extends OnceMarketConditionOrder implements RealTimeMarketDriven {
     private static final Logger logger = LoggerFactory.getLogger(PriceOrder.class);
 
-    public PriceOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, OrderState orderState,
-                      SecurityInfo securityInfo,PriceCondition condition, TradePlan tradePlan) {
+    public PriceOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
+                      PriceCondition condition, TradePlan tradePlan, OrderState orderState) {
         super(orderId, customerIdentity, deleted, securityInfo, NativeStrategyInfo.PRICE, condition, tradePlan, orderState);
     }
 
