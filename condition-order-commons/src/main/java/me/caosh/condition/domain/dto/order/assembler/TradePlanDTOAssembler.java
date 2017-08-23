@@ -15,10 +15,16 @@ public class TradePlanDTOAssembler {
 
     public static TradePlanDTO fromDomain(TradePlan tradePlan) {
         TradePlanDTO tradePlanDTO = new TradePlanDTO();
-        tradePlanDTO.setExchangeType(tradePlan.getExchangeType().getValue());
-        tradePlanDTO.setEntrustStrategy(tradePlan.getEntrustStrategy().getValue());
-        tradePlanDTO.setEntrustMethod(tradePlan.getTradeNumber().getEntrustMethod().getValue());
 
+        tradePlan.accept(new TradePlanVisitor() {
+            @Override
+            public void visitSingleDirectionTradePlan(SingleDirectionTradePlan singleDirectionTradePlan) {
+                tradePlanDTO.setExchangeType(singleDirectionTradePlan.getExchangeType().getValue());
+                tradePlanDTO.setEntrustStrategy(singleDirectionTradePlan.getEntrustStrategy().getValue());
+            }
+        });
+
+        tradePlanDTO.setEntrustMethod(tradePlan.getTradeNumber().getEntrustMethod().getValue());
         tradePlan.getTradeNumber().accept(new TradeNumberVisitor(){
             @Override
             public void visitTradeNumberDirect(TradeNumberDirect tradeNumberDirect) {
@@ -39,6 +45,6 @@ public class TradePlanDTOAssembler {
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(tradePlanDTO.getEntrustStrategy(), EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(tradePlanDTO.getEntrustMethod(), tradePlanDTO.getNumber(), tradePlanDTO.getEntrustAmount());
-        return new TradePlan(exchangeType, entrustStrategy, tradeNumber);
+        return new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
     }
 }

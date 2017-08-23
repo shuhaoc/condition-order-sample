@@ -1,9 +1,12 @@
 package me.caosh.condition.infrastructure.repository.model;
 
 import me.caosh.condition.domain.model.constants.SecurityExchange;
-import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.constants.SecurityType;
-import me.caosh.condition.domain.model.order.*;
+import me.caosh.condition.domain.model.market.SecurityInfo;
+import me.caosh.condition.domain.model.order.Condition;
+import me.caosh.condition.domain.model.order.ConditionOrder;
+import me.caosh.condition.domain.model.order.ConditionOrderFactory;
+import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.OrderState;
@@ -34,8 +37,15 @@ public class ConditionOrderDOAssembler {
         conditionOrderDO.setConditionProperties(ConditionOrderDOGSONUtils.getGSON().toJson(conditionDO));
         DynamicPropertiesDO dynamicPropertiesDO = new DynamicPropertiesDOBuilder(conditionOrder.getCondition()).build();
         conditionOrderDO.setDynamicProperties(ConditionOrderDOGSONUtils.getGSON().toJson(dynamicPropertiesDO));
-        conditionOrderDO.setExchangeType(conditionOrder.getTradePlan().getExchangeType().getValue());
-        conditionOrderDO.setEntrustStrategy(conditionOrder.getTradePlan().getEntrustStrategy().getValue());
+
+        conditionOrder.getTradePlan().accept(new TradePlanVisitor() {
+            @Override
+            public void visitSingleDirectionTradePlan(SingleDirectionTradePlan singleDirectionTradePlan) {
+                conditionOrderDO.setExchangeType(singleDirectionTradePlan.getExchangeType().getValue());
+                conditionOrderDO.setEntrustStrategy(singleDirectionTradePlan.getEntrustStrategy().getValue());
+            }
+        });
+
         conditionOrderDO.setEntrustMethod(conditionOrder.getTradePlan().getTradeNumber().getEntrustMethod().getValue());
         conditionOrder.getTradePlan().getTradeNumber().accept(new TradeNumberVisitor() {
             @Override
@@ -63,7 +73,7 @@ public class ConditionOrderDOAssembler {
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(conditionOrderDO.getEntrustStrategy(), EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance().create(conditionOrderDO.getEntrustMethod(),
                 conditionOrderDO.getEntrustAmount().intValue(), conditionOrderDO.getEntrustAmount());
-        TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, tradeNumber);
+        TradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
         ConditionDO conditionDO = ConditionOrderDOGSONUtils.getGSON().fromJson(conditionOrderDO.getConditionProperties(), ConditionDO.class);
         DynamicPropertiesDO dynamicPropertiesDO = ConditionOrderDOGSONUtils.getGSON().fromJson(conditionOrderDO.getDynamicProperties(), DynamicPropertiesDO.class);
         Condition condition = new ConditionBuilder(conditionDO, dynamicPropertiesDO).build();

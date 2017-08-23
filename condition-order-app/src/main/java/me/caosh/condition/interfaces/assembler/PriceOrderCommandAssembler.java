@@ -1,13 +1,14 @@
 package me.caosh.condition.interfaces.assembler;
 
 import me.caosh.condition.domain.model.constants.SecurityExchange;
-import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.constants.SecurityType;
-import me.caosh.condition.domain.model.order.*;
+import me.caosh.condition.domain.model.market.SecurityInfo;
+import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
 import me.caosh.condition.domain.model.order.constant.CompareCondition;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.OrderState;
+import me.caosh.condition.domain.model.order.plan.SingleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradeNumber;
 import me.caosh.condition.domain.model.order.plan.TradeNumberFactory;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
@@ -36,7 +37,7 @@ public class PriceOrderCommandAssembler {
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, tradeNumber);
+        TradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
         return new PriceOrder(orderId, customerIdentity, false, securityInfo, priceCondition, tradePlan, orderState);
     }
 
@@ -49,7 +50,7 @@ public class PriceOrderCommandAssembler {
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        TradePlan tradePlan = new TradePlan(exchangeType, entrustStrategy, tradeNumber);
+        TradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
         return new PriceOrder(oldPriceOrder.getOrderId(), oldPriceOrder.getCustomerIdentity(), false, oldPriceOrder.getSecurityInfo(), priceCondition, tradePlan, orderState
         );
     }
