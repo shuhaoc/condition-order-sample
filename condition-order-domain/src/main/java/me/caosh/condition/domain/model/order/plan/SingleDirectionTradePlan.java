@@ -37,6 +37,27 @@ public class SingleDirectionTradePlan implements TradePlan {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SingleDirectionTradePlan)) return false;
+
+        SingleDirectionTradePlan that = (SingleDirectionTradePlan) o;
+
+        if (exchangeType != that.exchangeType) return false;
+        if (entrustStrategy != that.entrustStrategy) return false;
+        return !(tradeNumber != null ? !tradeNumber.equals(that.tradeNumber) : that.tradeNumber != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = exchangeType != null ? exchangeType.hashCode() : 0;
+        result = 31 * result + (entrustStrategy != null ? entrustStrategy.hashCode() : 0);
+        result = 31 * result + (tradeNumber != null ? tradeNumber.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("exchangeType", exchangeType)

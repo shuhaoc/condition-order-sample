@@ -5,4 +5,6 @@ package me.caosh.condition.domain.model.order.plan;
  */
 public interface TradePlanVisitor {
     void visitSingleDirectionTradePlan(SingleDirectionTradePlan singleDirectionTradePlan);
+
+    void visitDoubleDirectionTradePlan(DoubleDirectionTradePlan doubleDirectionTradePlan);
 }
