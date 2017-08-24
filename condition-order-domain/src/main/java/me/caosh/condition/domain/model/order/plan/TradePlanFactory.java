@@ -21,10 +21,9 @@ public class TradePlanFactory {
 
     public TradePlan create(int exchangeType, Integer entrustStrategy,
                             Integer entrustMethod, Integer number, BigDecimal entrustAmount) {
-        EntrustStrategy theEntrustStrategy = ValuedEnumUtil.valueOf(entrustStrategy, EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance().create(entrustMethod, number, entrustAmount);
         if (exchangeType == DOUBLE_EXCHANGE_TYPE) {
-            EntrustStrategy buyEntrustStrategy = theEntrustStrategy;
+            EntrustStrategy buyEntrustStrategy = ValuedEnumUtil.valueOf(entrustStrategy, EntrustStrategy.class);
             EntrustStrategy sellEntrustStrategy;
             if (buyEntrustStrategy == EntrustStrategy.CURRENT_PRICE) {
                 sellEntrustStrategy = EntrustStrategy.CURRENT_PRICE;
@@ -35,6 +34,7 @@ public class TradePlanFactory {
             SingleDirectionTradePlan sellPlan = new SingleDirectionTradePlan(ExchangeType.SELL, sellEntrustStrategy, tradeNumber);
             return new DoubleDirectionTradePlan(buyPlan, sellPlan);
         } else {
+            EntrustStrategy theEntrustStrategy = ValuedEnumUtil.valueOf(entrustStrategy, EntrustStrategy.class);
             ExchangeType theExchangeType = ValuedEnumUtil.valueOf(exchangeType, ExchangeType.class);
             return new SingleDirectionTradePlan(theExchangeType, theEntrustStrategy, tradeNumber);
         }

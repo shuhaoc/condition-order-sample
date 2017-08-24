@@ -11,7 +11,7 @@ public class DoubleDirectionTradePlan implements TradePlan {
     private final SingleDirectionTradePlan buyPlan;
     private final SingleDirectionTradePlan sellPlan;
 
-    public DoubleDirectionTradePlan(SingleDirectionTradePlan buyPlan, SingleDirectionTradePlan sellPlan) {
+    DoubleDirectionTradePlan(SingleDirectionTradePlan buyPlan, SingleDirectionTradePlan sellPlan) {
         Preconditions.checkArgument(buyPlan.getExchangeType() == ExchangeType.BUY);
         Preconditions.checkArgument(sellPlan.getExchangeType() == ExchangeType.SELL);
         this.buyPlan = buyPlan;

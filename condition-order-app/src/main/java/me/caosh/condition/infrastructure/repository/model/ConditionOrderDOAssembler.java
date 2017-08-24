@@ -7,8 +7,6 @@ import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.ConditionOrderFactory;
 import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
-import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
-import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.plan.*;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
@@ -75,11 +73,9 @@ public class ConditionOrderDOAssembler {
         SecurityInfo securityInfo = new SecurityInfo(securityType, conditionOrderDO.getSecurityCode(), securityExchange,
                 conditionOrderDO.getSecurityName());
         NativeStrategyInfo nativeStrategyInfo = ValuedEnumUtil.valueOf(conditionOrderDO.getStrategyId(), NativeStrategyInfo.class);
-        ExchangeType exchangeType = ValuedEnumUtil.valueOf(conditionOrderDO.getExchangeType(), ExchangeType.class);
-        EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(conditionOrderDO.getEntrustStrategy(), EntrustStrategy.class);
-        TradeNumber tradeNumber = TradeNumberFactory.getInstance().create(conditionOrderDO.getEntrustMethod(),
-                conditionOrderDO.getEntrustAmount().intValue(), conditionOrderDO.getEntrustAmount());
-        TradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
+        TradePlan tradePlan = TradePlanFactory.getInstance().create(conditionOrderDO.getExchangeType(), conditionOrderDO.getEntrustStrategy(),
+                conditionOrderDO.getEntrustMethod(), conditionOrderDO.getEntrustAmount().intValue(), conditionOrderDO.getEntrustAmount());
+        ;
         ConditionDO conditionDO = ConditionOrderDOGSONUtils.getGSON().fromJson(conditionOrderDO.getConditionProperties(), ConditionDO.class);
         DynamicPropertiesDO dynamicPropertiesDO = ConditionOrderDOGSONUtils.getGSON().fromJson(conditionOrderDO.getDynamicProperties(), DynamicPropertiesDO.class);
         Condition condition = new ConditionBuilder(conditionDO, dynamicPropertiesDO).build();

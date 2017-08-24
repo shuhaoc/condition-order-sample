@@ -1,10 +1,7 @@
 package me.caosh.condition.domain.dto.order.assembler;
 
 import me.caosh.condition.domain.dto.order.TradePlanDTO;
-import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
-import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.plan.*;
-import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 
 /**
  * Created by caosh on 2017/8/18.
@@ -47,10 +44,7 @@ public class TradePlanDTOAssembler {
     }
 
     public static TradePlan toDomain(TradePlanDTO tradePlanDTO) {
-        ExchangeType exchangeType = ValuedEnumUtil.valueOf(tradePlanDTO.getExchangeType(), ExchangeType.class);
-        EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(tradePlanDTO.getEntrustStrategy(), EntrustStrategy.class);
-        TradeNumber tradeNumber = TradeNumberFactory.getInstance()
-                .create(tradePlanDTO.getEntrustMethod(), tradePlanDTO.getNumber(), tradePlanDTO.getEntrustAmount());
-        return new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
+        return TradePlanFactory.getInstance().create(tradePlanDTO.getExchangeType(), tradePlanDTO.getEntrustStrategy(),
+                tradePlanDTO.getEntrustMethod(), tradePlanDTO.getNumber(), tradePlanDTO.getEntrustAmount());
     }
 }
