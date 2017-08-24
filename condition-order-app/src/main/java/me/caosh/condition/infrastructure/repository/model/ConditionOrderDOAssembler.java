@@ -44,6 +44,12 @@ public class ConditionOrderDOAssembler {
                 conditionOrderDO.setExchangeType(singleDirectionTradePlan.getExchangeType().getValue());
                 conditionOrderDO.setEntrustStrategy(singleDirectionTradePlan.getEntrustStrategy().getValue());
             }
+
+            @Override
+            public void visitDoubleDirectionTradePlan(DoubleDirectionTradePlan doubleDirectionTradePlan) {
+                conditionOrderDO.setExchangeType(TradePlanFactory.DOUBLE_EXCHANGE_TYPE);
+                conditionOrderDO.setEntrustStrategy(doubleDirectionTradePlan.getBuyPlan().getEntrustStrategy().getValue());
+            }
         });
 
         conditionOrderDO.setEntrustMethod(conditionOrder.getTradePlan().getTradeNumber().getEntrustMethod().getValue());

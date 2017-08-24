@@ -22,6 +22,12 @@ public class TradePlanDTOAssembler {
                 tradePlanDTO.setExchangeType(singleDirectionTradePlan.getExchangeType().getValue());
                 tradePlanDTO.setEntrustStrategy(singleDirectionTradePlan.getEntrustStrategy().getValue());
             }
+
+            @Override
+            public void visitDoubleDirectionTradePlan(DoubleDirectionTradePlan doubleDirectionTradePlan) {
+                tradePlanDTO.setExchangeType(TradePlanFactory.DOUBLE_EXCHANGE_TYPE);
+                tradePlanDTO.setEntrustStrategy(doubleDirectionTradePlan.getBuyPlan().getEntrustStrategy().getValue());
+            }
         });
 
         tradePlanDTO.setEntrustMethod(tradePlan.getTradeNumber().getEntrustMethod().getValue());
