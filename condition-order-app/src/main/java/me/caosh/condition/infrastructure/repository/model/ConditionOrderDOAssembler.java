@@ -34,7 +34,10 @@ public class ConditionOrderDOAssembler {
         ConditionDO conditionDO = new ConditionDOBuilder(conditionOrder.getCondition()).build();
         conditionOrderDO.setConditionProperties(ConditionOrderDOGSONUtils.getGSON().toJson(conditionDO));
         DynamicPropertiesDO dynamicPropertiesDO = new DynamicPropertiesDOBuilder(conditionOrder.getCondition()).build();
-        conditionOrderDO.setDynamicProperties(ConditionOrderDOGSONUtils.getGSON().toJson(dynamicPropertiesDO));
+        String dynamicPropertiesJson = dynamicPropertiesDO != null
+                ? ConditionOrderDOGSONUtils.getGSON().toJson(dynamicPropertiesDO)
+                : null;
+        conditionOrderDO.setDynamicProperties(dynamicPropertiesJson);
 
         conditionOrder.getTradePlan().accept(new TradePlanVisitor() {
             @Override
