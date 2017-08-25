@@ -3,7 +3,7 @@ package me.caosh.condition.infrastructure.rabbitmq;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.event.RealTimeMarketPushEvent;
 import me.caosh.condition.domain.model.constants.SecurityType;
-import me.caosh.condition.infrastructure.eventbus.MonitorEntrustBus;
+import me.caosh.condition.infrastructure.eventbus.MonitorEventBus;
 import me.caosh.condition.infrastructure.rabbitmq.model.RealTimeMarketMessageConverter;
 import me.caosh.condition.infrastructure.rabbitmq.model.RealTimeMarketSimpleDTO;
 import me.caosh.condition.infrastructure.rabbitmq.model.RealTimeMarketSimpleDTOAssembler;
@@ -76,7 +76,7 @@ public class RealTimeMarketConsumer {
             HashMap<String, RealTimeMarketSimpleDTO> marketMap = (HashMap<String, RealTimeMarketSimpleDTO>) messageConverter.fromMessage(message);
             logger.debug("Receive market message <== size={}", marketMap.size());
             Map<String, RealTimeMarket> realTimeMarketMap = RealTimeMarketSimpleDTOAssembler.transformMap(SecurityType.STOCK, marketMap);
-            MonitorEntrustBus.EVENT_SERIALIZED.post(new RealTimeMarketPushEvent(realTimeMarketMap));
+            MonitorEventBus.EVENT_SERIALIZED.post(new RealTimeMarketPushEvent(realTimeMarketMap));
         });
         container.start();
     }

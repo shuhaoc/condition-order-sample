@@ -18,7 +18,7 @@ import me.caosh.condition.domain.model.order.event.ConditionOrderUpdateCommandEv
 import me.caosh.condition.domain.model.signal.SignalFactory;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.infrastructure.cache.MonitorContextManage;
-import me.caosh.condition.infrastructure.eventbus.MonitorEntrustBus;
+import me.caosh.condition.infrastructure.eventbus.MonitorEventBus;
 import me.caosh.condition.infrastructure.rabbitmq.TriggerMessageTriggerProducer;
 import me.caosh.condition.infrastructure.timer.event.TimerEvent;
 import org.slf4j.Logger;
@@ -46,7 +46,7 @@ public class ConditionOrderMonitorCenter {
 
     @PostConstruct
     public void init() {
-        MonitorEntrustBus.EVENT_SERIALIZED.register(this);
+        MonitorEventBus.EVENT_SERIALIZED.register(this);
     }
 
     @Subscribe

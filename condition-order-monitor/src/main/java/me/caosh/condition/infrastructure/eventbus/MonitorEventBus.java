@@ -9,6 +9,6 @@ import java.util.concurrent.Executors;
  *
  * @author caoshuhao@touker.com
  */
-public class MonitorEntrustBus {
+public class MonitorEventBus {
     public static final AsyncEventBus EVENT_SERIALIZED = new AsyncEventBus(Executors.newSingleThreadExecutor());
 }
