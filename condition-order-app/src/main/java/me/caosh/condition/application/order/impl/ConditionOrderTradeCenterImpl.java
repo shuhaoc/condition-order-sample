@@ -52,7 +52,6 @@ public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter 
     @Transactional
     @Override
     public void handleTriggerContext(TriggerContext triggerContext) {
-        // TODO: exception handler strategy: retry times? exception type?
         TradeSignal signal = triggerContext.getTradeSignal();
         ConditionOrder conditionOrder = triggerContext.getConditionOrder();
         if (signal instanceof General) {

@@ -10,7 +10,7 @@ import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.signal.Buy;
 import me.caosh.condition.domain.model.signal.Sell;
 import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.domain.model.strategy.StrategyInfo;
+import me.caosh.condition.domain.model.strategy.NativeStrategyInfo;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.trade.EntrustResult;
 import me.caosh.condition.domain.model.trade.EntrustResultAware;
@@ -20,8 +20,8 @@ import me.caosh.condition.domain.model.trade.EntrustResultAware;
  */
 public class GridTradeOrder extends ConditionOrder implements RealTimeMarketDriven, EntrustResultAware {
     public GridTradeOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
-                          StrategyInfo strategyInfo, Condition condition, TradePlan tradePlan, OrderState orderState) {
-        super(orderId, customerIdentity, deleted, securityInfo, strategyInfo, condition, tradePlan, orderState);
+                          Condition condition, TradePlan tradePlan, OrderState orderState) {
+        super(orderId, customerIdentity, deleted, securityInfo, NativeStrategyInfo.GRID, condition, tradePlan, orderState);
     }
 
     public GridCondition getGridCondition() {

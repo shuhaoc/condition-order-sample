@@ -21,7 +21,6 @@ public abstract class ConditionOrder {
     private final Condition condition;
     private final TradePlan tradePlan;
     private OrderState orderState;
-    // TODO: add create/update time fields
 
     public ConditionOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
                           StrategyInfo strategyInfo, Condition condition, TradePlan tradePlan, OrderState orderState) {

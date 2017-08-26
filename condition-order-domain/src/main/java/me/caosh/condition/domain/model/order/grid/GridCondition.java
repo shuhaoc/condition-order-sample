@@ -53,6 +53,8 @@ public class GridCondition implements Condition, RealTimeMarketDriven {
         BigDecimal currentPrice = realTimeMarket.getCurrentPrice();
         BigDecimal upwardTargetPrice = getBasePrice().add(gridLength);
         BigDecimal downwardTargetPrice = getBasePrice().subtract(gridLength);
+        logger.info("Check grid condition, basePrice={}, upwardTargetPrice={}, downwardTargetPrice={}, currentPrice={}",
+                basePrice, upwardTargetPrice, downwardTargetPrice, realTimeMarket.getCurrentPrice());
         if (currentPrice.compareTo(upwardTargetPrice) >= 0) {
             return SignalFactory.getInstance().sell();
         } else if (currentPrice.compareTo(downwardTargetPrice) <= 0) {

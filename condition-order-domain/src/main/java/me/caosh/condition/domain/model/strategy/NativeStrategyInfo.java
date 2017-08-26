@@ -2,6 +2,7 @@ package me.caosh.condition.domain.model.strategy;
 
 import me.caosh.condition.domain.model.share.ValuedEnum;
 
+import static me.caosh.condition.domain.model.strategy.LifeCircle.CONTINUOUS;
 import static me.caosh.condition.domain.model.strategy.LifeCircle.ONCE;
 
 /**
@@ -10,7 +11,8 @@ import static me.caosh.condition.domain.model.strategy.LifeCircle.ONCE;
 public enum NativeStrategyInfo implements StrategyInfo, ValuedEnum<Integer> {
     PRICE(1, ONCE),
     TURN_UP(2, ONCE),
-    TIME(4, ONCE);
+    TIME(4, ONCE),
+    GRID(5, CONTINUOUS);
 
     private final int strategyId;
     private final LifeCircle lifeCircle;

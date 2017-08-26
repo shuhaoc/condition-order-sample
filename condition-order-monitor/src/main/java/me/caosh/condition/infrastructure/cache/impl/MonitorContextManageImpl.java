@@ -49,6 +49,7 @@ public class MonitorContextManageImpl implements MonitorContextManage {
     @Override
     public void update(MonitorContext monitorContext) {
         monitorRepository.update(monitorContext.getConditionOrder());
+        monitorContexts.put(monitorContext.getOrderId(), monitorContext);
     }
 
     @Override
