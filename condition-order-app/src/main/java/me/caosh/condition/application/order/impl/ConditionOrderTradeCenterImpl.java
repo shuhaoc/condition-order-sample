@@ -14,6 +14,7 @@ import me.caosh.condition.domain.model.strategy.LifeCircle;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.trade.EntrustOrder;
 import me.caosh.condition.domain.model.trade.EntrustResult;
+import me.caosh.condition.domain.model.trade.EntrustResultAware;
 import me.caosh.condition.domain.service.RealTimeMarketService;
 import me.caosh.condition.domain.service.SecurityEntrustService;
 import me.caosh.condition.infrastructure.repository.EntrustOrderRepository;
@@ -65,6 +66,10 @@ public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter 
             EntrustCommand entrustCommand = conditionOrder.onTradeSignal(signal, realTimeMarket);
             EntrustResult entrustResult = securityEntrustService.execute(entrustCommand);
             logger.info("Entrust result <== {}", entrustResult);
+
+            if (conditionOrder instanceof EntrustResultAware) {
+                ((EntrustResultAware) conditionOrder).afterEntrustReturned(triggerContext, entrustResult);
+            }
 
             EntrustOrder entrustOrder = new EntrustOrder(entrustOrderIdGenerator.nextId(), conditionOrder.getOrderId(), entrustCommand, entrustResult);
             entrustOrderRepository.save(entrustOrder);

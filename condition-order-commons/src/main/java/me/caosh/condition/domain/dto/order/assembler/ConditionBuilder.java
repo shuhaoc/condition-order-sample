@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.dto.order.*;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.constant.CompareCondition;
+import me.caosh.condition.domain.model.order.grid.GridCondition;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.order.time.SimpleTimeCondition;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
@@ -42,5 +43,10 @@ public class ConditionBuilder implements ConditionDTOVisitor {
     @Override
     public void visitSimpleTimeConditionDTO(SimpleTimeConditionDTO simpleTimeConditionDTO) {
         this.condition = new SimpleTimeCondition(InstantUtils.toLocalDateTime(simpleTimeConditionDTO.getTargetTime()));
+    }
+
+    @Override
+    public void visitGridConditionDTO(GridConditionDTO gridConditionDTO) {
+        this.condition = new GridCondition(gridConditionDTO.getGridLength(), gridConditionDTO.getBasePrice());
     }
 }

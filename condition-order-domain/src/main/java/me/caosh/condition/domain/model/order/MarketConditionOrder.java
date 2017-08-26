@@ -16,6 +16,7 @@ import java.math.BigDecimal;
  * Created by caosh on 2017/8/20.
  */
 public abstract class MarketConditionOrder extends ConditionOrder implements RealTimeMarketDriven {
+    // TODO: 应重命名为单一条件的行情类条件单
     private static final Logger logger = LoggerFactory.getLogger(MarketConditionOrder.class);
 
     public MarketConditionOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,

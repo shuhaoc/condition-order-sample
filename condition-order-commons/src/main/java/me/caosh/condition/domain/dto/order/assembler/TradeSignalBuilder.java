@@ -1,10 +1,7 @@
 package me.caosh.condition.domain.dto.order.assembler;
 
 import com.google.common.base.Preconditions;
-import me.caosh.condition.domain.dto.order.CacheSyncSignalDTO;
-import me.caosh.condition.domain.dto.order.GeneralSignalDTO;
-import me.caosh.condition.domain.dto.order.TradeSignalDTO;
-import me.caosh.condition.domain.dto.order.TradeSignalDTOVisitor;
+import me.caosh.condition.domain.dto.order.*;
 import me.caosh.condition.domain.model.signal.SignalFactory;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 
@@ -33,5 +30,15 @@ public class TradeSignalBuilder implements TradeSignalDTOVisitor {
     @Override
     public void visitCacheSyncDTO(CacheSyncSignalDTO cacheSyncSignalDTO) {
         this.tradeSignal = SignalFactory.getInstance().cacheSync();
+    }
+
+    @Override
+    public void visitBuySignalDTO(BuySignalDTO buySignalDTO) {
+        this.tradeSignal = SignalFactory.getInstance().buy();
+    }
+
+    @Override
+    public void visitSellSignalDTO(SellSignalDTO sellSignalDTO) {
+        this.tradeSignal = SignalFactory.getInstance().sell();
     }
 }

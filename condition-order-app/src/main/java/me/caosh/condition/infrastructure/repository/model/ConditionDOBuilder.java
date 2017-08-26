@@ -2,6 +2,7 @@ package me.caosh.condition.infrastructure.repository.model;
 
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
+import me.caosh.condition.domain.model.order.grid.GridCondition;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.order.time.SimpleTimeCondition;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
@@ -35,5 +36,10 @@ public class ConditionDOBuilder implements ConditionVisitor {
     @Override
     public void visitSimpleTimeCondition(SimpleTimeCondition simpleTimeCondition) {
         this.conditionDO = new SimpleTimeConditionDO(InstantUtils.toDate(simpleTimeCondition.getTargetTime()));
+    }
+
+    @Override
+    public void visitGridCondition(GridCondition gridCondition) {
+        this.conditionDO = new GridConditionDO(gridCondition.getGridLength());
     }
 }

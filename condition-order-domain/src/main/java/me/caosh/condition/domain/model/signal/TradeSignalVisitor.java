@@ -9,4 +9,8 @@ public interface TradeSignalVisitor {
     void visitNone(None none);
     void visitGeneral(General general);
     void visitCacheSync(CacheSync cacheSync);
+
+    void visitBuy(Buy buy);
+
+    void visitSell(Sell sell);
 }
