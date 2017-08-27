@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * 仅作demo，此处实现没有做到下单与本地事务的一致性保证
  * Created by caosh on 2017/8/13.
  */
 @Service
@@ -70,7 +71,8 @@ public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter 
                 ((EntrustResultAware) conditionOrder).afterEntrustReturned(triggerContext, entrustResult);
             }
 
-            EntrustOrder entrustOrder = new EntrustOrder(entrustOrderIdGenerator.nextId(), conditionOrder.getOrderId(), entrustCommand, entrustResult);
+            long entrustId = entrustOrderIdGenerator.nextId();
+            EntrustOrder entrustOrder = new EntrustOrder(entrustId, conditionOrder.getOrderId(), entrustCommand, entrustResult);
             entrustOrderRepository.save(entrustOrder);
 
             if (conditionOrder.getStrategyInfo().getLifeCircle() == LifeCircle.ONCE) {
