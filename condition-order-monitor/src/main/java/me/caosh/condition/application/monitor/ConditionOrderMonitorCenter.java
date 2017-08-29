@@ -69,7 +69,7 @@ public class ConditionOrderMonitorCenter {
     private void checkWithRealTimeMarket(MonitorContext monitorContext, RealTimeMarket realTimeMarket) {
         if (monitorContext.isTriggerLocked()) {
             logger.warn("Trigger locked, orderId={}, lockedDuration={}", monitorContext.getOrderId(),
-                    monitorContext.getTriggerLock().get().getCurrentDuration());
+                    monitorContext.getTriggerLock().orElse(null).getCurrentDuration());
             return;
         }
         ConditionOrder conditionOrder = monitorContext.getConditionOrder();
