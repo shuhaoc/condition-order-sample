@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MonitorTimer {
-    @Scheduled(cron = "0/1 * 9-15 * *  1-5")
+    @Scheduled(cron = "0/1 * 1-23 * * 1-7")
     public void onTimer() {
         MonitorEventBus.EVENT_SERIALIZED.post(new TimerEvent());
     }

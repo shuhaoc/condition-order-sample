@@ -9,13 +9,12 @@ import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageCo
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.TriggerContext;
+import me.caosh.condition.domain.model.share.Retry;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.MessageListener;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.AmqpRejectAndDontRequeueException;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -74,18 +73,39 @@ public class TriggerMessageConsumer {
 
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
         container.addQueues(queue);
-        container.setMessageListener((MessageListener) message -> {
-            TriggerMessageDTO triggerMessageDTO = (TriggerMessageDTO) messageConverter.fromMessage(message);
-            logger.debug("Receive trigger message <== {}", triggerMessageDTO);
-            TradeSignal tradeSignal = new TradeSignalBuilder(triggerMessageDTO.getTradeSignalDTO()).build();
-            ConditionOrder conditionOrder = ConditionOrderDTOAssembler.fromDTO(triggerMessageDTO.getConditionOrderDTO());
-            RealTimeMarket realTimeMarket = null;
-            if (triggerMessageDTO.getRealTimeMarketDTO() != null) {
-                realTimeMarket = RealTimeMarketDTOAssembler.fromDTO(triggerMessageDTO.getRealTimeMarketDTO());
-            }
-            TriggerContext triggerContext = new TriggerContext(tradeSignal, conditionOrder, realTimeMarket);
-            conditionOrderTradeCenter.handleTriggerContext(triggerContext);
-        });
+        container.setMessageListener((MessageListener) this::handleTriggerMessage);
         container.start();
+    }
+
+    private void handleTriggerMessage(Message message) {
+        try {
+            Retry.times(3).onException(RuntimeException.class).execute(new Retry.BaseRetryAction<Void>() {
+                @Override
+                public Void onTry() throws Exception {
+                    tryHandleTriggerMessage(message);
+                    return null;
+                }
+
+                @Override
+                public void onFailedOnce(Exception e, int retriedTimes) {
+                    logger.warn("Try handle trigger message failed, retriedTimes=" + retriedTimes, e);
+                }
+            });
+        } catch (Exception e) {
+            throw new AmqpRejectAndDontRequeueException(e);
+        }
+    }
+
+    private void tryHandleTriggerMessage(Message message) {
+        TriggerMessageDTO triggerMessageDTO = (TriggerMessageDTO) messageConverter.fromMessage(message);
+        logger.debug("Receive trigger message <== {}", triggerMessageDTO);
+        TradeSignal tradeSignal = new TradeSignalBuilder(triggerMessageDTO.getTradeSignalDTO()).build();
+        ConditionOrder conditionOrder = ConditionOrderDTOAssembler.fromDTO(triggerMessageDTO.getConditionOrderDTO());
+        RealTimeMarket realTimeMarket = null;
+        if (triggerMessageDTO.getRealTimeMarketDTO() != null) {
+            realTimeMarket = RealTimeMarketDTOAssembler.fromDTO(triggerMessageDTO.getRealTimeMarketDTO());
+        }
+        TriggerContext triggerContext = new TriggerContext(tradeSignal, conditionOrder, realTimeMarket);
+        conditionOrderTradeCenter.handleTriggerContext(triggerContext);
     }
 }

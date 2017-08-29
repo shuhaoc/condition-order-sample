@@ -14,6 +14,7 @@ import me.caosh.condition.domain.model.strategy.LifeCircle;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.trade.EntrustOrder;
 import me.caosh.condition.domain.model.trade.EntrustResult;
+import me.caosh.condition.domain.model.trade.EntrustResultAware;
 import me.caosh.condition.domain.service.RealTimeMarketService;
 import me.caosh.condition.domain.service.SecurityEntrustService;
 import me.caosh.condition.infrastructure.repository.EntrustOrderRepository;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * 仅作demo，此处实现没有做到下单与本地事务的一致性保证
  * Created by caosh on 2017/8/13.
  */
 @Service
@@ -51,7 +53,6 @@ public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter 
     @Transactional
     @Override
     public void handleTriggerContext(TriggerContext triggerContext) {
-        // TODO: exception handler strategy: retry times? exception type?
         TradeSignal signal = triggerContext.getTradeSignal();
         ConditionOrder conditionOrder = triggerContext.getConditionOrder();
         if (signal instanceof General) {
@@ -66,7 +67,12 @@ public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter 
             EntrustResult entrustResult = securityEntrustService.execute(entrustCommand);
             logger.info("Entrust result <== {}", entrustResult);
 
-            EntrustOrder entrustOrder = new EntrustOrder(entrustOrderIdGenerator.nextId(), conditionOrder.getOrderId(), entrustCommand, entrustResult);
+            if (conditionOrder instanceof EntrustResultAware) {
+                ((EntrustResultAware) conditionOrder).afterEntrustReturned(triggerContext, entrustResult);
+            }
+
+            long entrustId = entrustOrderIdGenerator.nextId();
+            EntrustOrder entrustOrder = new EntrustOrder(entrustId, conditionOrder.getOrderId(), entrustCommand, entrustResult);
             entrustOrderRepository.save(entrustOrder);
 
             if (conditionOrder.getStrategyInfo().getLifeCircle() == LifeCircle.ONCE) {

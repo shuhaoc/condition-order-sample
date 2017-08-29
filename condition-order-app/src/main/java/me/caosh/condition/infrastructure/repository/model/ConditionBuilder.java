@@ -3,6 +3,7 @@ package me.caosh.condition.infrastructure.repository.model;
 import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.constant.CompareCondition;
+import me.caosh.condition.domain.model.order.grid.GridCondition;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.order.time.SimpleTimeCondition;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
@@ -51,5 +52,17 @@ public class ConditionBuilder implements ConditionDOVisitor, DynamicPropertiesDO
     @Override
     public void visitSimpleTimeConditionDO(SimpleTimeConditionDO simpleTimeConditionDO) {
         this.condition = new SimpleTimeCondition(InstantUtils.toLocalDateTime(simpleTimeConditionDO.getTargetTime()));
+    }
+
+    @Override
+    public void visitGridConditionDO(GridConditionDO gridConditionDO) {
+        this.condition = new GridCondition((gridConditionDO.getGridLength()));
+    }
+
+    @Override
+    public void visitGridDynamicPropertiesDO(GridDynamicPropertiesDO gridDynamicPropertiesDO) {
+        Preconditions.checkNotNull(condition);
+        GridCondition gridCondition = (GridCondition) condition;
+        this.condition = new GridCondition(gridCondition.getGridLength(), gridDynamicPropertiesDO.getBasePrice());
     }
 }

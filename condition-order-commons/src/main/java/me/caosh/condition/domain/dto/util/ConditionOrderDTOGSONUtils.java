@@ -27,10 +27,13 @@ public class ConditionOrderDTOGSONUtils {
                 .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(ConditionDTO.class)
                         .registerSubtype(PriceConditionDTO.class)
                         .registerSubtype(TurnUpConditionDTO.class)
-                        .registerSubtype(SimpleTimeConditionDTO.class))
+                        .registerSubtype(SimpleTimeConditionDTO.class)
+                        .registerSubtype(GridConditionDTO.class))
                 .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(TradeSignalDTO.class)
                         .registerSubtype(GeneralSignalDTO.class)
-                        .registerSubtype(CacheSyncSignalDTO.class))
+                        .registerSubtype(CacheSyncSignalDTO.class)
+                        .registerSubtype(BuySignalDTO.class)
+                        .registerSubtype(SellSignalDTO.class))
                 .create();
     }
 

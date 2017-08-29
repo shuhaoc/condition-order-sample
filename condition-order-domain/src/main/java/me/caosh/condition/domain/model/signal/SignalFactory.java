@@ -13,6 +13,8 @@ public class SignalFactory {
     private static final General general = new General();
     private static final None none = new None();
     private static final CacheSync cacheSync = new CacheSync();
+    private static final Buy buy = new Buy();
+    private static final Sell sell = new Sell();
 
     public None none() {
         return none;
@@ -24,6 +26,14 @@ public class SignalFactory {
 
     public CacheSync cacheSync() {
         return cacheSync;
+    }
+
+    public Buy buy() {
+        return buy;
+    }
+
+    public Sell sell() {
+        return sell;
     }
 
     private SignalFactory() {

@@ -22,9 +22,11 @@ public class ConditionOrderDOGSONUtils {
                 .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(ConditionDO.class)
                         .registerSubtype(PriceConditionDO.class)
                         .registerSubtype(TurnUpConditionDO.class)
-                        .registerSubtype(SimpleTimeConditionDO.class))
+                        .registerSubtype(SimpleTimeConditionDO.class)
+                        .registerSubtype(GridConditionDO.class))
                 .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(DynamicPropertiesDO.class)
-                        .registerSubtype(TurnUpDynamicPropertiesDO.class))
+                        .registerSubtype(TurnUpDynamicPropertiesDO.class)
+                        .registerSubtype(GridDynamicPropertiesDO.class))
                 .create();
     }
 

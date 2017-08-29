@@ -2,9 +2,9 @@ package me.caosh.condition.infrastructure.rabbitmq.model;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.market.MarketID;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
-import me.caosh.condition.domain.model.constants.SecurityType;
 
 import java.util.Map;
 
@@ -22,6 +22,7 @@ public class RealTimeMarketSimpleDTOAssembler {
                 realTimeMarketSimpleDTO.getSp3(),
                 realTimeMarketSimpleDTO.getSp2(),
                 realTimeMarketSimpleDTO.getSp1(),
+                realTimeMarketSimpleDTO.getBp1(),
                 realTimeMarketSimpleDTO.getBp2(),
                 realTimeMarketSimpleDTO.getBp3(),
                 realTimeMarketSimpleDTO.getBp4(),
