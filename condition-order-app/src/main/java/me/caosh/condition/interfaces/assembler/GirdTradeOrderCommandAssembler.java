@@ -8,7 +8,6 @@ import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.grid.GridCondition;
 import me.caosh.condition.domain.model.order.grid.GridTradeOrder;
 import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
-import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlanFactory;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 import me.caosh.condition.interfaces.command.GridTradeOrderCreateCommand;
@@ -24,8 +23,7 @@ public class GirdTradeOrderCommandAssembler {
         SecurityExchange securityExchange = SecurityExchange.valueOf(command.getSecurityExchange());
         SecurityInfo securityInfo = new SecurityInfo(securityType, command.getSecurityCode(), securityExchange, command.getSecurityName());
         GridCondition gridCondition = new GridCondition(command.getGridLength(), command.getBasePrice());
-        TradePlan tradePlan = TradePlanFactory.getInstance().create(TradePlanFactory.DOUBLE_EXCHANGE_TYPE,
-                command.getEntrustStrategy(),
+        DoubleDirectionTradePlan tradePlan = TradePlanFactory.getInstance().createDouble(command.getEntrustStrategy(),
                 command.getEntrustMethod(),
                 command.getEntrustNumber(),
                 command.getEntrustAmount());
@@ -34,15 +32,14 @@ public class GirdTradeOrderCommandAssembler {
                 false,
                 securityInfo,
                 gridCondition,
-                (DoubleDirectionTradePlan) tradePlan,
+                tradePlan,
                 orderState);
     }
 
     public static GridTradeOrder merge(GridTradeOrder oldOrder, GridTradeOrderUpdateCommand command) {
         OrderState orderState = OrderState.ACTIVE;
         GridCondition gridCondition = new GridCondition(command.getGridLength(), command.getBasePrice());
-        TradePlan tradePlan = TradePlanFactory.getInstance().create(TradePlanFactory.DOUBLE_EXCHANGE_TYPE,
-                command.getEntrustStrategy(),
+        DoubleDirectionTradePlan tradePlan = TradePlanFactory.getInstance().createDouble(command.getEntrustStrategy(),
                 command.getEntrustMethod(),
                 command.getEntrustNumber(),
                 command.getEntrustAmount());
@@ -50,7 +47,7 @@ public class GirdTradeOrderCommandAssembler {
                 oldOrder.getCustomerIdentity(),
                 false,
                 oldOrder.getSecurityInfo(),
-                gridCondition, (DoubleDirectionTradePlan) tradePlan, orderState
+                gridCondition, tradePlan, orderState
         );
     }
 
