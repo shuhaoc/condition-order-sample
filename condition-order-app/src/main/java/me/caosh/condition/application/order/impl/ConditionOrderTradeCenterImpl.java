@@ -11,10 +11,7 @@ import me.caosh.condition.domain.model.signal.CacheSync;
 import me.caosh.condition.domain.model.signal.General;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.LifeCircle;
-import me.caosh.condition.domain.model.trade.EntrustCommand;
-import me.caosh.condition.domain.model.trade.EntrustOrder;
-import me.caosh.condition.domain.model.trade.EntrustResult;
-import me.caosh.condition.domain.model.trade.EntrustResultAware;
+import me.caosh.condition.domain.model.trade.*;
 import me.caosh.condition.domain.service.RealTimeMarketService;
 import me.caosh.condition.domain.service.SecurityEntrustService;
 import me.caosh.condition.infrastructure.repository.EntrustOrderRepository;
@@ -63,17 +60,20 @@ public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter 
                 logger.info("Get real-time market <== {}", realTimeMarket);
                 Preconditions.checkNotNull(realTimeMarket);
             }
-            EntrustCommand entrustCommand = conditionOrder.onTradeSignal(signal, realTimeMarket);
-            EntrustResult entrustResult = securityEntrustService.execute(entrustCommand);
-            logger.info("Entrust result <== {}", entrustResult);
 
-            if (conditionOrder instanceof EntrustResultAware) {
-                ((EntrustResultAware) conditionOrder).afterEntrustReturned(triggerContext, entrustResult);
+            if (conditionOrder instanceof SingleEntrustOnTrigger) {
+                EntrustCommand entrustCommand = ((SingleEntrustOnTrigger) conditionOrder).onTradeSignal(signal, realTimeMarket);
+                EntrustResult entrustResult = securityEntrustService.execute(entrustCommand);
+                logger.info("Entrust result <== {}", entrustResult);
+
+                if (conditionOrder instanceof EntrustResultAware) {
+                    ((EntrustResultAware) conditionOrder).afterEntrustReturned(triggerContext, entrustResult);
+                }
+
+                long entrustId = entrustOrderIdGenerator.nextId();
+                EntrustOrder entrustOrder = new EntrustOrder(entrustId, conditionOrder.getOrderId(), entrustCommand, entrustResult);
+                entrustOrderRepository.save(entrustOrder);
             }
-
-            long entrustId = entrustOrderIdGenerator.nextId();
-            EntrustOrder entrustOrder = new EntrustOrder(entrustId, conditionOrder.getOrderId(), entrustCommand, entrustResult);
-            entrustOrderRepository.save(entrustOrder);
 
             if (conditionOrder.getStrategyInfo().getLifeCircle() == LifeCircle.ONCE) {
                 conditionOrder.setOrderState(OrderState.TERMINATED);

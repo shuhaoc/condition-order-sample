@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by caosh on 2017/8/19.
  */
-public abstract class OnceMarketConditionOrder extends MarketConditionOrder {
+public abstract class OnceMarketConditionOrder extends SimpleMarketConditionOrder {
     private static final Logger logger = LoggerFactory.getLogger(OnceMarketConditionOrder.class);
 
     public OnceMarketConditionOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,

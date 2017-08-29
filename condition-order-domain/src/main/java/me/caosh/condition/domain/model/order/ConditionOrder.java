@@ -1,89 +1,30 @@
 package me.caosh.condition.domain.model.order;
 
-import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
-import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.StrategyInfo;
-import me.caosh.condition.domain.model.trade.EntrustCommand;
 
 /**
- * Created by caosh on 2017/8/2.
+ * 条件单定义
+ * Created by caosh on 2017/8/29.
  */
-public abstract class ConditionOrder {
-    private final Long orderId;
-    private final TradeCustomerIdentity customerIdentity;
-    private final boolean deleted;
-    private final SecurityInfo securityInfo;
-    private final StrategyInfo strategyInfo;
-    private final Condition condition;
-    private final TradePlan tradePlan;
-    private OrderState orderState;
+public interface ConditionOrder {
+    Long getOrderId();
 
-    public ConditionOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
-                          StrategyInfo strategyInfo, Condition condition, TradePlan tradePlan, OrderState orderState) {
-        this.orderId = orderId;
-        this.customerIdentity = customerIdentity;
-        this.deleted = deleted;
-        this.securityInfo = securityInfo;
-        this.strategyInfo = strategyInfo;
-        this.condition = condition;
-        this.tradePlan = tradePlan;
-        this.orderState = orderState;
-    }
+    TradeCustomerIdentity getCustomerIdentity();
 
-    public Long getOrderId() {
-        return orderId;
-    }
+    SecurityInfo getSecurityInfo();
 
-    public TradeCustomerIdentity getCustomerIdentity() {
-        return customerIdentity;
-    }
+    StrategyInfo getStrategyInfo();
 
-    public boolean isDeleted() {
-        return deleted;
-    }
+    Condition getCondition();
 
-    public OrderState getOrderState() {
-        return orderState;
-    }
+    TradePlan getTradePlan();
 
-    public void setOrderState(OrderState orderState) {
-        this.orderState = orderState;
-    }
+    boolean isDeleted();
 
-    public SecurityInfo getSecurityInfo() {
-        return securityInfo;
-    }
+    OrderState getOrderState();
 
-    public StrategyInfo getStrategyInfo() {
-        return strategyInfo;
-    }
-
-    public Condition getCondition() {
-        return condition;
-    }
-
-    public TradePlan getTradePlan() {
-        return tradePlan;
-    }
-
-    // TODO: use interface
-    public abstract EntrustCommand onTradeSignal(TradeSignal signal, RealTimeMarket realTimeMarket);
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("orderId", orderId)
-                .add("customerIdentity", customerIdentity)
-                .add("deleted", deleted)
-                .add("orderState", orderState)
-                .add("securityInfo", securityInfo)
-                .add("strategyInfo", strategyInfo)
-                .add("condition", condition)
-                .add("tradePlan", tradePlan)
-                .toString();
-    }
+    void setOrderState(OrderState orderState);
 }

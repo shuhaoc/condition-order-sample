@@ -18,7 +18,7 @@ import me.caosh.condition.domain.model.trade.EntrustResultAware;
 /**
  * Created by caosh on 2017/8/23.
  */
-public class GridTradeOrder extends ConditionOrder implements RealTimeMarketDriven, EntrustResultAware {
+public class GridTradeOrder extends MarketConditionOrder implements EntrustResultAware {
     public GridTradeOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
                           Condition condition, TradePlan tradePlan, OrderState orderState) {
         super(orderId, customerIdentity, deleted, securityInfo, NativeStrategyInfo.GRID, condition, tradePlan, orderState);
