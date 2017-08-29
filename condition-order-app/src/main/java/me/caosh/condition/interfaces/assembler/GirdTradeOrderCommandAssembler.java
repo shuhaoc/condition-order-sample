@@ -7,6 +7,7 @@ import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
 import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.grid.GridCondition;
 import me.caosh.condition.domain.model.order.grid.GridTradeOrder;
+import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlanFactory;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
@@ -33,7 +34,7 @@ public class GirdTradeOrderCommandAssembler {
                 false,
                 securityInfo,
                 gridCondition,
-                tradePlan,
+                (DoubleDirectionTradePlan) tradePlan,
                 orderState);
     }
 
@@ -49,7 +50,7 @@ public class GirdTradeOrderCommandAssembler {
                 oldOrder.getCustomerIdentity(),
                 false,
                 oldOrder.getSecurityInfo(),
-                gridCondition, tradePlan, orderState
+                gridCondition, (DoubleDirectionTradePlan) tradePlan, orderState
         );
     }
 

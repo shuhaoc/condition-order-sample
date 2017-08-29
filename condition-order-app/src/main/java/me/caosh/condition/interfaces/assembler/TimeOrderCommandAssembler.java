@@ -10,7 +10,6 @@ import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.plan.SingleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradeNumber;
 import me.caosh.condition.domain.model.order.plan.TradeNumberFactory;
-import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.order.time.SimpleTimeCondition;
 import me.caosh.condition.domain.model.order.time.TimeOrder;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
@@ -33,7 +32,7 @@ public class TimeOrderCommandAssembler {
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        TradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
+        SingleDirectionTradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
         return new TimeOrder(orderId, customerIdentity, false, securityInfo, simpleTimeCondition, tradePlan, orderState);
     }
 
@@ -44,7 +43,7 @@ public class TimeOrderCommandAssembler {
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        TradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
+        SingleDirectionTradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
         return new TimeOrder(oldOrder.getOrderId(), oldOrder.getCustomerIdentity(), false,
                 oldOrder.getSecurityInfo(), simpleTimeCondition, tradePlan, orderState);
     }

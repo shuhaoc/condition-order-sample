@@ -3,7 +3,6 @@ package me.caosh.condition.domain.model.order;
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.constant.OrderState;
-import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.strategy.StrategyInfo;
 
 /**
@@ -15,19 +14,15 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     private final boolean deleted;
     private final SecurityInfo securityInfo;
     private final StrategyInfo strategyInfo;
-    private final Condition condition;
-    private final TradePlan tradePlan;
     private OrderState orderState;
 
     public AbstractConditionOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
-                                  StrategyInfo strategyInfo, Condition condition, TradePlan tradePlan, OrderState orderState) {
+                                  StrategyInfo strategyInfo, OrderState orderState) {
         this.orderId = orderId;
         this.customerIdentity = customerIdentity;
         this.deleted = deleted;
         this.securityInfo = securityInfo;
         this.strategyInfo = strategyInfo;
-        this.condition = condition;
-        this.tradePlan = tradePlan;
         this.orderState = orderState;
     }
 
@@ -67,26 +62,14 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     }
 
     @Override
-    public Condition getCondition() {
-        return condition;
-    }
-
-    @Override
-    public TradePlan getTradePlan() {
-        return tradePlan;
-    }
-
-    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("orderId", orderId)
                 .add("customerIdentity", customerIdentity)
                 .add("deleted", deleted)
-                .add("orderState", orderState)
                 .add("securityInfo", securityInfo)
                 .add("strategyInfo", strategyInfo)
-                .add("condition", condition)
-                .add("tradePlan", tradePlan)
+                .add("orderState", orderState)
                 .toString();
     }
 }

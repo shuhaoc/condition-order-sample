@@ -19,22 +19,34 @@ import me.caosh.condition.domain.model.trade.EntrustResultAware;
  * Created by caosh on 2017/8/23.
  */
 public class GridTradeOrder extends MarketConditionOrder implements EntrustResultAware {
-    public GridTradeOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
-                          Condition condition, TradePlan tradePlan, OrderState orderState) {
-        super(orderId, customerIdentity, deleted, securityInfo, NativeStrategyInfo.GRID, condition, tradePlan, orderState);
-    }
 
-    public GridCondition getGridCondition() {
-        return (GridCondition) getCondition();
+    private final GridCondition gridCondition;
+    private final DoubleDirectionTradePlan tradePlan;
+
+    public GridTradeOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
+                          GridCondition gridCondition, DoubleDirectionTradePlan tradePlan, OrderState orderState) {
+        super(orderId, customerIdentity, deleted, securityInfo, NativeStrategyInfo.GRID, orderState);
+        this.gridCondition = gridCondition;
+        this.tradePlan = tradePlan;
     }
 
     public DoubleDirectionTradePlan getDoubleDirectionTradePlan() {
-        return (DoubleDirectionTradePlan) getTradePlan();
+        return tradePlan;
+    }
+
+    @Override
+    public Condition getCondition() {
+        return gridCondition;
+    }
+
+    @Override
+    public TradePlan getTradePlan() {
+        return tradePlan;
     }
 
     @Override
     public TradeSignal onRealTimeMarketUpdate(RealTimeMarket realTimeMarket) {
-        return getGridCondition().onRealTimeMarketUpdate(realTimeMarket);
+        return gridCondition.onRealTimeMarketUpdate(realTimeMarket);
     }
 
     @Override
@@ -52,6 +64,6 @@ public class GridTradeOrder extends MarketConditionOrder implements EntrustResul
     @Override
     public void afterEntrustReturned(TriggerContext triggerContext, EntrustResult entrustResult) {
         RealTimeMarket triggerRealTimeMarket = triggerContext.getTriggerRealTimeMarket();
-        getGridCondition().setBasePrice(triggerRealTimeMarket.getCurrentPrice());
+        gridCondition.setBasePrice(triggerRealTimeMarket.getCurrentPrice());
     }
 }

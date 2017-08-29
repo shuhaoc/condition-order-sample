@@ -11,7 +11,6 @@ import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.plan.SingleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradeNumber;
 import me.caosh.condition.domain.model.order.plan.TradeNumberFactory;
-import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpBuyOrder;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
@@ -32,7 +31,7 @@ public class TurnUpBuyOrderCommandAssembler {
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        TradePlan tradePlan = new SingleDirectionTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
+        SingleDirectionTradePlan tradePlan = new SingleDirectionTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
         return new TurnUpBuyOrder(orderId, customerIdentity, false, securityInfo, turnUpCondition, tradePlan, orderState);
     }
 
@@ -45,9 +44,9 @@ public class TurnUpBuyOrderCommandAssembler {
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        TradePlan tradePlan = new SingleDirectionTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
-        return new TurnUpBuyOrder(oldOrder.getOrderId(), oldOrder.getCustomerIdentity(), false, oldOrder.getSecurityInfo(), turnUpCondition, tradePlan, orderState
-        );
+        SingleDirectionTradePlan tradePlan = new SingleDirectionTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
+        return new TurnUpBuyOrder(oldOrder.getOrderId(), oldOrder.getCustomerIdentity(), false, oldOrder.getSecurityInfo(),
+                turnUpCondition, tradePlan, orderState);
     }
 
     private TurnUpBuyOrderCommandAssembler() {

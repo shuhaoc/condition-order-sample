@@ -2,7 +2,10 @@ package me.caosh.condition.domain.model.order;
 
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.constant.OrderState;
+import me.caosh.condition.domain.model.order.grid.GridCondition;
 import me.caosh.condition.domain.model.order.grid.GridTradeOrder;
+import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
+import me.caosh.condition.domain.model.order.plan.SingleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
@@ -26,13 +29,17 @@ public class ConditionOrderFactory {
     public ConditionOrder create(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, OrderState orderState,
                                  SecurityInfo securityInfo, StrategyInfo strategyInfo, Condition condition, TradePlan tradePlan) {
         if (strategyInfo == NativeStrategyInfo.PRICE) {
-            return new PriceOrder(orderId, customerIdentity, deleted, securityInfo, (PriceCondition) condition, tradePlan, orderState);
+            return new PriceOrder(orderId, customerIdentity, deleted, securityInfo, (PriceCondition) condition,
+                    (SingleDirectionTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {
-            return new TurnUpBuyOrder(orderId, customerIdentity, deleted, securityInfo, (TurnUpCondition) condition, tradePlan, orderState);
+            return new TurnUpBuyOrder(orderId, customerIdentity, deleted, securityInfo, (TurnUpCondition) condition,
+                    (SingleDirectionTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.TIME) {
-            return new TimeOrder(orderId, customerIdentity, deleted, securityInfo, (SimpleTimeCondition) condition, tradePlan, orderState);
+            return new TimeOrder(orderId, customerIdentity, deleted, securityInfo, (SimpleTimeCondition) condition,
+                    (SingleDirectionTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.GRID) {
-            return new GridTradeOrder(orderId, customerIdentity, deleted, securityInfo, condition, tradePlan, orderState);
+            return new GridTradeOrder(orderId, customerIdentity, deleted, securityInfo, (GridCondition) condition,
+                    (DoubleDirectionTradePlan) tradePlan, orderState);
         }
         throw new IllegalArgumentException("strategyInfo=" + strategyInfo);
     }

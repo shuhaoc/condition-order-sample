@@ -11,7 +11,6 @@ import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.plan.SingleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradeNumber;
 import me.caosh.condition.domain.model.order.plan.TradeNumberFactory;
-import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
@@ -37,7 +36,7 @@ public class PriceOrderCommandAssembler {
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        TradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
+        SingleDirectionTradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
         return new PriceOrder(orderId, customerIdentity, false, securityInfo, priceCondition, tradePlan, orderState);
     }
 
@@ -50,9 +49,9 @@ public class PriceOrderCommandAssembler {
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        TradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
-        return new PriceOrder(oldPriceOrder.getOrderId(), oldPriceOrder.getCustomerIdentity(), false, oldPriceOrder.getSecurityInfo(), priceCondition, tradePlan, orderState
-        );
+        SingleDirectionTradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
+        return new PriceOrder(oldPriceOrder.getOrderId(), oldPriceOrder.getCustomerIdentity(), false,
+                oldPriceOrder.getSecurityInfo(), priceCondition, tradePlan, orderState);
     }
 
     private PriceOrderCommandAssembler() {
