@@ -1,5 +1,8 @@
-package me.caosh.condition.domain.model.order;
+package me.caosh.condition.domain.model.monitor;
 
+import me.caosh.condition.domain.model.order.ConditionOrder;
+import me.caosh.condition.domain.model.order.RealTimeMarketDriven;
+import me.caosh.condition.domain.model.order.TimeDriven;
 import me.caosh.condition.domain.model.order.shared.DelayTimer;
 
 import java.util.Optional;
@@ -24,6 +27,14 @@ public class MonitorContext {
 
     public ConditionOrder getConditionOrder() {
         return conditionOrder;
+    }
+
+    public boolean isRealTimeMarketDriven() {
+        return conditionOrder instanceof RealTimeMarketDriven;
+    }
+
+    public boolean isTimeDriven() {
+        return conditionOrder instanceof TimeDriven;
     }
 
     public void lockTriggering() {

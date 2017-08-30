@@ -14,7 +14,6 @@ import me.caosh.condition.domain.model.order.plan.TradeNumberDirect;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
 import me.caosh.condition.infrastructure.repository.impl.ConditionOrderIdGenerator;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +39,7 @@ public class ConditionOrderRepositoryTest {
     @Autowired
     private ConditionOrderIdGenerator conditionOrderIdGenerator;
 
-    @Test
+    //    @Test
     public void test() throws Exception {
         TradeCustomerIdentity customerIdentity = new TradeCustomerIdentity(303348, "010000061086");
         PriceOrder priceOrder = new PriceOrder(conditionOrderIdGenerator.nextId(), customerIdentity, false,

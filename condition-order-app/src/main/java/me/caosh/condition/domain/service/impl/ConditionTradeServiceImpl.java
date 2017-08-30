@@ -1,8 +1,7 @@
-package me.caosh.condition.application.order.impl;
+package me.caosh.condition.domain.service.impl;
 
 import com.google.common.base.Preconditions;
 import me.caosh.condition.application.order.ConditionOrderCommandService;
-import me.caosh.condition.application.order.ConditionOrderTradeCenter;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.TriggerContext;
@@ -12,6 +11,7 @@ import me.caosh.condition.domain.model.signal.General;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.LifeCircle;
 import me.caosh.condition.domain.model.trade.*;
+import me.caosh.condition.domain.service.ConditionTradeService;
 import me.caosh.condition.domain.service.RealTimeMarketService;
 import me.caosh.condition.domain.service.SecurityEntrustService;
 import me.caosh.condition.infrastructure.repository.EntrustOrderRepository;
@@ -26,8 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by caosh on 2017/8/13.
  */
 @Service
-public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter {
-    private static final Logger logger = LoggerFactory.getLogger(ConditionOrderTradeCenterImpl.class);
+public class ConditionTradeServiceImpl implements ConditionTradeService {
+    private static final Logger logger = LoggerFactory.getLogger(ConditionTradeServiceImpl.class);
 
     private final SecurityEntrustService securityEntrustService;
     private final ConditionOrderCommandService conditionOrderCommandService;
@@ -35,11 +35,11 @@ public class ConditionOrderTradeCenterImpl implements ConditionOrderTradeCenter 
     private final EntrustOrderIdGenerator entrustOrderIdGenerator;
     private final RealTimeMarketService realTimeMarketService;
 
-    public ConditionOrderTradeCenterImpl(SecurityEntrustService securityEntrustService,
-                                         ConditionOrderCommandService conditionOrderCommandService,
-                                         EntrustOrderRepository entrustOrderRepository,
-                                         EntrustOrderIdGenerator entrustOrderIdGenerator,
-                                         RealTimeMarketService realTimeMarketService) {
+    public ConditionTradeServiceImpl(SecurityEntrustService securityEntrustService,
+                                     ConditionOrderCommandService conditionOrderCommandService,
+                                     EntrustOrderRepository entrustOrderRepository,
+                                     EntrustOrderIdGenerator entrustOrderIdGenerator,
+                                     RealTimeMarketService realTimeMarketService) {
         this.securityEntrustService = securityEntrustService;
         this.conditionOrderCommandService = conditionOrderCommandService;
         this.entrustOrderRepository = entrustOrderRepository;

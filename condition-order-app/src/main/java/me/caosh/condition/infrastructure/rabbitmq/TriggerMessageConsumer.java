@@ -1,6 +1,5 @@
 package me.caosh.condition.infrastructure.rabbitmq;
 
-import me.caosh.condition.application.order.ConditionOrderTradeCenter;
 import me.caosh.condition.domain.dto.market.assembler.RealTimeMarketDTOAssembler;
 import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
@@ -11,6 +10,7 @@ import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.TriggerContext;
 import me.caosh.condition.domain.model.share.Retry;
 import me.caosh.condition.domain.model.signal.TradeSignal;
+import me.caosh.condition.domain.service.ConditionTradeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
@@ -40,7 +40,7 @@ public class TriggerMessageConsumer {
 
     private final ConnectionFactory connectionFactory;
     private final AmqpAdmin amqpAdmin;
-    private final ConditionOrderTradeCenter conditionOrderTradeCenter;
+    private final ConditionTradeService conditionTradeService;
     // TODO: converter to domain model
     private final MessageConverter messageConverter = new ConditionOrderGSONMessageConverter<>(TriggerMessageDTO.class);
 
@@ -56,10 +56,10 @@ public class TriggerMessageConsumer {
         this.routingKey = routingKey;
     }
 
-    public TriggerMessageConsumer(ConnectionFactory connectionFactory, AmqpAdmin amqpAdmin, ConditionOrderTradeCenter conditionOrderTradeCenter) {
+    public TriggerMessageConsumer(ConnectionFactory connectionFactory, AmqpAdmin amqpAdmin, ConditionTradeService conditionTradeService) {
         this.connectionFactory = connectionFactory;
         this.amqpAdmin = amqpAdmin;
-        this.conditionOrderTradeCenter = conditionOrderTradeCenter;
+        this.conditionTradeService = conditionTradeService;
     }
 
     @PostConstruct
@@ -106,6 +106,6 @@ public class TriggerMessageConsumer {
             realTimeMarket = RealTimeMarketDTOAssembler.fromDTO(triggerMessageDTO.getRealTimeMarketDTO());
         }
         TriggerContext triggerContext = new TriggerContext(tradeSignal, conditionOrder, realTimeMarket);
-        conditionOrderTradeCenter.handleTriggerContext(triggerContext);
+        conditionTradeService.handleTriggerContext(triggerContext);
     }
 }
