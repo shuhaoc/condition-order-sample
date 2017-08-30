@@ -10,6 +10,8 @@ import me.caosh.condition.domain.model.signal.SignalFactory;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.StrategyInfo;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
+import me.caosh.condition.domain.model.trade.EntrustResult;
+import me.caosh.condition.domain.model.trade.EntrustResultAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,13 +20,13 @@ import java.math.BigDecimal;
 /**
  * Created by caosh on 2017/8/20.
  */
-public abstract class SimpleMarketConditionOrder extends MarketConditionOrder {
+public abstract class SimpleMarketConditionOrder extends MarketConditionOrder implements EntrustResultAware {
     private static final Logger logger = LoggerFactory.getLogger(SimpleMarketConditionOrder.class);
 
     private final SingleDirectionTradePlan tradePlan;
 
     public SimpleMarketConditionOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
-                                      StrategyInfo strategyInfo, Condition condition, SingleDirectionTradePlan tradePlan, OrderState orderState) {
+                                      StrategyInfo strategyInfo, SingleDirectionTradePlan tradePlan, OrderState orderState) {
         super(orderId, customerIdentity, deleted, securityInfo, strategyInfo, orderState);
         this.tradePlan = tradePlan;
     }
@@ -50,6 +52,11 @@ public abstract class SimpleMarketConditionOrder extends MarketConditionOrder {
     @Override
     public EntrustCommand onTradeSignal(TradeSignal signal, RealTimeMarket realTimeMarket) {
         return OnceOrders.createEntrustCommand(this, realTimeMarket);
+    }
+
+    @Override
+    public void afterEntrustReturned(TriggerContext triggerContext, EntrustResult entrustResult) {
+        setOrderState(OrderState.TERMINATED);
     }
 
     @Override
