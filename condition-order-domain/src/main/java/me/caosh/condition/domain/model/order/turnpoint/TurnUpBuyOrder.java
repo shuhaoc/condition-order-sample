@@ -3,8 +3,7 @@ package me.caosh.condition.domain.model.order.turnpoint;
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.Condition;
-import me.caosh.condition.domain.model.order.MarketCondition;
-import me.caosh.condition.domain.model.order.RealTimeMarketDriven;
+import me.caosh.condition.domain.model.order.SimpleMarketCondition;
 import me.caosh.condition.domain.model.order.SimpleMarketConditionOrder;
 import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
 import me.caosh.condition.domain.model.order.constant.OrderState;
@@ -14,7 +13,7 @@ import me.caosh.condition.domain.model.strategy.NativeStrategyInfo;
 /**
  * Created by caosh on 2017/8/19.
  */
-public class TurnUpBuyOrder extends SimpleMarketConditionOrder implements RealTimeMarketDriven {
+public class TurnUpBuyOrder extends SimpleMarketConditionOrder {
 
     private final TurnUpCondition turnUpCondition;
 
@@ -30,7 +29,7 @@ public class TurnUpBuyOrder extends SimpleMarketConditionOrder implements RealTi
     }
 
     @Override
-    public MarketCondition getMarketCondition() {
+    public SimpleMarketCondition getMarketCondition() {
         return turnUpCondition;
     }
 

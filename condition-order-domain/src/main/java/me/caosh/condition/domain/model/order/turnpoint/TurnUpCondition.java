@@ -5,7 +5,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
 import me.caosh.condition.domain.model.order.DynamicCondition;
-import me.caosh.condition.domain.model.order.MarketCondition;
+import me.caosh.condition.domain.model.order.SimpleMarketCondition;
 import me.caosh.condition.domain.model.order.shared.DynamicProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,7 @@ import java.util.Optional;
 /**
  * Created by caosh on 2017/8/19.
  */
-public class TurnUpCondition implements MarketCondition, DynamicCondition {
+public class TurnUpCondition implements SimpleMarketCondition, DynamicCondition {
     private static final Logger logger = LoggerFactory.getLogger(TurnUpCondition.class);
 
     private final BigDecimal breakPrice;

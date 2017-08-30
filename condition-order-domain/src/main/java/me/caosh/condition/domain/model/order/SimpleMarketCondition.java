@@ -5,6 +5,6 @@ import java.math.BigDecimal;
 /**
  * Created by caosh on 2017/8/19.
  */
-public interface MarketCondition extends Condition {
+public interface SimpleMarketCondition extends Condition {
     boolean isSatisfiedBy(BigDecimal price);
 }

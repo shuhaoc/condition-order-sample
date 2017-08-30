@@ -31,7 +31,7 @@ public abstract class SimpleMarketConditionOrder extends MarketConditionOrder im
         this.tradePlan = tradePlan;
     }
 
-    public abstract MarketCondition getMarketCondition();
+    public abstract SimpleMarketCondition getMarketCondition();
 
     @Override
     public TradePlan getTradePlan() {
