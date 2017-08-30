@@ -2,7 +2,11 @@ package me.caosh.condition.domain.model.order.grid;
 
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.order.*;
+import me.caosh.condition.domain.model.order.Condition;
+import me.caosh.condition.domain.model.order.EntrustCommands;
+import me.caosh.condition.domain.model.order.MarketConditionOrder;
+import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
+import me.caosh.condition.domain.model.order.TriggerContext;
 import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.SingleDirectionTradePlan;
@@ -30,10 +34,6 @@ public class GridTradeOrder extends MarketConditionOrder implements EntrustResul
         this.tradePlan = tradePlan;
     }
 
-    public DoubleDirectionTradePlan getDoubleDirectionTradePlan() {
-        return tradePlan;
-    }
-
     @Override
     public Condition getCondition() {
         return gridCondition;
@@ -52,10 +52,10 @@ public class GridTradeOrder extends MarketConditionOrder implements EntrustResul
     @Override
     public EntrustCommand onTradeSignal(TradeSignal signal, RealTimeMarket realTimeMarket) {
         if (signal instanceof Buy) {
-            SingleDirectionTradePlan buyPlan = getDoubleDirectionTradePlan().getBuyPlan();
+            SingleDirectionTradePlan buyPlan = tradePlan.getBuyPlan();
             return EntrustCommands.createEntrustCommand(getCustomerIdentity(), getSecurityInfo(), buyPlan, realTimeMarket);
         } else if (signal instanceof Sell) {
-            SingleDirectionTradePlan sellPlan = getDoubleDirectionTradePlan().getSellPlan();
+            SingleDirectionTradePlan sellPlan = tradePlan.getSellPlan();
             return EntrustCommands.createEntrustCommand(getCustomerIdentity(), getSecurityInfo(), sellPlan, realTimeMarket);
         }
         throw new IllegalArgumentException(String.valueOf(signal));
