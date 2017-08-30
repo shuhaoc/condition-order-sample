@@ -7,19 +7,23 @@ import me.caosh.condition.domain.model.signal.TradeSignal;
 import java.util.Optional;
 
 /**
- * Created by caosh on 2017/8/14.
- *
- * @author caoshuhao@touker.com
+ * Created by caosh on 2017/8/30.
  */
-public class TriggerContext {
+public class TriggerMessage {
     private final TradeSignal tradeSignal;
     private final ConditionOrder conditionOrder;
-    private final RealTimeMarket triggerRealTimeMarket;
+    private final RealTimeMarket realTimeMarket;
 
-    public TriggerContext(TradeSignal tradeSignal, ConditionOrder conditionOrder, RealTimeMarket triggerRealTimeMarket) {
+    public TriggerMessage(TradeSignal tradeSignal, ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {
         this.tradeSignal = tradeSignal;
         this.conditionOrder = conditionOrder;
-        this.triggerRealTimeMarket = triggerRealTimeMarket;
+        this.realTimeMarket = realTimeMarket;
+    }
+
+    public TriggerMessage(TradeSignal tradeSignal, ConditionOrder conditionOrder) {
+        this.tradeSignal = tradeSignal;
+        this.conditionOrder = conditionOrder;
+        this.realTimeMarket = null;
     }
 
     public TradeSignal getTradeSignal() {
@@ -30,8 +34,8 @@ public class TriggerContext {
         return conditionOrder;
     }
 
-    public Optional<RealTimeMarket> getTriggerRealTimeMarket() {
-        return Optional.ofNullable(triggerRealTimeMarket);
+    public Optional<RealTimeMarket> getRealTimeMarket() {
+        return Optional.ofNullable(realTimeMarket);
     }
 
     @Override
@@ -39,7 +43,7 @@ public class TriggerContext {
         return MoreObjects.toStringHelper(this)
                 .add("tradeSignal", tradeSignal)
                 .add("conditionOrder", conditionOrder)
-                .add("triggerRealTimeMarket", triggerRealTimeMarket)
+                .add("realTimeMarket", realTimeMarket)
                 .toString();
     }
 }

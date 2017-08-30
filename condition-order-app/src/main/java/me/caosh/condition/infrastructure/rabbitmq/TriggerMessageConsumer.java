@@ -1,15 +1,11 @@
 package me.caosh.condition.infrastructure.rabbitmq;
 
-import me.caosh.condition.domain.dto.market.assembler.RealTimeMarketDTOAssembler;
 import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
-import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
-import me.caosh.condition.domain.dto.order.assembler.TradeSignalBuilder;
+import me.caosh.condition.domain.dto.order.assembler.TriggerMessageAssembler;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
-import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.TriggerContext;
+import me.caosh.condition.domain.model.order.TriggerMessage;
 import me.caosh.condition.domain.model.share.Retry;
-import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.service.ConditionTradeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,13 +95,10 @@ public class TriggerMessageConsumer {
     private void tryHandleTriggerMessage(Message message) {
         TriggerMessageDTO triggerMessageDTO = (TriggerMessageDTO) messageConverter.fromMessage(message);
         logger.debug("Receive trigger message <== {}", triggerMessageDTO);
-        TradeSignal tradeSignal = new TradeSignalBuilder(triggerMessageDTO.getTradeSignalDTO()).build();
-        ConditionOrder conditionOrder = ConditionOrderDTOAssembler.fromDTO(triggerMessageDTO.getConditionOrderDTO());
-        RealTimeMarket realTimeMarket = null;
-        if (triggerMessageDTO.getRealTimeMarketDTO() != null) {
-            realTimeMarket = RealTimeMarketDTOAssembler.fromDTO(triggerMessageDTO.getRealTimeMarketDTO());
-        }
-        TriggerContext triggerContext = new TriggerContext(tradeSignal, conditionOrder, realTimeMarket);
+
+        TriggerMessage triggerMessage = TriggerMessageAssembler.fromDTO(triggerMessageDTO);
+        TriggerContext triggerContext = new TriggerContext(triggerMessage.getTradeSignal(), triggerMessage.getConditionOrder(),
+                triggerMessage.getRealTimeMarket().orElse(null));
         conditionTradeService.handleTriggerContext(triggerContext);
     }
 }
