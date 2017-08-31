@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.model.order.shared;
 
-import java.util.Optional;
+import com.google.common.base.Preconditions;
 
 /**
  * Created by caosh on 2017/8/19.
@@ -13,7 +13,7 @@ public class DynamicProperty<T> {
     }
 
     public DynamicProperty(T value) {
-        this.value = value;
+        this.value = Preconditions.checkNotNull(value);
     }
 
     public T get() {
