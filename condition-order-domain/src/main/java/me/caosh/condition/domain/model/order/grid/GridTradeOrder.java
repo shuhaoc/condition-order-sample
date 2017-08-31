@@ -37,6 +37,10 @@ public class GridTradeOrder extends MarketConditionOrder implements EntrustResul
 
     @Override
     public Condition getCondition() {
+        return getGridCondition();
+    }
+
+    public GridCondition getGridCondition() {
         return gridCondition;
     }
 

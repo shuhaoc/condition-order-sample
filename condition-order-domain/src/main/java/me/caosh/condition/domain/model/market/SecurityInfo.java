@@ -54,7 +54,7 @@ public class SecurityInfo {
         if (type != that.type) return false;
         if (code != null ? !code.equals(that.code) : that.code != null) return false;
         return exchange == that.exchange;
-
+        // 由于证券名称可能会变，但不影响证券等于比较，因此这里没有比较name
     }
 
     @Override
