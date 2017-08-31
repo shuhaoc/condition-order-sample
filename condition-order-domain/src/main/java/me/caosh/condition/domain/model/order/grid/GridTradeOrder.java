@@ -1,5 +1,6 @@
 package me.caosh.condition.domain.model.order.grid;
 
+import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.Condition;
@@ -63,7 +64,8 @@ public class GridTradeOrder extends MarketConditionOrder implements EntrustResul
 
     @Override
     public void afterEntrustReturned(TriggerContext triggerContext, EntrustResult entrustResult) {
-        RealTimeMarket triggerRealTimeMarket = triggerContext.getTriggerRealTimeMarket();
+        Preconditions.checkNotNull(triggerContext.getTriggerRealTimeMarket().isPresent());
+        RealTimeMarket triggerRealTimeMarket = triggerContext.getTriggerRealTimeMarket().get();
         gridCondition.setBasePrice(triggerRealTimeMarket.getCurrentPrice());
     }
 }

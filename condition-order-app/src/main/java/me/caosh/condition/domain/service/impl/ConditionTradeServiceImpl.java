@@ -10,7 +10,11 @@ import me.caosh.condition.domain.model.signal.CacheSync;
 import me.caosh.condition.domain.model.signal.General;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.LifeCircle;
-import me.caosh.condition.domain.model.trade.*;
+import me.caosh.condition.domain.model.trade.EntrustCommand;
+import me.caosh.condition.domain.model.trade.EntrustOrder;
+import me.caosh.condition.domain.model.trade.EntrustResult;
+import me.caosh.condition.domain.model.trade.EntrustResultAware;
+import me.caosh.condition.domain.model.trade.SingleEntrustOnTrigger;
 import me.caosh.condition.domain.service.ConditionTradeService;
 import me.caosh.condition.domain.service.RealTimeMarketService;
 import me.caosh.condition.domain.service.SecurityEntrustService;
@@ -54,14 +58,15 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
         ConditionOrder conditionOrder = triggerContext.getConditionOrder();
         if (signal instanceof General) {
             // TODO: use responsibility chain pattern
-            RealTimeMarket realTimeMarket = triggerContext.getTriggerRealTimeMarket();
-            if (realTimeMarket == null) {
-                realTimeMarket = realTimeMarketService.getCurrentMarket(conditionOrder.getSecurityInfo().asMarketID());
+            if (!triggerContext.getTriggerRealTimeMarket().isPresent()) {
+                RealTimeMarket realTimeMarket = realTimeMarketService.getCurrentMarket(conditionOrder.getSecurityInfo().asMarketID());
                 logger.info("Get real-time market <== {}", realTimeMarket);
                 Preconditions.checkNotNull(realTimeMarket);
+                triggerContext.setTriggerRealTimeMarket(realTimeMarket);
             }
 
             if (conditionOrder instanceof SingleEntrustOnTrigger) {
+                RealTimeMarket realTimeMarket = triggerContext.getTriggerRealTimeMarket().get();
                 EntrustCommand entrustCommand = ((SingleEntrustOnTrigger) conditionOrder).onTradeSignal(signal, realTimeMarket);
                 EntrustResult entrustResult = securityEntrustService.execute(entrustCommand);
                 logger.info("Entrust result <== {}", entrustResult);

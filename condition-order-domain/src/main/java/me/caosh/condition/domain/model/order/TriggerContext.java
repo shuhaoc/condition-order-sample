@@ -14,7 +14,7 @@ import java.util.Optional;
 public class TriggerContext {
     private final TradeSignal tradeSignal;
     private final ConditionOrder conditionOrder;
-    private final RealTimeMarket triggerRealTimeMarket;
+    private RealTimeMarket triggerRealTimeMarket;
 
     public TriggerContext(TradeSignal tradeSignal, ConditionOrder conditionOrder, RealTimeMarket triggerRealTimeMarket) {
         this.tradeSignal = tradeSignal;
@@ -32,6 +32,10 @@ public class TriggerContext {
 
     public Optional<RealTimeMarket> getTriggerRealTimeMarket() {
         return Optional.ofNullable(triggerRealTimeMarket);
+    }
+
+    public void setTriggerRealTimeMarket(RealTimeMarket triggerRealTimeMarket) {
+        this.triggerRealTimeMarket = triggerRealTimeMarket;
     }
 
     @Override
