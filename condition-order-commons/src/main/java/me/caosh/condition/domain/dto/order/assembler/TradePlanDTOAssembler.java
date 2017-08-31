@@ -1,6 +1,7 @@
 package me.caosh.condition.domain.dto.order.assembler;
 
 import me.caosh.condition.domain.dto.order.TradePlanDTO;
+import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.plan.*;
 
 /**
@@ -24,6 +25,12 @@ public class TradePlanDTOAssembler {
             public void visitDoubleDirectionTradePlan(DoubleDirectionTradePlan doubleDirectionTradePlan) {
                 tradePlanDTO.setExchangeType(TradePlanFactory.DOUBLE_EXCHANGE_TYPE);
                 tradePlanDTO.setEntrustStrategy(doubleDirectionTradePlan.getBuyPlan().getEntrustStrategy().getValue());
+            }
+
+            @Override
+            public void visitAutoPurchaseTradePlan(AutoPurchaseTradePlan autoPurchaseTradePlan) {
+                tradePlanDTO.setExchangeType(autoPurchaseTradePlan.getExchangeTypeValue());
+                tradePlanDTO.setEntrustStrategy(autoPurchaseTradePlan.getEntrustStrategyValue());
             }
         });
 

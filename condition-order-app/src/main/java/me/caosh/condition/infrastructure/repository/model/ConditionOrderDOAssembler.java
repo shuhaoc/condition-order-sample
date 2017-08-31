@@ -7,6 +7,7 @@ import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.ConditionOrderFactory;
 import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
+import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.plan.*;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
@@ -50,6 +51,12 @@ public class ConditionOrderDOAssembler {
             public void visitDoubleDirectionTradePlan(DoubleDirectionTradePlan doubleDirectionTradePlan) {
                 conditionOrderDO.setExchangeType(TradePlanFactory.DOUBLE_EXCHANGE_TYPE);
                 conditionOrderDO.setEntrustStrategy(doubleDirectionTradePlan.getBuyPlan().getEntrustStrategy().getValue());
+            }
+
+            @Override
+            public void visitAutoPurchaseTradePlan(AutoPurchaseTradePlan autoPurchaseTradePlan) {
+                conditionOrderDO.setExchangeType(autoPurchaseTradePlan.getExchangeTypeValue());
+                conditionOrderDO.setEntrustStrategy(autoPurchaseTradePlan.getEntrustStrategyValue());
             }
         });
 

@@ -7,4 +7,6 @@ public interface TradePlanVisitor {
     void visitSingleDirectionTradePlan(SingleDirectionTradePlan singleDirectionTradePlan);
 
     void visitDoubleDirectionTradePlan(DoubleDirectionTradePlan doubleDirectionTradePlan);
+
+    void visitAutoPurchaseTradePlan(AutoPurchaseTradePlan autoPurchaseTradePlan);
 }

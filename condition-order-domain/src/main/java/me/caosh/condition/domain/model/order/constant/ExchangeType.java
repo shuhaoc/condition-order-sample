@@ -7,7 +7,8 @@ import me.caosh.condition.domain.model.share.ValuedEnum;
  */
 public enum ExchangeType implements ValuedEnum<Integer> {
     BUY(1),
-    SELL(2);
+    SELL(2),
+    QUOTA_PURCHASE(14);
 
     int value;
 
