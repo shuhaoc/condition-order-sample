@@ -39,7 +39,7 @@ public class GridCondition implements Condition, RealTimeMarketDriven {
         return Preconditions.checkNotNull(basePrice);
     }
 
-    public void setBasePrice(BigDecimal basePrice) {
+    void setBasePrice(BigDecimal basePrice) {
         this.basePrice = basePrice;
     }
 
@@ -50,9 +50,11 @@ public class GridCondition implements Condition, RealTimeMarketDriven {
 
     @Override
     public TradeSignal onRealTimeMarketUpdate(RealTimeMarket realTimeMarket) {
+        Preconditions.checkNotNull(basePrice);
+
         BigDecimal currentPrice = realTimeMarket.getCurrentPrice();
-        BigDecimal upwardTargetPrice = getBasePrice().add(gridLength);
-        BigDecimal downwardTargetPrice = getBasePrice().subtract(gridLength);
+        BigDecimal upwardTargetPrice = basePrice.add(gridLength);
+        BigDecimal downwardTargetPrice = basePrice.subtract(gridLength);
         logger.info("Check grid condition, basePrice={}, upwardTargetPrice={}, downwardTargetPrice={}, currentPrice={}",
                 basePrice, upwardTargetPrice, downwardTargetPrice, realTimeMarket.getCurrentPrice());
         if (currentPrice.compareTo(upwardTargetPrice) >= 0) {
