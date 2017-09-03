@@ -3,10 +3,10 @@ package me.caosh.condition.domain.model.order.newstock;
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
 import me.caosh.condition.domain.model.order.TimeCondition;
-import me.caosh.condition.domain.model.order.shared.DynamicProperty;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Optional;
 
 /**
  * Created by caosh on 2017/8/31.
@@ -24,12 +24,40 @@ public class NewStockPurchaseCondition implements TimeCondition {
         this.purchasedCount = 0;
     }
 
-    public NewStockPurchaseCondition(LocalTime purchaseTime, Integer purchasedCount) {
+    public NewStockPurchaseCondition(LocalTime purchaseTime, Integer purchasedCount, LocalDate lastTriggerDate) {
         this.purchaseTime = purchaseTime;
-        this.purchasedCount =MoreObjects.firstNonNull(purchasedCount, 0);
+        this.purchasedCount = MoreObjects.firstNonNull(purchasedCount, 0);
+        this.lastTriggerDate = lastTriggerDate;
     }
 
+    public LocalTime getPurchaseTime() {
+        return purchaseTime;
+    }
 
+    public int getPurchasedCount() {
+        return purchasedCount;
+    }
+
+    public Optional<LocalDate> getLastTriggerDate() {
+        return Optional.ofNullable(lastTriggerDate);
+    }
+
+    public boolean isTriggeredToday() {
+        return lastTriggerDate != null && LocalDate.now().equals(lastTriggerDate);
+    }
+
+    public void setTriggeredToday() {
+        this.lastTriggerDate = LocalDate.now();
+    }
+
+    @Override
+    public boolean isSatisfiedNow() {
+        if (isTriggeredToday()) {
+            return false;
+        }
+        LocalTime now = LocalTime.now();
+        return now.equals(purchaseTime) || now.isAfter(purchaseTime);
+    }
 
     @Override
     public void accept(ConditionVisitor visitor) {

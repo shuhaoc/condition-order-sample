@@ -5,11 +5,16 @@ import me.caosh.condition.domain.dto.order.*;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.constant.CompareCondition;
 import me.caosh.condition.domain.model.order.grid.GridCondition;
+import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.order.time.SimpleTimeCondition;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
+import me.caosh.condition.domain.util.DateFormats;
 import me.caosh.condition.domain.util.InstantUtils;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  * Created by caosh on 2017/8/11.
@@ -20,7 +25,7 @@ public class ConditionBuilder implements ConditionDTOVisitor {
 
     private Condition condition;
 
-    public ConditionBuilder (ConditionDTO conditionDTO) {
+    public ConditionBuilder(ConditionDTO conditionDTO) {
         conditionDTO.accept(this);
     }
 
@@ -48,5 +53,16 @@ public class ConditionBuilder implements ConditionDTOVisitor {
     @Override
     public void visitGridConditionDTO(GridConditionDTO gridConditionDTO) {
         this.condition = new GridCondition(gridConditionDTO.getGridLength(), gridConditionDTO.getBasePrice());
+    }
+
+    @Override
+    public void visitNewStockPurchaseConditionDTO(NewStockPurchaseConditionDTO newStockPurchaseConditionDTO) {
+        LocalTime purchaseTime = LocalTime.parse(newStockPurchaseConditionDTO.getPurchaseTime(), DateFormats.HH_MM_SS);
+        int purchasedCount = newStockPurchaseConditionDTO.getPurchasedCount();
+        LocalDate lastTriggerDate = newStockPurchaseConditionDTO.getLastTriggerDate() != null
+                ? InstantUtils.toLocalDate(newStockPurchaseConditionDTO.getLastTriggerDate())
+                : null;
+        this.condition = new NewStockPurchaseCondition(purchaseTime, purchasedCount, lastTriggerDate);
+
     }
 }

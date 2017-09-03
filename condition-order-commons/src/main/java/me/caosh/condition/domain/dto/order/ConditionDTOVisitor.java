@@ -13,4 +13,6 @@ public interface ConditionDTOVisitor {
     void visitSimpleTimeConditionDTO(SimpleTimeConditionDTO simpleTimeConditionDTO);
 
     void visitGridConditionDTO(GridConditionDTO gridConditionDTO);
+
+    void visitNewStockPurchaseConditionDTO(NewStockPurchaseConditionDTO newStockPurchaseConditionDTO);
 }

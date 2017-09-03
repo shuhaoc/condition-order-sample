@@ -4,11 +4,16 @@ import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.constant.CompareCondition;
 import me.caosh.condition.domain.model.order.grid.GridCondition;
+import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.order.time.SimpleTimeCondition;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
+import me.caosh.condition.domain.util.DateFormats;
 import me.caosh.condition.domain.util.InstantUtils;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  * Created by caosh on 2017/8/11.
@@ -64,5 +69,22 @@ public class ConditionBuilder implements ConditionDOVisitor, DynamicPropertiesDO
         Preconditions.checkNotNull(condition);
         GridCondition gridCondition = (GridCondition) condition;
         this.condition = new GridCondition(gridCondition.getGridLength(), gridDynamicPropertiesDO.getBasePrice());
+    }
+
+    @Override
+    public void visitNewStockPurchaseConditionDO(NewStockPurchaseConditionDO newStockPurchaseConditionDO) {
+        LocalTime purchaseTime = LocalTime.parse(newStockPurchaseConditionDO.getPurchaseTime(), DateFormats.HH_MM_SS);
+        this.condition = new NewStockPurchaseCondition(purchaseTime);
+    }
+
+    @Override
+    public void visitNewStockPurchaseDynamicPropertiesDO(NewStockPurchaseDynamicPropertiesDO newStockPurchaseDynamicPropertiesDO) {
+        Preconditions.checkNotNull(condition);
+        NewStockPurchaseCondition newStockPurchaseCondition = (NewStockPurchaseCondition) condition;
+        int purchasedCount = newStockPurchaseDynamicPropertiesDO.getPurchasedCount();
+        LocalDate lastTriggerDate = newStockPurchaseDynamicPropertiesDO.getLastTriggerDate() != null
+                ? InstantUtils.toLocalDate(newStockPurchaseDynamicPropertiesDO.getLastTriggerDate())
+                : null;
+        this.condition = new NewStockPurchaseCondition(newStockPurchaseCondition.getPurchaseTime(), purchasedCount, lastTriggerDate);
     }
 }

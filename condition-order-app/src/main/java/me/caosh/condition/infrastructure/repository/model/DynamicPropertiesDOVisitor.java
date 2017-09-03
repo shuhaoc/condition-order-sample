@@ -5,6 +5,7 @@ package me.caosh.condition.infrastructure.repository.model;
  */
 public interface DynamicPropertiesDOVisitor {
     void visitTurnUpDynamicPropertiesDO(TurnUpDynamicPropertiesDO turnUpDynamicPropertiesDO);
-
     void visitGridDynamicPropertiesDO(GridDynamicPropertiesDO gridDynamicPropertiesDO);
+
+    void visitNewStockPurchaseDynamicPropertiesDO(NewStockPurchaseDynamicPropertiesDO newStockPurchaseDynamicPropertiesDO);
 }

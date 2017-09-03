@@ -4,6 +4,8 @@ import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.grid.GridCondition;
 import me.caosh.condition.domain.model.order.grid.GridTradeOrder;
+import me.caosh.condition.domain.model.order.newstock.NewStockOrder;
+import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
 import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.SingleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
@@ -40,6 +42,8 @@ public class ConditionOrderFactory {
         } else if (strategyInfo == NativeStrategyInfo.GRID) {
             return new GridTradeOrder(orderId, customerIdentity, deleted, securityInfo, (GridCondition) condition,
                     (DoubleDirectionTradePlan) tradePlan, orderState);
+        } else if (strategyInfo == NativeStrategyInfo.NEW_STOCK) {
+            return new NewStockOrder(orderId, customerIdentity, deleted, (NewStockPurchaseCondition) condition, orderState);
         }
         throw new IllegalArgumentException("strategyInfo=" + strategyInfo);
     }

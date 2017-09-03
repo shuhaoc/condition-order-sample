@@ -3,9 +3,11 @@ package me.caosh.condition.infrastructure.repository.model;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
 import me.caosh.condition.domain.model.order.grid.GridCondition;
+import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.order.time.SimpleTimeCondition;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
+import me.caosh.condition.domain.util.DateFormats;
 import me.caosh.condition.domain.util.InstantUtils;
 
 /**
@@ -41,5 +43,11 @@ public class ConditionDOBuilder implements ConditionVisitor {
     @Override
     public void visitGridCondition(GridCondition gridCondition) {
         this.conditionDO = new GridConditionDO(gridCondition.getGridLength());
+    }
+
+    @Override
+    public void visitNewStockPurchaseCondition(NewStockPurchaseCondition newStockPurchaseCondition) {
+        String purchaseTime = DateFormats.HH_MM_SS.format(newStockPurchaseCondition.getPurchaseTime());
+        this.conditionDO = new NewStockPurchaseConditionDO(purchaseTime);
     }
 }

@@ -12,7 +12,8 @@ public enum NativeStrategyInfo implements StrategyInfo, ValuedEnum<Integer> {
     PRICE(1, ONCE),
     TURN_UP(2, ONCE),
     TIME(4, ONCE),
-    GRID(5, CONTINUOUS);
+    GRID(5, CONTINUOUS),
+    NEW_STOCK(6, CONTINUOUS);
 
     private final int strategyId;
     private final LifeCircle lifeCircle;
