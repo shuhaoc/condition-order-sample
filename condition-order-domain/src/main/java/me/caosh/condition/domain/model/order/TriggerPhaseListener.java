@@ -6,5 +6,5 @@ package me.caosh.condition.domain.model.order;
  * @author caoshuhao@touker.com
  */
 public interface TriggerPhaseListener {
-    void afterEntrustCommandExecuted(TriggerContext triggerContext);
+    void afterEntrustCommandsExecuted(TriggerContext triggerContext);
 }

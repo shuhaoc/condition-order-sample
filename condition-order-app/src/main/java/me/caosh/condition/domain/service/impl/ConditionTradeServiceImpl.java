@@ -84,7 +84,7 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
                 conditionOrder.setOrderState(OrderState.TERMINATED);
             }
             if (conditionOrder instanceof TriggerPhaseListener) {
-                ((TriggerPhaseListener) conditionOrder).afterEntrustCommandExecuted(triggerContext);
+                ((TriggerPhaseListener) conditionOrder).afterEntrustCommandsExecuted(triggerContext);
             }
             conditionOrderCommandService.update(conditionOrder);
         } else if (signal instanceof CacheSync) {

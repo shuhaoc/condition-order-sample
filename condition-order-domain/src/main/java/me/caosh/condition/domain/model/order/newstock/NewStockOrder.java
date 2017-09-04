@@ -78,7 +78,7 @@ public class NewStockOrder extends AbstractConditionOrder implements TimeDriven,
     }
 
     @Override
-    public void afterEntrustCommandExecuted(TriggerContext triggerContext) {
+    public void afterEntrustCommandsExecuted(TriggerContext triggerContext) {
         newStockPurchaseCondition.setTriggeredToday();
     }
 
