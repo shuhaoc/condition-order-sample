@@ -62,6 +62,21 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AbstractConditionOrder)) return false;
+
+        AbstractConditionOrder that = (AbstractConditionOrder) o;
+
+        return !(orderId != null ? !orderId.equals(that.orderId) : that.orderId != null);
+    }
+
+    @Override
+    public int hashCode() {
+        return orderId != null ? orderId.hashCode() : 0;
+    }
+
+    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("orderId", orderId)

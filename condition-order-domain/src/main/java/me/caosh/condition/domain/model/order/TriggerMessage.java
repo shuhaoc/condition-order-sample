@@ -39,6 +39,28 @@ public class TriggerMessage {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TriggerMessage)) return false;
+
+        TriggerMessage that = (TriggerMessage) o;
+
+        if (tradeSignal != null ? !tradeSignal.equals(that.tradeSignal) : that.tradeSignal != null) return false;
+        if (conditionOrder != null ? !conditionOrder.equals(that.conditionOrder) : that.conditionOrder != null)
+            return false;
+        return !(realTimeMarket != null ? !realTimeMarket.equals(that.realTimeMarket) : that.realTimeMarket != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = tradeSignal != null ? tradeSignal.hashCode() : 0;
+        result = 31 * result + (conditionOrder != null ? conditionOrder.hashCode() : 0);
+        result = 31 * result + (realTimeMarket != null ? realTimeMarket.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("tradeSignal", tradeSignal)

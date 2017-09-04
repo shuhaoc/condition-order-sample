@@ -8,3 +8,7 @@ DDD sample, a minimized condition order system.
 - guava(event bus)/gson
 - spring-jpa(using hibernate)/spring-data-redis/spring-rabbitmq
 - mysql/redis/rabbitmq
+
+## TODO
+
+- common check logic

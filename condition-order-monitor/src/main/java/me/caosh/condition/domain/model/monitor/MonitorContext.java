@@ -14,11 +14,21 @@ import java.util.Optional;
  */
 public class MonitorContext {
     private final ConditionOrder conditionOrder;
+    private final int lockTriggerSeconds;
+    private final int delaySyncSeconds;
     private DelayTimer triggerLock;
     private DelayTimer delaySyncMarker;
 
     public MonitorContext(ConditionOrder conditionOrder) {
         this.conditionOrder = conditionOrder;
+        lockTriggerSeconds = 10;
+        delaySyncSeconds = 4;
+    }
+
+    public MonitorContext(ConditionOrder conditionOrder, int lockTriggerSeconds, int delaySyncSeconds) {
+        this.conditionOrder = conditionOrder;
+        this.lockTriggerSeconds = lockTriggerSeconds;
+        this.delaySyncSeconds = delaySyncSeconds;
     }
 
     public Long getOrderId() {
@@ -38,7 +48,7 @@ public class MonitorContext {
     }
 
     public void lockTriggering() {
-        triggerLock = new DelayTimer(10);
+        triggerLock = new DelayTimer(lockTriggerSeconds);
     }
 
     public Optional<DelayTimer> getTriggerLock() {
@@ -50,11 +60,15 @@ public class MonitorContext {
     }
 
     public void markDelaySync() {
-        delaySyncMarker = new DelayTimer(4);
+        delaySyncMarker = new DelayTimer(delaySyncSeconds);
     }
 
     public void clearDelaySyncMarker() {
         delaySyncMarker = null;
+    }
+
+    public boolean isDelaySyncMarked() {
+        return delaySyncMarker != null && !delaySyncMarker.isTimesUp();
     }
 
     public boolean isDelaySyncTimesUp() {

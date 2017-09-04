@@ -59,8 +59,7 @@ public class TriggerMessageTriggerProducerImpl implements TriggerMessageTriggerP
         send(triggerMessageDTO);
     }
 
-    @Override
-    public void send(TriggerMessageDTO triggerMessageDTO) {
+    private void send(TriggerMessageDTO triggerMessageDTO) {
         Message message = messageConverter.toMessage(triggerMessageDTO, new MessageProperties());
         amqpTemplate.send(exchangeName, routingKey, message);
         logger.info("Send trigger message ==> {}", triggerMessageDTO);
