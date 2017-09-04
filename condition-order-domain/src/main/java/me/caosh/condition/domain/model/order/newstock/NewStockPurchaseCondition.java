@@ -38,15 +38,19 @@ public class NewStockPurchaseCondition implements TimeCondition {
         return purchasedCount;
     }
 
+    void increasePurchasedCount() {
+        this.purchasedCount++;
+    }
+
     public Optional<LocalDate> getLastTriggerDate() {
         return Optional.ofNullable(lastTriggerDate);
     }
 
-    public boolean isTriggeredToday() {
+    private boolean isTriggeredToday() {
         return lastTriggerDate != null && LocalDate.now().equals(lastTriggerDate);
     }
 
-    public void setTriggeredToday() {
+    void setTriggeredToday() {
         this.lastTriggerDate = LocalDate.now();
     }
 

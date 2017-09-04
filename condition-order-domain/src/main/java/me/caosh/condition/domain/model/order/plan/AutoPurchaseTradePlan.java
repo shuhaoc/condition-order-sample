@@ -1,5 +1,6 @@
 package me.caosh.condition.domain.model.order.plan;
 
+import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 
 /**
@@ -20,7 +21,7 @@ public class AutoPurchaseTradePlan implements TradePlan {
     }
 
     public int getEntrustStrategyValue() {
-        return 0;
+        return EntrustStrategy.NONE.getValue();
     }
 
     @Override

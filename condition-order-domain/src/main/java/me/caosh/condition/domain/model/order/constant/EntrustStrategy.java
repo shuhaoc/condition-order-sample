@@ -6,6 +6,7 @@ import me.caosh.condition.domain.model.share.ValuedEnum;
  * Created by caosh on 2017/8/2.
  */
 public enum EntrustStrategy implements ValuedEnum<Integer> {
+    NONE(0),
     CURRENT_PRICE(1),
     SELL5(2),
     SELL4(3),
