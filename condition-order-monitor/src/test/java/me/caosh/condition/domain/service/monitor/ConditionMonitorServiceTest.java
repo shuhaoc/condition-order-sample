@@ -50,7 +50,7 @@ public class ConditionMonitorServiceTest {
         SecurityInfo pfyh = getSecurityInfo();
         TurnUpCondition turnUpCondition = new TurnUpCondition(new BigDecimal("13.00"), new BigDecimal("1.00"));
         SingleDirectionTradePlan tradePlan = new SingleDirectionTradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100));
-        return new TurnUpBuyOrder(123L, customerIdentity, false, pfyh, turnUpCondition, tradePlan, OrderState.ACTIVE);
+        return new TurnUpBuyOrder(123L, customerIdentity, pfyh, turnUpCondition, tradePlan, OrderState.ACTIVE);
     }
 
     private RealTimeMarket newRealTimeMarket(BigDecimal currentPrice) {

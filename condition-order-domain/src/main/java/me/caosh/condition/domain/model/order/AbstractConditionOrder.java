@@ -11,16 +11,14 @@ import me.caosh.condition.domain.model.strategy.StrategyInfo;
 public abstract class AbstractConditionOrder implements ConditionOrder {
     private final Long orderId;
     private final TradeCustomerIdentity customerIdentity;
-    private final boolean deleted;
     private final SecurityInfo securityInfo;
     private final StrategyInfo strategyInfo;
     private OrderState orderState;
 
-    public AbstractConditionOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
+    public AbstractConditionOrder(Long orderId, TradeCustomerIdentity customerIdentity, SecurityInfo securityInfo,
                                   StrategyInfo strategyInfo, OrderState orderState) {
         this.orderId = orderId;
         this.customerIdentity = customerIdentity;
-        this.deleted = deleted;
         this.securityInfo = securityInfo;
         this.strategyInfo = strategyInfo;
         this.orderState = orderState;
@@ -34,11 +32,6 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     @Override
     public TradeCustomerIdentity getCustomerIdentity() {
         return customerIdentity;
-    }
-
-    @Override
-    public boolean isDeleted() {
-        return deleted;
     }
 
     @Override
@@ -78,10 +71,10 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects.toStringHelper(AbstractConditionOrder.class).omitNullValues()
+                .addValue(AbstractConditionOrder.class.getSuperclass() != Object.class ? super.toString() : null)
                 .add("orderId", orderId)
                 .add("customerIdentity", customerIdentity)
-                .add("deleted", deleted)
                 .add("securityInfo", securityInfo)
                 .add("strategyInfo", strategyInfo)
                 .add("orderState", orderState)

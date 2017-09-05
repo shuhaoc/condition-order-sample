@@ -22,9 +22,6 @@ public interface ConditionOrder {
 
     TradePlan getTradePlan();
 
-    @Deprecated
-    boolean isDeleted();
-
     OrderState getOrderState();
 
     void setOrderState(OrderState orderState);

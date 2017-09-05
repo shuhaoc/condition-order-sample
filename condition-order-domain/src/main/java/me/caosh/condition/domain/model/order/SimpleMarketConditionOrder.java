@@ -23,9 +23,9 @@ public abstract class SimpleMarketConditionOrder extends MarketConditionOrder {
 
     private final SingleDirectionTradePlan tradePlan;
 
-    public SimpleMarketConditionOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
+    public SimpleMarketConditionOrder(Long orderId, TradeCustomerIdentity customerIdentity, SecurityInfo securityInfo,
                                       StrategyInfo strategyInfo, SingleDirectionTradePlan tradePlan, OrderState orderState) {
-        super(orderId, customerIdentity, deleted, securityInfo, strategyInfo, orderState);
+        super(orderId, customerIdentity, securityInfo, strategyInfo, orderState);
         this.tradePlan = tradePlan;
     }
 

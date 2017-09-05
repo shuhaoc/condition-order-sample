@@ -37,9 +37,9 @@ public class NewStockOrder extends AbstractConditionOrder implements TimeDriven,
     private final AutoPurchaseTradePlan autoPurchaseTradePlan = new AutoPurchaseTradePlan();
     private final NewStockPurchaseCondition newStockPurchaseCondition;
 
-    public NewStockOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted,
+    public NewStockOrder(Long orderId, TradeCustomerIdentity customerIdentity,
                          NewStockPurchaseCondition newStockPurchaseCondition, OrderState orderState) {
-        super(orderId, customerIdentity, deleted, SecurityInfoConstants.NEW_STOCK_PURCHASE, NativeStrategyInfo.NEW_STOCK, orderState);
+        super(orderId, customerIdentity, SecurityInfoConstants.NEW_STOCK_PURCHASE, NativeStrategyInfo.NEW_STOCK, orderState);
         this.newStockPurchaseCondition = newStockPurchaseCondition;
     }
 

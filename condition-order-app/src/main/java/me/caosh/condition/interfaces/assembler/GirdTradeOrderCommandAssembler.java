@@ -29,7 +29,6 @@ public class GirdTradeOrderCommandAssembler {
                 command.getEntrustAmount());
         return new GridTradeOrder(orderId,
                 customerIdentity,
-                false,
                 securityInfo,
                 gridCondition,
                 tradePlan,
@@ -45,7 +44,6 @@ public class GirdTradeOrderCommandAssembler {
                 command.getEntrustAmount());
         return new GridTradeOrder(oldOrder.getOrderId(),
                 oldOrder.getCustomerIdentity(),
-                false,
                 oldOrder.getSecurityInfo(),
                 gridCondition, tradePlan, orderState
         );

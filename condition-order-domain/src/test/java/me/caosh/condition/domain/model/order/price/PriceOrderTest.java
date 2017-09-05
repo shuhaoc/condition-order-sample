@@ -34,7 +34,7 @@ public class PriceOrderTest {
         TradeCustomerIdentity customerIdentity = new TradeCustomerIdentity(303348, "010000061086");
         SecurityInfo pfyh = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
         ExchangeType exchangeType = ExchangeType.BUY;
-        PriceOrder priceOrder = new PriceOrder(123L, customerIdentity, false, pfyh,
+        PriceOrder priceOrder = new PriceOrder(123L, customerIdentity, pfyh,
                 new PriceCondition(CompareCondition.LESS_THAN_OR_EQUALS, new BigDecimal("13.00")),
                 new SingleDirectionTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
                 OrderState.ACTIVE);

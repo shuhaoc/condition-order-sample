@@ -31,9 +31,9 @@ public class GridTradeOrder extends MarketConditionOrder implements EntrustResul
     private final GridCondition gridCondition;
     private final DoubleDirectionTradePlan tradePlan;
 
-    public GridTradeOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
+    public GridTradeOrder(Long orderId, TradeCustomerIdentity customerIdentity, SecurityInfo securityInfo,
                           GridCondition gridCondition, DoubleDirectionTradePlan tradePlan, OrderState orderState) {
-        super(orderId, customerIdentity, deleted, securityInfo, NativeStrategyInfo.GRID, orderState);
+        super(orderId, customerIdentity, securityInfo, NativeStrategyInfo.GRID, orderState);
         this.gridCondition = gridCondition;
         this.tradePlan = tradePlan;
     }

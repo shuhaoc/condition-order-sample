@@ -39,7 +39,7 @@ public class GridOrderTest {
         ExchangeType exchangeType = ExchangeType.BUY;
         DoubleDirectionTradePlan tradePlan = TradePlanFactory.getInstance().createDouble(
                 EntrustStrategy.CURRENT_PRICE.getValue(), EntrustMethod.AMOUNT.getValue(), 0, new BigDecimal("4500"));
-        GridTradeOrder gridTradeOrder = new GridTradeOrder(123L, customerIdentity, false, pfyh, gridCondition,
+        GridTradeOrder gridTradeOrder = new GridTradeOrder(123L, customerIdentity, pfyh, gridCondition,
                 tradePlan, OrderState.ACTIVE);
 
         assertEquals(SignalFactory.getInstance().none(),

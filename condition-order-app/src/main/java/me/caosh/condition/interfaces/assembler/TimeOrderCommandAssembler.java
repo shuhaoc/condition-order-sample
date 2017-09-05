@@ -33,7 +33,7 @@ public class TimeOrderCommandAssembler {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
         SingleDirectionTradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
-        return new TimeOrder(orderId, customerIdentity, false, securityInfo, simpleTimeCondition, tradePlan, orderState);
+        return new TimeOrder(orderId, customerIdentity, securityInfo, simpleTimeCondition, tradePlan, orderState);
     }
 
     public static TimeOrder merge(TimeOrder oldOrder, TimeOrderUpdateCommand command) {
@@ -44,7 +44,7 @@ public class TimeOrderCommandAssembler {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
         SingleDirectionTradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
-        return new TimeOrder(oldOrder.getOrderId(), oldOrder.getCustomerIdentity(), false,
+        return new TimeOrder(oldOrder.getOrderId(), oldOrder.getCustomerIdentity(),
                 oldOrder.getSecurityInfo(), simpleTimeCondition, tradePlan, orderState);
     }
 

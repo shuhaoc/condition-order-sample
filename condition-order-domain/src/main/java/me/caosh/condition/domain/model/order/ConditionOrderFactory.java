@@ -31,19 +31,19 @@ public class ConditionOrderFactory {
     public ConditionOrder create(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, OrderState orderState,
                                  SecurityInfo securityInfo, StrategyInfo strategyInfo, Condition condition, TradePlan tradePlan) {
         if (strategyInfo == NativeStrategyInfo.PRICE) {
-            return new PriceOrder(orderId, customerIdentity, deleted, securityInfo, (PriceCondition) condition,
+            return new PriceOrder(orderId, customerIdentity, securityInfo, (PriceCondition) condition,
                     (SingleDirectionTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {
-            return new TurnUpBuyOrder(orderId, customerIdentity, deleted, securityInfo, (TurnUpCondition) condition,
+            return new TurnUpBuyOrder(orderId, customerIdentity, securityInfo, (TurnUpCondition) condition,
                     (SingleDirectionTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.TIME) {
-            return new TimeOrder(orderId, customerIdentity, deleted, securityInfo, (SimpleTimeCondition) condition,
+            return new TimeOrder(orderId, customerIdentity, securityInfo, (SimpleTimeCondition) condition,
                     (SingleDirectionTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.GRID) {
-            return new GridTradeOrder(orderId, customerIdentity, deleted, securityInfo, (GridCondition) condition,
+            return new GridTradeOrder(orderId, customerIdentity, securityInfo, (GridCondition) condition,
                     (DoubleDirectionTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.NEW_STOCK) {
-            return new NewStockOrder(orderId, customerIdentity, deleted, (NewStockPurchaseCondition) condition, orderState);
+            return new NewStockOrder(orderId, customerIdentity, (NewStockPurchaseCondition) condition, orderState);
         }
         throw new IllegalArgumentException("strategyInfo=" + strategyInfo);
     }

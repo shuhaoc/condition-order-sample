@@ -3,7 +3,12 @@ package me.caosh.condition.domain.model.order.time;
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.order.*;
+import me.caosh.condition.domain.model.order.AbstractConditionOrder;
+import me.caosh.condition.domain.model.order.Condition;
+import me.caosh.condition.domain.model.order.OnceOrders;
+import me.caosh.condition.domain.model.order.TimeCondition;
+import me.caosh.condition.domain.model.order.TimeDriven;
+import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
 import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.plan.SingleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
@@ -21,9 +26,9 @@ public class TimeOrder extends AbstractConditionOrder implements TimeDriven, Sin
     private final TimeCondition timeCondition;
     private final SingleDirectionTradePlan tradePlan;
 
-    public TimeOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
+    public TimeOrder(Long orderId, TradeCustomerIdentity customerIdentity, SecurityInfo securityInfo,
                      SimpleTimeCondition timeCondition, SingleDirectionTradePlan tradePlan, OrderState orderState) {
-        super(orderId, customerIdentity, deleted, securityInfo, NativeStrategyInfo.TIME, orderState);
+        super(orderId, customerIdentity, securityInfo, NativeStrategyInfo.TIME, orderState);
         this.timeCondition = timeCondition;
         this.tradePlan = tradePlan;
     }

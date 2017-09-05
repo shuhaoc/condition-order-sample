@@ -37,7 +37,7 @@ public class PriceOrderCommandAssembler {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
         SingleDirectionTradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
-        return new PriceOrder(orderId, customerIdentity, false, securityInfo, priceCondition, tradePlan, orderState);
+        return new PriceOrder(orderId, customerIdentity, securityInfo, priceCondition, tradePlan, orderState);
     }
 
     public static PriceOrder mergePriceOrder(PriceOrder oldPriceOrder, PriceOrderUpdateCommand command) {
@@ -50,7 +50,7 @@ public class PriceOrderCommandAssembler {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
         SingleDirectionTradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
-        return new PriceOrder(oldPriceOrder.getOrderId(), oldPriceOrder.getCustomerIdentity(), false,
+        return new PriceOrder(oldPriceOrder.getOrderId(), oldPriceOrder.getCustomerIdentity(),
                 oldPriceOrder.getSecurityInfo(), priceCondition, tradePlan, orderState);
     }
 

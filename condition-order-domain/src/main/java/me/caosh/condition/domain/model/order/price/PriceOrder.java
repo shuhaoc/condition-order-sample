@@ -17,9 +17,9 @@ public class PriceOrder extends SimpleMarketConditionOrder {
 
     private final PriceCondition priceCondition;
 
-    public PriceOrder(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, SecurityInfo securityInfo,
+    public PriceOrder(Long orderId, TradeCustomerIdentity customerIdentity, SecurityInfo securityInfo,
                       PriceCondition priceCondition, SingleDirectionTradePlan tradePlan, OrderState orderState) {
-        super(orderId, customerIdentity, deleted, securityInfo, NativeStrategyInfo.PRICE, tradePlan, orderState);
+        super(orderId, customerIdentity, securityInfo, NativeStrategyInfo.PRICE, tradePlan, orderState);
         this.priceCondition = priceCondition;
     }
 

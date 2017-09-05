@@ -18,14 +18,14 @@ public class NewStockOrderCommandAssembler {
         OrderState orderState = OrderState.ACTIVE;
         LocalTime purchaseTime = LocalTime.parse(command.getPurchaseTime(), DateFormats.HH_MM_SS);
         NewStockPurchaseCondition newStockPurchaseCondition = new NewStockPurchaseCondition(purchaseTime);
-        return new NewStockOrder(orderId, customerIdentity, false, newStockPurchaseCondition, orderState);
+        return new NewStockOrder(orderId, customerIdentity, newStockPurchaseCondition, orderState);
     }
 
     public static NewStockOrder merge(NewStockOrder oldOrder, NewStockOrderUpdateCommand command) {
         OrderState orderState = OrderState.ACTIVE;
         LocalTime purchaseTime = LocalTime.parse(command.getPurchaseTime(), DateFormats.HH_MM_SS);
         NewStockPurchaseCondition newStockPurchaseCondition = new NewStockPurchaseCondition(purchaseTime);
-        return new NewStockOrder(oldOrder.getOrderId(), oldOrder.getCustomerIdentity(), false,
+        return new NewStockOrder(oldOrder.getOrderId(), oldOrder.getCustomerIdentity(),
                 newStockPurchaseCondition, orderState);
     }
 
