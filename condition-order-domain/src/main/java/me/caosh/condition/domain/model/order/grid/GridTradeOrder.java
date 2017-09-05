@@ -19,11 +19,14 @@ import me.caosh.condition.domain.model.strategy.NativeStrategyInfo;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.trade.EntrustResult;
 import me.caosh.condition.domain.model.trade.EntrustResultAware;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by caosh on 2017/8/23.
  */
 public class GridTradeOrder extends MarketConditionOrder implements EntrustResultAware {
+    private static final Logger logger = LoggerFactory.getLogger(GridTradeOrder.class);
 
     private final GridCondition gridCondition;
     private final DoubleDirectionTradePlan tradePlan;
@@ -51,6 +54,7 @@ public class GridTradeOrder extends MarketConditionOrder implements EntrustResul
 
     @Override
     public TradeSignal onRealTimeMarketUpdate(RealTimeMarket realTimeMarket) {
+        logger.debug("Checking order {}", getOrderId());
         return gridCondition.onRealTimeMarketUpdate(realTimeMarket);
     }
 
@@ -70,6 +74,7 @@ public class GridTradeOrder extends MarketConditionOrder implements EntrustResul
     public void afterEntrustReturned(TriggerContext triggerContext, EntrustResult entrustResult) {
         Preconditions.checkNotNull(triggerContext.getTriggerRealTimeMarket().isPresent());
         RealTimeMarket triggerRealTimeMarket = triggerContext.getTriggerRealTimeMarket().get();
+        logger.info("Changing base price {} => {}", gridCondition.getBasePrice(), triggerRealTimeMarket.getCurrentPrice());
         gridCondition.setBasePrice(triggerRealTimeMarket.getCurrentPrice());
     }
 }

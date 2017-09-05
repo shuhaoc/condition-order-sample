@@ -11,4 +11,4 @@ DDD sample, a minimized condition order system.
 
 ## TODO
 
-- common check logic
+- common check logic/trigger logic

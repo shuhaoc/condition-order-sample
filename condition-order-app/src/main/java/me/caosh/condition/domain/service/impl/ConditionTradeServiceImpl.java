@@ -73,7 +73,8 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
         RealTimeMarket realTimeMarket = triggerContext.getTriggerRealTimeMarket().orElse(null);
         if (signal instanceof General) {
             if (conditionOrder instanceof SingleEntrustOnTrigger) {
-                ((SingleEntrustOnTrigger) conditionOrder).onTradeSignal(signal, realTimeMarket);
+                EntrustCommand entrustCommand = ((SingleEntrustOnTrigger) conditionOrder).onTradeSignal(signal, realTimeMarket);
+                handleEntrustCommand(triggerContext, entrustCommand);
             } else if (conditionOrder instanceof NewStockPurchaseOnTrigger) {
                 List<NewStock> currentPurchasable = newStockQueryService.getCurrentPurchasable();
                 List<EntrustCommand> entrustCommands = ((NewStockPurchaseOnTrigger) conditionOrder).createEntrustCommand(currentPurchasable);
