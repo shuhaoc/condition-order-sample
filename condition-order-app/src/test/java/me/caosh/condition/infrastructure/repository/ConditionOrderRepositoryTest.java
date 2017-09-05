@@ -14,12 +14,9 @@ import me.caosh.condition.domain.model.order.plan.TradeNumberDirect;
 import me.caosh.condition.domain.model.order.price.PriceCondition;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
 import me.caosh.condition.infrastructure.repository.impl.ConditionOrderIdGenerator;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -29,8 +26,8 @@ import static junit.framework.TestCase.assertTrue;
 /**
  * Created by caosh on 2017/8/6.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class ConditionOrderRepositoryTest {
     private static final Logger logger = LoggerFactory.getLogger(ConditionOrderRepositoryTest.class);
 
