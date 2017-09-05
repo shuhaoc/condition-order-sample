@@ -13,12 +13,7 @@ import me.caosh.condition.domain.model.signal.CacheSync;
 import me.caosh.condition.domain.model.signal.General;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.LifeCircle;
-import me.caosh.condition.domain.model.trade.EntrustCommand;
-import me.caosh.condition.domain.model.trade.EntrustOrder;
-import me.caosh.condition.domain.model.trade.EntrustResult;
-import me.caosh.condition.domain.model.trade.EntrustResultAware;
-import me.caosh.condition.domain.model.trade.NewStockPurchaseOnTrigger;
-import me.caosh.condition.domain.model.trade.SingleEntrustOnTrigger;
+import me.caosh.condition.domain.model.trade.*;
 import me.caosh.condition.domain.service.ConditionTradeService;
 import me.caosh.condition.domain.service.NewStockQueryService;
 import me.caosh.condition.domain.service.RealTimeMarketService;
@@ -66,6 +61,11 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
     public void handleTriggerContext(TriggerContext triggerContext) {
         TradeSignal signal = triggerContext.getTradeSignal();
         ConditionOrder conditionOrder = triggerContext.getConditionOrder();
+
+        if (conditionOrder.getOrderState() != OrderState.ACTIVE) {
+            logger.warn("Order illegal state, orderId={}, orderState={}", conditionOrder.getOrderId(), conditionOrder.getOrderState());
+            return;
+        }
 
         // TODO: use responsibility chain pattern
         supplyRealTimeMarket(triggerContext);

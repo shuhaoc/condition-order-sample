@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.monitor.MonitorContext;
 import me.caosh.condition.domain.model.order.*;
+import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.signal.SignalFactory;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.service.monitor.ConditionMonitorService;
@@ -32,6 +33,12 @@ public class ConditionMonitorServiceImpl implements ConditionMonitorService {
             return;
         }
         ConditionOrder conditionOrder = monitorContext.getConditionOrder();
+
+        if (conditionOrder.getOrderState() != OrderState.ACTIVE) {
+            logger.warn("Order illegal state, orderId={}, orderState={}", conditionOrder.getOrderId(), conditionOrder.getOrderState());
+            return;
+        }
+
         TradeSignal tradeSignal = ((RealTimeMarketDriven) conditionOrder).onRealTimeMarketUpdate(realTimeMarket);
         if (tradeSignal != SignalFactory.getInstance().none()) {
             triggerSignal(tradeSignal, conditionOrder, realTimeMarket);

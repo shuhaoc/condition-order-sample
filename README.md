@@ -10,5 +10,3 @@ DDD sample, a minimized condition order system.
 - mysql/redis/rabbitmq
 
 ## TODO
-
-- common check logic/trigger logic
