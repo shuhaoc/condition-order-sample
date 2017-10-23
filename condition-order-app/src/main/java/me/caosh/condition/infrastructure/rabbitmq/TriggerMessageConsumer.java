@@ -10,12 +10,15 @@ import me.caosh.condition.domain.service.ConditionTradeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageListener;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -24,7 +27,6 @@ import java.util.Collections;
 /**
  * Created by caosh on 2017/8/13.
  */
-@Configuration
 @ConfigurationProperties(prefix = "me.caosh.condition.triggerMessage")
 @Component
 public class TriggerMessageConsumer {

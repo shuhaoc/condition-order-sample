@@ -4,7 +4,7 @@ import me.caosh.condition.domain.model.share.SnowflakeIdWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.PostConstruct;
@@ -13,9 +13,9 @@ import javax.validation.constraints.NotNull;
 /**
  * Created by caosh on 2017/8/6.
  */
-@Configuration
 @ConfigurationProperties(prefix = "me.caosh.condition.conditionOrder")
 @Validated
+@Component
 public class ConditionOrderIdGenerator {
     private static final Logger logger = LoggerFactory.getLogger(ConditionOrderIdGenerator.class);
 

@@ -18,7 +18,6 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -28,7 +27,6 @@ import javax.annotation.PostConstruct;
  *
  * @author caoshuhao@touker.com
  */
-@Configuration
 @ConfigurationProperties(prefix = "me.caosh.condition.conditionOrder")
 @Service
 public class ConditionOrderProducerImpl implements ConditionOrderProducer {

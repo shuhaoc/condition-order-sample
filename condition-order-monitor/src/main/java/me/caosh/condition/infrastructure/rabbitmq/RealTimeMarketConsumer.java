@@ -1,8 +1,8 @@
 package me.caosh.condition.infrastructure.rabbitmq;
 
+import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.event.RealTimeMarketPushEvent;
-import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.infrastructure.eventbus.MonitorEventBus;
 import me.caosh.condition.infrastructure.rabbitmq.model.RealTimeMarketMessageConverter;
 import me.caosh.condition.infrastructure.rabbitmq.model.RealTimeMarketSimpleDTO;
@@ -18,7 +18,6 @@ import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -29,7 +28,6 @@ import java.util.Map;
 /**
  * Created by caosh on 2017/8/9.
  */
-@Configuration
 @ConfigurationProperties(prefix = "me.caosh.condition.realTimeMarket")
 @Component
 public class RealTimeMarketConsumer {
