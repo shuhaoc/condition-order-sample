@@ -15,7 +15,6 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -24,7 +23,6 @@ import java.util.Collections;
 /**
  * Created by caosh on 2017/8/9.
  */
-@Configuration
 @ConfigurationProperties(prefix = "me.caosh.condition.conditionOrder")
 @Component
 public class ConditionOrderConsumer {

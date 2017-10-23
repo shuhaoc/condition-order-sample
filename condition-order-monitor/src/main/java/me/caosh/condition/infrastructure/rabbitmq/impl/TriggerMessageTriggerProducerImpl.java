@@ -7,10 +7,13 @@ import me.caosh.condition.domain.model.order.TriggerMessage;
 import me.caosh.condition.infrastructure.rabbitmq.TriggerMessageTriggerProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -18,7 +21,6 @@ import javax.annotation.PostConstruct;
 /**
  * Created by caosh on 2017/8/11.
  */
-@Configuration
 @ConfigurationProperties(prefix = "me.caosh.condition.triggerMessage")
 @Service
 public class TriggerMessageTriggerProducerImpl implements TriggerMessageTriggerProducer {

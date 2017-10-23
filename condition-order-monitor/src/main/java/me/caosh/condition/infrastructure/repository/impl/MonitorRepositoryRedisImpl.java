@@ -6,7 +6,6 @@ import me.caosh.condition.infrastructure.repository.MonitorRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
@@ -18,7 +17,6 @@ import java.util.Map;
 /**
  * Created by caosh on 2017/8/11.
  */
-@Configuration
 @ConfigurationProperties(prefix = "me.caosh.condition.conditionOrder")
 @Repository("redis")
 public class MonitorRepositoryRedisImpl implements MonitorRepository {
