@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  * Created by caosh on 2017/8/26.
  */
 public class EntrustCommands {
-    public static EntrustCommand createEntrustCommand(TradeCustomerIdentity customerIdentity, SecurityInfo securityInfo, SingleDirectionTradePlan singleDirectionTradePlan, RealTimeMarket realTimeMarket) {
+    public static EntrustCommand createEntrustCommand(TradeCustomer customerIdentity, SecurityInfo securityInfo, SingleDirectionTradePlan singleDirectionTradePlan, RealTimeMarket realTimeMarket) {
         BigDecimal entrustPrice = EntrustPriceSelector.selectPrice(realTimeMarket, singleDirectionTradePlan.getEntrustStrategy());
         return new EntrustCommand(customerIdentity, securityInfo, singleDirectionTradePlan.getExchangeType(), entrustPrice,
                 singleDirectionTradePlan.getTradeNumber().getNumber(entrustPrice), OrderType.LIMITED);

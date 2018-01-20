@@ -10,12 +10,12 @@ import me.caosh.condition.domain.model.strategy.StrategyInfo;
  */
 public abstract class AbstractConditionOrder implements ConditionOrder {
     private final Long orderId;
-    private final TradeCustomerIdentity customerIdentity;
+    private final TradeCustomer customerIdentity;
     private final SecurityInfo securityInfo;
     private final StrategyInfo strategyInfo;
     private OrderState orderState;
 
-    public AbstractConditionOrder(Long orderId, TradeCustomerIdentity customerIdentity, SecurityInfo securityInfo,
+    public AbstractConditionOrder(Long orderId, TradeCustomer customerIdentity, SecurityInfo securityInfo,
                                   StrategyInfo strategyInfo, OrderState orderState) {
         this.orderId = orderId;
         this.customerIdentity = customerIdentity;
@@ -30,7 +30,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     }
 
     @Override
-    public TradeCustomerIdentity getCustomerIdentity() {
+    public TradeCustomer getCustomer() {
         return customerIdentity;
     }
 

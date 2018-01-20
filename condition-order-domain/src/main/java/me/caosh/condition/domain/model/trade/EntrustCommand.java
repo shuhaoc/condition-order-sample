@@ -2,7 +2,7 @@ package me.caosh.condition.domain.model.trade;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
+import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 
 import java.math.BigDecimal;
@@ -11,14 +11,14 @@ import java.math.BigDecimal;
  * Created by caosh on 2017/8/9.
  */
 public class EntrustCommand {
-    private final TradeCustomerIdentity customerIdentity;
+    private final TradeCustomer customerIdentity;
     private final SecurityInfo securityInfo;
     private final ExchangeType exchangeType;
     private final BigDecimal entrustPrice; // nullable
     private final int entrustNumber;
     private final OrderType orderType;
 
-    public EntrustCommand(TradeCustomerIdentity customerIdentity, SecurityInfo securityInfo, ExchangeType exchangeType,
+    public EntrustCommand(TradeCustomer customerIdentity, SecurityInfo securityInfo, ExchangeType exchangeType,
                           BigDecimal entrustPrice, int entrustNumber, OrderType orderType) {
         this.customerIdentity = customerIdentity;
         this.securityInfo = securityInfo;
@@ -28,7 +28,7 @@ public class EntrustCommand {
         this.orderType = orderType;
     }
 
-    public TradeCustomerIdentity getCustomerIdentity() {
+    public TradeCustomer getCustomerIdentity() {
         return customerIdentity;
     }
 

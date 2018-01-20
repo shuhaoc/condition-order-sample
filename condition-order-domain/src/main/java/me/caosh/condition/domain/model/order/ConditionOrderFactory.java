@@ -28,7 +28,7 @@ public class ConditionOrderFactory {
         return INSTANCE;
     }
 
-    public ConditionOrder create(Long orderId, TradeCustomerIdentity customerIdentity, boolean deleted, OrderState orderState,
+    public ConditionOrder create(Long orderId, TradeCustomer customerIdentity, boolean deleted, OrderState orderState,
                                  SecurityInfo securityInfo, StrategyInfo strategyInfo, Condition condition, TradePlan tradePlan) {
         if (strategyInfo == NativeStrategyInfo.PRICE) {
             return new PriceOrder(orderId, customerIdentity, securityInfo, (PriceCondition) condition,

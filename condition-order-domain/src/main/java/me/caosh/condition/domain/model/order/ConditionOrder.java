@@ -12,7 +12,7 @@ import me.caosh.condition.domain.model.strategy.StrategyInfo;
 public interface ConditionOrder {
     Long getOrderId();
 
-    TradeCustomerIdentity getCustomerIdentity();
+    TradeCustomer getCustomer();
 
     SecurityInfo getSecurityInfo();
 

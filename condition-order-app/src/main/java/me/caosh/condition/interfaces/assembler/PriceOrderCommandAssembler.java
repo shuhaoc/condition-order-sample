@@ -3,7 +3,7 @@ package me.caosh.condition.interfaces.assembler;
 import me.caosh.condition.domain.model.constants.SecurityExchange;
 import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
+import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.constant.CompareCondition;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
@@ -23,7 +23,7 @@ import java.math.BigDecimal;
  * Created by caosh on 2017/8/9.
  */
 public class PriceOrderCommandAssembler {
-    public static PriceOrder assemblePriceOrder(Long orderId, TradeCustomerIdentity customerIdentity, PriceOrderCreateCommand command) {
+    public static PriceOrder assemblePriceOrder(Long orderId, TradeCustomer customerIdentity, PriceOrderCreateCommand command) {
         OrderState orderState = OrderState.ACTIVE;
         SecurityType securityType = ValuedEnumUtil.valueOf(command.getSecurityType(), SecurityType.class);
         SecurityExchange securityExchange = SecurityExchange.valueOf(command.getSecurityExchange());
@@ -50,7 +50,7 @@ public class PriceOrderCommandAssembler {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
         SingleDirectionTradePlan tradePlan = new SingleDirectionTradePlan(exchangeType, entrustStrategy, tradeNumber);
-        return new PriceOrder(oldPriceOrder.getOrderId(), oldPriceOrder.getCustomerIdentity(),
+        return new PriceOrder(oldPriceOrder.getOrderId(), oldPriceOrder.getCustomer(),
                 oldPriceOrder.getSecurityInfo(), priceCondition, tradePlan, orderState);
     }
 

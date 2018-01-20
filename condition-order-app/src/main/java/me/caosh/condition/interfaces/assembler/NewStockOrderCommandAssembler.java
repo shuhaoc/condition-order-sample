@@ -1,6 +1,6 @@
 package me.caosh.condition.interfaces.assembler;
 
-import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
+import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.newstock.NewStockOrder;
 import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
@@ -14,7 +14,7 @@ import java.time.LocalTime;
  * Created by caosh on 2017/8/9.
  */
 public class NewStockOrderCommandAssembler {
-    public static NewStockOrder assemble(Long orderId, TradeCustomerIdentity customerIdentity, NewStockOrderCreateCommand command) {
+    public static NewStockOrder assemble(Long orderId, TradeCustomer customerIdentity, NewStockOrderCreateCommand command) {
         OrderState orderState = OrderState.ACTIVE;
         LocalTime purchaseTime = LocalTime.parse(command.getPurchaseTime(), DateFormats.HH_MM_SS);
         NewStockPurchaseCondition newStockPurchaseCondition = new NewStockPurchaseCondition(purchaseTime);
@@ -25,7 +25,7 @@ public class NewStockOrderCommandAssembler {
         OrderState orderState = OrderState.ACTIVE;
         LocalTime purchaseTime = LocalTime.parse(command.getPurchaseTime(), DateFormats.HH_MM_SS);
         NewStockPurchaseCondition newStockPurchaseCondition = new NewStockPurchaseCondition(purchaseTime);
-        return new NewStockOrder(oldOrder.getOrderId(), oldOrder.getCustomerIdentity(),
+        return new NewStockOrder(oldOrder.getOrderId(), oldOrder.getCustomer(),
                 newStockPurchaseCondition, orderState);
     }
 

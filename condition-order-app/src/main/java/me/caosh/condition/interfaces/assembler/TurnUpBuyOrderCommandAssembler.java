@@ -4,7 +4,7 @@ import me.caosh.condition.domain.model.constants.SecurityExchange;
 import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.DynamicCondition;
-import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
+import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.OrderState;
@@ -21,7 +21,7 @@ import me.caosh.condition.interfaces.command.TurnUpBuyOrderUpdateCommand;
  * Created by caosh on 2017/8/9.
  */
 public class TurnUpBuyOrderCommandAssembler {
-    public static TurnUpBuyOrder assemble(Long orderId, TradeCustomerIdentity customerIdentity, TurnUpBuyOrderCreateCommand command) {
+    public static TurnUpBuyOrder assemble(Long orderId, TradeCustomer customerIdentity, TurnUpBuyOrderCreateCommand command) {
         OrderState orderState = OrderState.ACTIVE;
         SecurityType securityType = ValuedEnumUtil.valueOf(command.getSecurityType(), SecurityType.class);
         SecurityExchange securityExchange = SecurityExchange.valueOf(command.getSecurityExchange());
@@ -45,7 +45,7 @@ public class TurnUpBuyOrderCommandAssembler {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
         SingleDirectionTradePlan tradePlan = new SingleDirectionTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
-        return new TurnUpBuyOrder(oldOrder.getOrderId(), oldOrder.getCustomerIdentity(), oldOrder.getSecurityInfo(),
+        return new TurnUpBuyOrder(oldOrder.getOrderId(), oldOrder.getCustomer(), oldOrder.getSecurityInfo(),
                 turnUpCondition, tradePlan, orderState);
     }
 

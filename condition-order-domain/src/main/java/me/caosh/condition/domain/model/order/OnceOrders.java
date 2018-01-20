@@ -10,7 +10,7 @@ import me.caosh.condition.domain.model.trade.EntrustCommand;
 public class OnceOrders {
     public static EntrustCommand createEntrustCommand(ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {
         SingleDirectionTradePlan singleDirectionTradePlan = (SingleDirectionTradePlan) conditionOrder.getTradePlan();
-        return EntrustCommands.createEntrustCommand(conditionOrder.getCustomerIdentity(),
+        return EntrustCommands.createEntrustCommand(conditionOrder.getCustomer(),
                 conditionOrder.getSecurityInfo(),
                 singleDirectionTradePlan,
                 realTimeMarket);

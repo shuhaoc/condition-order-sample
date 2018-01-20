@@ -6,7 +6,7 @@ import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.ConditionOrderFactory;
-import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
+import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.plan.AutoPurchaseTradePlan;
 import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
@@ -30,8 +30,8 @@ public class ConditionOrderDOAssembler {
     public static ConditionOrderDO toDO(ConditionOrder conditionOrder) {
         ConditionOrderDO conditionOrderDO = new ConditionOrderDO();
         conditionOrderDO.setOrderId(conditionOrder.getOrderId());
-        conditionOrderDO.setUserId(conditionOrder.getCustomerIdentity().getUserId());
-        conditionOrderDO.setCustomerNo(conditionOrder.getCustomerIdentity().getCustomerNo());
+        conditionOrderDO.setUserId(conditionOrder.getCustomer().getUserId());
+        conditionOrderDO.setCustomerNo(conditionOrder.getCustomer().getCustomerNo());
         conditionOrderDO.setDeleted(false);
         conditionOrderDO.setOrderState(conditionOrder.getOrderState().getValue());
         conditionOrderDO.setSecurityType(conditionOrder.getSecurityInfo().getType().getValue());
@@ -83,7 +83,7 @@ public class ConditionOrderDOAssembler {
     }
 
     public static ConditionOrder fromDO(ConditionOrderDO conditionOrderDO) {
-        TradeCustomerIdentity customerIdentity = new TradeCustomerIdentity(conditionOrderDO.getUserId(), conditionOrderDO.getCustomerNo());
+        TradeCustomer customerIdentity = new TradeCustomer(conditionOrderDO.getUserId(), conditionOrderDO.getCustomerNo());
         OrderState orderState = ValuedEnumUtil.valueOf(conditionOrderDO.getOrderState(), OrderState.class);
         SecurityType securityType = ValuedEnumUtil.valueOf(conditionOrderDO.getSecurityType(), SecurityType.class);
         SecurityExchange securityExchange = SecurityExchange.valueOf(conditionOrderDO.getSecurityExchange());

@@ -9,7 +9,7 @@ import me.caosh.condition.domain.model.order.AbstractConditionOrder;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.EntrustWithoutMarket;
 import me.caosh.condition.domain.model.order.TimeDriven;
-import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
+import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.TriggerContext;
 import me.caosh.condition.domain.model.order.TriggerPhaseListener;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
@@ -37,7 +37,7 @@ public class NewStockOrder extends AbstractConditionOrder implements TimeDriven,
     private final AutoPurchaseTradePlan autoPurchaseTradePlan = new AutoPurchaseTradePlan();
     private final NewStockPurchaseCondition newStockPurchaseCondition;
 
-    public NewStockOrder(Long orderId, TradeCustomerIdentity customerIdentity,
+    public NewStockOrder(Long orderId, TradeCustomer customerIdentity,
                          NewStockPurchaseCondition newStockPurchaseCondition, OrderState orderState) {
         super(orderId, customerIdentity, SecurityInfoConstants.NEW_STOCK_PURCHASE, NativeStrategyInfo.NEW_STOCK, orderState);
         this.newStockPurchaseCondition = newStockPurchaseCondition;
@@ -68,7 +68,7 @@ public class NewStockOrder extends AbstractConditionOrder implements TimeDriven,
     private EntrustCommand createPurchaseCommand(NewStock newStock) {
         SecurityInfo securityInfo = new SecurityInfo(SecurityType.STOCK, newStock.getPurchaseCode(),
                 newStock.getSecurityExchange(), newStock.getPurchaseName());
-        return new EntrustCommand(getCustomerIdentity(), securityInfo, ExchangeType.QUOTA_PURCHASE,
+        return new EntrustCommand(getCustomer(), securityInfo, ExchangeType.QUOTA_PURCHASE,
                 newStock.getIssuePrice(), newStock.getPurchaseUpperLimit(), OrderType.LIMITED);
     }
 

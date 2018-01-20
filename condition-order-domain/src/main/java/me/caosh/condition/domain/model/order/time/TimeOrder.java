@@ -8,7 +8,7 @@ import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.OnceOrders;
 import me.caosh.condition.domain.model.order.TimeCondition;
 import me.caosh.condition.domain.model.order.TimeDriven;
-import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
+import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.plan.SingleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
@@ -26,7 +26,7 @@ public class TimeOrder extends AbstractConditionOrder implements TimeDriven, Sin
     private final TimeCondition timeCondition;
     private final SingleDirectionTradePlan tradePlan;
 
-    public TimeOrder(Long orderId, TradeCustomerIdentity customerIdentity, SecurityInfo securityInfo,
+    public TimeOrder(Long orderId, TradeCustomer customerIdentity, SecurityInfo securityInfo,
                      SimpleTimeCondition timeCondition, SingleDirectionTradePlan tradePlan, OrderState orderState) {
         super(orderId, customerIdentity, securityInfo, NativeStrategyInfo.TIME, orderState);
         this.timeCondition = timeCondition;

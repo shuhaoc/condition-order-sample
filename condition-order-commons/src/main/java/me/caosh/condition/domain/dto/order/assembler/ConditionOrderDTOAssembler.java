@@ -9,7 +9,7 @@ import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.ConditionOrderFactory;
-import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
+import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
@@ -28,8 +28,8 @@ public class ConditionOrderDTOAssembler {
 
         return ConditionOrderDTOBuilder.aConditionOrderDTO()
                 .withOrderId(conditionOrder.getOrderId())
-                .withUserId(conditionOrder.getCustomerIdentity().getUserId())
-                .withCustomerNo(conditionOrder.getCustomerIdentity().getCustomerNo())
+                .withUserId(conditionOrder.getCustomer().getUserId())
+                .withCustomerNo(conditionOrder.getCustomer().getCustomerNo())
                 .withOrderState(conditionOrder.getOrderState().getValue())
                 .withSecurityInfo(SecurityInfoDTO.fromDomain(conditionOrder.getSecurityInfo()))
                 .withStrategyId(conditionOrder.getStrategyInfo().getStrategyId())
@@ -39,7 +39,7 @@ public class ConditionOrderDTOAssembler {
     }
 
     public static ConditionOrder fromDTO(ConditionOrderDTO dto) {
-        TradeCustomerIdentity customerIdentity = new TradeCustomerIdentity(dto.getUserId(), dto.getCustomerNo());
+        TradeCustomer customerIdentity = new TradeCustomer(dto.getUserId(), dto.getCustomerNo());
         OrderState orderState = ValuedEnumUtil.valueOf(dto.getOrderState(), OrderState.class);
         SecurityType securityType = ValuedEnumUtil.valueOf(dto.getSecurityInfoDTO().getType(), SecurityType.class);
         SecurityExchange securityExchange = SecurityExchange.valueOf(dto.getSecurityInfoDTO().getExchange());

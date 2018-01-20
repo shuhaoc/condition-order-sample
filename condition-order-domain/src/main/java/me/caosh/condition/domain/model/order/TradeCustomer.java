@@ -7,11 +7,11 @@ import com.google.common.base.MoreObjects;
  *
  * @author caoshuhao@touker.com
  */
-public class TradeCustomerIdentity {
+public class TradeCustomer {
     private final Integer userId;
     private final String customerNo;
 
-    public TradeCustomerIdentity(Integer userId, String customerNo) {
+    public TradeCustomer(Integer userId, String customerNo) {
         this.userId = userId;
         this.customerNo = customerNo;
     }
@@ -27,9 +27,9 @@ public class TradeCustomerIdentity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TradeCustomerIdentity)) return false;
+        if (!(o instanceof TradeCustomer)) return false;
 
-        TradeCustomerIdentity that = (TradeCustomerIdentity) o;
+        TradeCustomer that = (TradeCustomer) o;
 
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
         return customerNo != null ? customerNo.equals(that.customerNo) : that.customerNo == null;
@@ -44,8 +44,8 @@ public class TradeCustomerIdentity {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(TradeCustomerIdentity.class).omitNullValues()
-                .addValue(TradeCustomerIdentity.class.getSuperclass() != Object.class ? super.toString() : null)
+        return MoreObjects.toStringHelper(TradeCustomer.class).omitNullValues()
+                .addValue(TradeCustomer.class.getSuperclass() != Object.class ? super.toString() : null)
                 .add("userId", userId)
                 .add("customerNo", customerNo)
                 .toString();

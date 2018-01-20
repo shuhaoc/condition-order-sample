@@ -4,7 +4,7 @@ import me.caosh.condition.domain.model.constants.SecurityExchange;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
-import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
+import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.trade.EntrustOrder;
@@ -38,7 +38,7 @@ public class EntrustOrderDOAssembler {
     }
 
     public static EntrustOrder fromDO(EntrustOrderDO entrustOrderDO) {
-        TradeCustomerIdentity customerIdentity = new TradeCustomerIdentity(entrustOrderDO.getUserId(), entrustOrderDO.getCustomerNo());
+        TradeCustomer customerIdentity = new TradeCustomer(entrustOrderDO.getUserId(), entrustOrderDO.getCustomerNo());
         SecurityType securityType = ValuedEnumUtil.valueOf(entrustOrderDO.getSecurityType(), SecurityType.class);
         SecurityExchange securityExchange = SecurityExchange.valueOf(entrustOrderDO.getSecurityExchange());
         SecurityInfo securityInfo = new SecurityInfo(securityType, entrustOrderDO.getSecurityCode(), securityExchange,

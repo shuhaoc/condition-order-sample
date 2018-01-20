@@ -6,7 +6,7 @@ import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.EntrustCommands;
 import me.caosh.condition.domain.model.order.MarketConditionOrder;
-import me.caosh.condition.domain.model.order.TradeCustomerIdentity;
+import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.TriggerContext;
 import me.caosh.condition.domain.model.order.constant.OrderState;
 import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
@@ -31,7 +31,7 @@ public class GridTradeOrder extends MarketConditionOrder implements EntrustResul
     private final GridCondition gridCondition;
     private final DoubleDirectionTradePlan tradePlan;
 
-    public GridTradeOrder(Long orderId, TradeCustomerIdentity customerIdentity, SecurityInfo securityInfo,
+    public GridTradeOrder(Long orderId, TradeCustomer customerIdentity, SecurityInfo securityInfo,
                           GridCondition gridCondition, DoubleDirectionTradePlan tradePlan, OrderState orderState) {
         super(orderId, customerIdentity, securityInfo, NativeStrategyInfo.GRID, orderState);
         this.gridCondition = gridCondition;
@@ -62,10 +62,10 @@ public class GridTradeOrder extends MarketConditionOrder implements EntrustResul
     public EntrustCommand onTradeSignal(TradeSignal signal, RealTimeMarket realTimeMarket) {
         if (signal instanceof Buy) {
             SingleDirectionTradePlan buyPlan = tradePlan.getBuyPlan();
-            return EntrustCommands.createEntrustCommand(getCustomerIdentity(), getSecurityInfo(), buyPlan, realTimeMarket);
+            return EntrustCommands.createEntrustCommand(getCustomer(), getSecurityInfo(), buyPlan, realTimeMarket);
         } else if (signal instanceof Sell) {
             SingleDirectionTradePlan sellPlan = tradePlan.getSellPlan();
-            return EntrustCommands.createEntrustCommand(getCustomerIdentity(), getSecurityInfo(), sellPlan, realTimeMarket);
+            return EntrustCommands.createEntrustCommand(getCustomer(), getSecurityInfo(), sellPlan, realTimeMarket);
         }
         throw new IllegalArgumentException(String.valueOf(signal));
     }
