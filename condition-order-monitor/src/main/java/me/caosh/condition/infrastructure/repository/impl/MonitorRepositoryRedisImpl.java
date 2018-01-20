@@ -1,8 +1,8 @@
 package me.caosh.condition.infrastructure.repository.impl;
 
-import me.caosh.condition.domain.dto.order.serializer.ConditionOrderRedisSerializer;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.infrastructure.repository.MonitorRepository;
+import me.caosh.condition.infrastructure.repository.serializer.ConditionOrderRedisSerializer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
