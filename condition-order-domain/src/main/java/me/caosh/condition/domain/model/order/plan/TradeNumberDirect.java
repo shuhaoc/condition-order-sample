@@ -21,11 +21,11 @@ public class TradeNumberDirect implements TradeNumber {
     }
 
     @Override
-    public int getNumber(BigDecimal price) {
+    public int getNumber(BigDecimal entrustPrice) {
         return number;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 

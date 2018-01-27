@@ -2,7 +2,7 @@ package me.caosh.condition.application.order.impl;
 
 import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.domain.model.order.ConditionOrder;
-import me.caosh.condition.domain.model.order.constant.OrderState;
+import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
 import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +24,18 @@ public class ConditionOrderCommandServiceImpl implements ConditionOrderCommandSe
         this.conditionOrderProducer = conditionOrderProducer;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void save(ConditionOrder conditionOrder) {
         conditionOrderRepository.save(conditionOrder);
         conditionOrderProducer.save(conditionOrder);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void update(ConditionOrder conditionOrder) {
         conditionOrderRepository.save(conditionOrder);
-        if (conditionOrder.getOrderState() == OrderState.ACTIVE) {
+        if (conditionOrder.getStrategyState() == StrategyState.ACTIVE) {
             conditionOrderProducer.update(conditionOrder);
         } else {
             conditionOrderProducer.remove(conditionOrder.getOrderId());
@@ -47,7 +47,7 @@ public class ConditionOrderCommandServiceImpl implements ConditionOrderCommandSe
         conditionOrderRepository.save(conditionOrder);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void remove(Long orderId) {
         conditionOrderRepository.remove(orderId);

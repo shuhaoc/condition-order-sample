@@ -1,5 +1,8 @@
 package me.caosh.condition.domain.dto.order;
 
+import me.caosh.autoasm.RuntimeType;
+import me.caosh.condition.domain.model.signal.Signal;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +10,7 @@ import java.io.Serializable;
  *
  * @author caoshuhao@touker.com
  */
+@RuntimeType(Signal.class)
 public interface TradeSignalDTO extends Serializable {
     void accept(TradeSignalDTOVisitor visitor);
 }

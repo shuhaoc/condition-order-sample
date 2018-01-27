@@ -1,9 +1,10 @@
 package me.caosh.condition.interfaces.web;
 
+import com.google.common.base.Optional;
 import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.TradeCustomer;
-import me.caosh.condition.domain.model.order.constant.OrderState;
+import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.time.TimeOrder;
 import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
 import me.caosh.condition.infrastructure.repository.impl.ConditionOrderIdGenerator;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 /**
  * Created by caosh on 2017/8/9.
@@ -40,8 +40,8 @@ public class TimeOrderController {
     @RequestMapping("/create")
     public Long create(@Valid TimeOrderCreateCommand command) {
         Long orderId = idGenerator.nextId();
-        TradeCustomer customerIdentity = new TradeCustomer(303348, "010000061086");
-        TimeOrder timeOrder = TimeOrderCommandAssembler.assemble(orderId, customerIdentity, command);
+        TradeCustomer tradeCustomer = new TradeCustomer(303348, "010000061086");
+        TimeOrder timeOrder = TimeOrderCommandAssembler.assemble(orderId, tradeCustomer, command);
         conditionOrderCommandService.save(timeOrder);
         return orderId;
     }
@@ -55,7 +55,7 @@ public class TimeOrderController {
             return -1L;
         }
         ConditionOrder conditionOrder = conditionOrderOptional.get();
-        if (conditionOrder.getOrderState() != OrderState.ACTIVE && conditionOrder.getOrderState() != OrderState.PAUSED) {
+        if (conditionOrder.getStrategyState() != StrategyState.ACTIVE && conditionOrder.getStrategyState() != StrategyState.PAUSED) {
             return -2L;
         }
         TimeOrder oldOrder = (TimeOrder) conditionOrder;

@@ -18,7 +18,7 @@ public class PriceOrderCreateCommand implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    @Range(min = 1, max = 2)
+    @Range(min = 3, max = 4)
     private Integer securityType;
     @NotBlank
     @Length(min = 6, max = 6)
@@ -41,8 +41,8 @@ public class PriceOrderCreateCommand implements Serializable {
     @NotNull
     @Range(min = 1, max = 11)
     private Integer entrustStrategy;
-//    @NotNull
-@Range(min = 0, max = 1)
+    //    @NotNull
+    @Range(min = 0, max = 1)
     private Integer entrustMethod;
     @Min(100)
     private Integer entrustNumber;

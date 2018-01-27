@@ -26,10 +26,14 @@ public class TradeNumberByAmount implements TradeNumber {
     }
 
     @Override
-    public int getNumber(BigDecimal price) {
+    public int getNumber(BigDecimal entrustPrice) {
         // 简版金额下单逻辑，未考虑交易费用
-        BigDecimal amountPerHand = price.multiply(BigDecimal.valueOf(100));
+        BigDecimal amountPerHand = entrustPrice.multiply(BigDecimal.valueOf(100));
         return amount.divide(amountPerHand, 0, RoundingMode.DOWN).intValue() * 100;
+    }
+
+    public Number getNumber() {
+        return amount;
     }
 
     @Override

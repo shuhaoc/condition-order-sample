@@ -7,10 +7,7 @@ import me.caosh.condition.domain.model.order.event.ConditionOrderCommandEvent;
 import me.caosh.condition.infrastructure.eventbus.MonitorEventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.MessageListener;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -56,7 +53,8 @@ public class ConditionOrderConsumer {
     @PostConstruct
     public void init() throws Exception {
         Queue queue = new Queue(queueName, false, false, false);
-        Binding binding = new Binding(queue.getName(), Binding.DestinationType.QUEUE, exchangeName, routingKey, Collections.emptyMap());
+        Binding binding = new Binding(queue.getName(), Binding.DestinationType.QUEUE, exchangeName, routingKey,
+                Collections.<String, Object>emptyMap());
 
         amqpAdmin.declareQueue(queue);
         amqpAdmin.declareBinding(binding);
@@ -64,11 +62,14 @@ public class ConditionOrderConsumer {
 
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
         container.addQueues(queue);
-        container.setMessageListener((MessageListener) message -> {
-            ConditionOrderMonitorDTO conditionOrderMonitorDTO = (ConditionOrderMonitorDTO) messageConverter.fromMessage(message);
-            logger.debug("Receive condition order message <== {}", conditionOrderMonitorDTO);
-            ConditionOrderCommandEvent event = ConditionOrderCommandEventFactory.getInstance().create(conditionOrderMonitorDTO);
-            MonitorEventBus.EVENT_SERIALIZED.post(event);
+        container.setMessageListener(new MessageListener() {
+            @Override
+            public void onMessage(Message message) {
+                ConditionOrderMonitorDTO conditionOrderMonitorDTO = (ConditionOrderMonitorDTO) messageConverter.fromMessage(message);
+                logger.debug("Receive condition order message <== {}", conditionOrderMonitorDTO);
+                ConditionOrderCommandEvent event = ConditionOrderCommandEventFactory.getInstance().create(conditionOrderMonitorDTO);
+                MonitorEventBus.EVENT_SERIALIZED.post(event);
+            }
         });
         container.start();
     }

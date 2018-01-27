@@ -7,15 +7,11 @@ import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
 import me.caosh.condition.domain.model.constants.OrderCommandType;
 import me.caosh.condition.domain.model.order.ConditionOrder;
-import me.caosh.condition.domain.model.order.constant.OrderState;
+import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageProperties;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
@@ -64,13 +60,13 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
 
     @Override
     public void save(ConditionOrder conditionOrder) {
-        Preconditions.checkArgument(conditionOrder.getOrderState() == OrderState.ACTIVE);
+        Preconditions.checkArgument(conditionOrder.getStrategyState() == StrategyState.ACTIVE);
         send(exchangeName, routingKey, OrderCommandType.CREATE, conditionOrder);
     }
 
     @Override
     public void update(ConditionOrder conditionOrder) {
-        Preconditions.checkArgument(conditionOrder.getOrderState() == OrderState.ACTIVE);
+        Preconditions.checkArgument(conditionOrder.getStrategyState() == StrategyState.ACTIVE);
         send(exchangeName, routingKey, OrderCommandType.UPDATE, conditionOrder);
     }
 

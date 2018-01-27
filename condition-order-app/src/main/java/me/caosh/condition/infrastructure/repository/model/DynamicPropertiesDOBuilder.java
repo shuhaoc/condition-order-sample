@@ -1,12 +1,12 @@
 package me.caosh.condition.infrastructure.repository.model;
 
-import me.caosh.condition.domain.model.order.Condition;
+import me.caosh.condition.domain.model.condition.PriceCondition;
+import me.caosh.condition.domain.model.condition.TimeReachedCondition;
+import me.caosh.condition.domain.model.condition.TurnUpCondition;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
 import me.caosh.condition.domain.model.order.grid.GridCondition;
 import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
-import me.caosh.condition.domain.model.order.price.PriceCondition;
-import me.caosh.condition.domain.model.order.time.SimpleTimeCondition;
-import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
+import me.caosh.condition.domain.model.strategy.condition.Condition;
 import me.caosh.condition.domain.util.InstantUtils;
 
 import java.util.Date;
@@ -32,11 +32,11 @@ public class DynamicPropertiesDOBuilder implements ConditionVisitor {
 
     @Override
     public void visitTurnUpCondition(TurnUpCondition turnUpCondition) {
-        this.dynamicPropertiesDO = new TurnUpDynamicPropertiesDO(turnUpCondition.getBroken(), turnUpCondition.getLowestPrice().orElse(null));
+        this.dynamicPropertiesDO = new TurnUpDynamicPropertiesDO(turnUpCondition.isBroken(), turnUpCondition.getLowestPrice().orNull());
     }
 
     @Override
-    public void visitSimpleTimeCondition(SimpleTimeCondition simpleTimeCondition) {
+    public void visitSimpleTimeCondition(TimeReachedCondition timeReachedCondition) {
     }
 
     @Override

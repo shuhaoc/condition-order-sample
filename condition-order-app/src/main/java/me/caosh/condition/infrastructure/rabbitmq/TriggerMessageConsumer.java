@@ -10,11 +10,7 @@ import me.caosh.condition.domain.service.ConditionTradeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
-import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageListener;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -63,7 +59,8 @@ public class TriggerMessageConsumer {
     @PostConstruct
     public void init() {
         Queue queue = new Queue(queueName, false, false, false);
-        Binding binding = new Binding(queue.getName(), Binding.DestinationType.QUEUE, exchangeName, routingKey, Collections.emptyMap());
+        Binding binding = new Binding(queue.getName(), Binding.DestinationType.QUEUE, exchangeName, routingKey,
+                Collections.<String, Object>emptyMap());
 
         amqpAdmin.declareQueue(queue);
         amqpAdmin.declareBinding(binding);
@@ -71,11 +68,16 @@ public class TriggerMessageConsumer {
 
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
         container.addQueues(queue);
-        container.setMessageListener((MessageListener) this::handleTriggerMessage);
+        container.setMessageListener(new MessageListener() {
+            @Override
+            public void onMessage(Message message) {
+                handleTriggerMessage(message);
+            }
+        });
         container.start();
     }
 
-    private void handleTriggerMessage(Message message) {
+    private void handleTriggerMessage(final Message message) {
         try {
             Retry.times(3).onException(RuntimeException.class).execute(new Retry.BaseRetryAction<Void>() {
                 @Override
@@ -99,8 +101,8 @@ public class TriggerMessageConsumer {
         logger.debug("Receive trigger message <== {}", triggerMessageDTO);
 
         TriggerMessage triggerMessage = TriggerMessageAssembler.fromDTO(triggerMessageDTO);
-        TriggerContext triggerContext = new TriggerContext(triggerMessage.getTradeSignal(), triggerMessage.getConditionOrder(),
-                triggerMessage.getRealTimeMarket().orElse(null));
+        TriggerContext triggerContext = new TriggerContext(triggerMessage.getSignal(), triggerMessage.getConditionOrder(),
+                triggerMessage.getRealTimeMarket().orNull());
         conditionTradeService.handleTriggerContext(triggerContext);
     }
 }

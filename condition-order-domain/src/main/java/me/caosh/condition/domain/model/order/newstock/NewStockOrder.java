@@ -1,29 +1,21 @@
 package me.caosh.condition.domain.model.order.newstock;
 
+import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import me.caosh.condition.domain.model.constants.SecurityType;
+import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.market.SecurityInfoConstants;
 import me.caosh.condition.domain.model.newstock.NewStock;
-import me.caosh.condition.domain.model.order.AbstractConditionOrder;
-import me.caosh.condition.domain.model.order.Condition;
-import me.caosh.condition.domain.model.order.EntrustWithoutMarket;
-import me.caosh.condition.domain.model.order.TimeDriven;
-import me.caosh.condition.domain.model.order.TradeCustomer;
-import me.caosh.condition.domain.model.order.TriggerContext;
-import me.caosh.condition.domain.model.order.TriggerPhaseListener;
+import me.caosh.condition.domain.model.order.*;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
-import me.caosh.condition.domain.model.order.constant.OrderState;
+import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.AutoPurchaseTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
-import me.caosh.condition.domain.model.signal.SignalFactory;
 import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.domain.model.strategy.NativeStrategyInfo;
-import me.caosh.condition.domain.model.trade.EntrustCommand;
-import me.caosh.condition.domain.model.trade.EntrustResult;
-import me.caosh.condition.domain.model.trade.EntrustResultAware;
-import me.caosh.condition.domain.model.trade.NewStockPurchaseOnTrigger;
-import me.caosh.condition.domain.model.trade.OrderType;
+import me.caosh.condition.domain.model.strategy.condition.Condition;
+import me.caosh.condition.domain.model.strategy.description.NativeStrategyInfo;
+import me.caosh.condition.domain.model.trade.*;
 
 import java.util.List;
 
@@ -32,14 +24,14 @@ import java.util.List;
  *
  * @author caoshuhao@touker.com
  */
-public class NewStockOrder extends AbstractConditionOrder implements TimeDriven, NewStockPurchaseOnTrigger,
+public class NewStockOrder extends AbstractConditionOrder implements NewStockPurchaseOnTrigger,
         EntrustWithoutMarket, EntrustResultAware, TriggerPhaseListener {
     private final AutoPurchaseTradePlan autoPurchaseTradePlan = new AutoPurchaseTradePlan();
     private final NewStockPurchaseCondition newStockPurchaseCondition;
 
-    public NewStockOrder(Long orderId, TradeCustomer customerIdentity,
-                         NewStockPurchaseCondition newStockPurchaseCondition, OrderState orderState) {
-        super(orderId, customerIdentity, SecurityInfoConstants.NEW_STOCK_PURCHASE, NativeStrategyInfo.NEW_STOCK, orderState);
+    public NewStockOrder(Long orderId, TradeCustomer tradeCustomer,
+                         NewStockPurchaseCondition newStockPurchaseCondition, StrategyState strategyState) {
+        super(orderId, tradeCustomer, SecurityInfoConstants.NEW_STOCK_PURCHASE, NativeStrategyInfo.NEW_STOCK, strategyState);
         this.newStockPurchaseCondition = newStockPurchaseCondition;
     }
 
@@ -53,23 +45,30 @@ public class NewStockOrder extends AbstractConditionOrder implements TimeDriven,
     }
 
     @Override
-    public TradeSignal onSecondTick() {
-        if (newStockPurchaseCondition.isSatisfiedNow()) {
-            return SignalFactory.getInstance().general();
-        }
-        return SignalFactory.getInstance().none();
+    public Condition getRawCondition() {
+        return newStockPurchaseCondition;
     }
 
     @Override
     public List<EntrustCommand> createEntrustCommand(List<NewStock> currentPurchasable) {
-        return Lists.transform(currentPurchasable, this::createPurchaseCommand);
+        return Lists.transform(currentPurchasable, new Function<NewStock, EntrustCommand>() {
+            @Override
+            public EntrustCommand apply(NewStock newStock) {
+                return createPurchaseCommand(newStock);
+            }
+        });
     }
 
     private EntrustCommand createPurchaseCommand(NewStock newStock) {
         SecurityInfo securityInfo = new SecurityInfo(SecurityType.STOCK, newStock.getPurchaseCode(),
                 newStock.getSecurityExchange(), newStock.getPurchaseName());
-        return new EntrustCommand(getCustomer(), securityInfo, ExchangeType.QUOTA_PURCHASE,
+        return new EntrustCommand(securityInfo, ExchangeType.QUOTA_PURCHASE,
                 newStock.getIssuePrice(), newStock.getPurchaseUpperLimit(), OrderType.LIMITED);
+    }
+
+    @Override
+    public void onTradeSignal(TradeSignal tradeSignal, RealTimeMarket realTimeMarket) {
+
     }
 
     @Override

@@ -1,11 +1,15 @@
 package me.caosh.condition.domain.model.market;
 
 import me.caosh.condition.domain.model.constants.SecurityType;
+import me.caosh.condition.domain.model.strategy.container.BucketKey;
 
 /**
- * Created by caosh on 2017/8/1.
+ * 行情ID，由类别和证券代码组成，支持指数
+ * <p>
+ * @author caosh/caoshuhao@touker.com
+ * @date 2018/2/1
  */
-public class MarketID {
+public class MarketID implements BucketKey {
     private final SecurityType type;
     private final String code;
 
@@ -25,13 +29,16 @@ public class MarketID {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MarketID)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof MarketID)) {
+            return false;
+        }
 
         MarketID marketID = (MarketID) o;
 
-        if (type != marketID.type) return false;
-        return !(code != null ? !code.equals(marketID.code) : marketID.code != null);
+        return type == marketID.type && !(code != null ? !code.equals(marketID.code) : marketID.code != null);
 
     }
 

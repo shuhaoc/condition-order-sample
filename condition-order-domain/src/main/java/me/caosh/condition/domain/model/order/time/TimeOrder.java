@@ -1,41 +1,41 @@
 package me.caosh.condition.domain.model.order.time;
 
 import com.google.common.base.MoreObjects;
+import me.caosh.condition.domain.model.condition.TimeReachedCondition;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.order.AbstractConditionOrder;
-import me.caosh.condition.domain.model.order.Condition;
-import me.caosh.condition.domain.model.order.OnceOrders;
-import me.caosh.condition.domain.model.order.TimeCondition;
-import me.caosh.condition.domain.model.order.TimeDriven;
+import me.caosh.condition.domain.model.order.AbstractGeneralConditionOrder;
 import me.caosh.condition.domain.model.order.TradeCustomer;
-import me.caosh.condition.domain.model.order.constant.OrderState;
-import me.caosh.condition.domain.model.order.plan.SingleDirectionTradePlan;
+import me.caosh.condition.domain.model.order.constant.StrategyState;
+import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
-import me.caosh.condition.domain.model.signal.SignalFactory;
 import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.domain.model.strategy.NativeStrategyInfo;
-import me.caosh.condition.domain.model.trade.EntrustCommand;
-import me.caosh.condition.domain.model.trade.SingleEntrustOnTrigger;
+import me.caosh.condition.domain.model.strategy.condition.Condition;
+import me.caosh.condition.domain.model.strategy.description.NativeStrategyInfo;
 
 /**
  * Created by caosh on 2017/8/20.
  */
-public class TimeOrder extends AbstractConditionOrder implements TimeDriven, SingleEntrustOnTrigger {
+public class TimeOrder extends AbstractGeneralConditionOrder {
 
-    private final TimeCondition timeCondition;
-    private final SingleDirectionTradePlan tradePlan;
+    private final TimeReachedCondition timeReachedCondition;
+    private final BasicTradePlan tradePlan;
 
-    public TimeOrder(Long orderId, TradeCustomer customerIdentity, SecurityInfo securityInfo,
-                     SimpleTimeCondition timeCondition, SingleDirectionTradePlan tradePlan, OrderState orderState) {
-        super(orderId, customerIdentity, securityInfo, NativeStrategyInfo.TIME, orderState);
-        this.timeCondition = timeCondition;
+    public TimeOrder(Long orderId, TradeCustomer tradeCustomer, SecurityInfo securityInfo,
+                     TimeReachedCondition timeCondition, BasicTradePlan tradePlan, StrategyState strategyState) {
+        super(orderId, tradeCustomer, securityInfo, NativeStrategyInfo.TIME, strategyState);
+        this.timeReachedCondition = timeCondition;
         this.tradePlan = tradePlan;
     }
 
     @Override
     public Condition getCondition() {
-        return timeCondition;
+        return timeReachedCondition;
+    }
+
+    @Override
+    public Condition getRawCondition() {
+        return timeReachedCondition;
     }
 
     @Override
@@ -44,24 +44,16 @@ public class TimeOrder extends AbstractConditionOrder implements TimeDriven, Sin
     }
 
     @Override
-    public TradeSignal onSecondTick() {
-        boolean satisfiedNow = timeCondition.isSatisfiedNow();
-        if (satisfiedNow) {
-            return SignalFactory.getInstance().general();
-        }
-        return SignalFactory.getInstance().none();
-    }
-
-    @Override
-    public EntrustCommand onTradeSignal(TradeSignal signal, RealTimeMarket realTimeMarket) {
-        return OnceOrders.createEntrustCommand(this, realTimeMarket);
+    public void onTradeSignal(TradeSignal tradeSignal, RealTimeMarket realTimeMarket) {
+        super.onTradeSignal(tradeSignal, realTimeMarket);
+        setStrategyState(StrategyState.TERMINATED);
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .addValue(super.toString())
-                .add("timeCondition", timeCondition)
+                .add("timeReachedCondition", timeReachedCondition)
                 .add("tradePlan", tradePlan)
                 .toString();
     }

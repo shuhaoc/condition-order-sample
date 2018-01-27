@@ -1,33 +1,33 @@
 package me.caosh.condition.domain.model.order;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Optional;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
-import me.caosh.condition.domain.model.signal.TradeSignal;
+import me.caosh.condition.domain.model.signal.Signal;
 
-import java.util.Optional;
 
 /**
  * Created by caosh on 2017/8/30.
  */
 public class TriggerMessage {
-    private final TradeSignal tradeSignal;
+    private final Signal signal;
     private final ConditionOrder conditionOrder;
     private final RealTimeMarket realTimeMarket;
 
-    public TriggerMessage(TradeSignal tradeSignal, ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {
-        this.tradeSignal = tradeSignal;
+    public TriggerMessage(Signal signal, ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {
+        this.signal = signal;
         this.conditionOrder = conditionOrder;
         this.realTimeMarket = realTimeMarket;
     }
 
-    public TriggerMessage(TradeSignal tradeSignal, ConditionOrder conditionOrder) {
-        this.tradeSignal = tradeSignal;
+    public TriggerMessage(Signal signal, ConditionOrder conditionOrder) {
+        this.signal = signal;
         this.conditionOrder = conditionOrder;
         this.realTimeMarket = null;
     }
 
-    public TradeSignal getTradeSignal() {
-        return tradeSignal;
+    public Signal getSignal() {
+        return signal;
     }
 
     public ConditionOrder getConditionOrder() {
@@ -35,7 +35,7 @@ public class TriggerMessage {
     }
 
     public Optional<RealTimeMarket> getRealTimeMarket() {
-        return Optional.ofNullable(realTimeMarket);
+        return Optional.fromNullable(realTimeMarket);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class TriggerMessage {
 
         TriggerMessage that = (TriggerMessage) o;
 
-        if (tradeSignal != null ? !tradeSignal.equals(that.tradeSignal) : that.tradeSignal != null) return false;
+        if (signal != null ? !signal.equals(that.signal) : that.signal != null) return false;
         if (conditionOrder != null ? !conditionOrder.equals(that.conditionOrder) : that.conditionOrder != null)
             return false;
         return !(realTimeMarket != null ? !realTimeMarket.equals(that.realTimeMarket) : that.realTimeMarket != null);
@@ -54,7 +54,7 @@ public class TriggerMessage {
 
     @Override
     public int hashCode() {
-        int result = tradeSignal != null ? tradeSignal.hashCode() : 0;
+        int result = signal != null ? signal.hashCode() : 0;
         result = 31 * result + (conditionOrder != null ? conditionOrder.hashCode() : 0);
         result = 31 * result + (realTimeMarket != null ? realTimeMarket.hashCode() : 0);
         return result;
@@ -63,7 +63,7 @@ public class TriggerMessage {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("tradeSignal", tradeSignal)
+                .add("signal", signal)
                 .add("conditionOrder", conditionOrder)
                 .add("realTimeMarket", realTimeMarket)
                 .toString();

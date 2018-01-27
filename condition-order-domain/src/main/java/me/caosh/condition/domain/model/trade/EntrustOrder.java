@@ -1,6 +1,7 @@
 package me.caosh.condition.domain.model.trade;
 
 import com.google.common.base.MoreObjects;
+import me.caosh.condition.domain.model.order.TradeCustomer;
 
 /**
  * Created by caosh on 2017/8/14.
@@ -10,12 +11,14 @@ import com.google.common.base.MoreObjects;
 public class EntrustOrder {
     private final Long entrustId;
     private final Long orderId;
+    private final TradeCustomer tradeCustomer;
     private final EntrustCommand entrustCommand;
     private final EntrustResult entrustResult;
 
-    public EntrustOrder(Long entrustId, Long orderId, EntrustCommand entrustCommand, EntrustResult entrustResult) {
+    public EntrustOrder(Long entrustId, Long orderId, TradeCustomer tradeCustomer, EntrustCommand entrustCommand, EntrustResult entrustResult) {
         this.entrustId = entrustId;
         this.orderId = orderId;
+        this.tradeCustomer = tradeCustomer;
         this.entrustCommand = entrustCommand;
         this.entrustResult = entrustResult;
     }
@@ -26,6 +29,10 @@ public class EntrustOrder {
 
     public Long getOrderId() {
         return orderId;
+    }
+
+    public TradeCustomer getTradeCustomer() {
+        return tradeCustomer;
     }
 
     public EntrustCommand getEntrustCommand() {

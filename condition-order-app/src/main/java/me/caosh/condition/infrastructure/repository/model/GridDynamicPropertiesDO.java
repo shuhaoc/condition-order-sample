@@ -1,12 +1,15 @@
 package me.caosh.condition.infrastructure.repository.model;
 
 import com.google.common.base.MoreObjects;
+import me.caosh.autoasm.MappedClass;
+import me.caosh.condition.domain.model.order.grid.GridCondition;
 
 import java.math.BigDecimal;
 
 /**
  * Created by caosh on 2017/8/19.
  */
+@MappedClass(GridCondition.class)
 public class GridDynamicPropertiesDO implements DynamicPropertiesDO {
     private BigDecimal basePrice;
 

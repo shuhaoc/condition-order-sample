@@ -1,8 +1,8 @@
 package me.caosh.condition.domain.util;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+
 import java.util.Date;
 
 /**
@@ -10,15 +10,15 @@ import java.util.Date;
  */
 public class InstantUtils {
     public static Date toDate(LocalDateTime localDateTime) {
-        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        return localDateTime.toDate();
     }
 
     public static Date toDate(LocalDate localDate) {
-        return toDate(localDate.atStartOfDay());
+        return localDate.toDate();
     }
 
     public static LocalDateTime toLocalDateTime(Date date) {
-        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        return LocalDateTime.fromDateFields(date);
     }
 
     public static LocalDate toLocalDate(Date date) {

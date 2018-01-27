@@ -21,7 +21,7 @@ public class TimeOrderCreateCommand implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    @Range(min = 1, max = 2)
+    @Range(min = 3, max = 4)
     private Integer securityType;
     @NotBlank
     @Length(min = 6, max = 6)

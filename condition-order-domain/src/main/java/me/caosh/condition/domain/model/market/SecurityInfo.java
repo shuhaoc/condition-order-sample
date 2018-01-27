@@ -5,6 +5,8 @@ import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.trade.SecurityID;
 
 /**
+ * 证券信息，含指数
+ * 
  * Created by caosh on 2017/8/1.
  */
 public class SecurityInfo {
@@ -36,11 +38,11 @@ public class SecurityInfo {
         return name;
     }
 
-    public MarketID asMarketID() {
+    public MarketID getMarketID() {
         return new MarketID(type, code);
     }
 
-    public SecurityID asSecurityID() {
+    public SecurityID getSecurityID() {
         return new SecurityID(code, exchange);
     }
 
@@ -54,7 +56,7 @@ public class SecurityInfo {
         if (type != that.type) return false;
         if (code != null ? !code.equals(that.code) : that.code != null) return false;
         return exchange == that.exchange;
-        // 由于证券名称可能会变，但不影响证券等于比较，因此这里没有比较name
+        // 由于证券名称可能会变，比如XD，但不影响证券等于比较，因此这里没有比较name
     }
 
     @Override

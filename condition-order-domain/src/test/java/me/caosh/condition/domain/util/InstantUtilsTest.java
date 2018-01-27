@@ -1,12 +1,12 @@
 package me.caosh.condition.domain.util;
 
-import org.junit.Test;
+import org.joda.time.LocalDate;
+import org.testng.annotations.Test;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by caosh on 2017/9/3.

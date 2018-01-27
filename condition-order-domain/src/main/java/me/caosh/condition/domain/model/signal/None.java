@@ -3,9 +3,24 @@ package me.caosh.condition.domain.model.signal;
 /**
  * Created by caosh on 2017/8/1.
  */
-public final class None extends AbstractTradeSignal {
+public final class None extends AbstractSignal implements TradeSignal {
     @Override
-    public void accept(TradeSignalVisitor visitor) {
+    public boolean isValid() {
+        return false;
+    }
+
+    @Override
+    public boolean getDeviationExceeded() {
+        return false;
+    }
+
+    @Override
+    public TradeSignal withDeviationExceeded() {
+        return this;
+    }
+
+    @Override
+    public void accept(SignalVisitor visitor) {
         visitor.visitNone(this);
     }
 }

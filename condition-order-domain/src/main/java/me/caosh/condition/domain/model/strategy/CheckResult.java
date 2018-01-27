@@ -1,26 +1,27 @@
 package me.caosh.condition.domain.model.strategy;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.model.signal.TradeSignal;
+import me.caosh.condition.domain.model.signal.Signal;
 
 /**
  * Created by caosh on 2017/8/1.
  */
+@Deprecated
 public class CheckResult {
-    private final TradeSignal tradeSignal;
+    private final Signal signal;
 
-    public CheckResult(TradeSignal tradeSignal) {
-        this.tradeSignal = tradeSignal;
+    public CheckResult(Signal signal) {
+        this.signal = signal;
     }
 
-    public TradeSignal getTradeSignal() {
-        return tradeSignal;
+    public Signal getSignal() {
+        return signal;
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("tradeSignal", tradeSignal)
+                .add("signal", signal)
                 .toString();
     }
 }

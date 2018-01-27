@@ -1,5 +1,6 @@
 package me.caosh.condition.domain.model.order.plan;
 
+import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
@@ -19,24 +20,24 @@ public class TradePlanFactory {
         return INSTANCE;
     }
 
-    public TradePlan create(int exchangeType, Integer entrustStrategy,
+    public TradePlan create(SecurityInfo securityInfo, int exchangeType, Integer entrustStrategy,
                             Integer entrustMethod, Integer number, BigDecimal entrustAmount) {
         if (exchangeType == DOUBLE_EXCHANGE_TYPE) {
-            return createDouble(entrustStrategy, entrustMethod, number, entrustAmount);
+            return createDouble(securityInfo, entrustStrategy, entrustMethod, number, entrustAmount);
         } else {
-            return createSingle(exchangeType, entrustStrategy, entrustMethod, number, entrustAmount);
+            return createBasic(securityInfo, exchangeType, entrustStrategy, entrustMethod, number, entrustAmount);
         }
     }
 
-    public SingleDirectionTradePlan createSingle(int exchangeType, Integer entrustStrategy, Integer entrustMethod,
-                                                 Integer number, BigDecimal entrustAmount) {
+    public BasicTradePlan createBasic(SecurityInfo securityInfo, int exchangeType, Integer entrustStrategy, Integer entrustMethod,
+                                      Integer number, BigDecimal entrustAmount) {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance().create(entrustMethod, number, entrustAmount);
         EntrustStrategy theEntrustStrategy = ValuedEnumUtil.valueOf(entrustStrategy, EntrustStrategy.class);
         ExchangeType theExchangeType = ValuedEnumUtil.valueOf(exchangeType, ExchangeType.class);
-        return new SingleDirectionTradePlan(theExchangeType, theEntrustStrategy, tradeNumber);
+        return new BasicTradePlan(theExchangeType, theEntrustStrategy, tradeNumber);
     }
 
-    public DoubleDirectionTradePlan createDouble(Integer entrustStrategy, Integer entrustMethod, Integer number, BigDecimal entrustAmount) {
+    public DoubleDirectionTradePlan createDouble(SecurityInfo securityInfo, Integer entrustStrategy, Integer entrustMethod, Integer number, BigDecimal entrustAmount) {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance().create(entrustMethod, number, entrustAmount);
         EntrustStrategy buyEntrustStrategy = ValuedEnumUtil.valueOf(entrustStrategy, EntrustStrategy.class);
         EntrustStrategy sellEntrustStrategy;
@@ -45,8 +46,8 @@ public class TradePlanFactory {
         } else {
             sellEntrustStrategy = ValuedEnumUtil.valueOf(OPPOSITE_ENTRUST_STRATEGY_SUM - entrustStrategy, EntrustStrategy.class);
         }
-        SingleDirectionTradePlan buyPlan = new SingleDirectionTradePlan(ExchangeType.BUY, buyEntrustStrategy, tradeNumber);
-        SingleDirectionTradePlan sellPlan = new SingleDirectionTradePlan(ExchangeType.SELL, sellEntrustStrategy, tradeNumber);
+        BasicTradePlan buyPlan = new BasicTradePlan(ExchangeType.BUY, buyEntrustStrategy, tradeNumber);
+        BasicTradePlan sellPlan = new BasicTradePlan(ExchangeType.SELL, sellEntrustStrategy, tradeNumber);
         return new DoubleDirectionTradePlan(buyPlan, sellPlan);
     }
 

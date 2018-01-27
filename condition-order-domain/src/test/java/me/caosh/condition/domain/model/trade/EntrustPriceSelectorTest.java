@@ -5,11 +5,11 @@ import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.market.MarketID;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by caosh on 2017/8/31.

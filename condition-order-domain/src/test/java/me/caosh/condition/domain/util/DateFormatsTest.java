@@ -1,10 +1,9 @@
 package me.caosh.condition.domain.util;
 
-import org.junit.Test;
+import org.joda.time.LocalTime;
+import org.testng.annotations.Test;
 
-import java.time.LocalTime;
-
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by caosh on 2017/9/3.
@@ -12,9 +11,9 @@ import static org.junit.Assert.assertEquals;
 public class DateFormatsTest {
     @Test
     public void testLocalTimeFormat() throws Exception {
-        LocalTime localTime = LocalTime.of(9, 30, 0);
+        LocalTime localTime = new LocalTime(9, 30, 0);
         String text = "09:30:00";
-        assertEquals(text, DateFormats.HH_MM_SS.format(localTime));
+        assertEquals(text, DateFormats.HH_MM_SS.print(localTime));
         assertEquals(localTime, LocalTime.parse(text, DateFormats.HH_MM_SS));
     }
 }

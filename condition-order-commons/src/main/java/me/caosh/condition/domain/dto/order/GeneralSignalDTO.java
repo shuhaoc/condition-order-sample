@@ -1,10 +1,14 @@
 package me.caosh.condition.domain.dto.order;
 
+import me.caosh.autoasm.MappedClass;
+import me.caosh.condition.domain.model.signal.BS;
+
 /**
  * Created by caosh on 2017/8/14.
  *
  * @author caoshuhao@touker.com
  */
+@MappedClass(BS.class)
 public class GeneralSignalDTO implements TradeSignalDTO {
     private static final long serialVersionUID = 1L;
 

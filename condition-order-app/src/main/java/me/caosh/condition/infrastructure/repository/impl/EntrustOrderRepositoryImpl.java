@@ -4,6 +4,7 @@ import me.caosh.condition.domain.model.trade.EntrustOrder;
 import me.caosh.condition.infrastructure.repository.EntrustOrderRepository;
 import me.caosh.condition.infrastructure.repository.model.EntrustOrderDO;
 import me.caosh.condition.infrastructure.repository.model.EntrustOrderDOAssembler;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -31,6 +32,11 @@ public class EntrustOrderRepositoryImpl implements EntrustOrderRepository {
     @Override
     public Page<EntrustOrder> findByCustomerNo(String customerNo, Pageable pageable) {
         Page<EntrustOrderDO> entrustOrderDOPage = entrustOrderDORepository.findByCustomerNoOrderByEntrustIdDesc(customerNo, pageable);
-        return entrustOrderDOPage.map(EntrustOrderDOAssembler::fromDO);
+        return entrustOrderDOPage.map(new Converter<EntrustOrderDO, EntrustOrder>() {
+            @Override
+            public EntrustOrder convert(EntrustOrderDO entrustOrderDO) {
+                return EntrustOrderDOAssembler.fromDO(entrustOrderDO);
+            }
+        });
     }
 }

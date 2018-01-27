@@ -1,19 +1,19 @@
 package me.caosh.condition.infrastructure.repository.model;
 
 import com.google.common.base.Preconditions;
-import me.caosh.condition.domain.model.order.Condition;
-import me.caosh.condition.domain.model.order.constant.CompareCondition;
+import me.caosh.condition.domain.model.condition.PriceCondition;
+import me.caosh.condition.domain.model.condition.TimeReachedCondition;
+import me.caosh.condition.domain.model.condition.TurnUpCondition;
 import me.caosh.condition.domain.model.order.grid.GridCondition;
 import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
-import me.caosh.condition.domain.model.order.price.PriceCondition;
-import me.caosh.condition.domain.model.order.time.SimpleTimeCondition;
-import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
+import me.caosh.condition.domain.model.strategy.condition.Condition;
+import me.caosh.condition.domain.model.strategy.factor.CompareOperator;
 import me.caosh.condition.domain.util.DateFormats;
 import me.caosh.condition.domain.util.InstantUtils;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 /**
  * Created by caosh on 2017/8/11.
@@ -37,8 +37,8 @@ public class ConditionBuilder implements ConditionDOVisitor, DynamicPropertiesDO
 
     @Override
     public void visitPriceConditionDO(PriceConditionDO priceConditionDO) {
-        CompareCondition compareCondition = ValuedEnumUtil.valueOf(priceConditionDO.getCompareCondition(), CompareCondition.class);
-        this.condition = new PriceCondition(compareCondition, priceConditionDO.getTargetPrice());
+        CompareOperator compareOperator = ValuedEnumUtil.valueOf(priceConditionDO.getCompareOperator(), CompareOperator.class);
+        this.condition = new PriceCondition(compareOperator, priceConditionDO.getTargetPrice());
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ConditionBuilder implements ConditionDOVisitor, DynamicPropertiesDO
 
     @Override
     public void visitSimpleTimeConditionDO(SimpleTimeConditionDO simpleTimeConditionDO) {
-        this.condition = new SimpleTimeCondition(InstantUtils.toLocalDateTime(simpleTimeConditionDO.getTargetTime()));
+        this.condition = new TimeReachedCondition(InstantUtils.toLocalDateTime(simpleTimeConditionDO.getTargetTime()));
     }
 
     @Override

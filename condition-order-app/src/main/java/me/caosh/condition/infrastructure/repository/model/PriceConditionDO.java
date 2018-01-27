@@ -1,30 +1,34 @@
 package me.caosh.condition.infrastructure.repository.model;
 
 import com.google.common.base.MoreObjects;
+import me.caosh.autoasm.MappedClass;
+import me.caosh.condition.domain.model.condition.PriceCondition;
+import me.caosh.condition.domain.model.condition.PriceConditionBuilder;
 
 import java.math.BigDecimal;
 
 /**
  * Created by caosh on 2017/8/15.
  */
+@MappedClass(value = PriceCondition.class, builderClass = PriceConditionBuilder.class)
 public class PriceConditionDO implements ConditionDO {
-    private Integer compareCondition;
+    private Integer compareOperator;
     private BigDecimal targetPrice;
 
     public PriceConditionDO() {
     }
 
-    public PriceConditionDO(Integer compareCondition, BigDecimal targetPrice) {
-        this.compareCondition = compareCondition;
+    public PriceConditionDO(Integer compareOperator, BigDecimal targetPrice) {
+        this.compareOperator = compareOperator;
         this.targetPrice = targetPrice;
     }
 
-    public Integer getCompareCondition() {
-        return compareCondition;
+    public Integer getCompareOperator() {
+        return compareOperator;
     }
 
-    public void setCompareCondition(Integer compareCondition) {
-        this.compareCondition = compareCondition;
+    public void setCompareOperator(Integer compareOperator) {
+        this.compareOperator = compareOperator;
     }
 
     public BigDecimal getTargetPrice() {
@@ -43,7 +47,7 @@ public class PriceConditionDO implements ConditionDO {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("compareCondition", compareCondition)
+                .add("compareOperator", compareOperator)
                 .add("targetPrice", targetPrice)
                 .toString();
     }

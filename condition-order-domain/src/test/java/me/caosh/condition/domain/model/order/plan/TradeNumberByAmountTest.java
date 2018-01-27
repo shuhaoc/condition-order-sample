@@ -1,10 +1,10 @@
 package me.caosh.condition.domain.model.order.plan;
 
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
 
-import static junit.framework.TestCase.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by caosh on 2017/8/17.

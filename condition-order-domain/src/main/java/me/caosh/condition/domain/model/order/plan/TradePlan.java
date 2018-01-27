@@ -10,4 +10,6 @@ public interface TradePlan {
     TradeNumber getTradeNumber();
 
     void accept(TradePlanVisitor visitor);
+
+
 }

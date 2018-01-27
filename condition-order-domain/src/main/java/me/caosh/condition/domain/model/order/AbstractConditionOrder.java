@@ -1,27 +1,29 @@
 package me.caosh.condition.domain.model.order;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Optional;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.order.constant.OrderState;
-import me.caosh.condition.domain.model.strategy.StrategyInfo;
+import me.caosh.condition.domain.model.order.constant.StrategyState;
+import me.caosh.condition.domain.model.strategy.description.StrategyInfo;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by caosh on 2017/8/2.
  */
 public abstract class AbstractConditionOrder implements ConditionOrder {
     private final Long orderId;
-    private final TradeCustomer customerIdentity;
+    private final TradeCustomer tradeCustomer;
     private final SecurityInfo securityInfo;
     private final StrategyInfo strategyInfo;
-    private OrderState orderState;
+    private StrategyState strategyState;
 
-    public AbstractConditionOrder(Long orderId, TradeCustomer customerIdentity, SecurityInfo securityInfo,
-                                  StrategyInfo strategyInfo, OrderState orderState) {
+    public AbstractConditionOrder(Long orderId, TradeCustomer tradeCustomer, SecurityInfo securityInfo,
+                                  StrategyInfo strategyInfo, StrategyState strategyState) {
         this.orderId = orderId;
-        this.customerIdentity = customerIdentity;
+        this.tradeCustomer = tradeCustomer;
         this.securityInfo = securityInfo;
         this.strategyInfo = strategyInfo;
-        this.orderState = orderState;
+        this.strategyState = strategyState;
     }
 
     @Override
@@ -30,18 +32,23 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     }
 
     @Override
+    public int getStrategyId() {
+        return getOrderId().intValue();
+    }
+
+    @Override
     public TradeCustomer getCustomer() {
-        return customerIdentity;
+        return tradeCustomer;
     }
 
     @Override
-    public OrderState getOrderState() {
-        return orderState;
+    public StrategyState getStrategyState() {
+        return strategyState;
     }
 
     @Override
-    public void setOrderState(OrderState orderState) {
-        this.orderState = orderState;
+    public void setStrategyState(StrategyState strategyState) {
+        this.strategyState = strategyState;
     }
 
     @Override
@@ -55,18 +62,32 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     }
 
     @Override
+    public Optional<LocalDateTime> getExpireTime() {
+        return Optional.absent();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractConditionOrder)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         AbstractConditionOrder that = (AbstractConditionOrder) o;
 
-        return !(orderId != null ? !orderId.equals(that.orderId) : that.orderId != null);
+        if (!orderId.equals(that.orderId)) return false;
+        if (!tradeCustomer.equals(that.tradeCustomer)) return false;
+        if (!securityInfo.equals(that.securityInfo)) return false;
+        if (!strategyInfo.equals(that.strategyInfo)) return false;
+        return strategyState == that.strategyState;
     }
 
     @Override
     public int hashCode() {
-        return orderId != null ? orderId.hashCode() : 0;
+        int result = orderId.hashCode();
+        result = 31 * result + tradeCustomer.hashCode();
+        result = 31 * result + securityInfo.hashCode();
+        result = 31 * result + strategyInfo.hashCode();
+        result = 31 * result + strategyState.hashCode();
+        return result;
     }
 
     @Override
@@ -74,10 +95,10 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
         return MoreObjects.toStringHelper(AbstractConditionOrder.class).omitNullValues()
                 .addValue(AbstractConditionOrder.class.getSuperclass() != Object.class ? super.toString() : null)
                 .add("orderId", orderId)
-                .add("customerIdentity", customerIdentity)
+                .add("tradeCustomer", tradeCustomer)
                 .add("securityInfo", securityInfo)
                 .add("strategyInfo", strategyInfo)
-                .add("orderState", orderState)
+                .add("strategyState", strategyState)
                 .toString();
     }
 }

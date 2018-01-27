@@ -8,14 +8,14 @@ import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.TriggerMessage;
-import me.caosh.condition.domain.model.signal.TradeSignal;
+import me.caosh.condition.domain.model.signal.Signal;
 
 /**
  * Created by caosh on 2017/8/30.
  */
 public class TriggerMessageAssembler {
     public static TriggerMessageDTO toDTO(TriggerMessage triggerMessage) {
-        TradeSignalDTO tradeSignalDTO = new TradeSignalDTOBuilder(triggerMessage.getTradeSignal()).build();
+        TradeSignalDTO tradeSignalDTO = new SignalDTOBuilder(triggerMessage.getSignal()).build();
         ConditionOrderDTO conditionOrderDTO = ConditionOrderDTOAssembler.toDTO(triggerMessage.getConditionOrder());
         RealTimeMarketDTO realTimeMarketDTO = null;
         if (triggerMessage.getRealTimeMarket().isPresent()) {
@@ -25,13 +25,13 @@ public class TriggerMessageAssembler {
     }
 
     public static TriggerMessage fromDTO(TriggerMessageDTO triggerMessageDTO) {
-        TradeSignal tradeSignal = new TradeSignalBuilder(triggerMessageDTO.getTradeSignalDTO()).build();
+        Signal signal = new TradeSignalBuilder(triggerMessageDTO.getTradeSignalDTO()).build();
         ConditionOrder conditionOrder = ConditionOrderDTOAssembler.fromDTO(triggerMessageDTO.getConditionOrderDTO());
         RealTimeMarket realTimeMarket = null;
         if (triggerMessageDTO.getRealTimeMarketDTO() != null) {
             realTimeMarket = RealTimeMarketDTOAssembler.fromDTO(triggerMessageDTO.getRealTimeMarketDTO());
         }
-        return new TriggerMessage(tradeSignal, conditionOrder, realTimeMarket);
+        return new TriggerMessage(signal, conditionOrder, realTimeMarket);
     }
 
     private TriggerMessageAssembler() {

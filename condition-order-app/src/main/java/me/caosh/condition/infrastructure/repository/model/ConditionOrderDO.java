@@ -1,12 +1,9 @@
 package me.caosh.condition.infrastructure.repository.model;
 
 import com.google.common.base.MoreObjects;
+import me.caosh.autoasm.FieldMapping;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -19,20 +16,35 @@ import java.sql.Timestamp;
 @Table(name = "condition_order", schema = "test", catalog = "")
 public class ConditionOrderDO {
     private Long orderId;
+    @FieldMapping(mappedProperty = "customer.userId")
     private Integer userId;
+    @FieldMapping(mappedProperty = "customer.customerNo")
     private String customerNo;
-    private Boolean isDeleted;
+    @FieldMapping(value = "false")
+    private Boolean deleted;
+    @FieldMapping(mappedProperty = "strategyState")
     private Integer orderState;
+    @FieldMapping(mappedProperty = "securityInfo.type")
     private Integer securityType;
+    @FieldMapping(mappedProperty = "securityInfo.code")
     private String securityCode;
+    @FieldMapping(mappedProperty = "securityInfo.exchange")
     private String securityExchange;
+    @FieldMapping(mappedProperty = "securityInfo.name")
     private String securityName;
+    @FieldMapping(mappedProperty = "strategyInfo.strategyTemplateId")
     private Integer strategyId;
-    private String conditionProperties;
-    private String dynamicProperties;
+    @FieldMapping(mappedProperty = "rawCondition")
+    private ConditionDO conditionPropertiesObj;
+    @FieldMapping(mappedProperty = "rawCondition")
+    private DynamicPropertiesDO dynamicPropertiesObj;
+    @FieldMapping(mappedProperty = "tradePlan.exchangeType", defaultValue = "0")
     private Integer exchangeType;
+    @FieldMapping(mappedProperty = "tradePlan.entrustStrategy")
     private Integer entrustStrategy;
+    @FieldMapping(mappedProperty = "tradePlan.tradeNumber.entrustMethod")
     private Integer entrustMethod;
+    @FieldMapping(mappedProperty = "tradePlan.tradeNumber.number")
     private BigDecimal entrustAmount;
     private Timestamp createTime;
     private Timestamp updateTime;
@@ -70,11 +82,11 @@ public class ConditionOrderDO {
     @Basic
     @Column(name = "is_deleted")
     public Boolean getDeleted() {
-        return isDeleted;
+        return deleted;
     }
 
     public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
+        this.deleted = deleted;
     }
 
     @Basic
@@ -137,24 +149,42 @@ public class ConditionOrderDO {
         this.strategyId = strategyId;
     }
 
+    @Transient
+    public ConditionDO getConditionPropertiesObj() {
+        return conditionPropertiesObj;
+    }
+
+    public void setConditionPropertiesObj(ConditionDO conditionPropertiesObj) {
+        this.conditionPropertiesObj = conditionPropertiesObj;
+    }
+
+    @Transient
+    public DynamicPropertiesDO getDynamicPropertiesObj() {
+        return dynamicPropertiesObj;
+    }
+
+    public void setDynamicPropertiesObj(DynamicPropertiesDO dynamicPropertiesObj) {
+        this.dynamicPropertiesObj = dynamicPropertiesObj;
+    }
+
     @Basic
     @Column(name = "condition_properties")
     public String getConditionProperties() {
-        return conditionProperties;
+        return ConditionOrderDOGSONUtils.getGSON().toJson(conditionPropertiesObj);
     }
 
     public void setConditionProperties(String conditionProperties) {
-        this.conditionProperties = conditionProperties;
+        this.conditionPropertiesObj = ConditionOrderDOGSONUtils.getGSON().fromJson(conditionProperties, ConditionDO.class);
     }
 
     @Basic
     @Column(name = "dynamic_properties")
     public String getDynamicProperties() {
-        return dynamicProperties;
+        return dynamicPropertiesObj != null ? ConditionOrderDOGSONUtils.getGSON().toJson(dynamicPropertiesObj) : null;
     }
 
     public void setDynamicProperties(String dynamicProperties) {
-        this.dynamicProperties = dynamicProperties;
+        this.dynamicPropertiesObj = ConditionOrderDOGSONUtils.getGSON().fromJson(dynamicProperties, DynamicPropertiesDO.class);
     }
 
     @Basic
@@ -227,7 +257,7 @@ public class ConditionOrderDO {
         if (orderId != null ? !orderId.equals(that.orderId) : that.orderId != null) return false;
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
         if (customerNo != null ? !customerNo.equals(that.customerNo) : that.customerNo != null) return false;
-        if (isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null) return false;
+        if (deleted != null ? !deleted.equals(that.deleted) : that.deleted != null) return false;
         if (orderState != null ? !orderState.equals(that.orderState) : that.orderState != null) return false;
         if (securityType != null ? !securityType.equals(that.securityType) : that.securityType != null) return false;
         if (securityCode != null ? !securityCode.equals(that.securityCode) : that.securityCode != null) return false;
@@ -235,19 +265,19 @@ public class ConditionOrderDO {
             return false;
         if (securityName != null ? !securityName.equals(that.securityName) : that.securityName != null) return false;
         if (strategyId != null ? !strategyId.equals(that.strategyId) : that.strategyId != null) return false;
-        if (conditionProperties != null ? !conditionProperties.equals(that.conditionProperties) : that.conditionProperties != null)
+        if (conditionPropertiesObj != null ? !conditionPropertiesObj.equals(that.conditionPropertiesObj) : that.conditionPropertiesObj != null)
             return false;
-        if (dynamicProperties != null ? !dynamicProperties.equals(that.dynamicProperties) : that.dynamicProperties != null)
+        if (dynamicPropertiesObj != null ? !dynamicPropertiesObj.equals(that.dynamicPropertiesObj) : that.dynamicPropertiesObj != null)
             return false;
         if (exchangeType != null ? !exchangeType.equals(that.exchangeType) : that.exchangeType != null) return false;
         if (entrustStrategy != null ? !entrustStrategy.equals(that.entrustStrategy) : that.entrustStrategy != null)
             return false;
+        if (entrustMethod != null ? !entrustMethod.equals(that.entrustMethod) : that.entrustMethod != null)
+            return false;
         if (entrustAmount != null ? !entrustAmount.equals(that.entrustAmount) : that.entrustAmount != null)
             return false;
         if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
-        if (updateTime != null ? !updateTime.equals(that.updateTime) : that.updateTime != null) return false;
-
-        return true;
+        return updateTime != null ? updateTime.equals(that.updateTime) : that.updateTime == null;
     }
 
     @Override
@@ -255,17 +285,18 @@ public class ConditionOrderDO {
         int result = orderId != null ? orderId.hashCode() : 0;
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (customerNo != null ? customerNo.hashCode() : 0);
-        result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
+        result = 31 * result + (deleted != null ? deleted.hashCode() : 0);
         result = 31 * result + (orderState != null ? orderState.hashCode() : 0);
         result = 31 * result + (securityType != null ? securityType.hashCode() : 0);
         result = 31 * result + (securityCode != null ? securityCode.hashCode() : 0);
         result = 31 * result + (securityExchange != null ? securityExchange.hashCode() : 0);
         result = 31 * result + (securityName != null ? securityName.hashCode() : 0);
         result = 31 * result + (strategyId != null ? strategyId.hashCode() : 0);
-        result = 31 * result + (conditionProperties != null ? conditionProperties.hashCode() : 0);
-        result = 31 * result + (dynamicProperties != null ? dynamicProperties.hashCode() : 0);
+        result = 31 * result + (conditionPropertiesObj != null ? conditionPropertiesObj.hashCode() : 0);
+        result = 31 * result + (dynamicPropertiesObj != null ? dynamicPropertiesObj.hashCode() : 0);
         result = 31 * result + (exchangeType != null ? exchangeType.hashCode() : 0);
         result = 31 * result + (entrustStrategy != null ? entrustStrategy.hashCode() : 0);
+        result = 31 * result + (entrustMethod != null ? entrustMethod.hashCode() : 0);
         result = 31 * result + (entrustAmount != null ? entrustAmount.hashCode() : 0);
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
@@ -275,21 +306,21 @@ public class ConditionOrderDO {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(ConditionOrderDO.class).omitNullValues()
-                .addValue(ConditionOrderDO.class.getSuperclass() != Object.class ? super.toString() : null)
                 .add("orderId", orderId)
                 .add("userId", userId)
                 .add("customerNo", customerNo)
-                .add("isDeleted", isDeleted)
+                .add("deleted", deleted)
                 .add("orderState", orderState)
                 .add("securityType", securityType)
                 .add("securityCode", securityCode)
                 .add("securityExchange", securityExchange)
                 .add("securityName", securityName)
                 .add("strategyId", strategyId)
-                .add("conditionProperties", conditionProperties)
-                .add("dynamicProperties", dynamicProperties)
+                .add("conditionPropertiesObj", conditionPropertiesObj)
+                .add("dynamicPropertiesObj", dynamicPropertiesObj)
                 .add("exchangeType", exchangeType)
                 .add("entrustStrategy", entrustStrategy)
+                .add("entrustMethod", entrustMethod)
                 .add("entrustAmount", entrustAmount)
                 .add("createTime", createTime)
                 .add("updateTime", updateTime)

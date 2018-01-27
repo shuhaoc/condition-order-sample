@@ -1,10 +1,10 @@
 package me.caosh.condition.domain.model.order;
 
+import me.caosh.condition.domain.model.condition.PriceCondition;
+import me.caosh.condition.domain.model.condition.TimeReachedCondition;
+import me.caosh.condition.domain.model.condition.TurnUpCondition;
 import me.caosh.condition.domain.model.order.grid.GridCondition;
 import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
-import me.caosh.condition.domain.model.order.price.PriceCondition;
-import me.caosh.condition.domain.model.order.time.SimpleTimeCondition;
-import me.caosh.condition.domain.model.order.turnpoint.TurnUpCondition;
 
 /**
  * Created by caosh on 2017/8/11.
@@ -16,7 +16,7 @@ public interface ConditionVisitor {
 
     void visitTurnUpCondition(TurnUpCondition turnUpCondition);
 
-    void visitSimpleTimeCondition(SimpleTimeCondition simpleTimeCondition);
+    void visitSimpleTimeCondition(TimeReachedCondition timeReachedCondition);
 
     void visitGridCondition(GridCondition gridCondition);
 

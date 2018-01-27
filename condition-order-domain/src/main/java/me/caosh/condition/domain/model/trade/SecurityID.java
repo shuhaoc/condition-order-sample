@@ -3,6 +3,8 @@ package me.caosh.condition.domain.model.trade;
 import me.caosh.condition.domain.model.constants.SecurityExchange;
 
 /**
+ * 可交易证券ID，由交易所和证券代码组成
+ * <p>
  * Created by caosh on 2017/8/10.
  */
 public class SecurityID {

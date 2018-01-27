@@ -5,7 +5,7 @@ import me.caosh.condition.domain.model.share.ValuedEnum;
 /**
  * Created by caosh on 2017/8/14.
  */
-public enum  OrderType implements ValuedEnum<Integer> {
+public enum OrderType implements ValuedEnum<Integer> {
     LIMITED(0);
 
     int value;

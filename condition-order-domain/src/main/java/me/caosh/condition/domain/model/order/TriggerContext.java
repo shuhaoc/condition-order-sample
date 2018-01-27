@@ -1,10 +1,10 @@
 package me.caosh.condition.domain.model.order;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Optional;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
-import me.caosh.condition.domain.model.signal.TradeSignal;
+import me.caosh.condition.domain.model.signal.Signal;
 
-import java.util.Optional;
 
 /**
  * Created by caosh on 2017/8/14.
@@ -12,18 +12,18 @@ import java.util.Optional;
  * @author caoshuhao@touker.com
  */
 public class TriggerContext {
-    private final TradeSignal tradeSignal;
+    private final Signal signal;
     private final ConditionOrder conditionOrder;
     private RealTimeMarket triggerRealTimeMarket;
 
-    public TriggerContext(TradeSignal tradeSignal, ConditionOrder conditionOrder, RealTimeMarket triggerRealTimeMarket) {
-        this.tradeSignal = tradeSignal;
+    public TriggerContext(Signal signal, ConditionOrder conditionOrder, RealTimeMarket triggerRealTimeMarket) {
+        this.signal = signal;
         this.conditionOrder = conditionOrder;
         this.triggerRealTimeMarket = triggerRealTimeMarket;
     }
 
-    public TradeSignal getTradeSignal() {
-        return tradeSignal;
+    public Signal getSignal() {
+        return signal;
     }
 
     public ConditionOrder getConditionOrder() {
@@ -31,7 +31,7 @@ public class TriggerContext {
     }
 
     public Optional<RealTimeMarket> getTriggerRealTimeMarket() {
-        return Optional.ofNullable(triggerRealTimeMarket);
+        return Optional.fromNullable(triggerRealTimeMarket);
     }
 
     public void setTriggerRealTimeMarket(RealTimeMarket triggerRealTimeMarket) {
@@ -41,7 +41,7 @@ public class TriggerContext {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("tradeSignal", tradeSignal)
+                .add("signal", signal)
                 .add("conditionOrder", conditionOrder)
                 .add("triggerRealTimeMarket", triggerRealTimeMarket)
                 .toString();

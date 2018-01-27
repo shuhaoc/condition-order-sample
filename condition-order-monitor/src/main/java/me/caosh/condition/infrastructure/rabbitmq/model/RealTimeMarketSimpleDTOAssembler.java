@@ -1,5 +1,6 @@
 package me.caosh.condition.infrastructure.rabbitmq.model;
 
+import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import me.caosh.condition.domain.model.constants.SecurityType;
@@ -30,7 +31,12 @@ public class RealTimeMarketSimpleDTOAssembler {
         ));
     }
 
-    public static Map<String, RealTimeMarket> transformMap(SecurityType securityType, Map<String, RealTimeMarketSimpleDTO> realTimeMarketDTOMap) {
-        return Maps.transformValues(realTimeMarketDTOMap, realTimeMarketSimpleDTO -> fromDTO(securityType, realTimeMarketSimpleDTO));
+    public static Map<String, RealTimeMarket> transformMap(final SecurityType securityType, Map<String, RealTimeMarketSimpleDTO> realTimeMarketDTOMap) {
+        return Maps.transformValues(realTimeMarketDTOMap, new Function<RealTimeMarketSimpleDTO, RealTimeMarket>() {
+            @Override
+            public RealTimeMarket apply(RealTimeMarketSimpleDTO realTimeMarketSimpleDTO) {
+                return fromDTO(securityType, realTimeMarketSimpleDTO);
+            }
+        });
     }
 }

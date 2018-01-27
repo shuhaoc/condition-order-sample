@@ -1,37 +1,36 @@
 package me.caosh.condition.domain.model.order.newstock;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Optional;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
-import me.caosh.condition.domain.model.order.TimeCondition;
+import me.caosh.condition.domain.model.strategy.condition.AbstractBasicTimeCondition;
+import me.caosh.condition.domain.model.strategy.factor.DailyTargetTimeFactor;
+import me.caosh.condition.domain.model.strategy.factor.TimeFactor;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Optional;
 
 /**
  * Created by caosh on 2017/8/31.
  *
  * @author caoshuhao@touker.com
  */
-public class NewStockPurchaseCondition implements TimeCondition {
-
-    private final LocalTime purchaseTime;
+public class NewStockPurchaseCondition extends AbstractBasicTimeCondition {
     private int purchasedCount;
-    private LocalDate lastTriggerDate;
+    private DailyTargetTimeFactor timeFactor;
 
     public NewStockPurchaseCondition(LocalTime purchaseTime) {
-        this.purchaseTime = purchaseTime;
         this.purchasedCount = 0;
+        this.timeFactor = new DailyTargetTimeFactor(purchaseTime);
     }
 
     public NewStockPurchaseCondition(LocalTime purchaseTime, Integer purchasedCount, LocalDate lastTriggerDate) {
-        this.purchaseTime = purchaseTime;
         this.purchasedCount = MoreObjects.firstNonNull(purchasedCount, 0);
-        this.lastTriggerDate = lastTriggerDate;
+        this.timeFactor = new DailyTargetTimeFactor(purchaseTime, lastTriggerDate);
     }
 
     public LocalTime getPurchaseTime() {
-        return purchaseTime;
+        return timeFactor.getTargetTime();
     }
 
     public int getPurchasedCount() {
@@ -43,24 +42,16 @@ public class NewStockPurchaseCondition implements TimeCondition {
     }
 
     public Optional<LocalDate> getLastTriggerDate() {
-        return Optional.ofNullable(lastTriggerDate);
-    }
-
-    private boolean isTriggeredToday() {
-        return lastTriggerDate != null && LocalDate.now().equals(lastTriggerDate);
+        return timeFactor.getLastTriggerDate();
     }
 
     void setTriggeredToday() {
-        this.lastTriggerDate = LocalDate.now();
+        timeFactor = timeFactor.setTodayTriggered();
     }
 
     @Override
-    public boolean isSatisfiedNow() {
-        if (isTriggeredToday()) {
-            return false;
-        }
-        LocalTime now = LocalTime.now();
-        return now.equals(purchaseTime) || now.isAfter(purchaseTime);
+    public TimeFactor getTimeFactor() {
+        return timeFactor;
     }
 
     @Override

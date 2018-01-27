@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.dto.order.assembler;
 
 import me.caosh.condition.domain.dto.order.TradePlanDTO;
-import me.caosh.condition.domain.model.order.constant.ExchangeType;
+import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.plan.*;
 
 /**
@@ -12,13 +12,13 @@ public class TradePlanDTOAssembler {
     }
 
     public static TradePlanDTO fromDomain(TradePlan tradePlan) {
-        TradePlanDTO tradePlanDTO = new TradePlanDTO();
+        final TradePlanDTO tradePlanDTO = new TradePlanDTO();
 
         tradePlan.accept(new TradePlanVisitor() {
             @Override
-            public void visitSingleDirectionTradePlan(SingleDirectionTradePlan singleDirectionTradePlan) {
-                tradePlanDTO.setExchangeType(singleDirectionTradePlan.getExchangeType().getValue());
-                tradePlanDTO.setEntrustStrategy(singleDirectionTradePlan.getEntrustStrategy().getValue());
+            public void visitSingleDirectionTradePlan(BasicTradePlan basicTradePlan) {
+                tradePlanDTO.setExchangeType(basicTradePlan.getExchangeType().getValue());
+                tradePlanDTO.setEntrustStrategy(basicTradePlan.getEntrustStrategy().getValue());
             }
 
             @Override
@@ -50,8 +50,8 @@ public class TradePlanDTOAssembler {
         return tradePlanDTO;
     }
 
-    public static TradePlan toDomain(TradePlanDTO tradePlanDTO) {
-        return TradePlanFactory.getInstance().create(tradePlanDTO.getExchangeType(), tradePlanDTO.getEntrustStrategy(),
+    public static TradePlan toDomain(SecurityInfo securityInfo, TradePlanDTO tradePlanDTO) {
+        return TradePlanFactory.getInstance().create(securityInfo, tradePlanDTO.getExchangeType(), tradePlanDTO.getEntrustStrategy(),
                 tradePlanDTO.getEntrustMethod(), tradePlanDTO.getNumber(), tradePlanDTO.getEntrustAmount());
     }
 }

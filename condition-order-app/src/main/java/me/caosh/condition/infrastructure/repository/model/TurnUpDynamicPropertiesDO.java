@@ -1,12 +1,15 @@
 package me.caosh.condition.infrastructure.repository.model;
 
 import com.google.common.base.MoreObjects;
+import me.caosh.autoasm.MappedClass;
+import me.caosh.condition.domain.model.condition.TurnUpCondition;
 
 import java.math.BigDecimal;
 
 /**
  * Created by caosh on 2017/8/19.
  */
+@MappedClass(TurnUpCondition.class)
 public class TurnUpDynamicPropertiesDO implements DynamicPropertiesDO {
     private Boolean broken;
     private BigDecimal lowestPrice;

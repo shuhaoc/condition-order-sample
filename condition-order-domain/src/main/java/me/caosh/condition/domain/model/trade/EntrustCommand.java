@@ -2,7 +2,6 @@ package me.caosh.condition.domain.model.trade;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 
 import java.math.BigDecimal;
@@ -11,25 +10,22 @@ import java.math.BigDecimal;
  * Created by caosh on 2017/8/9.
  */
 public class EntrustCommand {
-    private final TradeCustomer customerIdentity;
     private final SecurityInfo securityInfo;
     private final ExchangeType exchangeType;
-    private final BigDecimal entrustPrice; // nullable
+    /**
+     * nullable
+     */
+    private final BigDecimal entrustPrice;
     private final int entrustNumber;
     private final OrderType orderType;
 
-    public EntrustCommand(TradeCustomer customerIdentity, SecurityInfo securityInfo, ExchangeType exchangeType,
-                          BigDecimal entrustPrice, int entrustNumber, OrderType orderType) {
-        this.customerIdentity = customerIdentity;
+    public EntrustCommand(SecurityInfo securityInfo, ExchangeType exchangeType, BigDecimal entrustPrice,
+                          int entrustNumber, OrderType orderType) {
         this.securityInfo = securityInfo;
         this.exchangeType = exchangeType;
         this.entrustPrice = entrustPrice;
         this.entrustNumber = entrustNumber;
         this.orderType = orderType;
-    }
-
-    public TradeCustomer getCustomerIdentity() {
-        return customerIdentity;
     }
 
     public SecurityInfo getSecurityInfo() {
@@ -55,14 +51,12 @@ public class EntrustCommand {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof EntrustCommand)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         EntrustCommand that = (EntrustCommand) o;
 
         if (entrustNumber != that.entrustNumber) return false;
-        if (customerIdentity != null ? !customerIdentity.equals(that.customerIdentity) : that.customerIdentity != null)
-            return false;
-        if (securityInfo != null ? !securityInfo.equals(that.securityInfo) : that.securityInfo != null) return false;
+        if (!securityInfo.equals(that.securityInfo)) return false;
         if (exchangeType != that.exchangeType) return false;
         if (entrustPrice != null ? !entrustPrice.equals(that.entrustPrice) : that.entrustPrice != null) return false;
         return orderType == that.orderType;
@@ -70,19 +64,17 @@ public class EntrustCommand {
 
     @Override
     public int hashCode() {
-        int result = customerIdentity != null ? customerIdentity.hashCode() : 0;
-        result = 31 * result + (securityInfo != null ? securityInfo.hashCode() : 0);
-        result = 31 * result + (exchangeType != null ? exchangeType.hashCode() : 0);
+        int result = securityInfo.hashCode();
+        result = 31 * result + exchangeType.hashCode();
         result = 31 * result + (entrustPrice != null ? entrustPrice.hashCode() : 0);
         result = 31 * result + entrustNumber;
-        result = 31 * result + (orderType != null ? orderType.hashCode() : 0);
+        result = 31 * result + orderType.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("customerIdentity", customerIdentity)
+        return MoreObjects.toStringHelper(EntrustCommand.class).omitNullValues()
                 .add("securityInfo", securityInfo)
                 .add("exchangeType", exchangeType)
                 .add("entrustPrice", entrustPrice)

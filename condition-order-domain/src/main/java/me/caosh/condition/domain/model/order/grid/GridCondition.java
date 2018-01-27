@@ -3,11 +3,10 @@ package me.caosh.condition.domain.model.order.grid;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
-import me.caosh.condition.domain.model.order.Condition;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
-import me.caosh.condition.domain.model.order.RealTimeMarketDriven;
-import me.caosh.condition.domain.model.signal.SignalFactory;
+import me.caosh.condition.domain.model.signal.Signals;
 import me.caosh.condition.domain.model.signal.TradeSignal;
+import me.caosh.condition.domain.model.strategy.condition.market.MarketCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +15,7 @@ import java.math.BigDecimal;
 /**
  * Created by caosh on 2017/8/26.
  */
-public class GridCondition implements Condition, RealTimeMarketDriven {
+public class GridCondition implements MarketCondition {
     private static final Logger logger = LoggerFactory.getLogger(GridCondition.class);
 
     private final BigDecimal gridLength;
@@ -49,7 +48,7 @@ public class GridCondition implements Condition, RealTimeMarketDriven {
     }
 
     @Override
-    public TradeSignal onRealTimeMarketUpdate(RealTimeMarket realTimeMarket) {
+    public TradeSignal onMarketUpdate(RealTimeMarket realTimeMarket) {
         Preconditions.checkNotNull(basePrice);
 
         BigDecimal currentPrice = realTimeMarket.getCurrentPrice();
@@ -58,11 +57,11 @@ public class GridCondition implements Condition, RealTimeMarketDriven {
         logger.info("Check grid condition, basePrice={}, upwardTargetPrice={}, downwardTargetPrice={}, currentPrice={}",
                 basePrice, upwardTargetPrice, downwardTargetPrice, realTimeMarket.getCurrentPrice());
         if (currentPrice.compareTo(upwardTargetPrice) >= 0) {
-            return SignalFactory.getInstance().sell();
+            return Signals.sell();
         } else if (currentPrice.compareTo(downwardTargetPrice) <= 0) {
-            return SignalFactory.getInstance().buy();
+            return Signals.buy();
         }
-        return SignalFactory.getInstance().none();
+        return Signals.none();
     }
 
     @Override

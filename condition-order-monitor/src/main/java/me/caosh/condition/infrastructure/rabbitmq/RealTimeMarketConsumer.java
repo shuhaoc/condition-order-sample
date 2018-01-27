@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -62,7 +63,8 @@ public class RealTimeMarketConsumer {
     @PostConstruct
     public void init() throws Exception {
         Queue queue = new Queue(stockQueue, false, false, true);
-        Binding binding = new Binding(queue.getName(), Binding.DestinationType.QUEUE, stockExchange, stockRoutingKey, Collections.emptyMap());
+        Binding binding = new Binding(queue.getName(), Binding.DestinationType.QUEUE, stockExchange, stockRoutingKey,
+                Collections.<String, Object>emptyMap());
 
         amqpAdmin.declareQueue(queue);
         amqpAdmin.declareBinding(binding);
@@ -70,11 +72,15 @@ public class RealTimeMarketConsumer {
 
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
         container.addQueues(queue);
-        container.setMessageListener((MessageListener) message -> {
-            HashMap<String, RealTimeMarketSimpleDTO> marketMap = (HashMap<String, RealTimeMarketSimpleDTO>) messageConverter.fromMessage(message);
-            logger.debug("Receive market message <== size={}", marketMap.size());
-            Map<String, RealTimeMarket> realTimeMarketMap = RealTimeMarketSimpleDTOAssembler.transformMap(SecurityType.STOCK, marketMap);
-            MonitorEventBus.EVENT_SERIALIZED.post(new RealTimeMarketPushEvent(realTimeMarketMap));
+        container.setMessageListener(new MessageListener() {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onMessage(Message message) {
+                HashMap<String, RealTimeMarketSimpleDTO> marketMap = (HashMap<String, RealTimeMarketSimpleDTO>) messageConverter.fromMessage(message);
+                logger.debug("Receive market message <== size={}", marketMap.size());
+                Map<String, RealTimeMarket> realTimeMarketMap = RealTimeMarketSimpleDTOAssembler.transformMap(SecurityType.STOCK, marketMap);
+                MonitorEventBus.EVENT_SERIALIZED.post(new RealTimeMarketPushEvent(realTimeMarketMap));
+            }
         });
         container.start();
     }

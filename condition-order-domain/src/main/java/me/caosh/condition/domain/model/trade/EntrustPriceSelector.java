@@ -8,7 +8,10 @@ import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import java.math.BigDecimal;
 
 /**
- * Created by caosh on 2017/8/15.
+ * 五档择价
+ *
+ * @author caosh/caoshuhao@touker.com
+ * @date 2017/8/15
  */
 public class EntrustPriceSelector {
 

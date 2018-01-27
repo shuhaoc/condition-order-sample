@@ -1,18 +1,17 @@
 package me.caosh.condition.infrastructure.repository.impl;
 
-import com.google.common.collect.Iterables;
+import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
+import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.model.order.ConditionOrder;
-import me.caosh.condition.domain.model.trade.EntrustOrder;
+import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
 import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
 import me.caosh.condition.infrastructure.repository.model.ConditionOrderDO;
-import me.caosh.condition.infrastructure.repository.model.ConditionOrderDOAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by caosh on 2017/8/3.
@@ -24,7 +23,7 @@ public class ConditionOrderRepositoryImpl implements ConditionOrderRepository {
 
     @Override
     public void save(ConditionOrder conditionOrder) {
-        ConditionOrderDO conditionOrderDO = ConditionOrderDOAssembler.toDO(conditionOrder);
+        ConditionOrderDO conditionOrderDO = AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDO.class);
         conditionOrderDORepository.save(conditionOrderDO);
     }
 
@@ -41,21 +40,33 @@ public class ConditionOrderRepositoryImpl implements ConditionOrderRepository {
     public Optional<ConditionOrder> findOne(Long orderId) {
         ConditionOrderDO conditionOrderDO = conditionOrderDORepository.findNotDeleted(orderId);
         if (conditionOrderDO == null) {
-            return Optional.empty();
+            return Optional.absent();
         }
-        ConditionOrder conditionOrder = ConditionOrderDOAssembler.fromDO(conditionOrderDO);
+        ConditionOrder conditionOrder = AutoAssemblers.getDefault()
+                .disassemble(conditionOrderDO, ConditionOrderBuilder.class)
+                .build();
         return Optional.of(conditionOrder);
     }
 
     @Override
     public List<ConditionOrder> findAllActive() {
         List<ConditionOrderDO> conditionOrderDOs = conditionOrderDORepository.findAllActive();
-        return Lists.transform(conditionOrderDOs, ConditionOrderDOAssembler::fromDO);
+        return Lists.transform(conditionOrderDOs, new Function<ConditionOrderDO, ConditionOrder>() {
+            @Override
+            public ConditionOrder apply(ConditionOrderDO conditionOrderDO) {
+                return AutoAssemblers.getDefault().disassemble(conditionOrderDO, ConditionOrderBuilder.class).build();
+            }
+        });
     }
 
     @Override
     public List<ConditionOrder> findMonitoringOrders(String customerNo) {
         List<ConditionOrderDO> monitoring = conditionOrderDORepository.findMonitoring(customerNo);
-        return Lists.transform(monitoring, ConditionOrderDOAssembler::fromDO);
+        return Lists.transform(monitoring, new Function<ConditionOrderDO, ConditionOrder>() {
+            @Override
+            public ConditionOrder apply(ConditionOrderDO conditionOrderDO) {
+                return AutoAssemblers.getDefault().disassemble(conditionOrderDO, ConditionOrderBuilder.class).build();
+            }
+        });
     }
 }
