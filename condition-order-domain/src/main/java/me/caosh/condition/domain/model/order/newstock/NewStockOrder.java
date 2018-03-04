@@ -16,7 +16,9 @@ import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.condition.Condition;
 import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
 import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
-import me.caosh.condition.domain.model.trade.*;
+import me.caosh.condition.domain.model.trade.EntrustCommand;
+import me.caosh.condition.domain.model.trade.NewStockPurchaseOnTrigger;
+import me.caosh.condition.domain.model.trade.OrderType;
 
 import java.util.List;
 
@@ -25,8 +27,7 @@ import java.util.List;
  *
  * @author caoshuhao@touker.com
  */
-public class NewStockOrder extends AbstractConditionOrder implements NewStockPurchaseOnTrigger,
-        EntrustResultAware, TriggerPhaseListener {
+public class NewStockOrder extends AbstractConditionOrder implements NewStockPurchaseOnTrigger, TriggerPhaseListener {
     private final AutoPurchaseTradePlan autoPurchaseTradePlan = new AutoPurchaseTradePlan();
     private final NewStockPurchaseCondition newStockPurchaseCondition;
 
@@ -74,11 +75,6 @@ public class NewStockOrder extends AbstractConditionOrder implements NewStockPur
 
     @Override
     public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier, RealTimeMarket realTimeMarket) {
-
-    }
-
-    @Override
-    public void afterEntrustReturned(TriggerContext triggerContext, EntrustResult entrustResult) {
         newStockPurchaseCondition.increasePurchasedCount();
     }
 

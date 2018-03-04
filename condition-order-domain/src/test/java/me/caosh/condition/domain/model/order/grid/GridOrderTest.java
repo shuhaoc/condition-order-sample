@@ -16,7 +16,6 @@ import me.caosh.condition.domain.model.order.plan.TradePlanFactory;
 import me.caosh.condition.domain.model.signal.Signal;
 import me.caosh.condition.domain.model.signal.Signals;
 import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.domain.model.trade.EntrustResult;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
@@ -72,7 +71,7 @@ public class GridOrderTest {
 //                gridTradeOrder.onTradeSignal(signal, realTimeMarket));
         gridTradeOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, new WrapperTradingMarketSupplier(realTimeMarket), realTimeMarket);
 
-        gridTradeOrder.afterEntrustReturned(triggerContext, new EntrustResult(EntrustResult.SUCCESS, "OK", 457));
+//        gridTradeOrder.afterEntrustReturned(triggerContext, new EntrustResult(EntrustResult.SUCCESS, "OK", 457));
         assertEquals(StrategyState.ACTIVE, gridTradeOrder.getStrategyState());
         assertEquals(new BigDecimal("13.00"), gridTradeOrder.getGridCondition().getBasePrice());
     }

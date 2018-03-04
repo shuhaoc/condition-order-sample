@@ -32,6 +32,17 @@ public class TriggerContext implements TradingMarketSupplier {
         this.tradeCustomer = tradeCustomer;
         this.realTimeMarketService = realTimeMarketService;
         this.triggerMarket = triggerMarket;
+
+        tryInitTradingMarket(conditionOrder, triggerMarket);
+    }
+
+    private void tryInitTradingMarket(ConditionOrder conditionOrder, RealTimeMarket triggerMarket) {
+        if (triggerMarket == null) {
+            return;
+        }
+        if (triggerMarket.getMarketID().equals(conditionOrder.getSecurityInfo().getMarketID())) {
+            this.tradingMarket = triggerMarket;
+        }
     }
 
     public Signal getSignal() {
@@ -42,12 +53,12 @@ public class TriggerContext implements TradingMarketSupplier {
         return conditionOrder;
     }
 
-    public Optional<RealTimeMarket> getTriggerMarket() {
-        return Optional.fromNullable(triggerMarket);
+    public TradeCustomer getTradeCustomer() {
+        return tradeCustomer;
     }
 
-    public void setTriggerMarket(RealTimeMarket triggerMarket) {
-        this.triggerMarket = triggerMarket;
+    public Optional<RealTimeMarket> getTriggerMarket() {
+        return Optional.fromNullable(triggerMarket);
     }
 
     @Override
@@ -68,10 +79,13 @@ public class TriggerContext implements TradingMarketSupplier {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects.toStringHelper(TriggerContext.class).omitNullValues()
                 .add("signal", signal)
                 .add("conditionOrder", conditionOrder)
+                .add("tradeCustomer", tradeCustomer)
+                .add("realTimeMarketService", realTimeMarketService)
                 .add("triggerMarket", triggerMarket)
+                .add("tradingMarket", tradingMarket)
                 .toString();
     }
 }

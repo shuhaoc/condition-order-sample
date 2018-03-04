@@ -1,9 +1,11 @@
 package me.caosh.condition.domain.model.order.grid;
 
-import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.order.*;
+import me.caosh.condition.domain.model.order.AbstractMarketConditionOrder;
+import me.caosh.condition.domain.model.order.TradeCustomer;
+import me.caosh.condition.domain.model.order.TradeCustomerInfo;
+import me.caosh.condition.domain.model.order.TradingMarketSupplier;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
@@ -12,15 +14,13 @@ import me.caosh.condition.domain.model.strategy.condition.Condition;
 import me.caosh.condition.domain.model.strategy.condition.market.MarketCondition;
 import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
 import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
-import me.caosh.condition.domain.model.trade.EntrustResult;
-import me.caosh.condition.domain.model.trade.EntrustResultAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Created by caosh on 2017/8/23.
  */
-public class GridTradeOrder extends AbstractMarketConditionOrder implements EntrustResultAware {
+public class GridTradeOrder extends AbstractMarketConditionOrder {
     private static final Logger logger = LoggerFactory.getLogger(GridTradeOrder.class);
 
     private final GridCondition gridCondition;
@@ -63,13 +63,5 @@ public class GridTradeOrder extends AbstractMarketConditionOrder implements Entr
 
         logger.info("Changing base price {} => {}", gridCondition.getBasePrice(), realTimeMarket.getCurrentPrice());
         gridCondition.setBasePrice(realTimeMarket.getCurrentPrice());
-    }
-
-    @Override
-    public void afterEntrustReturned(TriggerContext triggerContext, EntrustResult entrustResult) {
-        Preconditions.checkArgument(triggerContext.getTriggerMarket().isPresent());
-        RealTimeMarket triggerRealTimeMarket = triggerContext.getTriggerMarket().get();
-        logger.info("Changing base price {} => {}", gridCondition.getBasePrice(), triggerRealTimeMarket.getCurrentPrice());
-        gridCondition.setBasePrice(triggerRealTimeMarket.getCurrentPrice());
     }
 }
