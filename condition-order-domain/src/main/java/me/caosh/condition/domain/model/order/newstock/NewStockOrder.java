@@ -26,7 +26,7 @@ import java.util.List;
  * @author caoshuhao@touker.com
  */
 public class NewStockOrder extends AbstractConditionOrder implements NewStockPurchaseOnTrigger,
-        EntrustWithoutMarket, EntrustResultAware, TriggerPhaseListener {
+        EntrustResultAware, TriggerPhaseListener {
     private final AutoPurchaseTradePlan autoPurchaseTradePlan = new AutoPurchaseTradePlan();
     private final NewStockPurchaseCondition newStockPurchaseCondition;
 
