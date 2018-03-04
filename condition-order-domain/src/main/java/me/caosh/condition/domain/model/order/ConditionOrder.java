@@ -16,7 +16,7 @@ import me.caosh.condition.domain.model.strategy.description.StrategyInfo;
 public interface ConditionOrder extends Strategy {
     Long getOrderId();
 
-    TradeCustomer getCustomer();
+    TradeCustomerInfo getCustomer();
 
     SecurityInfo getSecurityInfo();
 

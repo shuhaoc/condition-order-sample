@@ -19,9 +19,9 @@ public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketC
 
     private final BasicTradePlan tradePlan;
 
-    public AbstractSimpleMarketConditionOrder(Long orderId, TradeCustomer tradeCustomer, SecurityInfo securityInfo,
+    public AbstractSimpleMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                                               StrategyInfo strategyInfo, BasicTradePlan tradePlan, StrategyState strategyState) {
-        super(orderId, tradeCustomer, securityInfo, strategyInfo, strategyState);
+        super(orderId, tradeCustomerInfo, securityInfo, strategyInfo, strategyState);
         this.tradePlan = tradePlan;
     }
 

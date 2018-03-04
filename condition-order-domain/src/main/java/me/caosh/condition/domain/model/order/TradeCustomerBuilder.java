@@ -6,7 +6,7 @@ import me.caosh.autoasm.ConvertibleBuilder;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/2/4
  */
-public class TradeCustomerBuilder implements ConvertibleBuilder<TradeCustomer> {
+public class TradeCustomerBuilder implements ConvertibleBuilder<TradeCustomerInfo> {
     private Integer userId;
     private String customerNo;
 
@@ -21,7 +21,7 @@ public class TradeCustomerBuilder implements ConvertibleBuilder<TradeCustomer> {
     }
 
     @Override
-    public TradeCustomer build() {
-        return new TradeCustomer(userId, customerNo);
+    public TradeCustomerInfo build() {
+        return new TradeCustomerInfo(userId, customerNo);
     }
 }

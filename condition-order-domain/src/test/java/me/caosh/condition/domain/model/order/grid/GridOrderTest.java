@@ -6,7 +6,7 @@ import me.caosh.condition.domain.model.constants.SecurityExchange;
 import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.order.TradeCustomer;
+import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.TriggerContext;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
@@ -32,12 +32,12 @@ public class GridOrderTest {
 
     @Test
     public void test() throws Exception {
-        TradeCustomer tradeCustomer = new TradeCustomer(303348, "010000061086", MockTradeSystemAdapter.INSTANCE);
+        TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086", MockTradeSystemAdapter.INSTANCE);
         SecurityInfo pfyh = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
         GridCondition gridCondition = new GridCondition(new BigDecimal("1.00"), new BigDecimal("13.00"));
         DoubleDirectionTradePlan tradePlan = TradePlanFactory.getInstance().createDouble(
                 pfyh, EntrustStrategy.CURRENT_PRICE.getValue(), EntrustMethod.AMOUNT.getValue(), 0, new BigDecimal("4500"));
-        GridTradeOrder gridTradeOrder = new GridTradeOrder(123L, tradeCustomer, pfyh, gridCondition,
+        GridTradeOrder gridTradeOrder = new GridTradeOrder(123L, tradeCustomerInfo, pfyh, gridCondition,
                 tradePlan, StrategyState.ACTIVE);
 
         assertEquals(Signals.none(),

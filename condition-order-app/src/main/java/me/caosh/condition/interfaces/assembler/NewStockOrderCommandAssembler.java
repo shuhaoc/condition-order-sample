@@ -1,6 +1,6 @@
 package me.caosh.condition.interfaces.assembler;
 
-import me.caosh.condition.domain.model.order.TradeCustomer;
+import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.newstock.NewStockOrder;
 import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
@@ -14,11 +14,11 @@ import org.joda.time.LocalTime;
  * Created by caosh on 2017/8/9.
  */
 public class NewStockOrderCommandAssembler {
-    public static NewStockOrder assemble(Long orderId, TradeCustomer tradeCustomer, NewStockOrderCreateCommand command) {
+    public static NewStockOrder assemble(Long orderId, TradeCustomerInfo tradeCustomerInfo, NewStockOrderCreateCommand command) {
         StrategyState strategyState = StrategyState.ACTIVE;
         LocalTime purchaseTime = LocalTime.parse(command.getPurchaseTime(), DateFormats.HH_MM_SS);
         NewStockPurchaseCondition newStockPurchaseCondition = new NewStockPurchaseCondition(purchaseTime);
-        return new NewStockOrder(orderId, tradeCustomer, newStockPurchaseCondition, strategyState);
+        return new NewStockOrder(orderId, tradeCustomerInfo, newStockPurchaseCondition, strategyState);
     }
 
     public static NewStockOrder merge(NewStockOrder oldOrder, NewStockOrderUpdateCommand command) {

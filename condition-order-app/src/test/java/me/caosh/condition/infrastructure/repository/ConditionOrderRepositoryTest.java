@@ -6,7 +6,7 @@ import me.caosh.condition.domain.model.constants.SecurityExchange;
 import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.ConditionOrder;
-import me.caosh.condition.domain.model.order.TradeCustomer;
+import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
@@ -38,9 +38,9 @@ public class ConditionOrderRepositoryTest {
 
     //    @Test
     public void test() throws Exception {
-        TradeCustomer tradeCustomer = new TradeCustomer(303348, "010000061086");
+        TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
         SecurityInfo securityInfo = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
-        PriceOrder priceOrder = new PriceOrder(conditionOrderIdGenerator.nextId(), tradeCustomer,
+        PriceOrder priceOrder = new PriceOrder(conditionOrderIdGenerator.nextId(), tradeCustomerInfo,
                 securityInfo,
                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                 new BasicTradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),

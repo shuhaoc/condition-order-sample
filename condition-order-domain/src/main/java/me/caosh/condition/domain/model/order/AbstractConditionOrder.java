@@ -12,15 +12,15 @@ import org.joda.time.LocalDateTime;
  */
 public abstract class AbstractConditionOrder implements ConditionOrder {
     private final Long orderId;
-    private final TradeCustomer tradeCustomer;
+    private final TradeCustomerInfo tradeCustomerInfo;
     private final SecurityInfo securityInfo;
     private final StrategyInfo strategyInfo;
     private StrategyState strategyState;
 
-    public AbstractConditionOrder(Long orderId, TradeCustomer tradeCustomer, SecurityInfo securityInfo,
+    public AbstractConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                                   StrategyInfo strategyInfo, StrategyState strategyState) {
         this.orderId = orderId;
-        this.tradeCustomer = tradeCustomer;
+        this.tradeCustomerInfo = tradeCustomerInfo;
         this.securityInfo = securityInfo;
         this.strategyInfo = strategyInfo;
         this.strategyState = strategyState;
@@ -37,8 +37,8 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     }
 
     @Override
-    public TradeCustomer getCustomer() {
-        return tradeCustomer;
+    public TradeCustomerInfo getCustomer() {
+        return tradeCustomerInfo;
     }
 
     @Override
@@ -74,7 +74,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
         AbstractConditionOrder that = (AbstractConditionOrder) o;
 
         if (!orderId.equals(that.orderId)) return false;
-        if (!tradeCustomer.equals(that.tradeCustomer)) return false;
+        if (!tradeCustomerInfo.equals(that.tradeCustomerInfo)) return false;
         if (!securityInfo.equals(that.securityInfo)) return false;
         if (!strategyInfo.equals(that.strategyInfo)) return false;
         return strategyState == that.strategyState;
@@ -83,7 +83,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     @Override
     public int hashCode() {
         int result = orderId.hashCode();
-        result = 31 * result + tradeCustomer.hashCode();
+        result = 31 * result + tradeCustomerInfo.hashCode();
         result = 31 * result + securityInfo.hashCode();
         result = 31 * result + strategyInfo.hashCode();
         result = 31 * result + strategyState.hashCode();
@@ -95,7 +95,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
         return MoreObjects.toStringHelper(AbstractConditionOrder.class).omitNullValues()
                 .addValue(AbstractConditionOrder.class.getSuperclass() != Object.class ? super.toString() : null)
                 .add("orderId", orderId)
-                .add("tradeCustomer", tradeCustomer)
+                .add("tradeCustomerInfo", tradeCustomerInfo)
                 .add("securityInfo", securityInfo)
                 .add("strategyInfo", strategyInfo)
                 .add("strategyState", strategyState)

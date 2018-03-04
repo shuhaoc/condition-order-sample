@@ -12,7 +12,7 @@ import me.caosh.condition.domain.model.trade.EntrustResult;
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/14
  */
-public class TradeCustomer extends User {
+public class TradeCustomerInfo extends User {
     private final String customerNo;
 
     /**
@@ -20,12 +20,12 @@ public class TradeCustomer extends User {
      */
     private TradeSystemAdapter tradeSystemAdapter;
 
-    public TradeCustomer(Integer userId, String customerNo) {
+    public TradeCustomerInfo(Integer userId, String customerNo) {
         super(userId);
         this.customerNo = customerNo;
     }
 
-    public TradeCustomer(Integer userId, String customerNo, TradeSystemAdapter tradeSystemAdapter) {
+    public TradeCustomerInfo(Integer userId, String customerNo, TradeSystemAdapter tradeSystemAdapter) {
         super(userId);
         this.customerNo = customerNo;
         this.tradeSystemAdapter = tradeSystemAdapter;
@@ -56,7 +56,7 @@ public class TradeCustomer extends User {
             return false;
         }
 
-        TradeCustomer that = (TradeCustomer) o;
+        TradeCustomerInfo that = (TradeCustomerInfo) o;
 
         return customerNo.equals(that.customerNo);
     }
@@ -70,7 +70,7 @@ public class TradeCustomer extends User {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(TradeCustomer.class).omitNullValues()
+        return MoreObjects.toStringHelper(TradeCustomerInfo.class).omitNullValues()
                 .add("customerNo", customerNo)
                 .toString();
     }

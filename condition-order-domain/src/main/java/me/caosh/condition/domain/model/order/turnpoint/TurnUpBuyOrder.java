@@ -5,7 +5,7 @@ import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.model.condition.TurnUpCondition;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.AbstractSimpleMarketConditionOrder;
-import me.caosh.condition.domain.model.order.TradeCustomer;
+import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
@@ -20,9 +20,9 @@ public class TurnUpBuyOrder extends AbstractSimpleMarketConditionOrder {
 
     private final TurnUpCondition turnUpCondition;
 
-    public TurnUpBuyOrder(Long orderId, TradeCustomer tradeCustomer, SecurityInfo securityInfo,
+    public TurnUpBuyOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                           TurnUpCondition turnUpCondition, BasicTradePlan tradePlan, StrategyState strategyState) {
-        super(orderId, tradeCustomer, securityInfo, NativeStrategyInfo.TURN_UP, tradePlan, strategyState);
+        super(orderId, tradeCustomerInfo, securityInfo, NativeStrategyInfo.TURN_UP, tradePlan, strategyState);
         Preconditions.checkArgument(tradePlan.getExchangeType() == ExchangeType.BUY);
         this.turnUpCondition = turnUpCondition;
     }

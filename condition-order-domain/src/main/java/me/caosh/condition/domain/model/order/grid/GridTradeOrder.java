@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.AbstractMarketConditionOrder;
-import me.caosh.condition.domain.model.order.TradeCustomer;
+import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.TriggerContext;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
@@ -27,9 +27,9 @@ public class GridTradeOrder extends AbstractMarketConditionOrder implements Entr
     private final GridCondition gridCondition;
     private final DoubleDirectionTradePlan tradePlan;
 
-    public GridTradeOrder(Long orderId, TradeCustomer tradeCustomer, SecurityInfo securityInfo,
+    public GridTradeOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                           GridCondition gridCondition, DoubleDirectionTradePlan tradePlan, StrategyState strategyState) {
-        super(orderId, tradeCustomer, securityInfo, NativeStrategyInfo.GRID, strategyState);
+        super(orderId, tradeCustomerInfo, securityInfo, NativeStrategyInfo.GRID, strategyState);
         this.gridCondition = gridCondition;
         this.tradePlan = tradePlan;
     }

@@ -4,7 +4,7 @@ import me.caosh.condition.domain.model.condition.TimeReachedCondition;
 import me.caosh.condition.domain.model.constants.SecurityExchange;
 import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.order.TradeCustomer;
+import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
@@ -21,7 +21,7 @@ import me.caosh.condition.interfaces.command.TimeOrderUpdateCommand;
  * Created by caosh on 2017/8/9.
  */
 public class TimeOrderCommandAssembler {
-    public static TimeOrder assemble(Long orderId, TradeCustomer tradeCustomer, TimeOrderCreateCommand command) {
+    public static TimeOrder assemble(Long orderId, TradeCustomerInfo tradeCustomerInfo, TimeOrderCreateCommand command) {
         StrategyState strategyState = StrategyState.ACTIVE;
         SecurityType securityType = ValuedEnumUtil.valueOf(command.getSecurityType(), SecurityType.class);
         SecurityExchange securityExchange = SecurityExchange.valueOf(command.getSecurityExchange());
@@ -33,7 +33,7 @@ public class TimeOrderCommandAssembler {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
         BasicTradePlan tradePlan = new BasicTradePlan(exchangeType, entrustStrategy, tradeNumber);
-        return new TimeOrder(orderId, tradeCustomer, securityInfo, timeReachedCondition, tradePlan, strategyState);
+        return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, timeReachedCondition, tradePlan, strategyState);
     }
 
     public static TimeOrder merge(TimeOrder oldOrder, TimeOrderUpdateCommand command) {

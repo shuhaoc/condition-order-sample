@@ -10,9 +10,9 @@ import me.caosh.condition.domain.model.strategy.description.StrategyInfo;
  * Created by caosh on 2017/8/20.
  */
 public abstract class AbstractMarketConditionOrder extends AbstractGeneralConditionOrder implements MarketDrivenStrategy {
-    public AbstractMarketConditionOrder(Long orderId, TradeCustomer tradeCustomer, SecurityInfo securityInfo,
+    public AbstractMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                                         StrategyInfo strategyInfo, StrategyState strategyState) {
-        super(orderId, tradeCustomer, securityInfo, strategyInfo, strategyState);
+        super(orderId, tradeCustomerInfo, securityInfo, strategyInfo, strategyState);
     }
 
     @Override

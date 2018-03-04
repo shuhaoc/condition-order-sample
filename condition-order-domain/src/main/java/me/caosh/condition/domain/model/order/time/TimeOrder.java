@@ -5,7 +5,7 @@ import me.caosh.condition.domain.model.condition.TimeReachedCondition;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.AbstractGeneralConditionOrder;
-import me.caosh.condition.domain.model.order.TradeCustomer;
+import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
@@ -21,9 +21,9 @@ public class TimeOrder extends AbstractGeneralConditionOrder {
     private final TimeReachedCondition timeReachedCondition;
     private final BasicTradePlan tradePlan;
 
-    public TimeOrder(Long orderId, TradeCustomer tradeCustomer, SecurityInfo securityInfo,
+    public TimeOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                      TimeReachedCondition timeCondition, BasicTradePlan tradePlan, StrategyState strategyState) {
-        super(orderId, tradeCustomer, securityInfo, NativeStrategyInfo.TIME, strategyState);
+        super(orderId, tradeCustomerInfo, securityInfo, NativeStrategyInfo.TIME, strategyState);
         this.timeReachedCondition = timeCondition;
         this.tradePlan = tradePlan;
     }

@@ -3,7 +3,7 @@ package me.caosh.condition.interfaces.assembler;
 import me.caosh.condition.domain.model.constants.SecurityExchange;
 import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.order.TradeCustomer;
+import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.grid.GridCondition;
 import me.caosh.condition.domain.model.order.grid.GridTradeOrder;
@@ -17,7 +17,7 @@ import me.caosh.condition.interfaces.command.GridTradeOrderUpdateCommand;
  * Created by caosh on 2017/8/9.
  */
 public class GirdTradeOrderCommandAssembler {
-    public static GridTradeOrder assemble(Long orderId, TradeCustomer tradeCustomer, GridTradeOrderCreateCommand command) {
+    public static GridTradeOrder assemble(Long orderId, TradeCustomerInfo tradeCustomerInfo, GridTradeOrderCreateCommand command) {
         StrategyState strategyState = StrategyState.ACTIVE;
         SecurityType securityType = ValuedEnumUtil.valueOf(command.getSecurityType(), SecurityType.class);
         SecurityExchange securityExchange = SecurityExchange.valueOf(command.getSecurityExchange());
@@ -28,7 +28,7 @@ public class GirdTradeOrderCommandAssembler {
                 command.getEntrustNumber(),
                 command.getEntrustAmount());
         return new GridTradeOrder(orderId,
-                tradeCustomer,
+                tradeCustomerInfo,
                 securityInfo,
                 gridCondition,
                 tradePlan,

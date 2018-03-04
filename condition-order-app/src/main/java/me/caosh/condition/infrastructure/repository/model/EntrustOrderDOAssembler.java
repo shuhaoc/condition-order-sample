@@ -3,7 +3,7 @@ package me.caosh.condition.infrastructure.repository.model;
 import me.caosh.condition.domain.model.constants.SecurityExchange;
 import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.order.TradeCustomer;
+import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
@@ -21,8 +21,8 @@ public class EntrustOrderDOAssembler {
         EntrustOrderDO entrustOrderDO = new EntrustOrderDO();
         entrustOrderDO.setEntrustId(entrustOrder.getEntrustId());
         entrustOrderDO.setOrderId(entrustOrder.getOrderId());
-        entrustOrderDO.setUserId(entrustOrder.getTradeCustomer().getUserId());
-        entrustOrderDO.setCustomerNo(entrustOrder.getTradeCustomer().getCustomerNo());
+        entrustOrderDO.setUserId(entrustOrder.getTradeCustomerInfo().getUserId());
+        entrustOrderDO.setCustomerNo(entrustOrder.getTradeCustomerInfo().getCustomerNo());
         entrustOrderDO.setSecurityType(entrustOrder.getEntrustCommand().getSecurityInfo().getType().getValue());
         entrustOrderDO.setSecurityCode(entrustOrder.getEntrustCommand().getSecurityInfo().getCode());
         entrustOrderDO.setSecurityExchange(entrustOrder.getEntrustCommand().getSecurityInfo().getExchange().name());
@@ -38,7 +38,7 @@ public class EntrustOrderDOAssembler {
     }
 
     public static EntrustOrder fromDO(EntrustOrderDO entrustOrderDO) {
-        TradeCustomer tradeCustomer = new TradeCustomer(entrustOrderDO.getUserId(), entrustOrderDO.getCustomerNo());
+        TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(entrustOrderDO.getUserId(), entrustOrderDO.getCustomerNo());
         SecurityType securityType = ValuedEnumUtil.valueOf(entrustOrderDO.getSecurityType(), SecurityType.class);
         SecurityExchange securityExchange = SecurityExchange.valueOf(entrustOrderDO.getSecurityExchange());
         SecurityInfo securityInfo = new SecurityInfo(securityType, entrustOrderDO.getSecurityCode(), securityExchange,
@@ -49,7 +49,7 @@ public class EntrustOrderDOAssembler {
                 entrustOrderDO.getEntrustPrice(), entrustOrderDO.getEntrustNumber(), orderType);
         EntrustResult entrustResult = new EntrustResult(entrustOrderDO.getEntrustState(), entrustOrderDO.getEntrustMessage(),
                 entrustOrderDO.getEntrustCode());
-        return new EntrustOrder(entrustOrderDO.getEntrustId(), entrustOrderDO.getOrderId(), tradeCustomer, entrustCommand, entrustResult);
+        return new EntrustOrder(entrustOrderDO.getEntrustId(), entrustOrderDO.getOrderId(), tradeCustomerInfo, entrustCommand, entrustResult);
     }
 
     private EntrustOrderDOAssembler() {

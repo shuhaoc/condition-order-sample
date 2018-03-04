@@ -29,22 +29,22 @@ public class ConditionOrderFactory {
         return INSTANCE;
     }
 
-    public ConditionOrder create(Long orderId, TradeCustomer tradeCustomer, StrategyState strategyState,
+    public ConditionOrder create(Long orderId, TradeCustomerInfo tradeCustomerInfo, StrategyState strategyState,
                                  SecurityInfo securityInfo, StrategyInfo strategyInfo, Condition condition, TradePlan tradePlan) {
         if (strategyInfo == NativeStrategyInfo.PRICE) {
-            return new PriceOrder(orderId, tradeCustomer, securityInfo, (PriceCondition) condition,
+            return new PriceOrder(orderId, tradeCustomerInfo, securityInfo, (PriceCondition) condition,
                     (BasicTradePlan) tradePlan, strategyState);
         } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {
-            return new TurnUpBuyOrder(orderId, tradeCustomer, securityInfo, (TurnUpCondition) condition,
+            return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,
                     (BasicTradePlan) tradePlan, strategyState);
         } else if (strategyInfo == NativeStrategyInfo.TIME) {
-            return new TimeOrder(orderId, tradeCustomer, securityInfo, (TimeReachedCondition) condition,
+            return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, (TimeReachedCondition) condition,
                     (BasicTradePlan) tradePlan, strategyState);
         } else if (strategyInfo == NativeStrategyInfo.GRID) {
-            return new GridTradeOrder(orderId, tradeCustomer, securityInfo, (GridCondition) condition,
+            return new GridTradeOrder(orderId, tradeCustomerInfo, securityInfo, (GridCondition) condition,
                     (DoubleDirectionTradePlan) tradePlan, strategyState);
         } else if (strategyInfo == NativeStrategyInfo.NEW_STOCK) {
-            return new NewStockOrder(orderId, tradeCustomer, (NewStockPurchaseCondition) condition, strategyState);
+            return new NewStockOrder(orderId, tradeCustomerInfo, (NewStockPurchaseCondition) condition, strategyState);
         }
         throw new IllegalArgumentException("strategyInfo=" + strategyInfo);
     }

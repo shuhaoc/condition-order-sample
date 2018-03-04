@@ -8,7 +8,7 @@ import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
-import me.caosh.condition.domain.model.order.TradeCustomer;
+import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
@@ -41,7 +41,7 @@ public class ConditionOrderDoAssemblerTest {
         SecurityInfo securityInfo = new SecurityInfo(SecurityType.STOCK, SECURITY_CODE, SecurityExchange.SH, SECURITY_NAME);
         ConditionOrder conditionOrder = new PriceOrder(
                 ORDER_ID,
-                new TradeCustomer(USER_ID, CUSTOMER_NO),
+                new TradeCustomerInfo(USER_ID, CUSTOMER_NO),
                 securityInfo,
                 new PriceCondition(CompareOperator.GE, new BigDecimal("10.00")),
                 new BasicTradePlan(ExchangeType.SELL, EntrustStrategy.BUY1,

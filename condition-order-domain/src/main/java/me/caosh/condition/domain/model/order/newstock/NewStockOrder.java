@@ -29,9 +29,9 @@ public class NewStockOrder extends AbstractConditionOrder implements NewStockPur
     private final AutoPurchaseTradePlan autoPurchaseTradePlan = new AutoPurchaseTradePlan();
     private final NewStockPurchaseCondition newStockPurchaseCondition;
 
-    public NewStockOrder(Long orderId, TradeCustomer tradeCustomer,
+    public NewStockOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo,
                          NewStockPurchaseCondition newStockPurchaseCondition, StrategyState strategyState) {
-        super(orderId, tradeCustomer, SecurityInfoConstants.NEW_STOCK_PURCHASE, NativeStrategyInfo.NEW_STOCK, strategyState);
+        super(orderId, tradeCustomerInfo, SecurityInfoConstants.NEW_STOCK_PURCHASE, NativeStrategyInfo.NEW_STOCK, strategyState);
         this.newStockPurchaseCondition = newStockPurchaseCondition;
     }
 

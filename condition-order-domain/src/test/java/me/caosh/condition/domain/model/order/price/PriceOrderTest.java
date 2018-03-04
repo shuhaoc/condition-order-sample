@@ -6,7 +6,7 @@ import me.caosh.condition.domain.model.constants.SecurityExchange;
 import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.order.TradeCustomer;
+import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
@@ -32,10 +32,10 @@ public class PriceOrderTest {
 
     @Test
     public void test() throws Exception {
-        TradeCustomer tradeCustomer = new TradeCustomer(303348, "010000061086", MockTradeSystemAdapter.INSTANCE);
+        TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086", MockTradeSystemAdapter.INSTANCE);
         SecurityInfo pfyh = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
         ExchangeType exchangeType = ExchangeType.BUY;
-        PriceOrder priceOrder = new PriceOrder(123L, tradeCustomer, pfyh,
+        PriceOrder priceOrder = new PriceOrder(123L, tradeCustomerInfo, pfyh,
                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                 new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
                 StrategyState.ACTIVE);
@@ -55,15 +55,15 @@ public class PriceOrderTest {
 
     @Test
     public void testBasic() throws Exception {
-        TradeCustomer tradeCustomer = new TradeCustomer(303348, "010000061086");
+        TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
         SecurityInfo pfyh = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
         ExchangeType exchangeType = ExchangeType.BUY;
 
-        PriceOrder priceOrder1 = new PriceOrder(123L, tradeCustomer, pfyh,
+        PriceOrder priceOrder1 = new PriceOrder(123L, tradeCustomerInfo, pfyh,
                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                 new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
                 StrategyState.ACTIVE);
-        PriceOrder priceOrder2 = new PriceOrder(123L, tradeCustomer, pfyh,
+        PriceOrder priceOrder2 = new PriceOrder(123L, tradeCustomerInfo, pfyh,
                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                 new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
                 StrategyState.ACTIVE);

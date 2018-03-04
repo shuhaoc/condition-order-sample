@@ -4,7 +4,7 @@ import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.model.condition.PriceCondition;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.AbstractSimpleMarketConditionOrder;
-import me.caosh.condition.domain.model.order.TradeCustomer;
+import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.strategy.condition.Condition;
@@ -21,9 +21,9 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder {
 
     private final PriceCondition priceCondition;
 
-    public PriceOrder(Long orderId, TradeCustomer tradeCustomer, SecurityInfo securityInfo,
+    public PriceOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                       PriceCondition priceCondition, BasicTradePlan tradePlan, StrategyState strategyState) {
-        super(orderId, tradeCustomer, securityInfo, NativeStrategyInfo.PRICE, tradePlan, strategyState);
+        super(orderId, tradeCustomerInfo, securityInfo, NativeStrategyInfo.PRICE, tradePlan, strategyState);
         this.priceCondition = priceCondition;
     }
 

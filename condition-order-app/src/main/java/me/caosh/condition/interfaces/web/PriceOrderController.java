@@ -3,7 +3,7 @@ package me.caosh.condition.interfaces.web;
 import com.google.common.base.Optional;
 import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.domain.model.order.ConditionOrder;
-import me.caosh.condition.domain.model.order.TradeCustomer;
+import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
 import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
@@ -38,8 +38,8 @@ public class PriceOrderController {
     @RequestMapping("/create")
     public Long create(@Valid PriceOrderCreateCommand command) {
         Long orderId = idGenerator.nextId();
-        TradeCustomer tradeCustomer = new TradeCustomer(303348, "010000061086");
-        PriceOrder priceOrder = PriceOrderCommandAssembler.assemblePriceOrder(orderId, tradeCustomer, command);
+        TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
+        PriceOrder priceOrder = PriceOrderCommandAssembler.assemblePriceOrder(orderId, tradeCustomerInfo, command);
         conditionOrderCommandService.save(priceOrder);
         return orderId;
     }

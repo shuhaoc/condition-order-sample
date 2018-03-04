@@ -20,9 +20,9 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractGeneralConditionOrder extends AbstractConditionOrder {
     private static final Logger logger = LoggerFactory.getLogger(AbstractGeneralConditionOrder.class);
 
-    public AbstractGeneralConditionOrder(Long orderId, TradeCustomer tradeCustomer, SecurityInfo securityInfo,
+    public AbstractGeneralConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                                          StrategyInfo strategyInfo, StrategyState strategyState) {
-        super(orderId, tradeCustomer, securityInfo, strategyInfo, strategyState);
+        super(orderId, tradeCustomerInfo, securityInfo, strategyInfo, strategyState);
     }
 
     @Override

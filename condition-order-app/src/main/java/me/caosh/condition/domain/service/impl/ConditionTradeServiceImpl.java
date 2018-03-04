@@ -5,7 +5,7 @@ import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.EntrustWithoutMarket;
-import me.caosh.condition.domain.model.order.TradeCustomer;
+import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.TriggerContext;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.signal.BS;
@@ -88,8 +88,8 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
 
     private void handleEntrustCommand(TriggerContext triggerContext, EntrustCommand entrustCommand) {
         ConditionOrder conditionOrder = triggerContext.getConditionOrder();
-        TradeCustomer tradeCustomer = conditionOrder.getCustomer();
-        EntrustResult entrustResult = tradeCustomer.entrust(entrustCommand);
+        TradeCustomerInfo tradeCustomerInfo = conditionOrder.getCustomer();
+        EntrustResult entrustResult = tradeCustomerInfo.entrust(entrustCommand);
         logger.info("Entrust result <== {}", entrustResult);
 
         if (conditionOrder instanceof EntrustResultAware) {
@@ -97,7 +97,7 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
         }
 
         long entrustId = entrustOrderIdGenerator.nextId();
-        EntrustOrder entrustOrder = new EntrustOrder(entrustId, conditionOrder.getOrderId(), tradeCustomer, entrustCommand, entrustResult);
+        EntrustOrder entrustOrder = new EntrustOrder(entrustId, conditionOrder.getOrderId(), tradeCustomerInfo, entrustCommand, entrustResult);
         entrustOrderRepository.save(entrustOrder);
     }
 

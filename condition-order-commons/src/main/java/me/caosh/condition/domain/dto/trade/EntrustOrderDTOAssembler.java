@@ -10,8 +10,8 @@ public class EntrustOrderDTOAssembler {
         EntrustOrderDTO entrustOrderDTO = new EntrustOrderDTO();
         entrustOrderDTO.setEntrustId(entrustOrder.getEntrustId());
         entrustOrderDTO.setOrderId(entrustOrder.getOrderId());
-        entrustOrderDTO.setUserId(entrustOrder.getTradeCustomer().getUserId());
-        entrustOrderDTO.setCustomerNo(entrustOrder.getTradeCustomer().getCustomerNo());
+        entrustOrderDTO.setUserId(entrustOrder.getTradeCustomerInfo().getUserId());
+        entrustOrderDTO.setCustomerNo(entrustOrder.getTradeCustomerInfo().getCustomerNo());
         entrustOrderDTO.setSecurityType(entrustOrder.getEntrustCommand().getSecurityInfo().getType().getValue());
         entrustOrderDTO.setSecurityCode(entrustOrder.getEntrustCommand().getSecurityInfo().getCode());
         entrustOrderDTO.setSecurityExchange(entrustOrder.getEntrustCommand().getSecurityInfo().getExchange().name());
