@@ -1,8 +1,8 @@
 package me.caosh.condition.domain.model.strategy.container;
 
+import hbec.intellitrade.strategy.domain.RealTimeMarketAware;
+import hbec.intellitrade.strategy.domain.Strategy;
 import me.caosh.condition.domain.model.market.MarketID;
-import me.caosh.condition.domain.model.strategy.RealTimeMarketAware;
-import me.caosh.condition.domain.model.strategy.Strategy;
 
 /**
  * {@link StrategyContext}工厂

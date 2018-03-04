@@ -3,13 +3,13 @@ package me.caosh.condition.domain.model.strategy.container;
 import com.google.common.base.Function;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.*;
+import hbec.intellitrade.strategy.domain.Strategy;
 import me.caosh.condition.domain.model.market.MarketID;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.signal.MarketSignalPayload;
 import me.caosh.condition.domain.model.signal.Signal;
 import me.caosh.condition.domain.model.signal.SignalPayload;
 import me.caosh.condition.domain.model.signal.Signals;
-import me.caosh.condition.domain.model.strategy.Strategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

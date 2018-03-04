@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.model.strategy.condition.time;
 
-import me.caosh.condition.domain.model.strategy.factor.TimeFactor;
+import hbec.intellitrade.strategy.domain.factor.TimeFactor;
 
 /**
  * 可转换为等价的时间因子的时间条件

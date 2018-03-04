@@ -1,5 +1,6 @@
 package me.caosh.condition.domain.model.order.price;
 
+import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import me.caosh.condition.domain.model.condition.PriceCondition;
 import me.caosh.condition.domain.model.constants.SecurityExchange;
 import me.caosh.condition.domain.model.constants.SecurityType;
@@ -16,7 +17,6 @@ import me.caosh.condition.domain.model.order.plan.TradeNumberDirect;
 import me.caosh.condition.domain.model.signal.Signal;
 import me.caosh.condition.domain.model.signal.Signals;
 import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.domain.model.strategy.factor.CompareOperator;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;

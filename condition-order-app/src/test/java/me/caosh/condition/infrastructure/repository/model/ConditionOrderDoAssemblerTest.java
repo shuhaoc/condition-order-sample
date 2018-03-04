@@ -1,5 +1,6 @@
 package me.caosh.condition.infrastructure.repository.model;
 
+import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.model.condition.PriceCondition;
 import me.caosh.condition.domain.model.constants.EntrustMethod;
@@ -15,7 +16,6 @@ import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradeNumberByAmount;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
-import me.caosh.condition.domain.model.strategy.factor.CompareOperator;
 import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
 import org.junit.Test;
 

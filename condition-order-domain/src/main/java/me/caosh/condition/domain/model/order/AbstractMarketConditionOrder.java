@@ -1,9 +1,9 @@
 package me.caosh.condition.domain.model.order;
 
+import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import me.caosh.condition.domain.model.market.MarketID;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
-import me.caosh.condition.domain.model.strategy.MarketDrivenStrategy;
 
 /**
  * Created by caosh on 2017/8/20.

@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.model.strategy.shared;
 
 import com.google.common.base.Function;
-import me.caosh.condition.domain.model.strategy.factor.CompareOperator;
+import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;

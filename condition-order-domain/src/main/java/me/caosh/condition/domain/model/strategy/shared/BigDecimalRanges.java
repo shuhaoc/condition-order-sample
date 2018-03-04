@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.model.strategy.shared;
 
 import com.google.common.base.Preconditions;
-import me.caosh.condition.domain.model.strategy.factor.CompareOperator;
+import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

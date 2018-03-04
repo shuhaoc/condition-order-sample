@@ -1,13 +1,13 @@
 package me.caosh.condition.domain.model.strategy.condition.deviation;
 
+import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
+import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import me.caosh.condition.domain.model.condition.PriceCondition;
 import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.market.MarketID;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.signal.Signals;
 import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.domain.model.strategy.factor.BasicTargetPriceFactor;
-import me.caosh.condition.domain.model.strategy.factor.CompareOperator;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;

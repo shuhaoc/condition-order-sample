@@ -1,12 +1,12 @@
 package me.caosh.condition.domain.model.strategy.condition.timerange;
 
+import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import me.caosh.condition.domain.model.condition.PriceCondition;
 import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.market.MarketID;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 import me.caosh.condition.domain.model.signal.Signals;
-import me.caosh.condition.domain.model.strategy.factor.CompareOperator;
 import me.caosh.condition.domain.model.strategy.shared.Week;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;

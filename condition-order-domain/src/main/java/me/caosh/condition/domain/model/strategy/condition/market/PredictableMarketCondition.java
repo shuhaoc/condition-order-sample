@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.model.strategy.condition.market;
 
+import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
 import me.caosh.condition.domain.model.strategy.condition.deviation.DeviationCtrlCondition;
-import me.caosh.condition.domain.model.strategy.factor.TargetPriceFactor;
 
 /**
  * 可预测的行情条件，即可以求目标价因子的条件

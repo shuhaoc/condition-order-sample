@@ -1,10 +1,10 @@
 package me.caosh.condition.domain.model.strategy.condition.deviation;
 
+import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.condition.market.PredictableMarketCondition;
-import me.caosh.condition.domain.model.strategy.factor.TargetPriceFactor;
 import me.caosh.condition.domain.model.strategy.shared.BigDecimalRanges;
 import me.caosh.condition.domain.model.strategy.shared.Range;
 

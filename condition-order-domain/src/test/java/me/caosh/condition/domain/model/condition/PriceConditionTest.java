@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.model.condition;
 
-import me.caosh.condition.domain.model.strategy.factor.CompareOperator;
+import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;

@@ -1,6 +1,7 @@
 package me.caosh.condition.infrastructure.repository;
 
 import com.google.common.base.Optional;
+import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import me.caosh.condition.domain.model.condition.PriceCondition;
 import me.caosh.condition.domain.model.constants.SecurityExchange;
 import me.caosh.condition.domain.model.constants.SecurityType;
@@ -13,7 +14,6 @@ import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradeNumberDirect;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
-import me.caosh.condition.domain.model.strategy.factor.CompareOperator;
 import me.caosh.condition.infrastructure.repository.impl.ConditionOrderIdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

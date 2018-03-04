@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.model.condition;
 
+import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import me.caosh.autoasm.ConvertibleBuilder;
-import me.caosh.condition.domain.model.strategy.factor.CompareOperator;
 
 import java.math.BigDecimal;
 

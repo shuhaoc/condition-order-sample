@@ -2,10 +2,10 @@ package me.caosh.condition.domain.model.order.newstock;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
+import hbec.intellitrade.strategy.domain.factor.DailyTargetTimeFactor;
+import hbec.intellitrade.strategy.domain.factor.TimeFactor;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
 import me.caosh.condition.domain.model.strategy.condition.AbstractBasicTimeCondition;
-import me.caosh.condition.domain.model.strategy.factor.DailyTargetTimeFactor;
-import me.caosh.condition.domain.model.strategy.factor.TimeFactor;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 

@@ -2,9 +2,9 @@ package me.caosh.condition.domain.model.strategy.container;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
+import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
-import me.caosh.condition.domain.model.strategy.TimeDrivenStrategy;
 import me.caosh.condition.domain.model.strategy.condition.time.TimeCondition;
 import org.joda.time.LocalDateTime;
 

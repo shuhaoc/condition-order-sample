@@ -1,8 +1,8 @@
 package me.caosh.condition.domain.model.signal;
 
 import com.google.common.base.MoreObjects;
+import hbec.intellitrade.strategy.domain.Strategy;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
-import me.caosh.condition.domain.model.strategy.Strategy;
 import org.joda.time.LocalTime;
 
 /**
