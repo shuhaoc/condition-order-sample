@@ -6,7 +6,7 @@ import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
-import me.caosh.condition.domain.model.order.TriggerContext;
+import me.caosh.condition.domain.model.order.TriggerTradingContext;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.signal.BS;
 import me.caosh.condition.domain.model.signal.CacheSync;
@@ -58,21 +58,21 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
         }
 
         TradeCustomer tradeCustomer = tradeCustomerFactory.createTradeCustomer(conditionOrder.getCustomer());
-        TriggerContext triggerContext = new TriggerContext(signal, conditionOrder, tradeCustomer,
+        TriggerTradingContext triggerTradingContext = new TriggerTradingContext(signal, conditionOrder, tradeCustomer,
                 realTimeMarketService, realTimeMarket);
 
         if (signal instanceof BS) {
 //                List<NewStock> currentPurchasable = newStockQueryService.getCurrentPurchasable();
 //                List<EntrustCommand> entrustCommands = ((NewStockPurchaseOnTrigger) conditionOrder).createEntrustCommand(currentPurchasable);
 //                for (EntrustCommand entrustCommand : entrustCommands) {
-//                    handleEntrustCommand(triggerContext, entrustCommand);
+//                    handleEntrustCommand(triggerTradingContext, entrustCommand);
 //                }
 
 //
 //            if (conditionOrder instanceof TriggerPhaseListener) {
-//                ((TriggerPhaseListener) conditionOrder).afterEntrustCommandsExecuted(triggerContext);
+//                ((TriggerPhaseListener) conditionOrder).afterEntrustCommandsExecuted(triggerTradingContext);
 //            }
-            conditionOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, triggerContext, realTimeMarket);
+            conditionOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, triggerTradingContext, realTimeMarket);
             conditionOrderCommandService.update(conditionOrder);
         } else if (signal instanceof CacheSync) {
             // TODO: use visitor pattern
@@ -81,14 +81,14 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
         }
     }
 
-    private void handleEntrustCommand(TriggerContext triggerContext, EntrustCommand entrustCommand) {
-        ConditionOrder conditionOrder = triggerContext.getConditionOrder();
+    private void handleEntrustCommand(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand) {
+        ConditionOrder conditionOrder = triggerTradingContext.getConditionOrder();
         TradeCustomerInfo tradeCustomerInfo = conditionOrder.getCustomer();
 //        EntrustResult entrustResult = tradeCustomerInfo.entrust(entrustCommand);
 //        logger.info("Entrust result <== {}", entrustResult);
 //
 //        if (conditionOrder instanceof EntrustResultAware) {
-//            ((EntrustResultAware) conditionOrder).afterEntrustReturned(triggerContext, entrustResult);
+//            ((EntrustResultAware) conditionOrder).afterEntrustReturned(triggerTradingContext, entrustResult);
 //        }
 
         long entrustId = entrustOrderIdGenerator.nextId();

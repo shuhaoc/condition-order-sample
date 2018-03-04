@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author caoshuhao@touker.com
  */
-public class TriggerContext implements TradingMarketSupplier {
-    private static final Logger logger = LoggerFactory.getLogger(TriggerContext.class);
+public class TriggerTradingContext implements TradingMarketSupplier {
+    private static final Logger logger = LoggerFactory.getLogger(TriggerTradingContext.class);
 
     private final Signal signal;
     private final ConditionOrder conditionOrder;
@@ -25,8 +25,8 @@ public class TriggerContext implements TradingMarketSupplier {
     private RealTimeMarket triggerMarket;
     private RealTimeMarket tradingMarket;
 
-    public TriggerContext(Signal signal, ConditionOrder conditionOrder, TradeCustomer tradeCustomer,
-                          RealTimeMarketService realTimeMarketService, RealTimeMarket triggerMarket) {
+    public TriggerTradingContext(Signal signal, ConditionOrder conditionOrder, TradeCustomer tradeCustomer,
+                                 RealTimeMarketService realTimeMarketService, RealTimeMarket triggerMarket) {
         this.signal = signal;
         this.conditionOrder = conditionOrder;
         this.tradeCustomer = tradeCustomer;
@@ -79,7 +79,7 @@ public class TriggerContext implements TradingMarketSupplier {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(TriggerContext.class).omitNullValues()
+        return MoreObjects.toStringHelper(TriggerTradingContext.class).omitNullValues()
                 .add("signal", signal)
                 .add("conditionOrder", conditionOrder)
                 .add("tradeCustomer", tradeCustomer)

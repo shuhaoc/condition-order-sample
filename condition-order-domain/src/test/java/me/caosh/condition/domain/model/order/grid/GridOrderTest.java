@@ -7,7 +7,7 @@ import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
-import me.caosh.condition.domain.model.order.TriggerContext;
+import me.caosh.condition.domain.model.order.TriggerTradingContext;
 import me.caosh.condition.domain.model.order.WrapperTradingMarketSupplier;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
@@ -49,14 +49,14 @@ public class GridOrderTest {
         Signal signal = gridTradeOrder.getCondition().onMarketUpdate(realTimeMarket);
         assertEquals(Signals.sell(), signal);
         TradeCustomer tradeCustomer = new TradeCustomer(303348, "010000061086");
-        TriggerContext triggerContext = new TriggerContext(signal, gridTradeOrder, tradeCustomer,
+        TriggerTradingContext triggerTradingContext = new TriggerTradingContext(signal, gridTradeOrder, tradeCustomer,
                 null, realTimeMarket);
 
 //        assertEquals(new EntrustCommand(pfyh, ExchangeType.SELL, new BigDecimal("14.00"), 300, OrderType.LIMITED),
 //                gridTradeOrder.onTradeSignal2((TradeSignal) signal, realTimeMarket));
         gridTradeOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, new WrapperTradingMarketSupplier(realTimeMarket), realTimeMarket);
 
-//        gridTradeOrder.afterEntrustReturned(triggerContext, new EntrustResult(EntrustResult.SUCCESS, "OK", 456));
+//        gridTradeOrder.afterEntrustReturned(triggerTradingContext, new EntrustResult(EntrustResult.SUCCESS, "OK", 456));
         assertEquals(StrategyState.ACTIVE, gridTradeOrder.getStrategyState());
         assertEquals(new BigDecimal("14.00"), gridTradeOrder.getGridCondition().getBasePrice());
 
@@ -64,14 +64,14 @@ public class GridOrderTest {
                 Collections.<BigDecimal>emptyList());
         signal = gridTradeOrder.getCondition().onMarketUpdate(realTimeMarket);
         assertEquals(Signals.buy(), signal);
-        triggerContext = new TriggerContext(signal, gridTradeOrder, tradeCustomer,
+        triggerTradingContext = new TriggerTradingContext(signal, gridTradeOrder, tradeCustomer,
                 null, realTimeMarket);
 
 //        assertEquals(new EntrustCommand(pfyh, ExchangeType.BUY, new BigDecimal("13.00"), 300, OrderType.LIMITED),
 //                gridTradeOrder.onTradeSignal(signal, realTimeMarket));
         gridTradeOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, new WrapperTradingMarketSupplier(realTimeMarket), realTimeMarket);
 
-//        gridTradeOrder.afterEntrustReturned(triggerContext, new EntrustResult(EntrustResult.SUCCESS, "OK", 457));
+//        gridTradeOrder.afterEntrustReturned(triggerTradingContext, new EntrustResult(EntrustResult.SUCCESS, "OK", 457));
         assertEquals(StrategyState.ACTIVE, gridTradeOrder.getStrategyState());
         assertEquals(new BigDecimal("13.00"), gridTradeOrder.getGridCondition().getBasePrice());
     }

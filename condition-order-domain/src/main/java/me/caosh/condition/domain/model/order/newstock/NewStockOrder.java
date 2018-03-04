@@ -79,7 +79,7 @@ public class NewStockOrder extends AbstractConditionOrder implements NewStockPur
     }
 
     @Override
-    public void afterEntrustCommandsExecuted(TriggerContext triggerContext) {
+    public void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext) {
         newStockPurchaseCondition.setTriggeredToday();
     }
 
