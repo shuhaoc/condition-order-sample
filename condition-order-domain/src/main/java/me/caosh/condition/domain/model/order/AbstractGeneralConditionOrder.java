@@ -25,10 +25,11 @@ public abstract class AbstractGeneralConditionOrder extends AbstractConditionOrd
     }
 
     @Override
-    public void onTradeSignal(TradeSignal tradeSignal, RealTimeMarket realTimeMarket) {
+    public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier, RealTimeMarket realTimeMarket) {
         SingleEntrustTradePlan singleEntrustTradePlan = (SingleEntrustTradePlan) getTradePlan();
-        EntrustCommand entrustCommand = singleEntrustTradePlan.createEntrustCommand(tradeSignal, getSecurityInfo(), realTimeMarket);
-        EntrustResult entrustResult = getCustomer().entrust(entrustCommand);
+        EntrustCommand entrustCommand = singleEntrustTradePlan.createEntrustCommand(tradeSignal, getSecurityInfo(),
+                tradingMarketSupplier);
+        EntrustResult entrustResult = tradeCustomer.entrust(entrustCommand);
         logger.info("Entrust result <== {}", entrustResult);
     }
 }

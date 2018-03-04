@@ -32,5 +32,5 @@ public interface ConditionOrder extends Strategy {
     @Override
     void setStrategyState(StrategyState strategyState);
 
-    void onTradeSignal(TradeSignal tradeSignal, RealTimeMarket realTimeMarket);
+    void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier, RealTimeMarket realTimeMarket);
 }

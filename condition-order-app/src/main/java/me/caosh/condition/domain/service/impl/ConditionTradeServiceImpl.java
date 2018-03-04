@@ -1,10 +1,10 @@
 package me.caosh.condition.domain.service.impl;
 
-import com.google.common.base.Preconditions;
 import me.caosh.condition.application.order.ConditionOrderCommandService;
+import me.caosh.condition.domain.factory.TradeCustomerFactory;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
-import me.caosh.condition.domain.model.order.EntrustWithoutMarket;
+import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.TriggerContext;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
@@ -14,8 +14,6 @@ import me.caosh.condition.domain.model.signal.Signal;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.trade.EntrustOrder;
-import me.caosh.condition.domain.model.trade.EntrustResult;
-import me.caosh.condition.domain.model.trade.EntrustResultAware;
 import me.caosh.condition.domain.service.ConditionTradeService;
 import me.caosh.condition.domain.service.NewStockQueryService;
 import me.caosh.condition.domain.service.RealTimeMarketService;
@@ -34,17 +32,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class ConditionTradeServiceImpl implements ConditionTradeService {
     private static final Logger logger = LoggerFactory.getLogger(ConditionTradeServiceImpl.class);
 
+    private final TradeCustomerFactory tradeCustomerFactory;
     private final ConditionOrderCommandService conditionOrderCommandService;
     private final EntrustOrderRepository entrustOrderRepository;
     private final EntrustOrderIdGenerator entrustOrderIdGenerator;
     private final RealTimeMarketService realTimeMarketService;
     private final NewStockQueryService newStockQueryService;
 
-    public ConditionTradeServiceImpl(ConditionOrderCommandService conditionOrderCommandService,
-                                     EntrustOrderRepository entrustOrderRepository,
-                                     EntrustOrderIdGenerator entrustOrderIdGenerator,
-                                     RealTimeMarketService realTimeMarketService,
-                                     NewStockQueryService newStockQueryService) {
+    public ConditionTradeServiceImpl(TradeCustomerFactory tradeCustomerFactory, ConditionOrderCommandService conditionOrderCommandService, EntrustOrderRepository entrustOrderRepository,
+                                     EntrustOrderIdGenerator entrustOrderIdGenerator, RealTimeMarketService realTimeMarketService, NewStockQueryService newStockQueryService) {
+        this.tradeCustomerFactory = tradeCustomerFactory;
         this.conditionOrderCommandService = conditionOrderCommandService;
         this.entrustOrderRepository = entrustOrderRepository;
         this.entrustOrderIdGenerator = entrustOrderIdGenerator;
@@ -54,18 +51,16 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void handleTriggerContext(TriggerContext triggerContext) {
-        Signal signal = triggerContext.getSignal();
-        ConditionOrder conditionOrder = triggerContext.getConditionOrder();
-
+    public void handleTriggerContext(Signal signal, ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {
         if (conditionOrder.getStrategyState() != StrategyState.ACTIVE) {
-            logger.warn("Order illegal state, orderId={}, orderState={}", conditionOrder.getOrderId(), conditionOrder.getStrategyState());
+            logger.warn("Order illegal state: {}", conditionOrder);
             return;
         }
 
-        supplyRealTimeMarket(triggerContext);
+        TradeCustomer tradeCustomer = tradeCustomerFactory.createTradeCustomer(conditionOrder.getCustomer());
+        TriggerContext triggerContext = new TriggerContext(signal, conditionOrder, tradeCustomer,
+                realTimeMarketService, realTimeMarket);
 
-        RealTimeMarket realTimeMarket = triggerContext.getTriggerRealTimeMarket().orNull();
         if (signal instanceof BS) {
 //                List<NewStock> currentPurchasable = newStockQueryService.getCurrentPurchasable();
 //                List<EntrustCommand> entrustCommands = ((NewStockPurchaseOnTrigger) conditionOrder).createEntrustCommand(currentPurchasable);
@@ -77,7 +72,7 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
 //            if (conditionOrder instanceof TriggerPhaseListener) {
 //                ((TriggerPhaseListener) conditionOrder).afterEntrustCommandsExecuted(triggerContext);
 //            }
-            conditionOrder.onTradeSignal((TradeSignal) signal, realTimeMarket);
+            conditionOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, triggerContext, realTimeMarket);
             conditionOrderCommandService.update(conditionOrder);
         } else if (signal instanceof CacheSync) {
             // TODO: use visitor pattern
@@ -89,28 +84,16 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
     private void handleEntrustCommand(TriggerContext triggerContext, EntrustCommand entrustCommand) {
         ConditionOrder conditionOrder = triggerContext.getConditionOrder();
         TradeCustomerInfo tradeCustomerInfo = conditionOrder.getCustomer();
-        EntrustResult entrustResult = tradeCustomerInfo.entrust(entrustCommand);
-        logger.info("Entrust result <== {}", entrustResult);
-
-        if (conditionOrder instanceof EntrustResultAware) {
-            ((EntrustResultAware) conditionOrder).afterEntrustReturned(triggerContext, entrustResult);
-        }
+//        EntrustResult entrustResult = tradeCustomerInfo.entrust(entrustCommand);
+//        logger.info("Entrust result <== {}", entrustResult);
+//
+//        if (conditionOrder instanceof EntrustResultAware) {
+//            ((EntrustResultAware) conditionOrder).afterEntrustReturned(triggerContext, entrustResult);
+//        }
 
         long entrustId = entrustOrderIdGenerator.nextId();
-        EntrustOrder entrustOrder = new EntrustOrder(entrustId, conditionOrder.getOrderId(), tradeCustomerInfo, entrustCommand, entrustResult);
+        EntrustOrder entrustOrder = new EntrustOrder(entrustId, conditionOrder.getOrderId(), tradeCustomerInfo, entrustCommand, null);
         entrustOrderRepository.save(entrustOrder);
     }
 
-    private void supplyRealTimeMarket(TriggerContext triggerContext) {
-        ConditionOrder conditionOrder = triggerContext.getConditionOrder();
-        boolean marketPresent = triggerContext.getTriggerRealTimeMarket().isPresent();
-        boolean notNeedMarket = conditionOrder instanceof EntrustWithoutMarket;
-        boolean needMarket = !notNeedMarket;
-        if (needMarket && !marketPresent) {
-            RealTimeMarket realTimeMarket = realTimeMarketService.getCurrentMarket(conditionOrder.getSecurityInfo().getMarketID());
-            logger.info("Get real-time market <== {}", realTimeMarket);
-            Preconditions.checkNotNull(realTimeMarket);
-            triggerContext.setTriggerRealTimeMarket(realTimeMarket);
-        }
-    }
 }

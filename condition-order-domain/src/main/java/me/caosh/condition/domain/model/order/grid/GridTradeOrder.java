@@ -3,9 +3,7 @@ package me.caosh.condition.domain.model.order.grid;
 import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.order.AbstractMarketConditionOrder;
-import me.caosh.condition.domain.model.order.TradeCustomerInfo;
-import me.caosh.condition.domain.model.order.TriggerContext;
+import me.caosh.condition.domain.model.order.*;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
@@ -60,8 +58,8 @@ public class GridTradeOrder extends AbstractMarketConditionOrder implements Entr
     }
 
     @Override
-    public void onTradeSignal(TradeSignal tradeSignal, RealTimeMarket realTimeMarket) {
-        super.onTradeSignal(tradeSignal, realTimeMarket);
+    public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier, RealTimeMarket realTimeMarket) {
+        super.onTradeSignal(tradeSignal, tradeCustomer, tradingMarketSupplier, realTimeMarket);
 
         logger.info("Changing base price {} => {}", gridCondition.getBasePrice(), realTimeMarket.getCurrentPrice());
         gridCondition.setBasePrice(realTimeMarket.getCurrentPrice());
@@ -69,8 +67,8 @@ public class GridTradeOrder extends AbstractMarketConditionOrder implements Entr
 
     @Override
     public void afterEntrustReturned(TriggerContext triggerContext, EntrustResult entrustResult) {
-        Preconditions.checkArgument(triggerContext.getTriggerRealTimeMarket().isPresent());
-        RealTimeMarket triggerRealTimeMarket = triggerContext.getTriggerRealTimeMarket().get();
+        Preconditions.checkArgument(triggerContext.getTriggerMarket().isPresent());
+        RealTimeMarket triggerRealTimeMarket = triggerContext.getTriggerMarket().get();
         logger.info("Changing base price {} => {}", gridCondition.getBasePrice(), triggerRealTimeMarket.getCurrentPrice());
         gridCondition.setBasePrice(triggerRealTimeMarket.getCurrentPrice());
     }

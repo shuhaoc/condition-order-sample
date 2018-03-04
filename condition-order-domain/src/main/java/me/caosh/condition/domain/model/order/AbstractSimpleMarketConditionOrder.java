@@ -26,8 +26,8 @@ public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketC
     }
 
     @Override
-    public void onTradeSignal(TradeSignal tradeSignal, RealTimeMarket realTimeMarket) {
-        super.onTradeSignal(tradeSignal, realTimeMarket);
+    public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier, RealTimeMarket realTimeMarket) {
+        super.onTradeSignal(tradeSignal, tradeCustomer, tradingMarketSupplier, realTimeMarket);
         setStrategyState(StrategyState.TERMINATED);
     }
 

@@ -3,6 +3,7 @@ package me.caosh.condition.domain.model.order.plan;
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
+import me.caosh.condition.domain.model.order.TradingMarketSupplier;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.signal.TradeSignal;
@@ -48,7 +49,9 @@ public class BasicTradePlan implements SingleEntrustTradePlan {
     }
 
     @Override
-    public EntrustCommand createEntrustCommand(TradeSignal tradeSignal, SecurityInfo securityInfo, RealTimeMarket realTimeMarket) {
+    public EntrustCommand createEntrustCommand(TradeSignal tradeSignal, SecurityInfo securityInfo,
+                                               TradingMarketSupplier tradingMarketSupplier) {
+        RealTimeMarket realTimeMarket = tradingMarketSupplier.getTradingMarket();
         BigDecimal entrustPrice = EntrustPriceSelector.selectPrice(realTimeMarket, entrustStrategy);
         return new EntrustCommand(securityInfo, exchangeType, entrustPrice,
                 tradeNumber.getNumber(entrustPrice), OrderType.LIMITED);

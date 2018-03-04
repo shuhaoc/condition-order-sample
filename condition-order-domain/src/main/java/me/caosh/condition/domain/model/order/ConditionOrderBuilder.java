@@ -13,7 +13,7 @@ import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
  */
 public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder> {
     private Long orderId;
-    private TradeCustomerBuilder customer = new TradeCustomerBuilder();
+    private TradeCustomerInfoBuilder customer = new TradeCustomerInfoBuilder();
     private SecurityInfoBuilder securityInfo = new SecurityInfoBuilder();
     private StrategyInfoBuilder strategyInfo = new StrategyInfoBuilder();
     private Condition rawCondition;
@@ -25,11 +25,11 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return this;
     }
 
-    public TradeCustomerBuilder getCustomer() {
+    public TradeCustomerInfoBuilder getCustomer() {
         return customer;
     }
 
-    public ConditionOrderBuilder setCustomer(TradeCustomerBuilder customer) {
+    public ConditionOrderBuilder setCustomer(TradeCustomerInfoBuilder customer) {
         this.customer = customer;
         return this;
     }

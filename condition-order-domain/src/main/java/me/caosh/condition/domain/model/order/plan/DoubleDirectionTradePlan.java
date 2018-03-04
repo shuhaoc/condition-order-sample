@@ -2,8 +2,8 @@ package me.caosh.condition.domain.model.order.plan;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
+import me.caosh.condition.domain.model.order.TradingMarketSupplier;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.signal.Buy;
@@ -48,11 +48,11 @@ public class DoubleDirectionTradePlan implements SingleEntrustTradePlan {
     }
 
     @Override
-    public EntrustCommand createEntrustCommand(TradeSignal tradeSignal, SecurityInfo securityInfo, RealTimeMarket realTimeMarket) {
+    public EntrustCommand createEntrustCommand(TradeSignal tradeSignal, SecurityInfo securityInfo, TradingMarketSupplier tradingMarketSupplier) {
         if (tradeSignal instanceof Buy) {
-            return buyPlan.createEntrustCommand(tradeSignal, securityInfo, realTimeMarket);
+            return buyPlan.createEntrustCommand(tradeSignal, securityInfo, tradingMarketSupplier);
         } else if (tradeSignal instanceof Sell) {
-            return sellPlan.createEntrustCommand(tradeSignal, securityInfo, realTimeMarket);
+            return sellPlan.createEntrustCommand(tradeSignal, securityInfo, tradingMarketSupplier);
         }
         throw new IllegalArgumentException(String.valueOf(tradeSignal));
     }

@@ -1,12 +1,13 @@
 package me.caosh.condition.domain.model.order.price;
 
-import me.caosh.condition.domain.adapter.MockTradeSystemAdapter;
 import me.caosh.condition.domain.model.condition.PriceCondition;
 import me.caosh.condition.domain.model.constants.SecurityExchange;
 import me.caosh.condition.domain.model.constants.SecurityType;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
+import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
+import me.caosh.condition.domain.model.order.WrapperTradingMarketSupplier;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
@@ -32,7 +33,7 @@ public class PriceOrderTest {
 
     @Test
     public void test() throws Exception {
-        TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086", MockTradeSystemAdapter.INSTANCE);
+        TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
         SecurityInfo pfyh = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
         ExchangeType exchangeType = ExchangeType.BUY;
         PriceOrder priceOrder = new PriceOrder(123L, tradeCustomerInfo, pfyh,
@@ -44,12 +45,13 @@ public class PriceOrderTest {
                         Collections.<BigDecimal>emptyList())),
                 Signals.none());
 
-        RealTimeMarket realTimeMarket = new RealTimeMarket(pfyh.getMarketID(), new BigDecimal("13.00"),
+        final RealTimeMarket realTimeMarket = new RealTimeMarket(pfyh.getMarketID(), new BigDecimal("13.00"),
                 Collections.<BigDecimal>emptyList());
         Signal signal = priceOrder.getCondition().onMarketUpdate(realTimeMarket);
         assertEquals(signal, Signals.buyOrSell());
 
-        priceOrder.onTradeSignal((TradeSignal) signal, realTimeMarket);
+        TradeCustomer tradeCustomer = new TradeCustomer(303348, "010000061086");
+        priceOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, new WrapperTradingMarketSupplier(realTimeMarket), realTimeMarket);
         assertEquals(priceOrder.getStrategyState(), StrategyState.TERMINATED);
     }
 

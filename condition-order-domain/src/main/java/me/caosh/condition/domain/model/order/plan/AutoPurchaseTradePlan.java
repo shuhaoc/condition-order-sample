@@ -21,7 +21,7 @@ public class AutoPurchaseTradePlan implements TradePlan {
     }
 
     public int getEntrustStrategyValue() {
-        return EntrustStrategy.NONE.getValue();
+        return EntrustStrategy.ASSIGNED_PRICE.getValue();
     }
 
     @Override

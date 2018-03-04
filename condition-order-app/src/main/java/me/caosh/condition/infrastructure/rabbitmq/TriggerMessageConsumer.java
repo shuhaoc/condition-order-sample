@@ -3,7 +3,6 @@ package me.caosh.condition.infrastructure.rabbitmq;
 import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
 import me.caosh.condition.domain.dto.order.assembler.TriggerMessageAssembler;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
-import me.caosh.condition.domain.model.order.TriggerContext;
 import me.caosh.condition.domain.model.order.TriggerMessage;
 import me.caosh.condition.domain.model.share.Retry;
 import me.caosh.condition.domain.service.ConditionTradeService;
@@ -101,8 +100,7 @@ public class TriggerMessageConsumer {
         logger.debug("Receive trigger message <== {}", triggerMessageDTO);
 
         TriggerMessage triggerMessage = TriggerMessageAssembler.fromDTO(triggerMessageDTO);
-        TriggerContext triggerContext = new TriggerContext(triggerMessage.getSignal(), triggerMessage.getConditionOrder(),
+        conditionTradeService.handleTriggerContext(triggerMessage.getSignal(), triggerMessage.getConditionOrder(),
                 triggerMessage.getRealTimeMarket().orNull());
-        conditionTradeService.handleTriggerContext(triggerContext);
     }
 }

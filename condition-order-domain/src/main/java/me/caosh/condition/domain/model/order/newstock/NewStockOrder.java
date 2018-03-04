@@ -73,7 +73,7 @@ public class NewStockOrder extends AbstractConditionOrder implements NewStockPur
     }
 
     @Override
-    public void onTradeSignal(TradeSignal tradeSignal, RealTimeMarket realTimeMarket) {
+    public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier, RealTimeMarket realTimeMarket) {
 
     }
 
