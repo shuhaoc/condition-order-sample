@@ -20,12 +20,4 @@ public interface StrategyInfo {
      * @return 策略模板ID
      */
     int getStrategyTemplateId();
-
-    /**
-     * 策略生命周期类别
-     * TODO: 应该在条件单自己实现
-     *
-     * @return 策略生命周期类别
-     */
-    LifeCircle getLifeCircle();
 }
