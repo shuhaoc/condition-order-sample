@@ -12,7 +12,8 @@ import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.condition.Condition;
 import me.caosh.condition.domain.model.strategy.condition.market.MarketCondition;
-import me.caosh.condition.domain.model.strategy.description.NativeStrategyInfo;
+import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
+import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
 import me.caosh.condition.domain.model.trade.EntrustResult;
 import me.caosh.condition.domain.model.trade.EntrustResultAware;
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ public class GridTradeOrder extends AbstractMarketConditionOrder implements Entr
 
     public GridTradeOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                           GridCondition gridCondition, DoubleDirectionTradePlan tradePlan, StrategyState strategyState) {
-        super(orderId, tradeCustomerInfo, securityInfo, NativeStrategyInfo.GRID, strategyState);
+        super(orderId, tradeCustomerInfo, securityInfo, strategyState);
         this.gridCondition = gridCondition;
         this.tradePlan = tradePlan;
     }
@@ -46,6 +47,11 @@ public class GridTradeOrder extends AbstractMarketConditionOrder implements Entr
 
     public GridCondition getGridCondition() {
         return gridCondition;
+    }
+
+    @Override
+    public StrategyInfo getStrategyInfo() {
+        return NativeStrategyInfo.GRID;
     }
 
     @Override

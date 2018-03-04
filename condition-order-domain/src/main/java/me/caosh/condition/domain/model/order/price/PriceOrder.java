@@ -9,7 +9,8 @@ import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.strategy.condition.Condition;
 import me.caosh.condition.domain.model.strategy.condition.market.MarketCondition;
-import me.caosh.condition.domain.model.strategy.description.NativeStrategyInfo;
+import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
+import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
 
 /**
  * 价格条件单
@@ -23,7 +24,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder {
 
     public PriceOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                       PriceCondition priceCondition, BasicTradePlan tradePlan, StrategyState strategyState) {
-        super(orderId, tradeCustomerInfo, securityInfo, NativeStrategyInfo.PRICE, tradePlan, strategyState);
+        super(orderId, tradeCustomerInfo, securityInfo, tradePlan, strategyState);
         this.priceCondition = priceCondition;
     }
 
@@ -35,6 +36,11 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder {
     @Override
     public Condition getRawCondition() {
         return priceCondition;
+    }
+
+    @Override
+    public StrategyInfo getStrategyInfo() {
+        return NativeStrategyInfo.PRICE;
     }
 
     @Override

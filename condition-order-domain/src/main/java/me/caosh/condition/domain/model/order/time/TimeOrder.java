@@ -11,7 +11,8 @@ import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.condition.Condition;
-import me.caosh.condition.domain.model.strategy.description.NativeStrategyInfo;
+import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
+import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
 
 /**
  * Created by caosh on 2017/8/20.
@@ -23,7 +24,7 @@ public class TimeOrder extends AbstractGeneralConditionOrder {
 
     public TimeOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                      TimeReachedCondition timeCondition, BasicTradePlan tradePlan, StrategyState strategyState) {
-        super(orderId, tradeCustomerInfo, securityInfo, NativeStrategyInfo.TIME, strategyState);
+        super(orderId, tradeCustomerInfo, securityInfo, strategyState);
         this.timeReachedCondition = timeCondition;
         this.tradePlan = tradePlan;
     }
@@ -36,6 +37,11 @@ public class TimeOrder extends AbstractGeneralConditionOrder {
     @Override
     public Condition getRawCondition() {
         return timeReachedCondition;
+    }
+
+    @Override
+    public StrategyInfo getStrategyInfo() {
+        return NativeStrategyInfo.TURN_UP;
     }
 
     @Override

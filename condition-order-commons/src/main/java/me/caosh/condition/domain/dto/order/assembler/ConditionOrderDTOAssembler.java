@@ -13,8 +13,8 @@ import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 import me.caosh.condition.domain.model.strategy.condition.Condition;
-import me.caosh.condition.domain.model.strategy.description.NativeStrategyInfo;
-import me.caosh.condition.domain.model.strategy.description.StrategyInfo;
+import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
+import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
 
 /**
  * Created by caosh on 2017/8/11.

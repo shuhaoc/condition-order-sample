@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.description;
+package me.caosh.condition.domain.model.strategyinfo;
 
 import me.caosh.autoasm.ConvertibleEnum;
 import me.caosh.condition.domain.model.share.ValuedEnum;

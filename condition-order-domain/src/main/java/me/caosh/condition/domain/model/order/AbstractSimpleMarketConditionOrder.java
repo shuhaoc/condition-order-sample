@@ -7,21 +7,16 @@ import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.domain.model.strategy.description.StrategyInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Created by caosh on 2017/8/20.
  */
 public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketConditionOrder {
-    private static final Logger logger = LoggerFactory.getLogger(AbstractSimpleMarketConditionOrder.class);
-
     private final BasicTradePlan tradePlan;
 
     public AbstractSimpleMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                                              StrategyInfo strategyInfo, BasicTradePlan tradePlan, StrategyState strategyState) {
-        super(orderId, tradeCustomerInfo, securityInfo, strategyInfo, strategyState);
+                                              BasicTradePlan tradePlan, StrategyState strategyState) {
+        super(orderId, tradeCustomerInfo, securityInfo, strategyState);
         this.tradePlan = tradePlan;
     }
 

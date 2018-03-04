@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.description;
+package me.caosh.condition.domain.model.strategyinfo;
 
 /**
  * 策略信息

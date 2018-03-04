@@ -16,8 +16,8 @@ import me.caosh.condition.domain.model.order.price.PriceOrder;
 import me.caosh.condition.domain.model.order.time.TimeOrder;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpBuyOrder;
 import me.caosh.condition.domain.model.strategy.condition.Condition;
-import me.caosh.condition.domain.model.strategy.description.NativeStrategyInfo;
-import me.caosh.condition.domain.model.strategy.description.StrategyInfo;
+import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
+import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
 
 /**
  * Created by caosh on 2017/8/9.

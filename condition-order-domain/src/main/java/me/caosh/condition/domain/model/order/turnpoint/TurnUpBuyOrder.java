@@ -11,7 +11,8 @@ import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.strategy.condition.Condition;
 import me.caosh.condition.domain.model.strategy.condition.market.MarketCondition;
-import me.caosh.condition.domain.model.strategy.description.NativeStrategyInfo;
+import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
+import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
 
 /**
  * Created by caosh on 2017/8/19.
@@ -22,7 +23,7 @@ public class TurnUpBuyOrder extends AbstractSimpleMarketConditionOrder {
 
     public TurnUpBuyOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                           TurnUpCondition turnUpCondition, BasicTradePlan tradePlan, StrategyState strategyState) {
-        super(orderId, tradeCustomerInfo, securityInfo, NativeStrategyInfo.TURN_UP, tradePlan, strategyState);
+        super(orderId, tradeCustomerInfo, securityInfo, tradePlan, strategyState);
         Preconditions.checkArgument(tradePlan.getExchangeType() == ExchangeType.BUY);
         this.turnUpCondition = turnUpCondition;
     }
@@ -39,6 +40,11 @@ public class TurnUpBuyOrder extends AbstractSimpleMarketConditionOrder {
     @Override
     public Condition getRawCondition() {
         return turnUpCondition;
+    }
+
+    @Override
+    public StrategyInfo getStrategyInfo() {
+        return NativeStrategyInfo.TURN_UP;
     }
 
     @Override

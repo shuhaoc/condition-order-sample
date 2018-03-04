@@ -14,7 +14,8 @@ import me.caosh.condition.domain.model.order.plan.AutoPurchaseTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.condition.Condition;
-import me.caosh.condition.domain.model.strategy.description.NativeStrategyInfo;
+import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
+import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
 import me.caosh.condition.domain.model.trade.*;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class NewStockOrder extends AbstractConditionOrder implements NewStockPur
 
     public NewStockOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo,
                          NewStockPurchaseCondition newStockPurchaseCondition, StrategyState strategyState) {
-        super(orderId, tradeCustomerInfo, SecurityInfoConstants.NEW_STOCK_PURCHASE, NativeStrategyInfo.NEW_STOCK, strategyState);
+        super(orderId, tradeCustomerInfo, SecurityInfoConstants.NEW_STOCK_PURCHASE, strategyState);
         this.newStockPurchaseCondition = newStockPurchaseCondition;
     }
 
@@ -47,6 +48,11 @@ public class NewStockOrder extends AbstractConditionOrder implements NewStockPur
     @Override
     public Condition getRawCondition() {
         return newStockPurchaseCondition;
+    }
+
+    @Override
+    public StrategyInfo getStrategyInfo() {
+        return NativeStrategyInfo.NEW_STOCK;
     }
 
     @Override

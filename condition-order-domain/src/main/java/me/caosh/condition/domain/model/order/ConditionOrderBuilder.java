@@ -5,7 +5,7 @@ import me.caosh.condition.domain.model.market.SecurityInfoBuilder;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.TradePlanBuilder;
 import me.caosh.condition.domain.model.strategy.condition.Condition;
-import me.caosh.condition.domain.model.strategy.description.NativeStrategyInfo;
+import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
 
 /**
  * @author caosh/caoshuhao@touker.com

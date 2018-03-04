@@ -15,8 +15,8 @@ import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradeNumberByAmount;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
-import me.caosh.condition.domain.model.strategy.description.NativeStrategyInfo;
 import me.caosh.condition.domain.model.strategy.factor.CompareOperator;
+import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
 import org.junit.Test;
 
 import java.math.BigDecimal;

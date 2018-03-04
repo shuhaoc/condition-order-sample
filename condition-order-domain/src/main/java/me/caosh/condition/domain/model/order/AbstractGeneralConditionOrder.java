@@ -5,7 +5,6 @@ import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.SingleEntrustTradePlan;
 import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.domain.model.strategy.description.StrategyInfo;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.trade.EntrustResult;
 import org.slf4j.Logger;
@@ -21,8 +20,8 @@ public abstract class AbstractGeneralConditionOrder extends AbstractConditionOrd
     private static final Logger logger = LoggerFactory.getLogger(AbstractGeneralConditionOrder.class);
 
     public AbstractGeneralConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                                         StrategyInfo strategyInfo, StrategyState strategyState) {
-        super(orderId, tradeCustomerInfo, securityInfo, strategyInfo, strategyState);
+                                         StrategyState strategyState) {
+        super(orderId, tradeCustomerInfo, securityInfo, strategyState);
     }
 
     @Override
