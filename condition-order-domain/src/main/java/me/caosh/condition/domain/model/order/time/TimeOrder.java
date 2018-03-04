@@ -2,7 +2,6 @@ package me.caosh.condition.domain.model.order.time;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.AbstractGeneralConditionOrder;
 import me.caosh.condition.domain.model.order.TradeCustomer;
@@ -52,8 +51,8 @@ public class TimeOrder extends AbstractGeneralConditionOrder {
     }
 
     @Override
-    public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier, RealTimeMarket realTimeMarket) {
-        super.onTradeSignal(tradeSignal, tradeCustomer, tradingMarketSupplier, realTimeMarket);
+    public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier) {
+        super.onTradeSignal(tradeSignal, tradeCustomer, tradingMarketSupplier);
         setStrategyState(StrategyState.TERMINATED);
     }
 

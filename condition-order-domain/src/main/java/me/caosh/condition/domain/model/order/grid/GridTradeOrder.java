@@ -58,9 +58,11 @@ public class GridTradeOrder extends AbstractMarketConditionOrder {
     }
 
     @Override
-    public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier, RealTimeMarket realTimeMarket) {
-        super.onTradeSignal(tradeSignal, tradeCustomer, tradingMarketSupplier, realTimeMarket);
+    public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier) {
+        super.onTradeSignal(tradeSignal, tradeCustomer, tradingMarketSupplier);
 
+        // TODO: use trigger market
+        RealTimeMarket realTimeMarket = tradingMarketSupplier.getTradingMarket();
         logger.info("Changing base price {} => {}", gridCondition.getBasePrice(), realTimeMarket.getCurrentPrice());
         gridCondition.setBasePrice(realTimeMarket.getCurrentPrice());
     }

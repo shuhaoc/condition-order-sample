@@ -51,7 +51,7 @@ public class PriceOrderTest {
         assertEquals(signal, Signals.buyOrSell());
 
         TradeCustomer tradeCustomer = new TradeCustomer(303348, "010000061086");
-        priceOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, new WrapperTradingMarketSupplier(realTimeMarket), realTimeMarket);
+        priceOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, new WrapperTradingMarketSupplier(realTimeMarket));
         assertEquals(priceOrder.getStrategyState(), StrategyState.TERMINATED);
     }
 

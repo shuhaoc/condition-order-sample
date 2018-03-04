@@ -1,7 +1,6 @@
 package me.caosh.condition.domain.model.order;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
@@ -26,8 +25,8 @@ public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketC
     }
 
     @Override
-    public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier, RealTimeMarket realTimeMarket) {
-        super.onTradeSignal(tradeSignal, tradeCustomer, tradingMarketSupplier, realTimeMarket);
+    public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier) {
+        super.onTradeSignal(tradeSignal, tradeCustomer, tradingMarketSupplier);
         setStrategyState(StrategyState.TERMINATED);
     }
 

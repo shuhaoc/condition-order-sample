@@ -1,7 +1,6 @@
 package me.caosh.condition.domain.model.order;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Optional;
 import me.caosh.condition.domain.model.market.MarketID;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.signal.Signal;
@@ -55,10 +54,6 @@ public class TriggerTradingContext implements TradingMarketSupplier {
 
     public TradeCustomer getTradeCustomer() {
         return tradeCustomer;
-    }
-
-    public Optional<RealTimeMarket> getTriggerMarket() {
-        return Optional.fromNullable(triggerMarket);
     }
 
     @Override

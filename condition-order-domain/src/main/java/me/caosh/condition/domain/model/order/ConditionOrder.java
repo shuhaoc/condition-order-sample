@@ -1,6 +1,5 @@
 package me.caosh.condition.domain.model.order;
 
-import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
@@ -32,5 +31,5 @@ public interface ConditionOrder extends Strategy {
     @Override
     void setStrategyState(StrategyState strategyState);
 
-    void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier, RealTimeMarket realTimeMarket);
+    void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier);
 }

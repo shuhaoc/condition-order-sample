@@ -54,7 +54,7 @@ public class GridOrderTest {
 
 //        assertEquals(new EntrustCommand(pfyh, ExchangeType.SELL, new BigDecimal("14.00"), 300, OrderType.LIMITED),
 //                gridTradeOrder.onTradeSignal2((TradeSignal) signal, realTimeMarket));
-        gridTradeOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, new WrapperTradingMarketSupplier(realTimeMarket), realTimeMarket);
+        gridTradeOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, new WrapperTradingMarketSupplier(realTimeMarket));
 
 //        gridTradeOrder.afterEntrustReturned(triggerTradingContext, new EntrustResult(EntrustResult.SUCCESS, "OK", 456));
         assertEquals(StrategyState.ACTIVE, gridTradeOrder.getStrategyState());
@@ -69,7 +69,7 @@ public class GridOrderTest {
 
 //        assertEquals(new EntrustCommand(pfyh, ExchangeType.BUY, new BigDecimal("13.00"), 300, OrderType.LIMITED),
 //                gridTradeOrder.onTradeSignal(signal, realTimeMarket));
-        gridTradeOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, new WrapperTradingMarketSupplier(realTimeMarket), realTimeMarket);
+        gridTradeOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, new WrapperTradingMarketSupplier(realTimeMarket));
 
 //        gridTradeOrder.afterEntrustReturned(triggerTradingContext, new EntrustResult(EntrustResult.SUCCESS, "OK", 457));
         assertEquals(StrategyState.ACTIVE, gridTradeOrder.getStrategyState());

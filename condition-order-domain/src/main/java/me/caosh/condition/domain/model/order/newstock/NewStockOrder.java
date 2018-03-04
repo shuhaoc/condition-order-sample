@@ -3,7 +3,6 @@ package me.caosh.condition.domain.model.order.newstock;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import me.caosh.condition.domain.model.constants.SecurityType;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.market.SecurityInfoConstants;
 import me.caosh.condition.domain.model.newstock.NewStock;
@@ -74,7 +73,7 @@ public class NewStockOrder extends AbstractConditionOrder implements NewStockPur
     }
 
     @Override
-    public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier, RealTimeMarket realTimeMarket) {
+    public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier) {
         newStockPurchaseCondition.increasePurchasedCount();
     }
 

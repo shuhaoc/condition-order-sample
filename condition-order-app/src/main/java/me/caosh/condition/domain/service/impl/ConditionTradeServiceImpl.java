@@ -72,7 +72,7 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
 //            if (conditionOrder instanceof TriggerPhaseListener) {
 //                ((TriggerPhaseListener) conditionOrder).afterEntrustCommandsExecuted(triggerTradingContext);
 //            }
-            conditionOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, triggerTradingContext, realTimeMarket);
+            conditionOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, triggerTradingContext);
             conditionOrderCommandService.update(conditionOrder);
         } else if (signal instanceof CacheSync) {
             // TODO: use visitor pattern
