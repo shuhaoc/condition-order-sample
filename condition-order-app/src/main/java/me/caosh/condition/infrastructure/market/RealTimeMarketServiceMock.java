@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import me.caosh.condition.domain.model.market.MarketID;
 import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.service.RealTimeMarketService;
+import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,7 +16,7 @@ import java.math.BigDecimal;
 public class RealTimeMarketServiceMock implements RealTimeMarketService {
     @Override
     public RealTimeMarket getCurrentMarket(MarketID marketID) {
-        return new RealTimeMarket(marketID, new BigDecimal("10.00"), Lists.newArrayList(
+        return new RealTimeMarket(marketID, new BigDecimal("10.00"), new BigDecimal("10.00"), Lists.newArrayList(
                 new BigDecimal("10.04"),
                 new BigDecimal("10.03"),
                 new BigDecimal("10.02"),
@@ -26,6 +27,6 @@ public class RealTimeMarketServiceMock implements RealTimeMarketService {
                 new BigDecimal("9.97"),
                 new BigDecimal("9.96"),
                 new BigDecimal("9.95")
-        ));
+        ), LocalDateTime.now());
     }
 }
