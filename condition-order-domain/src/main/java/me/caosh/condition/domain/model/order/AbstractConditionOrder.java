@@ -2,7 +2,7 @@ package me.caosh.condition.domain.model.order;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
-import me.caosh.condition.domain.model.market.SecurityInfo;
+import hbec.intellitrade.common.security.SecurityInfo;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import org.joda.time.LocalDateTime;
 

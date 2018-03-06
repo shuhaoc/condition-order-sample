@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.model.order;
 
+import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.strategy.domain.Strategy;
-import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.signal.TradeSignal;

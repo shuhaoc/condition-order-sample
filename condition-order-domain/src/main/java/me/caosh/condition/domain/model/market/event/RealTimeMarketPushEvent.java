@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.model.market.event;
 
-import me.caosh.condition.domain.model.market.RealTimeMarket;
+import hbec.intellitrade.common.market.RealTimeMarket;
 
 import java.util.Map;
 

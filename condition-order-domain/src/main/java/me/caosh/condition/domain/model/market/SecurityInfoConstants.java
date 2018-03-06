@@ -1,7 +1,8 @@
 package me.caosh.condition.domain.model.market;
 
-import me.caosh.condition.domain.model.constants.SecurityExchange;
-import me.caosh.condition.domain.model.constants.SecurityType;
+import hbec.intellitrade.common.security.SecurityExchange;
+import hbec.intellitrade.common.security.SecurityInfo;
+import hbec.intellitrade.common.security.SecurityType;
 
 /**
  * Created by caosh on 2017/9/3.

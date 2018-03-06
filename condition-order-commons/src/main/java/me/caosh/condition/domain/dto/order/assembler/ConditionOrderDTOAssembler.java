@@ -1,11 +1,11 @@
 package me.caosh.condition.domain.dto.order.assembler;
 
+import hbec.intellitrade.common.security.SecurityExchange;
+import hbec.intellitrade.common.security.SecurityInfo;
+import hbec.intellitrade.common.security.SecurityType;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
 import me.caosh.condition.domain.dto.order.ConditionDTO;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
-import me.caosh.condition.domain.model.constants.SecurityExchange;
-import me.caosh.condition.domain.model.constants.SecurityType;
-import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.ConditionOrderFactory;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;

@@ -1,8 +1,6 @@
-package me.caosh.condition.domain.model.market;
+package hbec.intellitrade.common.security;
 
 import me.caosh.autoasm.ConvertibleBuilder;
-import me.caosh.condition.domain.model.constants.SecurityExchange;
-import me.caosh.condition.domain.model.constants.SecurityType;
 
 /**
  * @author caosh/caoshuhao@touker.com

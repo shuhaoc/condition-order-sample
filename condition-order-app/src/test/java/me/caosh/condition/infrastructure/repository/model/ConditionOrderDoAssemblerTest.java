@@ -1,12 +1,12 @@
 package me.caosh.condition.infrastructure.repository.model;
 
+import hbec.intellitrade.common.security.SecurityExchange;
+import hbec.intellitrade.common.security.SecurityInfo;
+import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.model.condition.PriceCondition;
 import me.caosh.condition.domain.model.constants.EntrustMethod;
-import me.caosh.condition.domain.model.constants.SecurityExchange;
-import me.caosh.condition.domain.model.constants.SecurityType;
-import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;

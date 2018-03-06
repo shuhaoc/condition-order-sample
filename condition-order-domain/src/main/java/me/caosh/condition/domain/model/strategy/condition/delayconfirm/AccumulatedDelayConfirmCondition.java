@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.model.strategy.condition.delayconfirm;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
+import hbec.intellitrade.common.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
 import me.caosh.condition.domain.model.signal.Signals;
 import me.caosh.condition.domain.model.signal.TradeSignal;

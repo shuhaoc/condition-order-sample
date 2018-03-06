@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.model.order.plan;
 
-import me.caosh.condition.domain.model.market.SecurityInfo;
+import hbec.intellitrade.common.security.SecurityInfo;
 import me.caosh.condition.domain.model.order.TradingMarketSupplier;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.trade.EntrustCommand;

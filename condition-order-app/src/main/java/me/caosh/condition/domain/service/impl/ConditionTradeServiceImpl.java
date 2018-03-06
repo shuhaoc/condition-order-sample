@@ -1,8 +1,8 @@
 package me.caosh.condition.domain.service.impl;
 
+import hbec.intellitrade.common.market.RealTimeMarket;
 import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.domain.factory.TradeCustomerFactory;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;

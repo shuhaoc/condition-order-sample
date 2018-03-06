@@ -1,9 +1,9 @@
 package me.caosh.condition.domain.dto.market.assembler;
 
+import hbec.intellitrade.common.market.MarketID;
+import hbec.intellitrade.common.market.RealTimeMarket;
+import hbec.intellitrade.common.security.SecurityType;
 import me.caosh.condition.domain.dto.market.RealTimeMarketDTO;
-import me.caosh.condition.domain.model.constants.SecurityType;
-import me.caosh.condition.domain.model.market.MarketID;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 
 /**

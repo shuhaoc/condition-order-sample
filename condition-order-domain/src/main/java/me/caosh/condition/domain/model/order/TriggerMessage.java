@@ -2,7 +2,7 @@ package me.caosh.condition.domain.model.order;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
+import hbec.intellitrade.common.market.RealTimeMarket;
 import me.caosh.condition.domain.model.signal.Signal;
 
 

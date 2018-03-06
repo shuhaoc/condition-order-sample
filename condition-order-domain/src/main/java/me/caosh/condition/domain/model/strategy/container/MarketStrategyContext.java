@@ -1,9 +1,9 @@
 package me.caosh.condition.domain.model.strategy.container;
 
+import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import hbec.intellitrade.strategy.domain.RealTimeMarketAware;
 import hbec.intellitrade.strategy.domain.Strategy;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.signal.Signal;
 import me.caosh.condition.domain.model.signal.Signals;

@@ -1,7 +1,7 @@
 package me.caosh.condition.infrastructure.trade;
 
 import com.google.common.collect.ImmutableList;
-import me.caosh.condition.domain.model.constants.SecurityExchange;
+import hbec.intellitrade.common.security.SecurityExchange;
 import me.caosh.condition.domain.model.newstock.NewStock;
 import me.caosh.condition.domain.service.NewStockQueryService;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package hbec.intellitrade.strategy.domain;
 
-import me.caosh.condition.domain.model.market.MarketID;
+import hbec.intellitrade.common.market.MarketID;
 
 /**
  * 需要接收实时行情作为输入的策略

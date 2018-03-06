@@ -1,11 +1,11 @@
 package me.caosh.condition.domain.dto.order.assembler;
 
+import hbec.intellitrade.common.market.RealTimeMarket;
 import me.caosh.condition.domain.dto.market.RealTimeMarketDTO;
 import me.caosh.condition.domain.dto.market.assembler.RealTimeMarketDTOAssembler;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.TradeSignalDTO;
 import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.TriggerMessage;
 import me.caosh.condition.domain.model.signal.Signal;

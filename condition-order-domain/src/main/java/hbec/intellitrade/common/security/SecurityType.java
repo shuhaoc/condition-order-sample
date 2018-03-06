@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.constants;
+package hbec.intellitrade.common.security;
 
 import me.caosh.autoasm.ConvertibleEnum;
 import me.caosh.condition.domain.model.share.ValuedEnum;
@@ -8,8 +8,7 @@ import me.caosh.condition.domain.model.share.ValuedEnum;
  */
 public enum SecurityType implements ValuedEnum<Integer>, ConvertibleEnum<Integer> {
     STOCK(4),
-    FUND(3),
-    INDEX(5);
+    FUND(3);
 
     int value;
 

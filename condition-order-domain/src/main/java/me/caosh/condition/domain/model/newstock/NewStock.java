@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.model.newstock;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.model.constants.SecurityExchange;
+import hbec.intellitrade.common.security.SecurityExchange;
 
 import java.math.BigDecimal;
 

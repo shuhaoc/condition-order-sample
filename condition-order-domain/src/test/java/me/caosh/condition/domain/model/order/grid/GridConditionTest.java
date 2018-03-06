@@ -1,8 +1,8 @@
 package me.caosh.condition.domain.model.order.grid;
 
-import me.caosh.condition.domain.model.constants.SecurityType;
-import me.caosh.condition.domain.model.market.MarketID;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
+import hbec.intellitrade.common.market.MarketID;
+import hbec.intellitrade.common.market.RealTimeMarket;
+import hbec.intellitrade.common.security.SecurityType;
 import me.caosh.condition.domain.model.signal.Signals;
 import org.testng.annotations.Test;
 

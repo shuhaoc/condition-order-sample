@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.model.order;
 
-import me.caosh.condition.domain.model.market.RealTimeMarket;
+import hbec.intellitrade.common.market.RealTimeMarket;
 
 /**
  * @author caoshuhao@touker.com

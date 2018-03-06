@@ -1,8 +1,8 @@
 package me.caosh.condition.interfaces.assembler;
 
-import me.caosh.condition.domain.model.constants.SecurityExchange;
-import me.caosh.condition.domain.model.constants.SecurityType;
-import me.caosh.condition.domain.model.market.SecurityInfo;
+import hbec.intellitrade.common.security.SecurityExchange;
+import hbec.intellitrade.common.security.SecurityInfo;
+import hbec.intellitrade.common.security.SecurityType;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.grid.GridCondition;

@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.market;
+package hbec.intellitrade.common.market;
 
 import com.google.common.base.MoreObjects;
 import org.joda.time.LocalDateTime;

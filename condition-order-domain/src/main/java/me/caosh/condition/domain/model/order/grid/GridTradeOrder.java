@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.model.order.grid;
 
-import me.caosh.condition.domain.model.market.RealTimeMarket;
-import me.caosh.condition.domain.model.market.SecurityInfo;
+import hbec.intellitrade.common.market.RealTimeMarket;
+import hbec.intellitrade.common.security.SecurityInfo;
 import me.caosh.condition.domain.model.order.AbstractMarketConditionOrder;
 import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;

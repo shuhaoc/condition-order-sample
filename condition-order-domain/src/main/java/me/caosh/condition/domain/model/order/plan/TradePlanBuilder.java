@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.model.order.plan;
 
+import hbec.intellitrade.common.security.SecurityInfoBuilder;
 import me.caosh.autoasm.ConvertibleBuilder;
-import me.caosh.condition.domain.model.market.SecurityInfoBuilder;
 
 import java.math.BigDecimal;
 

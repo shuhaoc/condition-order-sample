@@ -1,10 +1,10 @@
 package me.caosh.condition.interfaces.assembler;
 
+import hbec.intellitrade.common.security.SecurityExchange;
+import hbec.intellitrade.common.security.SecurityInfo;
+import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import me.caosh.condition.domain.model.condition.PriceCondition;
-import me.caosh.condition.domain.model.constants.SecurityExchange;
-import me.caosh.condition.domain.model.constants.SecurityType;
-import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;

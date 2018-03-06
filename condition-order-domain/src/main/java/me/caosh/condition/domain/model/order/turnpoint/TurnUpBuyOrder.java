@@ -2,8 +2,8 @@ package me.caosh.condition.domain.model.order.turnpoint;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
+import hbec.intellitrade.common.security.SecurityInfo;
 import me.caosh.condition.domain.model.condition.TurnUpCondition;
-import me.caosh.condition.domain.model.market.SecurityInfo;
 import me.caosh.condition.domain.model.order.AbstractSimpleMarketConditionOrder;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;

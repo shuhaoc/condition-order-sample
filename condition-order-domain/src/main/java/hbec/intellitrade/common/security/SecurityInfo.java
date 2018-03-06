@@ -1,7 +1,7 @@
-package me.caosh.condition.domain.model.market;
+package hbec.intellitrade.common.security;
 
-import me.caosh.condition.domain.model.constants.SecurityExchange;
-import me.caosh.condition.domain.model.constants.SecurityType;
+import com.google.common.base.Preconditions;
+import hbec.intellitrade.common.market.MarketID;
 import me.caosh.condition.domain.model.trade.SecurityID;
 
 /**
@@ -16,6 +16,10 @@ public class SecurityInfo {
     private final String name;
 
     public SecurityInfo(SecurityType type, String code, SecurityExchange exchange, String name) {
+        Preconditions.checkNotNull(type, "type cannot be null");
+        Preconditions.checkNotNull(code, "code cannot be null");
+        Preconditions.checkNotNull(exchange, "exchange cannot be null");
+        Preconditions.checkNotNull(name, "name cannot be null");
         this.type = type;
         this.code = code;
         this.exchange = exchange;

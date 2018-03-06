@@ -2,7 +2,7 @@ package me.caosh.condition.domain.model.trade;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
+import hbec.intellitrade.common.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 
 import java.math.BigDecimal;

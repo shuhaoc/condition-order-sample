@@ -1,8 +1,8 @@
 package me.caosh.condition.infrastructure.market;
 
 import com.google.common.collect.Lists;
-import me.caosh.condition.domain.model.market.MarketID;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
+import hbec.intellitrade.common.market.MarketID;
+import hbec.intellitrade.common.market.RealTimeMarket;
 import me.caosh.condition.domain.service.RealTimeMarketService;
 import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Service;

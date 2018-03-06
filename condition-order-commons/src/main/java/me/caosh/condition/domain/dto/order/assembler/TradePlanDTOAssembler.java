@@ -1,8 +1,16 @@
 package me.caosh.condition.domain.dto.order.assembler;
 
+import hbec.intellitrade.common.security.SecurityInfo;
 import me.caosh.condition.domain.dto.order.TradePlanDTO;
-import me.caosh.condition.domain.model.market.SecurityInfo;
-import me.caosh.condition.domain.model.order.plan.*;
+import me.caosh.condition.domain.model.order.plan.AutoPurchaseTradePlan;
+import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
+import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
+import me.caosh.condition.domain.model.order.plan.TradeNumberByAmount;
+import me.caosh.condition.domain.model.order.plan.TradeNumberDirect;
+import me.caosh.condition.domain.model.order.plan.TradeNumberVisitor;
+import me.caosh.condition.domain.model.order.plan.TradePlan;
+import me.caosh.condition.domain.model.order.plan.TradePlanFactory;
+import me.caosh.condition.domain.model.order.plan.TradePlanVisitor;
 
 /**
  * Created by caosh on 2017/8/18.

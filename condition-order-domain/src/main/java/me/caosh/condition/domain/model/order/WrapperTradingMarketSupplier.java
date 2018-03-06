@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.model.order;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.model.market.RealTimeMarket;
+import hbec.intellitrade.common.market.RealTimeMarket;
 
 /**
  * @author caoshuhao@touker.com

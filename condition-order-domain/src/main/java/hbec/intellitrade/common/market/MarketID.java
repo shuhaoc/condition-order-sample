@@ -1,6 +1,6 @@
-package me.caosh.condition.domain.model.market;
+package hbec.intellitrade.common.market;
 
-import me.caosh.condition.domain.model.constants.SecurityType;
+import hbec.intellitrade.common.security.SecurityType;
 import me.caosh.condition.domain.model.strategy.container.BucketKey;
 
 /**

@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.model.strategy.condition.market;
 
-import me.caosh.condition.domain.model.market.RealTimeMarket;
+import hbec.intellitrade.common.market.RealTimeMarket;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.condition.Condition;
 
