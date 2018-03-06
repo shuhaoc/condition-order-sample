@@ -8,8 +8,11 @@ import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.SingleEntrustTradePlan;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
+import me.caosh.condition.domain.model.trade.EntrustOrderInfo;
 import me.caosh.condition.domain.model.trade.EntrustResult;
 import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +24,8 @@ import java.util.List;
  * @date 2017/8/2
  */
 public abstract class AbstractConditionOrder implements ConditionOrder {
+    private static final Logger logger = LoggerFactory.getLogger(AbstractConditionOrder.class);
+
     private final Long orderId;
     private final TradeCustomerInfo tradeCustomerInfo;
     private final SecurityInfo securityInfo;
@@ -69,7 +74,28 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     }
 
     @Override
-    public List<EntrustCommand> onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier) {
+    public void onTradeSignal(TriggerTradingContext triggerTradingContext) {
+        List<EntrustCommand> entrustCommands = createEntrustCommands((TradeSignal) triggerTradingContext.getSignal(), triggerTradingContext);
+        for (EntrustCommand entrustCommand : entrustCommands) {
+            handleEntrustCommand(triggerTradingContext, entrustCommand);
+        }
+        afterEntrustCommandsExecuted(triggerTradingContext);
+    }
+
+    private void handleEntrustCommand(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand) {
+        ConditionOrder conditionOrder = triggerTradingContext.getConditionOrder();
+        TradeCustomer tradeCustomer = triggerTradingContext.getTradeCustomer();
+        try {
+            EntrustResult entrustResult = tradeCustomer.entrust(entrustCommand);
+            logger.info("Entrust result <== {}", entrustResult);
+            conditionOrder.afterEntrustSuccess(triggerTradingContext, entrustCommand, entrustResult);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
+
+    @Override
+    public List<EntrustCommand> createEntrustCommands(TradeSignal tradeSignal, TradingMarketSupplier tradingMarketSupplier) {
         SingleEntrustTradePlan singleEntrustTradePlan = (SingleEntrustTradePlan) getTradePlan();
         EntrustCommand entrustCommand = singleEntrustTradePlan.createEntrustCommand(tradeSignal, getSecurityInfo(),
                 tradingMarketSupplier);
@@ -77,8 +103,8 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     }
 
     @Override
-    public void afterEntrustSuccess(TriggerTradingContext triggerTradingContext, EntrustResult entrustResult) {
-        // 默认无行为
+    public void afterEntrustSuccess(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand, EntrustResult entrustResult) {
+        triggerTradingContext.saveEntrustOrder(new EntrustOrderInfo(orderId, tradeCustomerInfo, entrustCommand, entrustResult));
     }
 
     @Override
@@ -88,14 +114,24 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         AbstractConditionOrder that = (AbstractConditionOrder) o;
 
-        if (!orderId.equals(that.orderId)) return false;
-        if (!tradeCustomerInfo.equals(that.tradeCustomerInfo)) return false;
-        if (!securityInfo.equals(that.securityInfo)) return false;
+        if (!orderId.equals(that.orderId)) {
+            return false;
+        }
+        if (!tradeCustomerInfo.equals(that.tradeCustomerInfo)) {
+            return false;
+        }
+        if (!securityInfo.equals(that.securityInfo)) {
+            return false;
+        }
         return strategyState == that.strategyState;
     }
 

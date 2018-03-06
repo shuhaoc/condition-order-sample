@@ -4,13 +4,12 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
-import me.caosh.condition.domain.model.account.TradeCustomer;
 import me.caosh.condition.domain.model.market.SecurityInfoConstants;
 import me.caosh.condition.domain.model.newstock.NewStock;
 import me.caosh.condition.domain.model.order.AbstractConditionOrder;
+import me.caosh.condition.domain.model.order.TriggerTradingContext;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.TradingMarketSupplier;
-import me.caosh.condition.domain.model.order.TriggerTradingContext;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.AutoPurchaseTradePlan;
@@ -79,12 +78,12 @@ public class NewStockOrder extends AbstractConditionOrder implements NewStockPur
     }
 
     @Override
-    public List<EntrustCommand> onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier) {
+    public List<EntrustCommand> createEntrustCommands(TradeSignal tradeSignal, TradingMarketSupplier tradingMarketSupplier) {
         return Collections.emptyList();
     }
 
     @Override
-    public void afterEntrustSuccess(TriggerTradingContext triggerTradingContext, EntrustResult entrustResult) {
+    public void afterEntrustSuccess(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand, EntrustResult entrustResult) {
         newStockPurchaseCondition.increasePurchasedCount();
     }
 

@@ -7,8 +7,8 @@ import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import me.caosh.condition.domain.model.account.TradeCustomer;
 import me.caosh.condition.domain.model.condition.PriceCondition;
+import me.caosh.condition.domain.model.order.BasicTriggerTradingContext;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
-import me.caosh.condition.domain.model.order.WrapperTradingMarketSupplier;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
@@ -16,16 +16,23 @@ import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradeNumberDirect;
 import me.caosh.condition.domain.model.signal.Signal;
 import me.caosh.condition.domain.model.signal.Signals;
-import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.domain.model.trade.EntrustCommand;
-import me.caosh.condition.domain.model.trade.OrderType;
+import me.caosh.condition.domain.model.trade.EntrustOrderInfo;
+import me.caosh.condition.domain.model.trade.EntrustOrderWriter;
+import me.caosh.condition.domain.service.RealTimeMarketSupplier;
 import me.caosh.condition.domain.util.MockMarkets;
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doAnswer;
 import static org.testng.Assert.assertEquals;
 
 /**
@@ -34,6 +41,16 @@ import static org.testng.Assert.assertEquals;
  * @author caoshuhao@touker.com
  */
 public class PriceOrderTest {
+    @Mock
+    private RealTimeMarketSupplier realTimeMarketSupplier;
+
+    @Mock
+    private EntrustOrderWriter entrustOrderWriter;
+
+    @BeforeMethod
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void test() throws Exception {
@@ -52,14 +69,27 @@ public class PriceOrderTest {
         Signal signal = priceOrder.getCondition().onMarketUpdate(realTimeMarket);
         assertEquals(signal, Signals.buyOrSell());
 
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
+                System.out.println("Save entrust order: " + Arrays.toString(invocationOnMock.getArguments()));
+                return null;
+            }
+        }).when(entrustOrderWriter).save(Matchers.<EntrustOrderInfo>any());
+
         TradeCustomer tradeCustomer = new TradeCustomer(303348, "010000061086");
-        List<EntrustCommand> entrustCommands = priceOrder.onTradeSignal((TradeSignal) signal, tradeCustomer,
-                new WrapperTradingMarketSupplier(realTimeMarket));
-        assertEquals(entrustCommands, Collections.singletonList(new EntrustCommand(pfyh, exchangeType, new BigDecimal("13.00"),
-                100, OrderType.LIMITED)));
-        // do not care
-        priceOrder.afterEntrustSuccess(null, null);
-        priceOrder.afterEntrustCommandsExecuted(null);
+        BasicTriggerTradingContext triggerTradingContext = new BasicTriggerTradingContext(signal, priceOrder, tradeCustomer,
+                realTimeMarketSupplier, entrustOrderWriter, realTimeMarket);
+
+        priceOrder.onTradeSignal(triggerTradingContext);
+
+//        List<EntrustCommand> entrustCommands = priceOrder.createEntrustCommands((TradeSignal) signal,
+//                triggerTradingContext);
+//        assertEquals(entrustCommands, Collections.singletonList(new EntrustCommand(pfyh, exchangeType, new BigDecimal("13.00"),
+//                100, OrderType.LIMITED)));
+//
+//        priceOrder.afterEntrustSuccess(triggerTradingContext, entrustCommands.get(0), EntrustResult.ofSuccess("OK", 98));
+//        priceOrder.afterEntrustCommandsExecuted(triggerTradingContext);
         assertEquals(priceOrder.getStrategyState(), StrategyState.TERMINATED);
     }
 

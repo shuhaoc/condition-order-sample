@@ -7,6 +7,7 @@ import hbec.intellitrade.common.market.RealTimeMarket;
  * @author caoshuhao@touker.com
  * @date 2018/3/4
  */
+@Deprecated
 public class WrapperTradingMarketSupplier implements TradingMarketSupplier {
     private final RealTimeMarket tradingMarket;
 

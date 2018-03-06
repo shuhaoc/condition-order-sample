@@ -6,6 +6,6 @@ import hbec.intellitrade.common.market.RealTimeMarket;
 /**
  * Created by caosh on 2017/8/2.
  */
-public interface RealTimeMarketService {
+public interface RealTimeMarketSupplier {
     RealTimeMarket getCurrentMarket(MarketID marketID);
 }

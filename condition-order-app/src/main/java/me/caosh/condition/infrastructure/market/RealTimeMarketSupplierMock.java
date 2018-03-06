@@ -3,7 +3,7 @@ package me.caosh.condition.infrastructure.market;
 import com.google.common.collect.Lists;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
-import me.caosh.condition.domain.service.RealTimeMarketService;
+import me.caosh.condition.domain.service.RealTimeMarketSupplier;
 import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  * Created by caosh on 2017/8/20.
  */
 @Service
-public class RealTimeMarketServiceMock implements RealTimeMarketService {
+public class RealTimeMarketSupplierMock implements RealTimeMarketSupplier {
     @Override
     public RealTimeMarket getCurrentMarket(MarketID marketID) {
         return new RealTimeMarket(marketID, new BigDecimal("10.00"), new BigDecimal("10.00"), Lists.newArrayList(

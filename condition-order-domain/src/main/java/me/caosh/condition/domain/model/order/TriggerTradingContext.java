@@ -1,91 +1,24 @@
 package me.caosh.condition.domain.model.order;
 
-import com.google.common.base.MoreObjects;
-import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import me.caosh.condition.domain.model.account.TradeCustomer;
 import me.caosh.condition.domain.model.signal.Signal;
-import me.caosh.condition.domain.service.RealTimeMarketService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import me.caosh.condition.domain.model.trade.EntrustOrderInfo;
 
 /**
- * Created by caosh on 2017/8/14.
+ * 交易信号触发上下文
  *
- * @author caoshuhao@touker.com
+ * @author caosh/caoshuhao@touker.com
+ * @date 2018/3/6
  */
-public class TriggerTradingContext implements TradingMarketSupplier {
-    private static final Logger logger = LoggerFactory.getLogger(TriggerTradingContext.class);
+public interface TriggerTradingContext extends TradingMarketSupplier {
+    Signal getSignal();
 
-    private final Signal signal;
-    private final ConditionOrder conditionOrder;
-    private final TradeCustomer tradeCustomer;
-    private final RealTimeMarketService realTimeMarketService;
-    private RealTimeMarket triggerMarket;
-    private RealTimeMarket tradingMarket;
+    ConditionOrder getConditionOrder();
 
-    public TriggerTradingContext(Signal signal, ConditionOrder conditionOrder, TradeCustomer tradeCustomer,
-                                 RealTimeMarketService realTimeMarketService, RealTimeMarket triggerMarket) {
-        this.signal = signal;
-        this.conditionOrder = conditionOrder;
-        this.tradeCustomer = tradeCustomer;
-        this.realTimeMarketService = realTimeMarketService;
-        this.triggerMarket = triggerMarket;
+    TradeCustomer getTradeCustomer();
 
-        tryInitTradingMarket(conditionOrder, triggerMarket);
-    }
+    RealTimeMarket getTriggerMarket();
 
-    private void tryInitTradingMarket(ConditionOrder conditionOrder, RealTimeMarket triggerMarket) {
-        if (triggerMarket == null) {
-            return;
-        }
-        if (triggerMarket.getMarketID().equals(conditionOrder.getSecurityInfo().getMarketID())) {
-            this.tradingMarket = triggerMarket;
-        }
-    }
-
-    public Signal getSignal() {
-        return signal;
-    }
-
-    public ConditionOrder getConditionOrder() {
-        return conditionOrder;
-    }
-
-    public TradeCustomer getTradeCustomer() {
-        return tradeCustomer;
-    }
-
-    public RealTimeMarket getTriggerMarket() {
-        return triggerMarket;
-    }
-
-    @Override
-    public RealTimeMarket getTradingMarket() {
-        if (tradingMarket != null) {
-            return tradingMarket;
-        }
-
-        MarketID tradingMarketID = conditionOrder.getSecurityInfo().getMarketID();
-        if (triggerMarket.getMarketID().equals(tradingMarketID)) {
-            return triggerMarket;
-        }
-
-        tradingMarket = realTimeMarketService.getCurrentMarket(tradingMarketID);
-        logger.info("Get trading real-time market <== {}", tradingMarket);
-        return tradingMarket;
-    }
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(TriggerTradingContext.class).omitNullValues()
-                .add("signal", signal)
-                .add("conditionOrder", conditionOrder)
-                .add("tradeCustomer", tradeCustomer)
-                .add("realTimeMarketService", realTimeMarketService)
-                .add("triggerMarket", triggerMarket)
-                .add("tradingMarket", tradingMarket)
-                .toString();
-    }
+    void saveEntrustOrder(EntrustOrderInfo entrustOrderInfo);
 }
