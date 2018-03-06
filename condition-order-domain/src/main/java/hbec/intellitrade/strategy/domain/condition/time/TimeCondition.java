@@ -11,10 +11,10 @@ import hbec.intellitrade.strategy.domain.condition.Condition;
  */
 public interface TimeCondition extends Condition {
     /**
-     * 条件接受秒级Tick返回交易信号
+     * 条件时间Tick返回交易信号
      * {@link TradeSignal#isValid()}返回false表示无信号
      *
      * @return 交易信号
      */
-    TradeSignal onSecondTick();
+    TradeSignal onTimeTick();
 }

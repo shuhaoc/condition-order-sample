@@ -132,7 +132,7 @@ public class StrategyContext {
         // 计算时间驱动策略的条件
         if (getStrategy() instanceof TimeDrivenStrategy) {
             TimeDrivenStrategy timeDrivenStrategy = (TimeDrivenStrategy) getStrategy();
-            TradeSignal tradeSignal = timeDrivenStrategy.getCondition().onSecondTick();
+            TradeSignal tradeSignal = timeDrivenStrategy.getCondition().onTimeTick();
             if (tradeSignal.isValid()) {
                 lockTriggering();
             }

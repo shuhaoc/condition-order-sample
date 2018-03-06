@@ -31,9 +31,9 @@ public class TimeReachedConditionTest {
     @Test
     public void testOnSecondTick() throws Exception {
         TimeReachedCondition timeReachedCondition1 = new TimeReachedCondition(LocalDateTime.now());
-        assertEquals(timeReachedCondition1.onSecondTick(), Signals.buyOrSell());
+        assertEquals(timeReachedCondition1.onTimeTick(), Signals.buyOrSell());
 
         TimeReachedCondition timeReachedCondition2 = new TimeReachedCondition(LocalDateTime.now().plusMinutes(1));
-        assertEquals(timeReachedCondition2.onSecondTick(), Signals.none());
+        assertEquals(timeReachedCondition2.onTimeTick(), Signals.none());
     }
 }

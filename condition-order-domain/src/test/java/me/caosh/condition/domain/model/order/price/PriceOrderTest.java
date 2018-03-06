@@ -33,6 +33,8 @@ import java.util.Arrays;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.testng.Assert.assertEquals;
 
 /**
@@ -91,6 +93,7 @@ public class PriceOrderTest {
 //        priceOrder.afterEntrustSuccess(triggerTradingContext, entrustCommands.get(0), EntrustResult.ofSuccess("OK", 98));
 //        priceOrder.afterEntrustCommandsExecuted(triggerTradingContext);
         assertEquals(priceOrder.getStrategyState(), StrategyState.TERMINATED);
+        verify(entrustOrderWriter, times(1)).save(Matchers.<EntrustOrderInfo>any());
     }
 
     @Test

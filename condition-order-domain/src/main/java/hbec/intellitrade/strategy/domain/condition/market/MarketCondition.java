@@ -12,7 +12,7 @@ import hbec.intellitrade.strategy.domain.condition.Condition;
  */
 public interface MarketCondition extends Condition {
     /**
-     * 条件实体接受行情更新返回交易信号
+     * 条件实体接受实时行情Tick返回交易信号
      * {@link TradeSignal#isValid()}返回false表示无信号
      *
      * @param realTimeMarket 实时消息
