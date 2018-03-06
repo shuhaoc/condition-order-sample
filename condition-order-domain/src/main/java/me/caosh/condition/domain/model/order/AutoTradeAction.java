@@ -22,7 +22,19 @@ public interface AutoTradeAction {
      */
     List<EntrustCommand> createEntrustCommands(TradeSignal tradeSignal, TradingMarketSupplier tradingMarketSupplier);
 
+    /**
+     * 委托成功事件
+     *
+     * @param triggerTradingContext 触发交易上下文
+     * @param entrustCommand 委托指令
+     * @param entrustResult 委托结果
+     */
     void afterEntrustSuccess(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand, EntrustResult entrustResult);
 
+    /**
+     * 所有委托完成事件
+     *
+     * @param triggerTradingContext 触发交易上下文
+     */
     void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext);
 }
