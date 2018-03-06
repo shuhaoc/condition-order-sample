@@ -57,7 +57,7 @@ public class ConditionOrderDoAssemblerTest {
         assertEquals(conditionOrderDO.getSecurityCode(), SECURITY_CODE);
         assertEquals(conditionOrderDO.getSecurityExchange(), SecurityExchange.SH.name());
         assertEquals(conditionOrderDO.getSecurityName(), SECURITY_NAME);
-        assertEquals(conditionOrderDO.getStrategyId().intValue(), NativeStrategyInfo.PRICE.getStrategyTemplateId());
+        assertEquals(conditionOrderDO.getStrategyType().intValue(), NativeStrategyInfo.PRICE.getStrategyType());
         assertEquals(conditionOrderDO.getConditionProperties(), "{\"type\":\"PriceConditionDO\",\"compareOperator\":1,\"targetPrice\":10.00}");
         assertNull(conditionOrderDO.getDynamicPropertiesObj());
         assertEquals(conditionOrderDO.getExchangeType(), ExchangeType.SELL.getValue());

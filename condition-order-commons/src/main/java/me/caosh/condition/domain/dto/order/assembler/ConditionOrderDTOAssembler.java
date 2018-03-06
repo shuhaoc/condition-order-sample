@@ -32,7 +32,7 @@ public class ConditionOrderDTOAssembler {
                 .withCustomerNo(conditionOrder.getCustomer().getCustomerNo())
                 .withOrderState(conditionOrder.getStrategyState().getValue())
                 .withSecurityInfo(SecurityInfoDTO.fromDomain(conditionOrder.getSecurityInfo()))
-                .withStrategyId(conditionOrder.getStrategyInfo().getStrategyTemplateId())
+                .withStrategyId(conditionOrder.getStrategyInfo().getStrategyType())
                 .withCondition(conditionDTO)
                 .withTradePlanDTO(TradePlanDTOAssembler.fromDomain(conditionOrder.getTradePlan()))
                 .build();

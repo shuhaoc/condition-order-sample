@@ -9,15 +9,15 @@ import me.caosh.condition.domain.model.share.ValuedEnum;
  */
 public enum NativeStrategyInfo implements StrategyInfo, ValuedEnum<Integer>, ConvertibleEnum<Integer> {
     PRICE(1),
-    TURN_UP(2),
     TIME(4),
-    GRID(5),
-    NEW_STOCK(6);
+    TURN_UP(7),
+    GRID(9),
+    NEW_STOCK(10);
 
-    private final int strategyId;
+    private final int strategyType;
 
-    NativeStrategyInfo(int strategyId) {
-        this.strategyId = strategyId;
+    NativeStrategyInfo(int strategyType) {
+        this.strategyType = strategyType;
     }
 
     @Override
@@ -26,12 +26,12 @@ public enum NativeStrategyInfo implements StrategyInfo, ValuedEnum<Integer>, Con
     }
 
     @Override
-    public int getStrategyTemplateId() {
-        return strategyId;
+    public int getStrategyType() {
+        return strategyType;
     }
 
     @Override
     public Integer getValue() {
-        return strategyId;
+        return strategyType;
     }
 }

@@ -19,5 +19,5 @@ public interface StrategyInfo {
      *
      * @return 策略模板ID
      */
-    int getStrategyTemplateId();
+    int getStrategyType();
 }

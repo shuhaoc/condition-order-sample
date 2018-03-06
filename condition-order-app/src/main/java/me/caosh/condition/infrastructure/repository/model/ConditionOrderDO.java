@@ -3,7 +3,12 @@ package me.caosh.condition.infrastructure.repository.model;
 import com.google.common.base.MoreObjects;
 import me.caosh.autoasm.FieldMapping;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -33,7 +38,7 @@ public class ConditionOrderDO {
     @FieldMapping(mappedProperty = "securityInfo.name")
     private String securityName;
     @FieldMapping(mappedProperty = "strategyInfo.strategyTemplateId")
-    private Integer strategyId;
+    private Integer strategyType;
     @FieldMapping(mappedProperty = "rawCondition")
     private ConditionDO conditionPropertiesObj;
     @FieldMapping(mappedProperty = "rawCondition")
@@ -140,13 +145,13 @@ public class ConditionOrderDO {
     }
 
     @Basic
-    @Column(name = "strategy_id")
-    public Integer getStrategyId() {
-        return strategyId;
+    @Column(name = "strategy_type")
+    public Integer getStrategyType() {
+        return strategyType;
     }
 
-    public void setStrategyId(Integer strategyId) {
-        this.strategyId = strategyId;
+    public void setStrategyType(Integer strategyType) {
+        this.strategyType = strategyType;
     }
 
     @Transient
@@ -264,7 +269,7 @@ public class ConditionOrderDO {
         if (securityExchange != null ? !securityExchange.equals(that.securityExchange) : that.securityExchange != null)
             return false;
         if (securityName != null ? !securityName.equals(that.securityName) : that.securityName != null) return false;
-        if (strategyId != null ? !strategyId.equals(that.strategyId) : that.strategyId != null) return false;
+        if (strategyType != null ? !strategyType.equals(that.strategyType) : that.strategyType != null) return false;
         if (conditionPropertiesObj != null ? !conditionPropertiesObj.equals(that.conditionPropertiesObj) : that.conditionPropertiesObj != null)
             return false;
         if (dynamicPropertiesObj != null ? !dynamicPropertiesObj.equals(that.dynamicPropertiesObj) : that.dynamicPropertiesObj != null)
@@ -291,7 +296,7 @@ public class ConditionOrderDO {
         result = 31 * result + (securityCode != null ? securityCode.hashCode() : 0);
         result = 31 * result + (securityExchange != null ? securityExchange.hashCode() : 0);
         result = 31 * result + (securityName != null ? securityName.hashCode() : 0);
-        result = 31 * result + (strategyId != null ? strategyId.hashCode() : 0);
+        result = 31 * result + (strategyType != null ? strategyType.hashCode() : 0);
         result = 31 * result + (conditionPropertiesObj != null ? conditionPropertiesObj.hashCode() : 0);
         result = 31 * result + (dynamicPropertiesObj != null ? dynamicPropertiesObj.hashCode() : 0);
         result = 31 * result + (exchangeType != null ? exchangeType.hashCode() : 0);
@@ -315,7 +320,7 @@ public class ConditionOrderDO {
                 .add("securityCode", securityCode)
                 .add("securityExchange", securityExchange)
                 .add("securityName", securityName)
-                .add("strategyId", strategyId)
+                .add("strategyType", strategyType)
                 .add("conditionPropertiesObj", conditionPropertiesObj)
                 .add("dynamicPropertiesObj", dynamicPropertiesObj)
                 .add("exchangeType", exchangeType)
