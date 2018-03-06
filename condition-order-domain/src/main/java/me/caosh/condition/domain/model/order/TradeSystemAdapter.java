@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.model.order;
 
-import me.caosh.condition.domain.model.trade.EntrustCommand;
-import me.caosh.condition.domain.model.trade.EntrustResult;
+import hbec.intellitrade.trade.domain.EntrustCommand;
+import hbec.intellitrade.trade.domain.EntrustResult;
 
 /**
  * 交易系统适配器

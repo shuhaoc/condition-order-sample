@@ -8,9 +8,9 @@ import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import me.caosh.condition.domain.model.condition.PriceCondition;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
-import me.caosh.condition.domain.model.signal.Signal;
-import me.caosh.condition.domain.model.signal.Signals;
-import me.caosh.condition.domain.model.signal.TradeSignal;
+import hbec.intellitrade.strategy.domain.signal.Signal;
+import hbec.intellitrade.strategy.domain.signal.Signals;
+import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import org.joda.time.LocalDateTime;
 
 /**

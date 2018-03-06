@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.share;
+package hbec.intellitrade.common;
 
 /**
  * Created by caosh on 2017/8/3.

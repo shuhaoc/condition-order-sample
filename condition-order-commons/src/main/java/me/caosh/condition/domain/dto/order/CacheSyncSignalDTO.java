@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.dto.order;
 
 import me.caosh.autoasm.MappedClass;
-import me.caosh.condition.domain.model.signal.CacheSync;
+import hbec.intellitrade.strategy.domain.signal.CacheSync;
 
 /**
  * Created by caosh on 2017/8/19.

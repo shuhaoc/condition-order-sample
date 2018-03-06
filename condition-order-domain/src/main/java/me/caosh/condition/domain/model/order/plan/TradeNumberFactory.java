@@ -3,7 +3,7 @@ package me.caosh.condition.domain.model.order.plan;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.model.constants.EntrustMethod;
-import me.caosh.condition.domain.model.share.ValuedEnumUtil;
+import hbec.intellitrade.common.ValuedEnumUtil;
 
 import java.math.BigDecimal;
 

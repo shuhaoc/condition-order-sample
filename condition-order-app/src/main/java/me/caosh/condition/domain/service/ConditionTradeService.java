@@ -2,7 +2,7 @@ package me.caosh.condition.domain.service;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionOrder;
-import me.caosh.condition.domain.model.signal.Signal;
+import hbec.intellitrade.strategy.domain.signal.Signal;
 
 /**
  * Created by caosh on 2017/8/13.

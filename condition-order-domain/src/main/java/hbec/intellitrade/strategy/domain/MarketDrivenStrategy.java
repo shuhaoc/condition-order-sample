@@ -2,8 +2,8 @@ package hbec.intellitrade.strategy.domain;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
-import me.caosh.condition.domain.model.signal.Signal;
-import me.caosh.condition.domain.model.signal.TradeSignal;
+import hbec.intellitrade.strategy.domain.signal.Signal;
+import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import org.joda.time.LocalDateTime;
 
 /**

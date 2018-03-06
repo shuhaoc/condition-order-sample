@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.trade;
+package hbec.intellitrade.trade.domain;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;

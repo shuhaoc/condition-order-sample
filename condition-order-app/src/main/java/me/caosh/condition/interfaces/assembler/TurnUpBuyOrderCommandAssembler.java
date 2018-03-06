@@ -12,7 +12,7 @@ import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradeNumber;
 import me.caosh.condition.domain.model.order.plan.TradeNumberFactory;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpBuyOrder;
-import me.caosh.condition.domain.model.share.ValuedEnumUtil;
+import hbec.intellitrade.common.ValuedEnumUtil;
 import me.caosh.condition.interfaces.command.TurnUpBuyOrderCreateCommand;
 import me.caosh.condition.interfaces.command.TurnUpBuyOrderUpdateCommand;
 

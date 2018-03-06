@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.dto.order;
 
 import me.caosh.autoasm.MappedClass;
-import me.caosh.condition.domain.model.signal.Buy;
+import hbec.intellitrade.strategy.domain.signal.Buy;
 
 /**
  * Created by caosh on 2017/8/26.

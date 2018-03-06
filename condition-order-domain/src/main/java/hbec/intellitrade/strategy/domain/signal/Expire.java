@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.signal;
+package hbec.intellitrade.strategy.domain.signal;
 
 /**
  * @author caosh/caoshuhao@touker.com

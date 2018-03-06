@@ -15,12 +15,12 @@ import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.AutoPurchaseTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
-import me.caosh.condition.domain.model.signal.TradeSignal;
+import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
 import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
-import me.caosh.condition.domain.model.trade.EntrustCommand;
-import me.caosh.condition.domain.model.trade.EntrustResult;
-import me.caosh.condition.domain.model.trade.OrderType;
+import hbec.intellitrade.trade.domain.EntrustCommand;
+import hbec.intellitrade.trade.domain.EntrustResult;
+import hbec.intellitrade.trade.domain.OrderType;
 
 import java.util.Collections;
 import java.util.List;

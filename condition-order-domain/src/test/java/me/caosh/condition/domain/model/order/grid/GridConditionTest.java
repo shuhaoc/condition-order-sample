@@ -3,7 +3,7 @@ package me.caosh.condition.domain.model.order.grid;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.security.SecurityType;
-import me.caosh.condition.domain.model.signal.Signals;
+import hbec.intellitrade.strategy.domain.signal.Signals;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;

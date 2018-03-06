@@ -1,7 +1,7 @@
 package hbec.intellitrade.strategy.domain.factor;
 
 import me.caosh.autoasm.ConvertibleEnum;
-import me.caosh.condition.domain.model.share.ValuedEnum;
+import hbec.intellitrade.common.ValuedEnum;
 
 /**
  * 函数化的比较操作符

@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.signal;
+package hbec.intellitrade.strategy.domain.signal;
 
 /**
  * 交易信号，包括普通买卖信号或无信号

@@ -1,6 +1,6 @@
 package me.caosh.condition.infrastructure.repository.impl;
 
-import me.caosh.condition.domain.model.trade.EntrustOrder;
+import hbec.intellitrade.trade.domain.EntrustOrder;
 import me.caosh.condition.infrastructure.repository.EntrustOrderRepository;
 import me.caosh.condition.infrastructure.repository.model.EntrustOrderDO;
 import me.caosh.condition.infrastructure.repository.model.EntrustOrderDOAssembler;

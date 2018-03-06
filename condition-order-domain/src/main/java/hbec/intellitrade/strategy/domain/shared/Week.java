@@ -1,6 +1,6 @@
 package hbec.intellitrade.strategy.domain.shared;
 
-import me.caosh.condition.domain.model.share.ValuedEnum;
+import hbec.intellitrade.common.ValuedEnum;
 
 /**
  * 星期

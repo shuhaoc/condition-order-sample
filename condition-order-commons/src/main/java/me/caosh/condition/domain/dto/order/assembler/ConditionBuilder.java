@@ -8,7 +8,7 @@ import me.caosh.condition.domain.model.condition.TimeReachedCondition;
 import me.caosh.condition.domain.model.condition.TurnUpCondition;
 import me.caosh.condition.domain.model.order.grid.GridCondition;
 import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
-import me.caosh.condition.domain.model.share.ValuedEnumUtil;
+import hbec.intellitrade.common.ValuedEnumUtil;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import me.caosh.condition.domain.util.DateFormats;
 import me.caosh.condition.domain.util.InstantUtils;

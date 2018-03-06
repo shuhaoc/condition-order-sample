@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.model.strategyinfo;
 
 import me.caosh.autoasm.ConvertibleEnum;
-import me.caosh.condition.domain.model.share.ValuedEnum;
+import hbec.intellitrade.common.ValuedEnum;
 
 /**
  * @author caosh/caoshuhao@touker.com

@@ -14,9 +14,9 @@ import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlanFactory;
-import me.caosh.condition.domain.model.signal.Signal;
-import me.caosh.condition.domain.model.signal.Signals;
-import me.caosh.condition.domain.model.signal.TradeSignal;
+import hbec.intellitrade.strategy.domain.signal.Signal;
+import hbec.intellitrade.strategy.domain.signal.Signals;
+import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;

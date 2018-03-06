@@ -3,7 +3,7 @@ package me.caosh.condition.application.order.impl;
 import com.google.common.base.Optional;
 import me.caosh.condition.application.order.ConditionOrderQueryService;
 import me.caosh.condition.domain.model.order.ConditionOrder;
-import me.caosh.condition.domain.model.trade.EntrustOrder;
+import hbec.intellitrade.trade.domain.EntrustOrder;
 import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
 import me.caosh.condition.infrastructure.repository.EntrustOrderRepository;
 import org.springframework.data.domain.Page;

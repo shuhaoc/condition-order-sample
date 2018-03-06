@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.dto.trade;
 
-import me.caosh.condition.domain.model.trade.EntrustOrder;
+import hbec.intellitrade.trade.domain.EntrustOrder;
 
 /**
  * Created by caosh on 2017/8/15.

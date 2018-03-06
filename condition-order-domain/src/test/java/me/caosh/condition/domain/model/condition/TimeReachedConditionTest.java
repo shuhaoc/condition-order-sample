@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.model.condition;
 
-import me.caosh.condition.domain.model.signal.Signals;
+import hbec.intellitrade.strategy.domain.signal.Signals;
 import org.joda.time.LocalDateTime;
 import org.testng.annotations.Test;
 

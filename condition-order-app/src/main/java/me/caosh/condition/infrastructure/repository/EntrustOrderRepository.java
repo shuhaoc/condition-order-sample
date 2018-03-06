@@ -1,6 +1,6 @@
 package me.caosh.condition.infrastructure.repository;
 
-import me.caosh.condition.domain.model.trade.EntrustOrder;
+import hbec.intellitrade.trade.domain.EntrustOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

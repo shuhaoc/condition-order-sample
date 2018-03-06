@@ -9,7 +9,7 @@ import me.caosh.condition.domain.model.order.grid.GridCondition;
 import me.caosh.condition.domain.model.order.grid.GridTradeOrder;
 import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlanFactory;
-import me.caosh.condition.domain.model.share.ValuedEnumUtil;
+import hbec.intellitrade.common.ValuedEnumUtil;
 import me.caosh.condition.interfaces.command.GridTradeOrderCreateCommand;
 import me.caosh.condition.interfaces.command.GridTradeOrderUpdateCommand;
 

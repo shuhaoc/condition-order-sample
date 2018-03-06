@@ -4,7 +4,7 @@ import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
-import me.caosh.condition.domain.model.share.ValuedEnumUtil;
+import hbec.intellitrade.common.ValuedEnumUtil;
 
 import java.io.Serializable;
 

@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.model.constants;
 
-import me.caosh.condition.domain.model.share.ValuedEnum;
+import hbec.intellitrade.common.ValuedEnum;
 
 /**
  * Created by caosh on 2017/8/13.

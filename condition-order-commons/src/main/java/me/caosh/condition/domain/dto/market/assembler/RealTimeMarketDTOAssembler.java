@@ -4,7 +4,7 @@ import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.security.SecurityType;
 import me.caosh.condition.domain.dto.market.RealTimeMarketDTO;
-import me.caosh.condition.domain.model.share.ValuedEnumUtil;
+import hbec.intellitrade.common.ValuedEnumUtil;
 
 /**
  * Created by caosh on 2017/8/14.

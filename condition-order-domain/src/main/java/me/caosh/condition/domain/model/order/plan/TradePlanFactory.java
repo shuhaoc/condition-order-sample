@@ -3,7 +3,7 @@ package me.caosh.condition.domain.model.order.plan;
 import hbec.intellitrade.common.security.SecurityInfo;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
-import me.caosh.condition.domain.model.share.ValuedEnumUtil;
+import hbec.intellitrade.common.ValuedEnumUtil;
 
 import java.math.BigDecimal;
 

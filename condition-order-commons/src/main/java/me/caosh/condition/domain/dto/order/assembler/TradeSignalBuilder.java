@@ -7,8 +7,8 @@ import me.caosh.condition.domain.dto.order.GeneralSignalDTO;
 import me.caosh.condition.domain.dto.order.SellSignalDTO;
 import me.caosh.condition.domain.dto.order.TradeSignalDTO;
 import me.caosh.condition.domain.dto.order.TradeSignalDTOVisitor;
-import me.caosh.condition.domain.model.signal.Signal;
-import me.caosh.condition.domain.model.signal.Signals;
+import hbec.intellitrade.strategy.domain.signal.Signal;
+import hbec.intellitrade.strategy.domain.signal.Signals;
 
 /**
  * Created by caosh on 2017/8/14.

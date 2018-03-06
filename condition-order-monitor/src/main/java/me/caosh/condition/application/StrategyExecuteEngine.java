@@ -7,7 +7,7 @@ import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.event.ConditionOrderCreateCommandEvent;
 import me.caosh.condition.domain.model.order.event.ConditionOrderDeleteCommandEvent;
 import me.caosh.condition.domain.model.order.event.ConditionOrderUpdateCommandEvent;
-import me.caosh.condition.domain.model.signal.SignalPayload;
+import me.caosh.condition.domain.model.signalpayload.SignalPayload;
 import me.caosh.condition.domain.model.strategy.container.StrategyContainer;
 import me.caosh.condition.infrastructure.eventbus.MonitorEventBus;
 import me.caosh.condition.infrastructure.repository.MonitorRepository;

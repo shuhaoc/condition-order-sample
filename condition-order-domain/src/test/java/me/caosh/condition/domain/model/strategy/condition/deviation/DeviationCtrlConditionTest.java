@@ -6,8 +6,8 @@ import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import me.caosh.condition.domain.model.condition.PriceCondition;
-import me.caosh.condition.domain.model.signal.Signals;
-import me.caosh.condition.domain.model.signal.TradeSignal;
+import hbec.intellitrade.strategy.domain.signal.Signals;
+import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;

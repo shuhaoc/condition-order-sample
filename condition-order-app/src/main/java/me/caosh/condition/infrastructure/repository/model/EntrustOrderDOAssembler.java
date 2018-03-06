@@ -5,11 +5,11 @@ import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
-import me.caosh.condition.domain.model.share.ValuedEnumUtil;
-import me.caosh.condition.domain.model.trade.EntrustCommand;
-import me.caosh.condition.domain.model.trade.EntrustOrder;
-import me.caosh.condition.domain.model.trade.EntrustResult;
-import me.caosh.condition.domain.model.trade.OrderType;
+import hbec.intellitrade.common.ValuedEnumUtil;
+import hbec.intellitrade.trade.domain.EntrustCommand;
+import hbec.intellitrade.trade.domain.EntrustOrder;
+import hbec.intellitrade.trade.domain.EntrustResult;
+import hbec.intellitrade.trade.domain.OrderType;
 
 /**
  * Created by caosh on 2017/8/14.

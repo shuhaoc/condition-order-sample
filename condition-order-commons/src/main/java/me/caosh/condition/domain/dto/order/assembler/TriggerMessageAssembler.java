@@ -8,7 +8,7 @@ import me.caosh.condition.domain.dto.order.TradeSignalDTO;
 import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.TriggerMessage;
-import me.caosh.condition.domain.model.signal.Signal;
+import hbec.intellitrade.strategy.domain.signal.Signal;
 
 /**
  * Created by caosh on 2017/8/30.

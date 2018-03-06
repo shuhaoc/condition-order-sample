@@ -6,7 +6,7 @@ import me.caosh.condition.domain.model.order.event.ConditionOrderCommandEvent;
 import me.caosh.condition.domain.model.order.event.ConditionOrderCreateCommandEvent;
 import me.caosh.condition.domain.model.order.event.ConditionOrderDeleteCommandEvent;
 import me.caosh.condition.domain.model.order.event.ConditionOrderUpdateCommandEvent;
-import me.caosh.condition.domain.model.share.ValuedEnumUtil;
+import hbec.intellitrade.common.ValuedEnumUtil;
 
 /**
  * Created by caosh on 2017/8/14.

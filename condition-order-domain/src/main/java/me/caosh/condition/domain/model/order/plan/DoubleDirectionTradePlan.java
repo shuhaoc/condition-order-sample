@@ -6,10 +6,10 @@ import hbec.intellitrade.common.security.SecurityInfo;
 import me.caosh.condition.domain.model.order.TradingMarketSupplier;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
-import me.caosh.condition.domain.model.signal.Buy;
-import me.caosh.condition.domain.model.signal.Sell;
-import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.domain.model.trade.EntrustCommand;
+import hbec.intellitrade.strategy.domain.signal.Buy;
+import hbec.intellitrade.strategy.domain.signal.Sell;
+import hbec.intellitrade.strategy.domain.signal.TradeSignal;
+import hbec.intellitrade.trade.domain.EntrustCommand;
 
 /**
  * Created by caosh on 2017/8/24.

@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.signal;
+package hbec.intellitrade.strategy.domain.signal;
 
 /**
  * Created by caosh on 2017/8/1.

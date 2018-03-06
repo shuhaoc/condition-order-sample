@@ -2,8 +2,8 @@ package me.caosh.condition.domain.model.order;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
 import me.caosh.condition.domain.model.account.TradeCustomer;
-import me.caosh.condition.domain.model.signal.Signal;
-import me.caosh.condition.domain.model.trade.EntrustOrderInfo;
+import hbec.intellitrade.strategy.domain.signal.Signal;
+import hbec.intellitrade.trade.domain.EntrustOrderInfo;
 
 /**
  * 交易信号触发上下文

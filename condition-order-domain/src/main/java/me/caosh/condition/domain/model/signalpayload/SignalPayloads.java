@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.signal;
+package me.caosh.condition.domain.model.signalpayload;
 
 import org.joda.time.LocalTime;
 

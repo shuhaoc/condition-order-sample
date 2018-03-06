@@ -1,23 +1,23 @@
-package me.caosh.condition.domain.model.signal;
+package hbec.intellitrade.strategy.domain.signal;
 
 /**
  * Created by caosh on 2017/8/1.
  */
-public class Sell extends BS {
-    Sell() {
+public class Buy extends BS {
+    Buy() {
     }
 
-    private Sell(boolean deviationExceeded) {
+    private Buy(boolean deviationExceeded) {
         super(deviationExceeded);
     }
 
     @Override
     public TradeSignal withDeviationExceeded() {
-        return new Sell(true);
+        return new Buy(true);
     }
 
     @Override
     public void accept(SignalVisitor visitor) {
-        visitor.visitSell(this);
+        visitor.visitBuy(this);
     }
 }

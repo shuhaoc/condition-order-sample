@@ -12,7 +12,7 @@ import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradeNumber;
 import me.caosh.condition.domain.model.order.plan.TradeNumberFactory;
 import me.caosh.condition.domain.model.order.time.TimeOrder;
-import me.caosh.condition.domain.model.share.ValuedEnumUtil;
+import hbec.intellitrade.common.ValuedEnumUtil;
 import me.caosh.condition.domain.util.InstantUtils;
 import me.caosh.condition.interfaces.command.TimeOrderCreateCommand;
 import me.caosh.condition.interfaces.command.TimeOrderUpdateCommand;

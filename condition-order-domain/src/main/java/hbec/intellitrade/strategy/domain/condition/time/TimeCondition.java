@@ -1,6 +1,6 @@
 package hbec.intellitrade.strategy.domain.condition.time;
 
-import me.caosh.condition.domain.model.signal.TradeSignal;
+import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 
 /**

@@ -2,8 +2,8 @@ package hbec.intellitrade.strategy.domain.condition;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
-import me.caosh.condition.domain.model.signal.Signals;
-import me.caosh.condition.domain.model.signal.TradeSignal;
+import hbec.intellitrade.strategy.domain.signal.Signals;
+import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import hbec.intellitrade.strategy.domain.condition.market.PredictableMarketCondition;
 
 import java.math.BigDecimal;

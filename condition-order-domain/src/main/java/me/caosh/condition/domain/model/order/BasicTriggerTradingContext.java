@@ -5,9 +5,9 @@ import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.market.RealTimeMarketSupplier;
 import me.caosh.condition.domain.model.account.TradeCustomer;
-import me.caosh.condition.domain.model.signal.Signal;
-import me.caosh.condition.domain.model.trade.EntrustOrderInfo;
-import me.caosh.condition.domain.model.trade.EntrustOrderWriter;
+import hbec.intellitrade.strategy.domain.signal.Signal;
+import hbec.intellitrade.trade.domain.EntrustOrderInfo;
+import hbec.intellitrade.trade.domain.EntrustOrderWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -10,10 +10,10 @@ import com.google.common.collect.Sets;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.strategy.domain.Strategy;
-import me.caosh.condition.domain.model.signal.MarketSignalPayload;
-import me.caosh.condition.domain.model.signal.Signal;
-import me.caosh.condition.domain.model.signal.SignalPayload;
-import me.caosh.condition.domain.model.signal.Signals;
+import me.caosh.condition.domain.model.signalpayload.MarketSignalPayload;
+import hbec.intellitrade.strategy.domain.signal.Signal;
+import me.caosh.condition.domain.model.signalpayload.SignalPayload;
+import hbec.intellitrade.strategy.domain.signal.Signals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

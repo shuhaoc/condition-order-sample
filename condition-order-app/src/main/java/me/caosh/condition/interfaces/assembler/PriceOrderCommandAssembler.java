@@ -13,7 +13,7 @@ import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradeNumber;
 import me.caosh.condition.domain.model.order.plan.TradeNumberFactory;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
-import me.caosh.condition.domain.model.share.ValuedEnumUtil;
+import hbec.intellitrade.common.ValuedEnumUtil;
 import me.caosh.condition.interfaces.command.PriceOrderCreateCommand;
 import me.caosh.condition.interfaces.command.PriceOrderUpdateCommand;
 
