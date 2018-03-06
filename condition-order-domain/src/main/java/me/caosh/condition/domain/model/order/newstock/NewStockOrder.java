@@ -4,23 +4,22 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
+import hbec.intellitrade.strategy.domain.condition.Condition;
 import me.caosh.condition.domain.model.market.SecurityInfoConstants;
 import me.caosh.condition.domain.model.newstock.NewStock;
 import me.caosh.condition.domain.model.order.AbstractConditionOrder;
-import me.caosh.condition.domain.model.order.TriggerTradingContext;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.TradingMarketSupplier;
+import me.caosh.condition.domain.model.order.TriggerTradingContext;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.AutoPurchaseTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.signal.TradeSignal;
-import hbec.intellitrade.strategy.domain.condition.Condition;
 import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
 import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.trade.EntrustResult;
-import me.caosh.condition.domain.model.trade.NewStockPurchaseOnTrigger;
 import me.caosh.condition.domain.model.trade.OrderType;
 
 import java.util.Collections;
@@ -31,7 +30,7 @@ import java.util.List;
  *
  * @author caoshuhao@touker.com
  */
-public class NewStockOrder extends AbstractConditionOrder implements NewStockPurchaseOnTrigger {
+public class NewStockOrder extends AbstractConditionOrder {
     private final AutoPurchaseTradePlan autoPurchaseTradePlan = new AutoPurchaseTradePlan();
     private final NewStockPurchaseCondition newStockPurchaseCondition;
 
@@ -60,7 +59,7 @@ public class NewStockOrder extends AbstractConditionOrder implements NewStockPur
         return NativeStrategyInfo.NEW_STOCK;
     }
 
-    @Override
+
     public List<EntrustCommand> createEntrustCommand(List<NewStock> currentPurchasable) {
         return Lists.transform(currentPurchasable, new Function<NewStock, EntrustCommand>() {
             @Override

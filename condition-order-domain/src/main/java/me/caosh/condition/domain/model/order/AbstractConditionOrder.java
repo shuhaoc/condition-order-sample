@@ -29,6 +29,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     private final Long orderId;
     private final TradeCustomerInfo tradeCustomerInfo;
     private final SecurityInfo securityInfo;
+    private final LocalDateTime expireTime = null;
     private StrategyState strategyState;
 
     public AbstractConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,

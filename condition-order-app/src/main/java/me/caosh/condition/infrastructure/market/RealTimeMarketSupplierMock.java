@@ -3,7 +3,7 @@ package me.caosh.condition.infrastructure.market;
 import com.google.common.collect.Lists;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
-import me.caosh.condition.domain.service.RealTimeMarketSupplier;
+import hbec.intellitrade.common.market.RealTimeMarketSupplier;
 import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 

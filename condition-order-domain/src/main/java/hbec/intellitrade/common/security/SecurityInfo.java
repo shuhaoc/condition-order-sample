@@ -2,7 +2,6 @@ package hbec.intellitrade.common.security;
 
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.common.market.MarketID;
-import me.caosh.condition.domain.model.trade.SecurityID;
 
 /**
  * 证券信息，含指数

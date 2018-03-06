@@ -1,6 +1,7 @@
 package me.caosh.condition.domain.model.order.price;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
+import hbec.intellitrade.common.market.RealTimeMarketSupplier;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
@@ -18,7 +19,6 @@ import me.caosh.condition.domain.model.signal.Signal;
 import me.caosh.condition.domain.model.signal.Signals;
 import me.caosh.condition.domain.model.trade.EntrustOrderInfo;
 import me.caosh.condition.domain.model.trade.EntrustOrderWriter;
-import me.caosh.condition.domain.service.RealTimeMarketSupplier;
 import me.caosh.condition.domain.util.MockMarkets;
 import org.mockito.Matchers;
 import org.mockito.Mock;

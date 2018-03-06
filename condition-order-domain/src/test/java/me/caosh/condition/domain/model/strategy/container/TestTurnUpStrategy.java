@@ -3,10 +3,14 @@ package me.caosh.condition.domain.model.strategy.container;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
 import hbec.intellitrade.common.market.MarketID;
+import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
+import hbec.intellitrade.strategy.domain.shared.DirtyFlag;
 import me.caosh.condition.domain.model.condition.TurnUpCondition;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
-import hbec.intellitrade.strategy.domain.shared.DirtyFlag;
+import me.caosh.condition.domain.model.signal.Signal;
+import me.caosh.condition.domain.model.signal.Signals;
+import me.caosh.condition.domain.model.signal.TradeSignal;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -37,6 +41,16 @@ public class TestTurnUpStrategy implements MarketDrivenStrategy, DirtyFlag {
     @Override
     public TurnUpCondition getCondition() {
         return turnUpCondition;
+    }
+
+    @Override
+    public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
+        return turnUpCondition.onMarketTick(realTimeMarket);
+    }
+
+    @Override
+    public Signal onTimeTick(LocalDateTime localDateTime) {
+        return Signals.none();
     }
 
     @Override

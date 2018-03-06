@@ -1,6 +1,4 @@
-package me.caosh.condition.domain.model.trade;
-
-import hbec.intellitrade.common.security.SecurityExchange;
+package hbec.intellitrade.common.security;
 
 /**
  * 可交易证券ID，由交易所和证券代码组成

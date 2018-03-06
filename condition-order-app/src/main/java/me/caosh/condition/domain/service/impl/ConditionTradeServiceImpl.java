@@ -1,12 +1,13 @@
 package me.caosh.condition.domain.service.impl;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
+import hbec.intellitrade.common.market.RealTimeMarketSupplier;
 import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.domain.factory.TradeCustomerFactory;
 import me.caosh.condition.domain.model.account.TradeCustomer;
+import me.caosh.condition.domain.model.order.BasicTriggerTradingContext;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.TriggerTradingContext;
-import me.caosh.condition.domain.model.order.BasicTriggerTradingContext;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.signal.BS;
 import me.caosh.condition.domain.model.signal.CacheSync;
@@ -16,7 +17,6 @@ import me.caosh.condition.domain.model.trade.EntrustOrderInfo;
 import me.caosh.condition.domain.model.trade.EntrustOrderWriter;
 import me.caosh.condition.domain.service.ConditionTradeService;
 import me.caosh.condition.domain.service.NewStockQueryService;
-import me.caosh.condition.domain.service.RealTimeMarketSupplier;
 import me.caosh.condition.infrastructure.repository.EntrustOrderRepository;
 import me.caosh.condition.infrastructure.repository.impl.EntrustOrderIdGenerator;
 import org.slf4j.Logger;
