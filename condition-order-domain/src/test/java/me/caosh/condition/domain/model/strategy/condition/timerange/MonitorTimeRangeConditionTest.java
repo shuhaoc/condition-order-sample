@@ -30,7 +30,7 @@ public class MonitorTimeRangeConditionTest {
                 new WeekTimeRange(new WeekRange(weekToday, weekToday),
                         new LocalTimeRange(LocalTime.now().minusHours(2), LocalTime.now().minusHours(1))),
                 new PriceCondition(CompareOperator.GE, new BigDecimal("10.00")));
-        assertEquals(condition.onMarketUpdate(getMockRealTimeMarket(new BigDecimal("10.01"))), Signals.none());
+        assertEquals(condition.onMarketTick(getMockRealTimeMarket(new BigDecimal("10.01"))), Signals.none());
     }
 
     @Test
@@ -40,7 +40,7 @@ public class MonitorTimeRangeConditionTest {
                 new WeekTimeRange(new WeekRange(weekToday, weekToday),
                         new LocalTimeRange(LocalTime.now().minusHours(1), LocalTime.now().plusHours(1))),
                 new PriceCondition(CompareOperator.GE, new BigDecimal("10.00")));
-        assertEquals(condition.onMarketUpdate(getMockRealTimeMarket(new BigDecimal("10.01"))), Signals.buyOrSell());
+        assertEquals(condition.onMarketTick(getMockRealTimeMarket(new BigDecimal("10.01"))), Signals.buyOrSell());
     }
 
     private RealTimeMarket getMockRealTimeMarket(BigDecimal currentPrice) {

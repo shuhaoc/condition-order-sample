@@ -55,7 +55,7 @@ public class MarketStrategyContext extends StrategyContext {
             return Signals.none();
         }
 
-        TradeSignal tradeSignal = ((MarketDrivenStrategy) getStrategy()).getCondition().onMarketUpdate(realTimeMarket);
+        TradeSignal tradeSignal = ((MarketDrivenStrategy) getStrategy()).getCondition().onMarketTick(realTimeMarket);
         if (tradeSignal.isValid()) {
             lockTriggering();
             return tradeSignal;

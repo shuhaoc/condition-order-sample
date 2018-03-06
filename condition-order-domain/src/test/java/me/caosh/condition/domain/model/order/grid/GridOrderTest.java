@@ -42,12 +42,12 @@ public class GridOrderTest {
                 tradePlan, StrategyState.ACTIVE);
 
         assertEquals(Signals.none(),
-                gridTradeOrder.getCondition().onMarketUpdate(new RealTimeMarket(pfyh.getMarketID(), new BigDecimal("13.01"),
+                gridTradeOrder.getCondition().onMarketTick(new RealTimeMarket(pfyh.getMarketID(), new BigDecimal("13.01"),
                         Collections.<BigDecimal>emptyList())));
 
         RealTimeMarket realTimeMarket = new RealTimeMarket(pfyh.getMarketID(), new BigDecimal("14.00"),
                 Collections.<BigDecimal>emptyList());
-        Signal signal = gridTradeOrder.getCondition().onMarketUpdate(realTimeMarket);
+        Signal signal = gridTradeOrder.getCondition().onMarketTick(realTimeMarket);
         assertEquals(Signals.sell(), signal);
         TradeCustomer tradeCustomer = new TradeCustomer(303348, "010000061086");
         TriggerTradingContext triggerTradingContext = new BasicTriggerTradingContext(signal, gridTradeOrder, tradeCustomer,
@@ -63,7 +63,7 @@ public class GridOrderTest {
 
         realTimeMarket = new RealTimeMarket(pfyh.getMarketID(), new BigDecimal("13.00"),
                 Collections.<BigDecimal>emptyList());
-        signal = gridTradeOrder.getCondition().onMarketUpdate(realTimeMarket);
+        signal = gridTradeOrder.getCondition().onMarketTick(realTimeMarket);
         assertEquals(Signals.buy(), signal);
         triggerTradingContext = new BasicTriggerTradingContext(signal, gridTradeOrder, tradeCustomer,
                 null, realTimeMarket);

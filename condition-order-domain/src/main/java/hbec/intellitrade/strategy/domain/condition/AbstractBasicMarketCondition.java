@@ -16,7 +16,7 @@ import java.math.BigDecimal;
  */
 public abstract class AbstractBasicMarketCondition implements PredictableMarketCondition {
     @Override
-    public TradeSignal onMarketUpdate(RealTimeMarket realTimeMarket) {
+    public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
         BigDecimal currentPrice = realTimeMarket.getCurrentPrice();
         TargetPriceFactor targetPriceFactor = getTargetPriceFactor();
         boolean satisfied = targetPriceFactor.apply(currentPrice);

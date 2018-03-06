@@ -19,8 +19,8 @@ public class NoneMonitorTimeRangeCondition implements MarketCondition {
     }
 
     @Override
-    public TradeSignal onMarketUpdate(RealTimeMarket realTimeMarket) {
-        return marketCondition.onMarketUpdate(realTimeMarket);
+    public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
+        return marketCondition.onMarketTick(realTimeMarket);
     }
 
     @Override

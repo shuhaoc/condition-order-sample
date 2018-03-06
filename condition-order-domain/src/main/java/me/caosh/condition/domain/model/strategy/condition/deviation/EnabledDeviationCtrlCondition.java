@@ -35,8 +35,8 @@ public class EnabledDeviationCtrlCondition implements DeviationCtrlCondition, Pr
     }
 
     @Override
-    public TradeSignal onMarketUpdate(RealTimeMarket realTimeMarket) {
-        TradeSignal tradeSignal = predictableMarketCondition.onMarketUpdate(realTimeMarket);
+    public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
+        TradeSignal tradeSignal = predictableMarketCondition.onMarketTick(realTimeMarket);
         if (!tradeSignal.isValid()) {
             return tradeSignal;
         }

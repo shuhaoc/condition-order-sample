@@ -25,11 +25,11 @@ public class MonitorTimeRangeCondition implements MarketCondition {
     }
 
     @Override
-    public TradeSignal onMarketUpdate(RealTimeMarket realTimeMarket) {
+    public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
         if (!monitorTimeRange.isInTimeRangeNow()) {
             return Signals.none();
         }
-        return marketCondition.onMarketUpdate(realTimeMarket);
+        return marketCondition.onMarketTick(realTimeMarket);
     }
 
     @Override

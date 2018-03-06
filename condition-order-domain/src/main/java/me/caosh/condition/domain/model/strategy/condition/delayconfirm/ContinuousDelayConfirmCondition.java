@@ -27,8 +27,8 @@ public class ContinuousDelayConfirmCondition implements MarketCondition {
     }
 
     @Override
-    public TradeSignal onMarketUpdate(RealTimeMarket realTimeMarket) {
-        TradeSignal tradeSignal = marketCondition.onMarketUpdate(realTimeMarket);
+    public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
+        TradeSignal tradeSignal = marketCondition.onMarketTick(realTimeMarket);
         if (!tradeSignal.isValid()) {
             counter.reset();
             logger.info("Confirmed count reset due to NONE signal");

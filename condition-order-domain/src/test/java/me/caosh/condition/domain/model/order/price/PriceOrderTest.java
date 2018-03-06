@@ -62,11 +62,11 @@ public class PriceOrderTest {
                 new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
                 StrategyState.ACTIVE);
 
-        assertEquals(priceOrder.getCondition().onMarketUpdate(MockMarkets.withCurrentPrice(new BigDecimal("13.01"))),
+        assertEquals(priceOrder.getCondition().onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("13.01"))),
                 Signals.none());
 
         final RealTimeMarket realTimeMarket = MockMarkets.withCurrentPrice(new BigDecimal("13.00"));
-        Signal signal = priceOrder.getCondition().onMarketUpdate(realTimeMarket);
+        Signal signal = priceOrder.getCondition().onMarketTick(realTimeMarket);
         assertEquals(signal, Signals.buyOrSell());
 
         doAnswer(new Answer() {

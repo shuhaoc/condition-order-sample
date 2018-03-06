@@ -18,5 +18,5 @@ public interface MarketCondition extends Condition {
      * @param realTimeMarket 实时消息
      * @return 交易信号
      */
-    TradeSignal onMarketUpdate(RealTimeMarket realTimeMarket);
+    TradeSignal onMarketTick(RealTimeMarket realTimeMarket);
 }

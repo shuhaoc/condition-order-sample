@@ -48,7 +48,7 @@ public class GridCondition implements MarketCondition {
     }
 
     @Override
-    public TradeSignal onMarketUpdate(RealTimeMarket realTimeMarket) {
+    public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
         Preconditions.checkNotNull(basePrice);
 
         BigDecimal currentPrice = realTimeMarket.getCurrentPrice();

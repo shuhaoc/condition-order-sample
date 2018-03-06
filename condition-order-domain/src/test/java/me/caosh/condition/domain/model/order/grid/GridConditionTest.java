@@ -22,16 +22,16 @@ public class GridConditionTest {
         MarketID pfyh = new MarketID(SecurityType.STOCK, "600000");
         GridCondition gridCondition = new GridCondition(new BigDecimal("1.00"), new BigDecimal("10.00"));
         assertEquals(Signals.none(),
-                gridCondition.onMarketUpdate(new RealTimeMarket(pfyh, new BigDecimal("10.99"),
+                gridCondition.onMarketTick(new RealTimeMarket(pfyh, new BigDecimal("10.99"),
                         Collections.<BigDecimal>emptyList())));
         assertEquals(Signals.sell(),
-                gridCondition.onMarketUpdate(new RealTimeMarket(pfyh, new BigDecimal("11.00"),
+                gridCondition.onMarketTick(new RealTimeMarket(pfyh, new BigDecimal("11.00"),
                         Collections.<BigDecimal>emptyList())));
         assertEquals(Signals.none(),
-                gridCondition.onMarketUpdate(new RealTimeMarket(pfyh, new BigDecimal("9.01"),
+                gridCondition.onMarketTick(new RealTimeMarket(pfyh, new BigDecimal("9.01"),
                         Collections.<BigDecimal>emptyList())));
         assertEquals(Signals.buy(),
-                gridCondition.onMarketUpdate(new RealTimeMarket(pfyh, new BigDecimal("9.00"),
+                gridCondition.onMarketTick(new RealTimeMarket(pfyh, new BigDecimal("9.00"),
                         Collections.<BigDecimal>emptyList())));
     }
 }

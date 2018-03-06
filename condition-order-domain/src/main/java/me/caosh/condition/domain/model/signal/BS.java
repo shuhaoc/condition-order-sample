@@ -17,11 +17,6 @@ public class BS extends AbstractSignal implements TradeSignal {
     }
 
     @Override
-    public boolean isValid() {
-        return true;
-    }
-
-    @Override
     public boolean getDeviationExceeded() {
         return Boolean.TRUE.equals(deviationExceeded);
     }

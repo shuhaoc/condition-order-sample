@@ -27,16 +27,16 @@ public class DeviationCtrlConditionTest {
 
         assertEquals(deviationCtrlCondition.getTargetPriceFactor(), new BasicTargetPriceFactor(CompareOperator.GE, new BigDecimal("10.00")));
 
-        TradeSignal tradeSignal1 = deviationCtrlCondition.onMarketUpdate(getMockRealTimeMarket(new BigDecimal("9.99")));
+        TradeSignal tradeSignal1 = deviationCtrlCondition.onMarketTick(getMockRealTimeMarket(new BigDecimal("9.99")));
         assertEquals(tradeSignal1, Signals.none());
 
-        TradeSignal tradeSignal2 = deviationCtrlCondition.onMarketUpdate(getMockRealTimeMarket(new BigDecimal("10.00")));
+        TradeSignal tradeSignal2 = deviationCtrlCondition.onMarketTick(getMockRealTimeMarket(new BigDecimal("10.00")));
         assertEquals(tradeSignal2, Signals.buyOrSell());
 
-        TradeSignal tradeSignal3 = deviationCtrlCondition.onMarketUpdate(getMockRealTimeMarket(new BigDecimal("10.10")));
+        TradeSignal tradeSignal3 = deviationCtrlCondition.onMarketTick(getMockRealTimeMarket(new BigDecimal("10.10")));
         assertEquals(tradeSignal3, Signals.buyOrSell());
 
-        TradeSignal tradeSignal4 = deviationCtrlCondition.onMarketUpdate(getMockRealTimeMarket(new BigDecimal("10.11")));
+        TradeSignal tradeSignal4 = deviationCtrlCondition.onMarketTick(getMockRealTimeMarket(new BigDecimal("10.11")));
         assertEquals(tradeSignal4, Signals.buyOrSell());
     }
 
@@ -46,17 +46,17 @@ public class DeviationCtrlConditionTest {
                 new PriceCondition(CompareOperator.GE, new BigDecimal("10.00")),
                 new BigDecimal(1));
 
-        TradeSignal tradeSignal1 = deviationCtrlCondition.onMarketUpdate(getMockRealTimeMarket(new BigDecimal("9.99")));
+        TradeSignal tradeSignal1 = deviationCtrlCondition.onMarketTick(getMockRealTimeMarket(new BigDecimal("9.99")));
         assertEquals(tradeSignal1, Signals.none());
 
-        TradeSignal tradeSignal2 = deviationCtrlCondition.onMarketUpdate(getMockRealTimeMarket(new BigDecimal("10.00")));
+        TradeSignal tradeSignal2 = deviationCtrlCondition.onMarketTick(getMockRealTimeMarket(new BigDecimal("10.00")));
         assertEquals(tradeSignal2, Signals.buyOrSell());
 
         // 偏差刚好等于1%，视为超出
-        TradeSignal tradeSignal3 = deviationCtrlCondition.onMarketUpdate(getMockRealTimeMarket(new BigDecimal("10.10")));
+        TradeSignal tradeSignal3 = deviationCtrlCondition.onMarketTick(getMockRealTimeMarket(new BigDecimal("10.10")));
         assertEquals(tradeSignal3, Signals.buyOrSell().withDeviationExceeded());
 
-        TradeSignal tradeSignal4 = deviationCtrlCondition.onMarketUpdate(getMockRealTimeMarket(new BigDecimal("10.11")));
+        TradeSignal tradeSignal4 = deviationCtrlCondition.onMarketTick(getMockRealTimeMarket(new BigDecimal("10.11")));
         assertEquals(tradeSignal4, Signals.buyOrSell().withDeviationExceeded());
 
         assertEquals(deviationCtrlCondition.getTargetPriceFactor(), new BasicTargetPriceFactor(CompareOperator.GE, new BigDecimal("10.00")));

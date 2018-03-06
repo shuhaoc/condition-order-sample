@@ -20,11 +20,11 @@ public class AccumulatedDelayConfirmConditionTest {
         AccumulatedDelayConfirmCondition delayConfirmCondition = new AccumulatedDelayConfirmCondition(3,
                 new PriceCondition(CompareOperator.GE, new BigDecimal("10.00")));
 
-        assertEquals(delayConfirmCondition.onMarketUpdate(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),
+        assertEquals(delayConfirmCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),
                 Signals.none());
-        assertEquals(delayConfirmCondition.onMarketUpdate(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),
+        assertEquals(delayConfirmCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),
                 Signals.none());
-        assertEquals(delayConfirmCondition.onMarketUpdate(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),
+        assertEquals(delayConfirmCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),
                 Signals.buyOrSell());
     }
 
@@ -33,13 +33,13 @@ public class AccumulatedDelayConfirmConditionTest {
         AccumulatedDelayConfirmCondition delayConfirmCondition = new AccumulatedDelayConfirmCondition(3,
                 new PriceCondition(CompareOperator.GE, new BigDecimal("10.00")));
 
-        assertEquals(delayConfirmCondition.onMarketUpdate(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),
+        assertEquals(delayConfirmCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),
                 Signals.none());
-        assertEquals(delayConfirmCondition.onMarketUpdate(MockMarkets.withCurrentPrice(new BigDecimal("9.00"))),
+        assertEquals(delayConfirmCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("9.00"))),
                 Signals.none());
-        assertEquals(delayConfirmCondition.onMarketUpdate(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),
+        assertEquals(delayConfirmCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),
                 Signals.none());
-        assertEquals(delayConfirmCondition.onMarketUpdate(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),
+        assertEquals(delayConfirmCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),
                 Signals.buyOrSell());
     }
 
