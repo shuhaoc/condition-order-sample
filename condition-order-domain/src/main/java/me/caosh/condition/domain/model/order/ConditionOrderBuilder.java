@@ -4,7 +4,7 @@ import hbec.intellitrade.common.security.SecurityInfoBuilder;
 import me.caosh.autoasm.ConvertibleBuilder;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.TradePlanBuilder;
-import me.caosh.condition.domain.model.strategy.condition.Condition;
+import hbec.intellitrade.strategy.domain.condition.Condition;
 import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
 
 /**

@@ -1,8 +1,8 @@
 package me.caosh.condition.domain.model.strategy.condition.delayconfirm;
 
 import com.google.common.base.Preconditions;
-import me.caosh.condition.domain.model.strategy.shared.DirtyFlag;
-import me.caosh.condition.domain.model.strategy.shared.DynamicProperty;
+import hbec.intellitrade.strategy.domain.shared.DirtyFlag;
+import hbec.intellitrade.strategy.domain.shared.DynamicProperty;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

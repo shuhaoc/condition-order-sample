@@ -15,7 +15,7 @@ import me.caosh.condition.domain.model.order.plan.TradePlan;
 import me.caosh.condition.domain.model.order.price.PriceOrder;
 import me.caosh.condition.domain.model.order.time.TimeOrder;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpBuyOrder;
-import me.caosh.condition.domain.model.strategy.condition.Condition;
+import hbec.intellitrade.strategy.domain.condition.Condition;
 import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
 import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
 

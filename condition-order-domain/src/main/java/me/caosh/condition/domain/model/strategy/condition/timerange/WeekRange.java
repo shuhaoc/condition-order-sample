@@ -3,9 +3,9 @@ package me.caosh.condition.domain.model.strategy.condition.timerange;
 import com.google.common.base.Function;
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
-import me.caosh.condition.domain.model.strategy.shared.Range;
-import me.caosh.condition.domain.model.strategy.shared.Ranges;
-import me.caosh.condition.domain.model.strategy.shared.Week;
+import hbec.intellitrade.strategy.domain.shared.Range;
+import hbec.intellitrade.strategy.domain.shared.Ranges;
+import hbec.intellitrade.strategy.domain.shared.Week;
 import org.joda.time.LocalDate;
 
 /**

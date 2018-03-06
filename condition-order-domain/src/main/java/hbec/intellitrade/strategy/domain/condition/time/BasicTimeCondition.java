@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.condition.time;
+package hbec.intellitrade.strategy.domain.condition.time;
 
 import hbec.intellitrade.strategy.domain.factor.TimeFactor;
 

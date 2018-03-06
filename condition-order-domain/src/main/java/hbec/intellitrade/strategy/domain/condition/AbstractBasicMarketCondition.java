@@ -1,10 +1,10 @@
-package me.caosh.condition.domain.model.strategy.condition;
+package hbec.intellitrade.strategy.domain.condition;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
 import me.caosh.condition.domain.model.signal.Signals;
 import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.domain.model.strategy.condition.market.PredictableMarketCondition;
+import hbec.intellitrade.strategy.domain.condition.market.PredictableMarketCondition;
 
 import java.math.BigDecimal;
 

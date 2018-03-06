@@ -5,7 +5,7 @@ import com.google.common.base.Optional;
 import hbec.intellitrade.strategy.domain.factor.DailyTargetTimeFactor;
 import hbec.intellitrade.strategy.domain.factor.TimeFactor;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
-import me.caosh.condition.domain.model.strategy.condition.AbstractBasicTimeCondition;
+import hbec.intellitrade.strategy.domain.condition.AbstractBasicTimeCondition;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 

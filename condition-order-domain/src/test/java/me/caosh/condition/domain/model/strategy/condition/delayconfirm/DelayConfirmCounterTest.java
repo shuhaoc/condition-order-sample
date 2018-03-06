@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.model.strategy.condition.delayconfirm;
 
-import me.caosh.condition.domain.model.strategy.shared.DynamicProperty;
+import hbec.intellitrade.strategy.domain.shared.DynamicProperty;
 import org.joda.time.LocalDate;
 import org.testng.annotations.Test;
 

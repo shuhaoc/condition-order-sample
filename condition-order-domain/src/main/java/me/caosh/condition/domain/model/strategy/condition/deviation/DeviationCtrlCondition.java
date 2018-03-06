@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.model.strategy.condition.deviation;
 
-import me.caosh.condition.domain.model.strategy.condition.market.MarketCondition;
+import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 
 /**
  * 偏差控制条件，扩展行情条件

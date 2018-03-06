@@ -1,6 +1,6 @@
-package me.caosh.condition.domain.model.strategy.condition;
+package hbec.intellitrade.strategy.domain.condition;
 
-import me.caosh.condition.domain.model.strategy.shared.DirtyFlag;
+import hbec.intellitrade.strategy.domain.shared.DirtyFlag;
 
 /**
  * 动态属性条件，属于有状态条件的一种

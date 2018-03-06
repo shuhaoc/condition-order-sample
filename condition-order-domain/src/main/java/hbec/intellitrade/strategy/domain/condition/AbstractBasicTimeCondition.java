@@ -1,8 +1,8 @@
-package me.caosh.condition.domain.model.strategy.condition;
+package hbec.intellitrade.strategy.domain.condition;
 
 import me.caosh.condition.domain.model.signal.Signals;
 import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.domain.model.strategy.condition.time.BasicTimeCondition;
+import hbec.intellitrade.strategy.domain.condition.time.BasicTimeCondition;
 import org.joda.time.LocalDateTime;
 
 /**

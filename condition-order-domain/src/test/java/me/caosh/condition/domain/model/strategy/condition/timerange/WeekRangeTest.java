@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.model.strategy.condition.timerange;
 
-import me.caosh.condition.domain.model.strategy.shared.Week;
+import hbec.intellitrade.strategy.domain.shared.Week;
 import org.joda.time.LocalDate;
 import org.testng.annotations.Test;
 

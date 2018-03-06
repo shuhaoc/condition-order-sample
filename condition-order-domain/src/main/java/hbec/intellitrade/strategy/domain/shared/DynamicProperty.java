@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.shared;
+package hbec.intellitrade.strategy.domain.shared;
 
 /**
  * 动态属性代理

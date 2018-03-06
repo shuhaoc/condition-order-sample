@@ -1,6 +1,6 @@
 package hbec.intellitrade.strategy.domain;
 
-import me.caosh.condition.domain.model.strategy.condition.market.MarketCondition;
+import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 
 /**
  * 行情驱动策略

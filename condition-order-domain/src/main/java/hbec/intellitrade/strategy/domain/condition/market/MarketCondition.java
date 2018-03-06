@@ -1,8 +1,8 @@
-package me.caosh.condition.domain.model.strategy.condition.market;
+package hbec.intellitrade.strategy.domain.condition.market;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
 import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.domain.model.strategy.condition.Condition;
+import hbec.intellitrade.strategy.domain.condition.Condition;
 
 /**
  * 行情条件，在行情更新时根据具体的条件返回交易信号

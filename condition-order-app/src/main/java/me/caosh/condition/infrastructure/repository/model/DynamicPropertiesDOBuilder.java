@@ -6,7 +6,7 @@ import me.caosh.condition.domain.model.condition.TurnUpCondition;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
 import me.caosh.condition.domain.model.order.grid.GridCondition;
 import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
-import me.caosh.condition.domain.model.strategy.condition.Condition;
+import hbec.intellitrade.strategy.domain.condition.Condition;
 import me.caosh.condition.domain.util.InstantUtils;
 
 import java.util.Date;

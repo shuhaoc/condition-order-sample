@@ -1,8 +1,8 @@
-package me.caosh.condition.domain.model.strategy.condition;
+package hbec.intellitrade.strategy.domain.condition;
 
 import me.caosh.condition.domain.model.order.ConditionVisitor;
-import me.caosh.condition.domain.model.strategy.condition.market.MarketCondition;
-import me.caosh.condition.domain.model.strategy.condition.time.TimeCondition;
+import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
+import hbec.intellitrade.strategy.domain.condition.time.TimeCondition;
 
 /**
  * 策略条件

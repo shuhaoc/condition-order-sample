@@ -4,9 +4,9 @@ import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
 import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.domain.model.strategy.condition.market.PredictableMarketCondition;
-import me.caosh.condition.domain.model.strategy.shared.BigDecimalRanges;
-import me.caosh.condition.domain.model.strategy.shared.Range;
+import hbec.intellitrade.strategy.domain.condition.market.PredictableMarketCondition;
+import hbec.intellitrade.strategy.domain.shared.BigDecimalRanges;
+import hbec.intellitrade.strategy.domain.shared.Range;
 
 import java.math.BigDecimal;
 

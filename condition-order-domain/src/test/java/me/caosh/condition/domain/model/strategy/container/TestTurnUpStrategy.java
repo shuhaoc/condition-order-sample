@@ -6,7 +6,7 @@ import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import me.caosh.condition.domain.model.condition.TurnUpCondition;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
-import me.caosh.condition.domain.model.strategy.shared.DirtyFlag;
+import hbec.intellitrade.strategy.domain.shared.DirtyFlag;
 import org.joda.time.LocalDateTime;
 
 /**

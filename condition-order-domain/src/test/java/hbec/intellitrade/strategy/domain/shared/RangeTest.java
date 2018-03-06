@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.shared;
+package hbec.intellitrade.strategy.domain.shared;
 
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import org.testng.annotations.Test;
@@ -23,8 +23,11 @@ public class RangeTest {
         assertTrue(range.isInRange(new BigDecimal("2")));
         assertFalse(range.isInRange(new BigDecimal("2.01")));
         assertEquals(range.toString(), "[1.00, 2.00]");
-        assertEquals(range, new Range<>(
-                new BigDecimal("1.00"), new BigDecimal("2.00"), CompareOperator.GE, CompareOperator.LE));
+
+        Range<BigDecimal> range2 = new Range<>(
+                new BigDecimal("1.00"), new BigDecimal("2.00"), CompareOperator.GE, CompareOperator.LE);
+        assertEquals(range, range2);
+        assertEquals(range.hashCode(), range2.hashCode());
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)

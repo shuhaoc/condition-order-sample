@@ -2,7 +2,7 @@ package me.caosh.condition.domain.model.strategy.condition.timerange;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
-import me.caosh.condition.domain.model.strategy.shared.Range;
+import hbec.intellitrade.strategy.domain.shared.Range;
 import org.joda.time.LocalTime;
 
 /**

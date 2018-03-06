@@ -5,8 +5,8 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.strategy.domain.factor.*;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
-import me.caosh.condition.domain.model.strategy.condition.AbstractBasicMarketCondition;
-import me.caosh.condition.domain.model.strategy.condition.DynamicCondition;
+import hbec.intellitrade.strategy.domain.condition.AbstractBasicMarketCondition;
+import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

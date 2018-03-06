@@ -6,7 +6,7 @@ import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import me.caosh.condition.domain.model.condition.PriceCondition;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
-import me.caosh.condition.domain.model.strategy.condition.market.MarketCondition;
+import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import org.joda.time.LocalDateTime;
 
 /**

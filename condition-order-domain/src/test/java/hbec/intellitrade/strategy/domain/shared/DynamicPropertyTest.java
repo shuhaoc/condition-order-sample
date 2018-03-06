@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.shared;
+package hbec.intellitrade.strategy.domain.shared;
 
 import org.testng.annotations.Test;
 

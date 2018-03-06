@@ -7,7 +7,7 @@ import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import me.caosh.condition.domain.model.condition.PriceCondition;
 import me.caosh.condition.domain.model.share.ValuedEnumUtil;
 import me.caosh.condition.domain.model.signal.Signals;
-import me.caosh.condition.domain.model.strategy.shared.Week;
+import hbec.intellitrade.strategy.domain.shared.Week;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;

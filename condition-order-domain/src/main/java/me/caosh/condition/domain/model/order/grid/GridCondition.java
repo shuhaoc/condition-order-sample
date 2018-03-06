@@ -6,7 +6,7 @@ import hbec.intellitrade.common.market.RealTimeMarket;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
 import me.caosh.condition.domain.model.signal.Signals;
 import me.caosh.condition.domain.model.signal.TradeSignal;
-import me.caosh.condition.domain.model.strategy.condition.market.MarketCondition;
+import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

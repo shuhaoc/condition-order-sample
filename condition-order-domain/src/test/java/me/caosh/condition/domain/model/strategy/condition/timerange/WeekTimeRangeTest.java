@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.model.strategy.condition.timerange;
 
 import com.google.common.base.Optional;
-import me.caosh.condition.domain.model.strategy.shared.Week;
+import hbec.intellitrade.strategy.domain.shared.Week;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.testng.annotations.Test;

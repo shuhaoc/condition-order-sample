@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.condition.market;
+package hbec.intellitrade.strategy.domain.condition.market;
 
 import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
 import me.caosh.condition.domain.model.strategy.condition.deviation.DeviationCtrlCondition;

@@ -1,6 +1,6 @@
 package hbec.intellitrade.strategy.domain;
 
-import me.caosh.condition.domain.model.strategy.condition.time.TimeCondition;
+import hbec.intellitrade.strategy.domain.condition.time.TimeCondition;
 
 /**
  * 时间驱动策略
