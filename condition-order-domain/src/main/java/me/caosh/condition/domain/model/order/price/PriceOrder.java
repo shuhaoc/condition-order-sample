@@ -11,6 +11,7 @@ import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
 import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
+import org.joda.time.LocalDateTime;
 
 /**
  * 价格条件单
@@ -25,6 +26,13 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder {
     public PriceOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                       PriceCondition priceCondition, BasicTradePlan tradePlan, StrategyState strategyState) {
         super(orderId, tradeCustomerInfo, securityInfo, tradePlan, strategyState);
+        this.priceCondition = priceCondition;
+    }
+
+    public PriceOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
+                      PriceCondition priceCondition, LocalDateTime expireTime, BasicTradePlan tradePlan,
+                      StrategyState strategyState) {
+        super(orderId, tradeCustomerInfo, securityInfo, expireTime, tradePlan, strategyState);
         this.priceCondition = priceCondition;
     }
 

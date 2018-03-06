@@ -24,6 +24,11 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
         super(orderId, tradeCustomerInfo, securityInfo, strategyState);
     }
 
+    public AbstractMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
+                                        LocalDateTime expireTime, StrategyState strategyState) {
+        super(orderId, tradeCustomerInfo, securityInfo, expireTime, strategyState);
+    }
+
     @Override
     public MarketID getTrackMarketID() {
         return getSecurityInfo().getMarketID();

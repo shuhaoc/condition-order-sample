@@ -5,6 +5,7 @@ import hbec.intellitrade.common.security.SecurityInfo;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by caosh on 2017/8/20.
@@ -15,6 +16,12 @@ public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketC
     public AbstractSimpleMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                                               BasicTradePlan tradePlan, StrategyState strategyState) {
         super(orderId, tradeCustomerInfo, securityInfo, strategyState);
+        this.tradePlan = tradePlan;
+    }
+
+    public AbstractSimpleMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
+                                              LocalDateTime expireTime, BasicTradePlan tradePlan, StrategyState strategyState) {
+        super(orderId, tradeCustomerInfo, securityInfo, expireTime, strategyState);
         this.tradePlan = tradePlan;
     }
 

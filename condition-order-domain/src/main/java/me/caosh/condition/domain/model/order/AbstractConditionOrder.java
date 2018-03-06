@@ -29,7 +29,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     private final Long orderId;
     private final TradeCustomerInfo tradeCustomerInfo;
     private final SecurityInfo securityInfo;
-    private final LocalDateTime expireTime = null;
+    private final LocalDateTime expireTime;
     private StrategyState strategyState;
 
     public AbstractConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
@@ -37,6 +37,16 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
         this.orderId = orderId;
         this.tradeCustomerInfo = tradeCustomerInfo;
         this.securityInfo = securityInfo;
+        this.expireTime = null;
+        this.strategyState = strategyState;
+    }
+
+    public AbstractConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
+                                  LocalDateTime expireTime, StrategyState strategyState) {
+        this.orderId = orderId;
+        this.tradeCustomerInfo = tradeCustomerInfo;
+        this.securityInfo = securityInfo;
+        this.expireTime = expireTime;
         this.strategyState = strategyState;
     }
 
@@ -71,7 +81,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
 
     @Override
     public Optional<LocalDateTime> getExpireTime() {
-        return Optional.absent();
+        return Optional.fromNullable(expireTime);
     }
 
     protected boolean isMonitoringState() {

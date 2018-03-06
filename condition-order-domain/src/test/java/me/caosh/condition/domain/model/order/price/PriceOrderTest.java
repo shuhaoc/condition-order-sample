@@ -6,6 +6,9 @@ import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
+import hbec.intellitrade.strategy.domain.signal.Signals;
+import hbec.intellitrade.trade.domain.EntrustOrderInfo;
+import hbec.intellitrade.trade.domain.EntrustOrderWriter;
 import me.caosh.condition.domain.model.account.TradeCustomer;
 import me.caosh.condition.domain.model.condition.PriceCondition;
 import me.caosh.condition.domain.model.order.BasicTriggerTradingContext;
@@ -15,10 +18,6 @@ import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradeNumberDirect;
-import hbec.intellitrade.strategy.domain.signal.Signal;
-import hbec.intellitrade.strategy.domain.signal.Signals;
-import hbec.intellitrade.trade.domain.EntrustOrderInfo;
-import hbec.intellitrade.trade.domain.EntrustOrderWriter;
 import me.caosh.condition.domain.util.MockMarkets;
 import org.joda.time.LocalDateTime;
 import org.mockito.Matchers;
@@ -90,17 +89,6 @@ public class PriceOrderTest {
     }
 
     @Test
-    public void testAutoTradeAction() throws Exception {
-//        List<EntrustCommand> entrustCommands = priceOrder.createEntrustCommands((TradeSignal) signal,
-//                triggerTradingContext);
-//        assertEquals(entrustCommands, Collections.singletonList(new EntrustCommand(pfyh, exchangeType, new BigDecimal("13.00"),
-//                100, OrderType.LIMITED)));
-//
-//        priceOrder.afterEntrustSuccess(triggerTradingContext, entrustCommands.get(0), EntrustResult.ofSuccess("OK", 98));
-//        priceOrder.afterEntrustCommandsExecuted(triggerTradingContext);
-    }
-
-    @Test
     public void testBasic() throws Exception {
         TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
         SecurityInfo pfyh = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
@@ -117,5 +105,21 @@ public class PriceOrderTest {
 
         assertEquals(priceOrder1, priceOrder2);
         assertEquals(priceOrder1.hashCode(), priceOrder2.hashCode());
+    }
+
+    @Test
+    public void testExpire() throws Exception {
+        TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
+        SecurityInfo pfyh = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
+        ExchangeType exchangeType = ExchangeType.BUY;
+
+        PriceOrder priceOrder = new PriceOrder(123L, tradeCustomerInfo, pfyh,
+                new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
+                LocalDateTime.parse("2018-03-06T10:00:00"),
+                new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
+                StrategyState.ACTIVE);
+
+        assertEquals(priceOrder.onTimeTick(LocalDateTime.parse("2018-03-06T09:59:59")), Signals.none());
+        assertEquals(priceOrder.onTimeTick(LocalDateTime.parse("2018-03-06T10:00:00")), Signals.expire());
     }
 }
