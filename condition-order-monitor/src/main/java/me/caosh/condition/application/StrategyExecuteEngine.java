@@ -12,6 +12,7 @@ import me.caosh.condition.domain.model.strategy.container.StrategyContainer;
 import me.caosh.condition.infrastructure.eventbus.MonitorEventBus;
 import me.caosh.condition.infrastructure.repository.MonitorRepository;
 import me.caosh.condition.infrastructure.timer.event.TimerEvent;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -48,14 +49,14 @@ public class StrategyExecuteEngine {
         Map<String, RealTimeMarket> realTimeMarketMap = e.getMarketMap();
         logger.info("---------------- Start checking ----------------");
 
-        Collection<SignalPayload> signalPayloads = strategyContainer.onMarketUpdate(e.getMarketMap().values());
+        Collection<SignalPayload> signalPayloads = strategyContainer.onMarketTicks(e.getMarketMap().values());
 
         logger.info("---------------- Finish checking, count={} ----------------", strategyContainer.size());
     }
 
     @Subscribe
     public void onTimer(TimerEvent e) {
-        Collection<SignalPayload> signalPayloads = strategyContainer.onSecondTick();
+        Collection<SignalPayload> signalPayloads = strategyContainer.onTimeTick(LocalDateTime.now());
     }
 
     @Subscribe

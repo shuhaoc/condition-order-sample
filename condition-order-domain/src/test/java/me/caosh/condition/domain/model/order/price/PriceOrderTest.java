@@ -20,6 +20,7 @@ import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.trade.domain.EntrustOrderInfo;
 import hbec.intellitrade.trade.domain.EntrustOrderWriter;
 import me.caosh.condition.domain.util.MockMarkets;
+import org.joda.time.LocalDateTime;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -56,17 +57,19 @@ public class PriceOrderTest {
         TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
         SecurityInfo pfyh = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
         ExchangeType exchangeType = ExchangeType.BUY;
-        PriceOrder priceOrder = new PriceOrder(123L, tradeCustomerInfo, pfyh,
+        PriceOrder priceOrder = new PriceOrder(123L,
+                tradeCustomerInfo,
+                pfyh,
                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                 new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
                 StrategyState.ACTIVE);
 
-        assertEquals(priceOrder.getCondition().onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("13.01"))),
-                Signals.none());
+        assertEquals(priceOrder.onTimeTick(LocalDateTime.now()), Signals.none());
+
+        assertEquals(priceOrder.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("13.01"))), Signals.none());
 
         final RealTimeMarket realTimeMarket = MockMarkets.withCurrentPrice(new BigDecimal("13.00"));
-        Signal signal = priceOrder.getCondition().onMarketTick(realTimeMarket);
-        assertEquals(signal, Signals.buyOrSell());
+        assertEquals(priceOrder.onMarketTick(realTimeMarket), Signals.buyOrSell());
 
         doAnswer(new Answer() {
             @Override
@@ -76,12 +79,18 @@ public class PriceOrderTest {
             }
         }).when(entrustOrderWriter).save(Matchers.<EntrustOrderInfo>any());
 
-        TradeCustomer tradeCustomer = new TradeCustomer(303348, "010000061086");
-        BasicTriggerTradingContext triggerTradingContext = new BasicTriggerTradingContext(signal, priceOrder, tradeCustomer,
-                realTimeMarketSupplier, entrustOrderWriter, realTimeMarket);
+        TradeCustomer tradeCustomer = new TradeCustomer(tradeCustomerInfo.getUserId(), tradeCustomerInfo.getCustomerNo());
+        BasicTriggerTradingContext triggerTradingContext = new BasicTriggerTradingContext(Signals.buyOrSell(),
+                priceOrder, tradeCustomer, realTimeMarketSupplier, entrustOrderWriter, realTimeMarket);
 
         priceOrder.onTradeSignal(triggerTradingContext);
 
+        assertEquals(priceOrder.getStrategyState(), StrategyState.TERMINATED);
+        verify(entrustOrderWriter, times(1)).save(Matchers.<EntrustOrderInfo>any());
+    }
+
+    @Test
+    public void testAutoTradeAction() throws Exception {
 //        List<EntrustCommand> entrustCommands = priceOrder.createEntrustCommands((TradeSignal) signal,
 //                triggerTradingContext);
 //        assertEquals(entrustCommands, Collections.singletonList(new EntrustCommand(pfyh, exchangeType, new BigDecimal("13.00"),
@@ -89,8 +98,6 @@ public class PriceOrderTest {
 //
 //        priceOrder.afterEntrustSuccess(triggerTradingContext, entrustCommands.get(0), EntrustResult.ofSuccess("OK", 98));
 //        priceOrder.afterEntrustCommandsExecuted(triggerTradingContext);
-        assertEquals(priceOrder.getStrategyState(), StrategyState.TERMINATED);
-        verify(entrustOrderWriter, times(1)).save(Matchers.<EntrustOrderInfo>any());
     }
 
     @Test

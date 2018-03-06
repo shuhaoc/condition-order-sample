@@ -103,8 +103,9 @@ public class StrategyContext {
      * 接受秒级时间通知，对所有策略适用
      *
      * @return 信号
+     * @param localDateTime
      */
-    public Signal onSecondTick() {
+    public Signal onTimeTick(LocalDateTime localDateTime) {
         // 触发锁定期间不执行
         if (isTriggerLocked()) {
             logger.warn("Trigger locked, strategyId={}, lockedDuration={}", getStrategy().getStrategyId(),
@@ -118,35 +119,18 @@ public class StrategyContext {
             return Signals.none();
         }
 
-        // 过期判断
-        if (isStrategyExpired()) {
-            return Signals.expire();
+        Signal signal = strategy.onTimeTick(localDateTime);
+        if (signal.isValid()) {
+            lockTriggering();
+            return signal;
         }
 
-        // 延迟同步到期的触发同步信号（仅行情驱动策略需要延迟同步，不会影响时间驱动策略的触发）
+        // 延迟同步到期的触发同步信号（仅行情驱动策略需要延迟同步）
         if (isDelaySyncTimesUp()) {
             clearDelaySyncMarker();
             return Signals.cacheSync();
         }
-
-        // 计算时间驱动策略的条件
-        if (getStrategy() instanceof TimeDrivenStrategy) {
-            TimeDrivenStrategy timeDrivenStrategy = (TimeDrivenStrategy) getStrategy();
-            TradeSignal tradeSignal = timeDrivenStrategy.getCondition().onTimeTick();
-            if (tradeSignal.isValid()) {
-                lockTriggering();
-            }
-            return tradeSignal;
-        }
         return Signals.none();
-    }
-
-    private boolean isStrategyExpired() {
-        boolean expireTimeConfigured = strategy.getExpireTime().isPresent();
-        if (expireTimeConfigured) {
-            return LocalDateTime.now().compareTo(strategy.getExpireTime().get()) >= 0;
-        }
-        return false;
     }
 
     @Override

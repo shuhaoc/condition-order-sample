@@ -70,19 +70,19 @@ public class StrategyContainerTest {
         container.add(testPriceStrategy);
 
         RealTimeMarket realTimeMarket1 = new RealTimeMarket(new MarketID(SecurityType.STOCK, "600012"),
-                new BigDecimal("10.99"), new BigDecimal("11.00"), Collections.<BigDecimal>emptyList());
-        assertTrue(container.onMarketUpdate(Collections.singleton(realTimeMarket1)).isEmpty());
+                new BigDecimal("10.99"), new BigDecimal("11.00"), Collections.<BigDecimal>emptyList(), LocalDateTime.now());
+        assertTrue(container.onMarketTicks(Collections.singleton(realTimeMarket1)).isEmpty());
 
         RealTimeMarket realTimeMarket2 = new RealTimeMarket(MARKET_ID, new BigDecimal("10.00"), new BigDecimal("9.99"),
-                Collections.<BigDecimal>emptyList());
-        Collection<SignalPayload> signalPayloads = container.onMarketUpdate(Collections.singleton(realTimeMarket2));
+                Collections.<BigDecimal>emptyList(), LocalDateTime.now());
+        Collection<SignalPayload> signalPayloads = container.onMarketTicks(Collections.singleton(realTimeMarket2));
         assertEquals(signalPayloads.size(), 1);
         SignalPayload signalPayload = signalPayloads.iterator().next();
         System.out.println(signalPayload.getTriggerId());
         assertEquals(signalPayload.getSignal(), Signals.buyOrSell());
         assertEquals(signalPayload.getStrategy(), testPriceStrategy);
 
-        assertTrue(container.onSecondTick().isEmpty());
+        assertTrue(container.onTimeTick(LocalDateTime.now()).isEmpty());
     }
 
     @Test
@@ -94,13 +94,13 @@ public class StrategyContainerTest {
         TestTimeStrategy testTimeStrategy1 = new TestTimeStrategy(2,
                 new TimeReachedCondition(LocalDateTime.now().plusHours(1)));
         container.add(testTimeStrategy1);
-        assertTrue(container.onSecondTick().isEmpty());
+        assertTrue(container.onTimeTick(LocalDateTime.now()).isEmpty());
 
         TestTimeStrategy testTimeStrategy2 = new TestTimeStrategy(2,
                 new TimeReachedCondition(LocalDateTime.now()));
         container.add(testTimeStrategy2);
         assertEquals(container.getBucket(TimeDrivenBucketKey.INSTANCE).size(), 1);
-        Collection<SignalPayload> signalPayloads = container.onSecondTick();
+        Collection<SignalPayload> signalPayloads = container.onTimeTick(LocalDateTime.now());
         assertEquals(signalPayloads.size(), 1);
         SignalPayload signalPayload = signalPayloads.iterator().next();
         assertEquals(signalPayload.getSignal(), Signals.buyOrSell());
@@ -115,9 +115,9 @@ public class StrategyContainerTest {
         StrategyContainer container = new StrategyContainer();
         container.add(testPriceStrategy);
 
-        assertTrue(container.onMarketUpdate(Collections.singleton(MockMarkets.withCurrentPrice(
+        assertTrue(container.onMarketTicks(Collections.singleton(MockMarkets.withCurrentPrice(
                 new BigDecimal("10.00")))).isEmpty());
 
-        assertTrue(container.onSecondTick().isEmpty());
+        assertTrue(container.onTimeTick(LocalDateTime.now()).isEmpty());
     }
 }

@@ -74,6 +74,18 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
         return Optional.absent();
     }
 
+    protected boolean isMonitoringState() {
+        return strategyState == StrategyState.ACTIVE || strategyState == StrategyState.PAUSED;
+    }
+
+    protected boolean isExpiredAt(LocalDateTime localDateTime) {
+        boolean expireTimeConfigured = getExpireTime().isPresent();
+        if (expireTimeConfigured) {
+            return localDateTime.compareTo(getExpireTime().get()) >= 0;
+        }
+        return false;
+    }
+
     @Override
     public void onTradeSignal(TriggerTradingContext triggerTradingContext) {
         List<EntrustCommand> entrustCommands = createEntrustCommands((TradeSignal) triggerTradingContext.getSignal(), triggerTradingContext);

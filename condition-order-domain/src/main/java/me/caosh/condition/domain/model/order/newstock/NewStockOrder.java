@@ -5,6 +5,8 @@ import com.google.common.collect.Lists;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.strategy.domain.condition.Condition;
+import hbec.intellitrade.strategy.domain.signal.Signal;
+import hbec.intellitrade.strategy.domain.signal.Signals;
 import me.caosh.condition.domain.model.market.SecurityInfoConstants;
 import me.caosh.condition.domain.model.newstock.NewStock;
 import me.caosh.condition.domain.model.order.AbstractConditionOrder;
@@ -21,6 +23,9 @@ import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
 import hbec.intellitrade.trade.domain.EntrustCommand;
 import hbec.intellitrade.trade.domain.EntrustResult;
 import hbec.intellitrade.trade.domain.OrderType;
+import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,6 +36,8 @@ import java.util.List;
  * @author caoshuhao@touker.com
  */
 public class NewStockOrder extends AbstractConditionOrder {
+    private static final Logger logger = LoggerFactory.getLogger(NewStockOrder.class);
+
     private final AutoPurchaseTradePlan autoPurchaseTradePlan = new AutoPurchaseTradePlan();
     private final NewStockPurchaseCondition newStockPurchaseCondition;
 
@@ -59,6 +66,19 @@ public class NewStockOrder extends AbstractConditionOrder {
         return NativeStrategyInfo.NEW_STOCK;
     }
 
+    @Override
+    public Signal onTimeTick(LocalDateTime localDateTime) {
+        if (isMonitoringState() && isExpiredAt(localDateTime)) {
+            return Signals.expire();
+        }
+
+        if (getStrategyState() != StrategyState.ACTIVE) {
+            return Signals.none();
+        }
+
+        // TODO: pull up
+        return newStockPurchaseCondition.onTimeTick(LocalDateTime.now());
+    }
 
     public List<EntrustCommand> createEntrustCommand(List<NewStock> currentPurchasable) {
         return Lists.transform(currentPurchasable, new Function<NewStock, EntrustCommand>() {

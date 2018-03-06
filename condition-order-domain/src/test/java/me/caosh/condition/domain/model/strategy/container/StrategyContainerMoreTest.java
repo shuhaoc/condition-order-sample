@@ -36,10 +36,10 @@ public class StrategyContainerMoreTest {
         container.add(testPriceStrategy1);
         container.add(testPriceStrategy2);
 
-        assertTrue(container.onSecondTick().isEmpty());
+        assertTrue(container.onTimeTick(LocalDateTime.now()).isEmpty());
 
         testPriceStrategy2.setExpireTime(LocalDateTime.now());
-        Collection<SignalPayload> signalPayloads = container.onSecondTick();
+        Collection<SignalPayload> signalPayloads = container.onTimeTick(LocalDateTime.now());
         assertEquals(signalPayloads.size(), 1);
         SignalPayload signalPayload = signalPayloads.iterator().next();
         assertEquals(signalPayload.getSignal(), Signals.expire());
@@ -53,22 +53,22 @@ public class StrategyContainerMoreTest {
         container.add(testPriceStrategy);
 
         RealTimeMarket realTimeMarket1 = MockMarkets.withCurrentPrice(new BigDecimal("10.00"));
-        Collection<SignalPayload> signalPayloads1 = container.onMarketUpdate(Collections.singleton(realTimeMarket1));
+        Collection<SignalPayload> signalPayloads1 = container.onMarketTicks(Collections.singleton(realTimeMarket1));
         assertEquals(signalPayloads1.size(), 1);
         assertEquals(signalPayloads1.iterator().next().getSignal(), Signals.buyOrSell());
 
-        Collection<SignalPayload> signalPayloads2 = container.onMarketUpdate(Collections.singleton(realTimeMarket1));
+        Collection<SignalPayload> signalPayloads2 = container.onMarketTicks(Collections.singleton(realTimeMarket1));
         assertTrue(signalPayloads2.isEmpty());
 
-        Collection<SignalPayload> signalPayloads21 = container.onSecondTick();
+        Collection<SignalPayload> signalPayloads21 = container.onTimeTick(LocalDateTime.now());
         assertTrue(signalPayloads21.isEmpty());
 
         TimeUnit.SECONDS.sleep(1);
 
-        Collection<SignalPayload> signalPayloads22 = container.onSecondTick();
+        Collection<SignalPayload> signalPayloads22 = container.onTimeTick(LocalDateTime.now());
         assertTrue(signalPayloads22.isEmpty());
 
-        Collection<SignalPayload> signalPayloads3 = container.onMarketUpdate(Collections.singleton(realTimeMarket1));
+        Collection<SignalPayload> signalPayloads3 = container.onMarketTicks(Collections.singleton(realTimeMarket1));
         assertEquals(signalPayloads3.size(), 1);
         assertEquals(signalPayloads3.iterator().next().getSignal(), Signals.buyOrSell());
     }
@@ -81,22 +81,22 @@ public class StrategyContainerMoreTest {
         container.add(testTurnUpStrategy);
 
         RealTimeMarket realTimeMarket1 = MockMarkets.withCurrentPrice(new BigDecimal("9.00"));
-        Collection<SignalPayload> signalPayloads1 = container.onMarketUpdate(Collections.singleton(realTimeMarket1));
+        Collection<SignalPayload> signalPayloads1 = container.onMarketTicks(Collections.singleton(realTimeMarket1));
         assertTrue(signalPayloads1.isEmpty());
         assertFalse(testTurnUpStrategy.isDirty());
 
-        assertTrue(container.onSecondTick().isEmpty());
+        assertTrue(container.onTimeTick(LocalDateTime.now()).isEmpty());
 
         TimeUnit.MILLISECONDS.sleep(500);
         RealTimeMarket realTimeMarket2 = MockMarkets.withCurrentPrice(new BigDecimal("9.01"));
-        assertTrue(container.onMarketUpdate(Collections.singleton(realTimeMarket2)).isEmpty());
+        assertTrue(container.onMarketTicks(Collections.singleton(realTimeMarket2)).isEmpty());
 
         TimeUnit.MILLISECONDS.sleep(500);
-        Collection<SignalPayload> signalPayloads2 = container.onSecondTick();
+        Collection<SignalPayload> signalPayloads2 = container.onTimeTick(LocalDateTime.now());
         assertEquals(signalPayloads2.size(), 1);
         SignalPayload signalPayload = signalPayloads2.iterator().next();
         assertEquals(signalPayload.getSignal(), Signals.cacheSync());
 
-        assertTrue(container.onMarketUpdate(Collections.singleton(realTimeMarket2)).isEmpty());
+        assertTrue(container.onMarketTicks(Collections.singleton(realTimeMarket2)).isEmpty());
     }
 }

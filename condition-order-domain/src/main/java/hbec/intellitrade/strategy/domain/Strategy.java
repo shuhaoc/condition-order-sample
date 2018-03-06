@@ -1,6 +1,8 @@
 package hbec.intellitrade.strategy.domain;
 
 import com.google.common.base.Optional;
+import hbec.intellitrade.strategy.domain.signal.Signal;
+import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import org.joda.time.LocalDateTime;
@@ -41,4 +43,14 @@ public interface Strategy {
      * @return 过期时间
      */
     Optional<LocalDateTime> getExpireTime();
+
+    /**
+     * 接受时间Tick返回交易信号
+     * <p>
+     * {@link TradeSignal#isValid()}返回false表示无信号
+     *
+     * @param localDateTime 时间点
+     * @return 交易信号
+     */
+    Signal onTimeTick(LocalDateTime localDateTime);
 }

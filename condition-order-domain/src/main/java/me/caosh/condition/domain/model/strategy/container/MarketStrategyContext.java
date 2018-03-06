@@ -37,7 +37,7 @@ public class MarketStrategyContext extends StrategyContext {
      * @param realTimeMarket 实时行情
      * @return 信号
      */
-    public Signal onMarketUpdate(RealTimeMarket realTimeMarket) {
+    public Signal onMarketTick(RealTimeMarket realTimeMarket) {
         if (isTriggerLocked()) {
             logger.warn("Trigger locked, strategyId={}, lockedDuration={}", getStrategy().getStrategyId(),
                     getTriggerLockedDuration());
@@ -55,7 +55,7 @@ public class MarketStrategyContext extends StrategyContext {
             return Signals.none();
         }
 
-        TradeSignal tradeSignal = ((MarketDrivenStrategy) getStrategy()).getCondition().onMarketTick(realTimeMarket);
+        TradeSignal tradeSignal = ((MarketDrivenStrategy) getStrategy()).onMarketTick(realTimeMarket);
         if (tradeSignal.isValid()) {
             lockTriggering();
             return tradeSignal;

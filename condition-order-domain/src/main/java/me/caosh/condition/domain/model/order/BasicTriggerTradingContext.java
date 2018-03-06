@@ -41,19 +41,6 @@ public class BasicTriggerTradingContext implements TriggerTradingContext {
         tryInitTradingMarket(conditionOrder, triggerMarket);
     }
 
-    @Deprecated
-    public BasicTriggerTradingContext(Signal signal, ConditionOrder conditionOrder, TradeCustomer tradeCustomer,
-                                      RealTimeMarketSupplier realTimeMarketSupplier, RealTimeMarket triggerMarket) {
-        this.signal = signal;
-        this.conditionOrder = conditionOrder;
-        this.tradeCustomer = tradeCustomer;
-        this.realTimeMarketSupplier = realTimeMarketSupplier;
-        this.entrustOrderWriter = null;
-        this.triggerMarket = triggerMarket;
-
-        tryInitTradingMarket(conditionOrder, triggerMarket);
-    }
-
     private void tryInitTradingMarket(ConditionOrder conditionOrder, RealTimeMarket triggerMarket) {
         if (triggerMarket == null) {
             return;

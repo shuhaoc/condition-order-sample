@@ -13,7 +13,7 @@ import org.joda.time.LocalDateTime;
  */
 public abstract class AbstractBasicTimeCondition implements BasicTimeCondition {
     @Override
-    public TradeSignal onTimeTick() {
+    public TradeSignal onTimeTick(LocalDateTime localDateTime) {
         boolean satisfiedNow = getTimeFactor().apply(LocalDateTime.now());
         if (satisfiedNow) {
             return Signals.buyOrSell();

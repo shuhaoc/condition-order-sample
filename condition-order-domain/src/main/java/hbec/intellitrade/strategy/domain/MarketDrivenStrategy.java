@@ -2,9 +2,7 @@ package hbec.intellitrade.strategy.domain;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
-import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
-import org.joda.time.LocalDateTime;
 
 /**
  * 行情驱动策略
@@ -23,19 +21,11 @@ public interface MarketDrivenStrategy extends RealTimeMarketAware {
 
     /**
      * 接受实时行情Tick返回交易信号
+     * <p>
      * {@link TradeSignal#isValid()}返回false表示无信号
      *
      * @param realTimeMarket 实时消息
      * @return 交易信号
      */
     TradeSignal onMarketTick(RealTimeMarket realTimeMarket);
-
-    /**
-     * 接受时间Tick返回交易信号
-     * {@link TradeSignal#isValid()}返回false表示无信号
-     *
-     * @param localDateTime 时间点
-     * @return 交易信号
-     */
-    Signal onTimeTick(LocalDateTime localDateTime);
 }

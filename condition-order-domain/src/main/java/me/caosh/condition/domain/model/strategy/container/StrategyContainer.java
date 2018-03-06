@@ -14,6 +14,7 @@ import me.caosh.condition.domain.model.signalpayload.MarketSignalPayload;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import me.caosh.condition.domain.model.signalpayload.SignalPayload;
 import hbec.intellitrade.strategy.domain.signal.Signals;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -100,7 +101,7 @@ public class StrategyContainer {
      * @param realTimeMarkets 实时行情数据
      * @return 触发的信号集合
      */
-    public Collection<SignalPayload> onMarketUpdate(Iterable<RealTimeMarket> realTimeMarkets) {
+    public Collection<SignalPayload> onMarketTicks(Iterable<RealTimeMarket> realTimeMarkets) {
         List<SignalPayload> signalPayloads = Lists.newArrayList();
         for (RealTimeMarket realTimeMarket : realTimeMarkets) {
             MarketID marketID = realTimeMarket.getMarketID();
@@ -121,13 +122,14 @@ public class StrategyContainer {
     /**
      * 接受秒级时间变化
      *
+     * @param localDateTime 时间点
      * @return 触发的信号集合
      */
-    public Collection<SignalPayload> onSecondTick() {
+    public Collection<SignalPayload> onTimeTick(LocalDateTime localDateTime) {
         List<SignalPayload> signalPayloads = Lists.newArrayList();
         for (StrategyContext strategyContext : strategies.values()) {
             Strategy strategy = strategyContext.getStrategy();
-            Signal signal = checkTimeCondition(strategyContext);
+            Signal signal = checkTimeCondition(strategyContext,localDateTime);
             if (signal.isValid()) {
                 SignalPayload signalPayload = new SignalPayload(signal, strategy);
                 signalPayloads.add(signalPayload);
@@ -139,17 +141,17 @@ public class StrategyContainer {
     private Signal checkMarketCondition(MarketStrategyContext marketStrategyContext, RealTimeMarket realTimeMarket) {
         // 实现异常安全
         try {
-            return marketStrategyContext.onMarketUpdate(realTimeMarket);
+            return marketStrategyContext.onMarketTick(realTimeMarket);
         } catch (Exception e) {
             logger.error("Check error, strategyContext=" + marketStrategyContext, e);
             return Signals.none();
         }
     }
 
-    private Signal checkTimeCondition(StrategyContext strategyContext) {
+    private Signal checkTimeCondition(StrategyContext strategyContext, LocalDateTime localDateTime) {
         // 实现异常安全
         try {
-            return strategyContext.onSecondTick();
+            return strategyContext.onTimeTick(localDateTime);
         } catch (Exception e) {
             logger.error("Check error, strategyContext=" + strategyContext, e);
             return Signals.none();
