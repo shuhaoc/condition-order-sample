@@ -3,12 +3,22 @@ package me.caosh.condition.domain.model.order;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
 import hbec.intellitrade.common.security.SecurityInfo;
+import me.caosh.condition.domain.model.account.TradeCustomer;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
+import me.caosh.condition.domain.model.order.plan.SingleEntrustTradePlan;
+import me.caosh.condition.domain.model.signal.TradeSignal;
+import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.trade.EntrustResult;
 import org.joda.time.LocalDateTime;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
- * Created by caosh on 2017/8/2.
+ * 条件单骨架，并实现最常见的单委托、单次条件单逻辑
+ *
+ * @author caosh/caoshuhao@touker.com
+ * @date 2017/8/2
  */
 public abstract class AbstractConditionOrder implements ConditionOrder {
     private final Long orderId;
@@ -59,8 +69,21 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     }
 
     @Override
+    public List<EntrustCommand> onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier) {
+        SingleEntrustTradePlan singleEntrustTradePlan = (SingleEntrustTradePlan) getTradePlan();
+        EntrustCommand entrustCommand = singleEntrustTradePlan.createEntrustCommand(tradeSignal, getSecurityInfo(),
+                tradingMarketSupplier);
+        return Collections.singletonList(entrustCommand);
+    }
+
+    @Override
     public void afterEntrustSuccess(TriggerTradingContext triggerTradingContext, EntrustResult entrustResult) {
         // 默认无行为
+    }
+
+    @Override
+    public void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext) {
+        setStrategyState(StrategyState.TERMINATED);
     }
 
     @Override

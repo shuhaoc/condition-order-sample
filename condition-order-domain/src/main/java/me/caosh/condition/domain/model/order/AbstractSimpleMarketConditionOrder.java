@@ -24,11 +24,6 @@ public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketC
     }
 
     @Override
-    public void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext) {
-        setStrategyState(StrategyState.TERMINATED);
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

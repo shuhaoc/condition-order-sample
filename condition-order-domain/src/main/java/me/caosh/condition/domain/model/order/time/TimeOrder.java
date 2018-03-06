@@ -3,9 +3,8 @@ package me.caosh.condition.domain.model.order.time;
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.security.SecurityInfo;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
-import me.caosh.condition.domain.model.order.AbstractGeneralConditionOrder;
+import me.caosh.condition.domain.model.order.AbstractConditionOrder;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
-import me.caosh.condition.domain.model.order.TriggerTradingContext;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
@@ -16,7 +15,7 @@ import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
 /**
  * Created by caosh on 2017/8/20.
  */
-public class TimeOrder extends AbstractGeneralConditionOrder {
+public class TimeOrder extends AbstractConditionOrder {
 
     private final TimeReachedCondition timeReachedCondition;
     private final BasicTradePlan tradePlan;
@@ -46,11 +45,6 @@ public class TimeOrder extends AbstractGeneralConditionOrder {
     @Override
     public TradePlan getTradePlan() {
         return tradePlan;
-    }
-
-    @Override
-    public void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext) {
-        setStrategyState(StrategyState.TERMINATED);
     }
 
     @Override

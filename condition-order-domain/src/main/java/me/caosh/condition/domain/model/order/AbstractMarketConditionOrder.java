@@ -8,7 +8,7 @@ import me.caosh.condition.domain.model.order.constant.StrategyState;
 /**
  * Created by caosh on 2017/8/20.
  */
-public abstract class AbstractMarketConditionOrder extends AbstractGeneralConditionOrder implements MarketDrivenStrategy {
+public abstract class AbstractMarketConditionOrder extends AbstractConditionOrder implements MarketDrivenStrategy {
     public AbstractMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                                         StrategyState strategyState) {
         super(orderId, tradeCustomerInfo, securityInfo, strategyState);
