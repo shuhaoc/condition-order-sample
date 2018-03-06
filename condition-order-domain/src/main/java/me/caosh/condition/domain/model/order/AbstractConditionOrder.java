@@ -43,8 +43,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
         return strategyState;
     }
 
-    @Override
-    public void setStrategyState(StrategyState strategyState) {
+    protected void setStrategyState(StrategyState strategyState) {
         this.strategyState = strategyState;
     }
 

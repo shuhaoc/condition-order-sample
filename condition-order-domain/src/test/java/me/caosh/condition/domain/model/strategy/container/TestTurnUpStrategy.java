@@ -50,11 +50,6 @@ public class TestTurnUpStrategy implements MarketDrivenStrategy, DirtyFlag {
     }
 
     @Override
-    public void setStrategyState(StrategyState strategyState) {
-        this.strategyState = strategyState;
-    }
-
-    @Override
     public boolean isDirty() {
         return turnUpCondition.isDirty();
     }

@@ -109,8 +109,8 @@ public class StrategyContainerTest {
 
     @Test
     public void testState() throws Exception {
-        TestPriceStrategy testPriceStrategy = new TestPriceStrategy(1, MARKET_ID, PRICE_CONDITION);
-        testPriceStrategy.setStrategyState(StrategyState.PAUSED);
+        TestPriceStrategy testPriceStrategy = new TestPriceStrategy(1, MARKET_ID, PRICE_CONDITION, null,
+                StrategyState.PAUSED);
 
         StrategyContainer container = new StrategyContainer();
         container.add(testPriceStrategy);

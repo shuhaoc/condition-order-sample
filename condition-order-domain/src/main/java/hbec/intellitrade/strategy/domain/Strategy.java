@@ -36,13 +36,6 @@ public interface Strategy {
     StrategyState getStrategyState();
 
     /**
-     * 更新策略状态
-     *
-     * @param strategyState 策略状态
-     */
-    void setStrategyState(StrategyState strategyState);
-
-    /**
      * 获取过期时间
      *
      * @return 过期时间

@@ -28,8 +28,5 @@ public interface ConditionOrder extends Strategy {
     @Override
     StrategyState getStrategyState();
 
-    @Override
-    void setStrategyState(StrategyState strategyState);
-
     void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier);
 }

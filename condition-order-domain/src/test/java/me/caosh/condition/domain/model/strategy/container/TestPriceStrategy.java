@@ -34,6 +34,15 @@ class TestPriceStrategy implements MarketDrivenStrategy {
         this.expireTime = expireTime;
     }
 
+    public TestPriceStrategy(int strategyId, MarketID marketID, PriceCondition priceCondition, LocalDateTime expireTime,
+                             StrategyState strategyState) {
+        this.strategyId = strategyId;
+        this.marketID = marketID;
+        this.priceCondition = priceCondition;
+        this.expireTime = expireTime;
+        this.strategyState = strategyState;
+    }
+
     @Override
     public long getStrategyId() {
         return strategyId;
@@ -61,11 +70,6 @@ class TestPriceStrategy implements MarketDrivenStrategy {
     @Override
     public StrategyState getStrategyState() {
         return strategyState;
-    }
-
-    @Override
-    public void setStrategyState(StrategyState strategyState) {
-        this.strategyState = strategyState;
     }
 
     @Override
