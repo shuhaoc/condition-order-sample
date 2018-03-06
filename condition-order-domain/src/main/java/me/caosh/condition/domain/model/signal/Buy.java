@@ -4,10 +4,10 @@ package me.caosh.condition.domain.model.signal;
  * Created by caosh on 2017/8/1.
  */
 public class Buy extends BS {
-    public Buy() {
+    Buy() {
     }
 
-    public Buy(boolean deviationExceeded) {
+    private Buy(boolean deviationExceeded) {
         super(deviationExceeded);
     }
 

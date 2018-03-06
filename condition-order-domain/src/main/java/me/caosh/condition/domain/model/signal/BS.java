@@ -6,13 +6,13 @@ import com.google.common.base.MoreObjects;
  * Created by caosh on 2017/8/1.
  */
 public class BS extends AbstractSignal implements TradeSignal {
-    private final boolean deviationExceeded;
+    private final Boolean deviationExceeded;
 
-    public BS() {
-        deviationExceeded = false;
+    BS() {
+        this.deviationExceeded = null;
     }
 
-    public BS(boolean deviationExceeded) {
+    BS(boolean deviationExceeded) {
         this.deviationExceeded = deviationExceeded;
     }
 
@@ -23,7 +23,7 @@ public class BS extends AbstractSignal implements TradeSignal {
 
     @Override
     public boolean getDeviationExceeded() {
-        return deviationExceeded;
+        return Boolean.TRUE.equals(deviationExceeded);
     }
 
     @Override
@@ -38,22 +38,26 @@ public class BS extends AbstractSignal implements TradeSignal {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         BS bs = (BS) o;
 
-        return deviationExceeded == bs.deviationExceeded;
+        return deviationExceeded != null ? deviationExceeded.equals(bs.deviationExceeded) : bs.deviationExceeded == null;
     }
 
     @Override
     public int hashCode() {
-        return (deviationExceeded ? 1 : 0);
+        return deviationExceeded != null ? deviationExceeded.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(BS.class).omitNullValues()
+        return MoreObjects.toStringHelper(getClass().getSimpleName()).omitNullValues()
                 .add("deviationExceeded", deviationExceeded)
                 .toString();
     }

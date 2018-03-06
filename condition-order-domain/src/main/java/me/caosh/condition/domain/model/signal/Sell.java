@@ -4,10 +4,10 @@ package me.caosh.condition.domain.model.signal;
  * Created by caosh on 2017/8/1.
  */
 public class Sell extends BS {
-    public Sell() {
+    Sell() {
     }
 
-    public Sell(boolean deviationExceeded) {
+    private Sell(boolean deviationExceeded) {
         super(deviationExceeded);
     }
 
