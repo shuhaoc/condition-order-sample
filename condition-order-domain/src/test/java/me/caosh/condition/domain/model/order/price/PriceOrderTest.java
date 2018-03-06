@@ -17,10 +17,14 @@ import me.caosh.condition.domain.model.order.plan.TradeNumberDirect;
 import me.caosh.condition.domain.model.signal.Signal;
 import me.caosh.condition.domain.model.signal.Signals;
 import me.caosh.condition.domain.model.signal.TradeSignal;
+import me.caosh.condition.domain.model.trade.EntrustCommand;
+import me.caosh.condition.domain.model.trade.OrderType;
+import me.caosh.condition.domain.util.MockMarkets;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 
@@ -41,17 +45,21 @@ public class PriceOrderTest {
                 new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
                 StrategyState.ACTIVE);
 
-        assertEquals(priceOrder.getCondition().onMarketUpdate(new RealTimeMarket(pfyh.getMarketID(), new BigDecimal("13.01"),
-                        Collections.<BigDecimal>emptyList())),
+        assertEquals(priceOrder.getCondition().onMarketUpdate(MockMarkets.withCurrentPrice(new BigDecimal("13.01"))),
                 Signals.none());
 
-        final RealTimeMarket realTimeMarket = new RealTimeMarket(pfyh.getMarketID(), new BigDecimal("13.00"),
-                Collections.<BigDecimal>emptyList());
+        final RealTimeMarket realTimeMarket = MockMarkets.withCurrentPrice(new BigDecimal("13.00"));
         Signal signal = priceOrder.getCondition().onMarketUpdate(realTimeMarket);
         assertEquals(signal, Signals.buyOrSell());
 
         TradeCustomer tradeCustomer = new TradeCustomer(303348, "010000061086");
-        priceOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, new WrapperTradingMarketSupplier(realTimeMarket));
+        List<EntrustCommand> entrustCommands = priceOrder.onTradeSignal((TradeSignal) signal, tradeCustomer,
+                new WrapperTradingMarketSupplier(realTimeMarket));
+        assertEquals(entrustCommands, Collections.singletonList(new EntrustCommand(pfyh, exchangeType, new BigDecimal("13.00"),
+                100, OrderType.LIMITED)));
+        // do not care
+        priceOrder.afterEntrustSuccess(null, null);
+        priceOrder.afterEntrustCommandsExecuted(null);
         assertEquals(priceOrder.getStrategyState(), StrategyState.TERMINATED);
     }
 

@@ -5,7 +5,6 @@ import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.domain.factory.TradeCustomerFactory;
 import me.caosh.condition.domain.model.account.TradeCustomer;
 import me.caosh.condition.domain.model.order.ConditionOrder;
-import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.TriggerTradingContext;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.signal.BS;
@@ -14,6 +13,7 @@ import me.caosh.condition.domain.model.signal.Signal;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.trade.EntrustOrder;
+import me.caosh.condition.domain.model.trade.EntrustResult;
 import me.caosh.condition.domain.service.ConditionTradeService;
 import me.caosh.condition.domain.service.NewStockQueryService;
 import me.caosh.condition.domain.service.RealTimeMarketService;
@@ -23,6 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 仅作demo，此处实现没有做到下单与本地事务的一致性保证
@@ -72,7 +74,11 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
 //            if (conditionOrder instanceof TriggerPhaseListener) {
 //                ((TriggerPhaseListener) conditionOrder).afterEntrustCommandsExecuted(triggerTradingContext);
 //            }
-            conditionOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, triggerTradingContext);
+            List<EntrustCommand> entrustCommands = conditionOrder.onTradeSignal((TradeSignal) signal, tradeCustomer, triggerTradingContext);
+            for (EntrustCommand entrustCommand : entrustCommands) {
+                handleEntrustCommand(triggerTradingContext, entrustCommand);
+            }
+            conditionOrder.afterEntrustCommandsExecuted(triggerTradingContext);
             conditionOrderCommandService.update(conditionOrder);
         } else if (signal instanceof CacheSync) {
             // TODO: use visitor pattern
@@ -83,16 +89,18 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
 
     private void handleEntrustCommand(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand) {
         ConditionOrder conditionOrder = triggerTradingContext.getConditionOrder();
-        TradeCustomerInfo tradeCustomerInfo = conditionOrder.getCustomer();
-//        EntrustResult entrustResult = tradeCustomerInfo.entrust(entrustCommand);
-//        logger.info("Entrust result <== {}", entrustResult);
-//
-//        if (conditionOrder instanceof EntrustResultAware) {
-//            ((EntrustResultAware) conditionOrder).afterEntrustReturned(triggerTradingContext, entrustResult);
-//        }
+        TradeCustomer tradeCustomer = triggerTradingContext.getTradeCustomer();
+        EntrustResult entrustResult = null;
+        try {
+            entrustResult = tradeCustomer.entrust(entrustCommand);
+            logger.info("Entrust result <== {}", entrustResult);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         long entrustId = entrustOrderIdGenerator.nextId();
-        EntrustOrder entrustOrder = new EntrustOrder(entrustId, conditionOrder.getOrderId(), tradeCustomerInfo, entrustCommand, null);
+        EntrustOrder entrustOrder = new EntrustOrder(entrustId, conditionOrder.getOrderId(), conditionOrder.getCustomer(),
+                entrustCommand, entrustResult);
         entrustOrderRepository.save(entrustOrder);
     }
 

@@ -2,15 +2,13 @@ package me.caosh.condition.domain.model.order.time;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.security.SecurityInfo;
-import me.caosh.condition.domain.model.account.TradeCustomer;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
 import me.caosh.condition.domain.model.order.AbstractGeneralConditionOrder;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
-import me.caosh.condition.domain.model.order.TradingMarketSupplier;
+import me.caosh.condition.domain.model.order.TriggerTradingContext;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
-import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.condition.Condition;
 import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
 import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
@@ -51,8 +49,7 @@ public class TimeOrder extends AbstractGeneralConditionOrder {
     }
 
     @Override
-    public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier) {
-        super.onTradeSignal(tradeSignal, tradeCustomer, tradingMarketSupplier);
+    public void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext) {
         setStrategyState(StrategyState.TERMINATED);
     }
 

@@ -57,6 +57,10 @@ public class TriggerTradingContext implements TradingMarketSupplier {
         return tradeCustomer;
     }
 
+    public RealTimeMarket getTriggerMarket() {
+        return triggerMarket;
+    }
+
     @Override
     public RealTimeMarket getTradingMarket() {
         if (tradingMarket != null) {

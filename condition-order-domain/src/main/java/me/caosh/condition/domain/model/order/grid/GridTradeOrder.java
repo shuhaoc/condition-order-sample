@@ -2,14 +2,12 @@ package me.caosh.condition.domain.model.order.grid;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.security.SecurityInfo;
-import me.caosh.condition.domain.model.account.TradeCustomer;
 import me.caosh.condition.domain.model.order.AbstractMarketConditionOrder;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
-import me.caosh.condition.domain.model.order.TradingMarketSupplier;
+import me.caosh.condition.domain.model.order.TriggerTradingContext;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
-import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.condition.Condition;
 import me.caosh.condition.domain.model.strategy.condition.market.MarketCondition;
 import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
@@ -58,11 +56,8 @@ public class GridTradeOrder extends AbstractMarketConditionOrder {
     }
 
     @Override
-    public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier) {
-        super.onTradeSignal(tradeSignal, tradeCustomer, tradingMarketSupplier);
-
-        // TODO: use trigger market
-        RealTimeMarket realTimeMarket = tradingMarketSupplier.getTradingMarket();
+    public void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext) {
+        RealTimeMarket realTimeMarket = triggerTradingContext.getTriggerMarket();
         logger.info("Changing base price {} => {}", gridCondition.getBasePrice(), realTimeMarket.getCurrentPrice());
         gridCondition.setBasePrice(realTimeMarket.getCurrentPrice());
     }

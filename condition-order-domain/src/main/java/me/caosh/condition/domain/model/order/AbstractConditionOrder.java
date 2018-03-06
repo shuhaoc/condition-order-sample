@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
 import hbec.intellitrade.common.security.SecurityInfo;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
+import me.caosh.condition.domain.model.trade.EntrustResult;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -55,6 +56,11 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     @Override
     public Optional<LocalDateTime> getExpireTime() {
         return Optional.absent();
+    }
+
+    @Override
+    public void afterEntrustSuccess(TriggerTradingContext triggerTradingContext, EntrustResult entrustResult) {
+        // 默认无行为
     }
 
     @Override

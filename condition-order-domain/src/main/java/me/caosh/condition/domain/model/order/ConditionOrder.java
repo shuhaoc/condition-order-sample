@@ -9,6 +9,7 @@ import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.strategy.condition.Condition;
 import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
+import me.caosh.condition.domain.model.trade.EntrustResult;
 
 import java.util.List;
 
@@ -36,5 +37,17 @@ public interface ConditionOrder extends Strategy {
     @Override
     StrategyState getStrategyState();
 
+    /**
+     * 交易信号处理行为
+     *
+     * @param tradeSignal           交易信号
+     * @param tradeCustomer         客户实体
+     * @param tradingMarketSupplier 交易标的实时行情supplier
+     * @return 交易指令
+     */
     List<EntrustCommand> onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier);
+
+    void afterEntrustSuccess(TriggerTradingContext triggerTradingContext, EntrustResult entrustResult);
+
+    void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext);
 }

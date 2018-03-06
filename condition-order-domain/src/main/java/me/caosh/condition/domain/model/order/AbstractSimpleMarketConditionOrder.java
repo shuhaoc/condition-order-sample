@@ -2,11 +2,9 @@ package me.caosh.condition.domain.model.order;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.security.SecurityInfo;
-import me.caosh.condition.domain.model.account.TradeCustomer;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
-import me.caosh.condition.domain.model.signal.TradeSignal;
 
 /**
  * Created by caosh on 2017/8/20.
@@ -26,8 +24,7 @@ public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketC
     }
 
     @Override
-    public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier) {
-        super.onTradeSignal(tradeSignal, tradeCustomer, tradingMarketSupplier);
+    public void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext) {
         setStrategyState(StrategyState.TERMINATED);
     }
 

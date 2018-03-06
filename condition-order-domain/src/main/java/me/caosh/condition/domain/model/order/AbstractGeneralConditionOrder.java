@@ -6,9 +6,11 @@ import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.SingleEntrustTradePlan;
 import me.caosh.condition.domain.model.signal.TradeSignal;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
-import me.caosh.condition.domain.model.trade.EntrustResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 普通条件单，一次仅触发一笔委托
@@ -25,11 +27,12 @@ public abstract class AbstractGeneralConditionOrder extends AbstractConditionOrd
     }
 
     @Override
-    public void onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier) {
+    public List<EntrustCommand> onTradeSignal(TradeSignal tradeSignal, TradeCustomer tradeCustomer, TradingMarketSupplier tradingMarketSupplier) {
         SingleEntrustTradePlan singleEntrustTradePlan = (SingleEntrustTradePlan) getTradePlan();
         EntrustCommand entrustCommand = singleEntrustTradePlan.createEntrustCommand(tradeSignal, getSecurityInfo(),
                 tradingMarketSupplier);
-        EntrustResult entrustResult = tradeCustomer.entrust(entrustCommand);
-        logger.info("Entrust result <== {}", entrustResult);
+//        EntrustResult entrustResult = tradeCustomer.entrust(entrustCommand);
+//        logger.info("Entrust result <== {}", entrustResult);
+        return Collections.singletonList(entrustCommand);
     }
 }
