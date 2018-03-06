@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.condition;
+package hbec.intellitrade.strategy.domain.strategies.condition;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;

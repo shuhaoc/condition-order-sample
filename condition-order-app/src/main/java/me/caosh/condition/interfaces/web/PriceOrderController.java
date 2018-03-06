@@ -5,7 +5,7 @@ import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
-import me.caosh.condition.domain.model.order.price.PriceOrder;
+import hbec.intellitrade.condorder.domain.orders.PriceOrder;
 import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
 import me.caosh.condition.infrastructure.repository.impl.ConditionOrderIdGenerator;
 import me.caosh.condition.interfaces.assembler.PriceOrderCommandAssembler;

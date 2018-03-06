@@ -5,7 +5,7 @@ import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import me.caosh.autoasm.AutoAssemblers;
-import me.caosh.condition.domain.model.condition.PriceCondition;
+import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import me.caosh.condition.domain.model.constants.EntrustMethod;
 import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
@@ -15,7 +15,7 @@ import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradeNumberByAmount;
-import me.caosh.condition.domain.model.order.price.PriceOrder;
+import hbec.intellitrade.condorder.domain.orders.PriceOrder;
 import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
 import org.junit.Test;
 

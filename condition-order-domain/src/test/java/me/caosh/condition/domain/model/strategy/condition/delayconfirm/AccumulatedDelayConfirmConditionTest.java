@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.model.strategy.condition.delayconfirm;
 
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
-import me.caosh.condition.domain.model.condition.PriceCondition;
+import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import me.caosh.condition.domain.util.MockMarkets;
 import org.testng.annotations.Test;

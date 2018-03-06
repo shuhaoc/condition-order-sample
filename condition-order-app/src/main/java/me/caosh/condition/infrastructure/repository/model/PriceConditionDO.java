@@ -2,8 +2,8 @@ package me.caosh.condition.infrastructure.repository.model;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.autoasm.MappedClass;
-import me.caosh.condition.domain.model.condition.PriceCondition;
-import me.caosh.condition.domain.model.condition.PriceConditionBuilder;
+import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
+import hbec.intellitrade.strategy.domain.strategies.condition.PriceConditionBuilder;
 
 import java.math.BigDecimal;
 

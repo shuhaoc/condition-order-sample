@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.model.order;
 
 import hbec.intellitrade.common.security.SecurityInfo;
-import me.caosh.condition.domain.model.condition.PriceCondition;
+import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
 import me.caosh.condition.domain.model.condition.TurnUpCondition;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
@@ -12,7 +12,7 @@ import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
 import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlan;
-import me.caosh.condition.domain.model.order.price.PriceOrder;
+import hbec.intellitrade.condorder.domain.orders.PriceOrder;
 import me.caosh.condition.domain.model.order.time.TimeOrder;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpBuyOrder;
 import hbec.intellitrade.strategy.domain.condition.Condition;

@@ -5,7 +5,7 @@ import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
-import me.caosh.condition.domain.model.condition.PriceCondition;
+import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import org.testng.annotations.Test;

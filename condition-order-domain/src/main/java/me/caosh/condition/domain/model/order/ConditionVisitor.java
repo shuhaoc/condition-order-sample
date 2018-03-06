@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.model.order;
 
-import me.caosh.condition.domain.model.condition.PriceCondition;
+import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
 import me.caosh.condition.domain.model.condition.TurnUpCondition;
 import me.caosh.condition.domain.model.order.grid.GridCondition;

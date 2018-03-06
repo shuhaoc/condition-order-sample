@@ -7,7 +7,7 @@ import me.caosh.condition.domain.dto.order.NewStockPurchaseConditionDTO;
 import me.caosh.condition.domain.dto.order.PriceConditionDTO;
 import me.caosh.condition.domain.dto.order.SimpleTimeConditionDTO;
 import me.caosh.condition.domain.dto.order.TurnUpConditionDTO;
-import me.caosh.condition.domain.model.condition.PriceCondition;
+import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
 import me.caosh.condition.domain.model.condition.TurnUpCondition;
 import me.caosh.condition.domain.model.order.ConditionVisitor;
