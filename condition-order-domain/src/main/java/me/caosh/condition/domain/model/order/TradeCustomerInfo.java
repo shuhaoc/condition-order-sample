@@ -1,7 +1,6 @@
 package me.caosh.condition.domain.model.order;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.model.account.User;
 
 /**
  * 交易客户信息
@@ -9,12 +8,17 @@ import me.caosh.condition.domain.model.account.User;
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/14
  */
-public class TradeCustomerInfo extends User {
+public class TradeCustomerInfo {
+    private final Integer userId;
     private final String customerNo;
 
     public TradeCustomerInfo(Integer userId, String customerNo) {
-        super(userId);
+        this.userId = userId;
         this.customerNo = customerNo;
+    }
+
+    public Integer getUserId() {
+        return userId;
     }
 
     public String getCustomerNo() {
@@ -29,18 +33,18 @@ public class TradeCustomerInfo extends User {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if (!super.equals(o)) {
-            return false;
-        }
 
         TradeCustomerInfo that = (TradeCustomerInfo) o;
 
+        if (!userId.equals(that.userId)) {
+            return false;
+        }
         return customerNo.equals(that.customerNo);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
+        int result = userId.hashCode();
         result = 31 * result + customerNo.hashCode();
         return result;
     }
@@ -48,6 +52,7 @@ public class TradeCustomerInfo extends User {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(TradeCustomerInfo.class).omitNullValues()
+                .add("userId", userId)
                 .add("customerNo", customerNo)
                 .toString();
     }
