@@ -3,6 +3,7 @@ package me.caosh.condition.domain.model.order;
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
+import me.caosh.condition.domain.model.account.TradeCustomer;
 import me.caosh.condition.domain.model.signal.Signal;
 import me.caosh.condition.domain.service.RealTimeMarketService;
 import org.slf4j.Logger;

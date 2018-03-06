@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.factory;
 
-import me.caosh.condition.domain.model.order.TradeCustomer;
+import me.caosh.condition.domain.model.account.TradeCustomer;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import org.springframework.stereotype.Component;
 

@@ -2,9 +2,9 @@ package me.caosh.condition.domain.model.order.time;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.security.SecurityInfo;
+import me.caosh.condition.domain.model.account.TradeCustomer;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
 import me.caosh.condition.domain.model.order.AbstractGeneralConditionOrder;
-import me.caosh.condition.domain.model.order.TradeCustomer;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.TradingMarketSupplier;
 import me.caosh.condition.domain.model.order.constant.StrategyState;

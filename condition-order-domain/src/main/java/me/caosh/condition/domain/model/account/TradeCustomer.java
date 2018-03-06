@@ -1,7 +1,6 @@
-package me.caosh.condition.domain.model.order;
+package me.caosh.condition.domain.model.account;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.model.account.User;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import me.caosh.condition.domain.model.trade.EntrustCommand;
 import me.caosh.condition.domain.model.trade.EntrustResult;
