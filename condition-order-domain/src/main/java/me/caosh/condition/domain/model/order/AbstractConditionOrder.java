@@ -29,7 +29,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     }
 
     @Override
-    public int getStrategyId() {
+    public long getStrategyId() {
         return getOrderId().intValue();
     }
 

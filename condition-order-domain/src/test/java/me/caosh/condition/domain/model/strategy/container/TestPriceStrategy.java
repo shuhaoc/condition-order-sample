@@ -35,7 +35,7 @@ class TestPriceStrategy implements MarketDrivenStrategy {
     }
 
     @Override
-    public int getStrategyId() {
+    public long getStrategyId() {
         return strategyId;
     }
 

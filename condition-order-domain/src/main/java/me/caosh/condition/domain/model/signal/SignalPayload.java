@@ -16,7 +16,7 @@ public class SignalPayload {
     private final Strategy strategy;
 
     public SignalPayload(Signal signal, Strategy strategy) {
-        this.triggerId = SignalPayloads.triggerId(strategy.getStrategyId(), LocalTime.now());
+        this.triggerId = SignalPayloads.triggerId((int) strategy.getStrategyId(), LocalTime.now());
         this.signal = signal;
         this.strategy = strategy;
     }

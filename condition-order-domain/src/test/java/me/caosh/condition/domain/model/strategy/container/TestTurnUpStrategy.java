@@ -25,7 +25,7 @@ public class TestTurnUpStrategy implements MarketDrivenStrategy, DirtyFlag {
         this.turnUpCondition = turnUpCondition;
     }
 
-    public int getStrategyId() {
+    public long getStrategyId() {
         return strategyId;
     }
 

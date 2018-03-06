@@ -19,7 +19,7 @@ public interface Strategy {
      *
      * @return 策略ID
      */
-    int getStrategyId();
+    long getStrategyId();
 
     /**
      * 获取策略条件
