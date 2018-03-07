@@ -42,12 +42,12 @@ public class ConditionOrderDoAssemblerTest {
         ConditionOrder conditionOrder = new PriceOrder(
                 ORDER_ID,
                 new TradeCustomerInfo(USER_ID, CUSTOMER_NO),
-                securityInfo,
+                OrderState.ACTIVE, securityInfo,
                 new PriceCondition(CompareOperator.GE, new BigDecimal("10.00")),
                 null,
                 new BasicTradePlan(ExchangeType.SELL, EntrustStrategy.BUY1,
-                        new TradeNumberByAmount(new BigDecimal("10000.00"))),
-                OrderState.ACTIVE);
+                        new TradeNumberByAmount(new BigDecimal("10000.00")))
+        );
         ConditionOrderDO conditionOrderDO = AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDO.class);
         assertEquals(conditionOrderDO.getOrderId().longValue(), ORDER_ID);
         assertEquals(conditionOrderDO.getUserId().intValue(), USER_ID);

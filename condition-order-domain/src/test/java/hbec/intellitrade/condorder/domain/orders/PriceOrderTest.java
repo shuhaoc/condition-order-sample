@@ -59,11 +59,11 @@ public class PriceOrderTest {
         ExchangeType exchangeType = ExchangeType.BUY;
         PriceOrder priceOrder = new PriceOrder(123L,
                 tradeCustomerInfo,
-                pfyh,
+                OrderState.ACTIVE, pfyh,
                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                 null,
-                new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
-                OrderState.ACTIVE);
+                new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100))
+        );
 
         assertEquals(priceOrder.onTimeTick(LocalDateTime.now()), Signals.none());
 
@@ -97,16 +97,16 @@ public class PriceOrderTest {
         ExchangeType exchangeType = ExchangeType.BUY;
 
         LocalDateTime expireTime = LocalDateTime.now().plusDays(1);
-        PriceOrder priceOrder1 = new PriceOrder(123L, tradeCustomerInfo, pfyh,
+        PriceOrder priceOrder1 = new PriceOrder(123L, tradeCustomerInfo, OrderState.ACTIVE, pfyh,
                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                 expireTime,
-                new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
-                OrderState.ACTIVE);
-        PriceOrder priceOrder2 = new PriceOrder(123L, tradeCustomerInfo, pfyh,
+                new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100))
+        );
+        PriceOrder priceOrder2 = new PriceOrder(123L, tradeCustomerInfo, OrderState.ACTIVE, pfyh,
                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                 expireTime,
-                new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
-                OrderState.ACTIVE);
+                new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100))
+        );
 
         assertEquals(priceOrder1, priceOrder2);
         assertEquals(priceOrder1.hashCode(), priceOrder2.hashCode());
@@ -118,11 +118,11 @@ public class PriceOrderTest {
         SecurityInfo pfyh = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
         ExchangeType exchangeType = ExchangeType.BUY;
 
-        PriceOrder priceOrder = new PriceOrder(123L, tradeCustomerInfo, pfyh,
+        PriceOrder priceOrder = new PriceOrder(123L, tradeCustomerInfo, OrderState.ACTIVE, pfyh,
                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                 LocalDateTime.parse("2018-03-06T10:00:00"),
-                new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
-                OrderState.ACTIVE);
+                new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100))
+        );
 
         assertEquals(priceOrder.onTimeTick(LocalDateTime.parse("2018-03-06T09:59:59")), Signals.none());
         assertEquals(priceOrder.onTimeTick(LocalDateTime.parse("2018-03-06T10:00:00")), Signals.expire());

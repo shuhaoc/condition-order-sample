@@ -33,8 +33,8 @@ public class ConditionOrderFactory {
                                  SecurityInfo securityInfo, StrategyInfo strategyInfo, Condition condition,
                                  LocalDateTime expireTime, TradePlan tradePlan) {
         if (strategyInfo == NativeStrategyInfo.PRICE) {
-            return new PriceOrder(orderId, tradeCustomerInfo, securityInfo, (PriceCondition) condition, expireTime,
-                    (BasicTradePlan) tradePlan, orderState);
+            return new PriceOrder(orderId, tradeCustomerInfo, orderState, securityInfo, (PriceCondition) condition, expireTime,
+                    (BasicTradePlan) tradePlan);
         } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {
             return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,
                     (BasicTradePlan) tradePlan, orderState);

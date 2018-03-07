@@ -45,11 +45,11 @@ public class ConditionOrderRepositoryTest extends AbstractTestNGSpringContextTes
         TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
         SecurityInfo securityInfo = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
         PriceOrder priceOrder = new PriceOrder(conditionOrderIdGenerator.nextId(), tradeCustomerInfo,
-                securityInfo,
+                OrderState.ACTIVE, securityInfo,
                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                 LocalDateTime.parse("2018-03-09T15:00:00"),
-                new BasicTradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
-                OrderState.ACTIVE);
+                new BasicTradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100))
+        );
         conditionOrderRepository.save(priceOrder);
 
         Optional<ConditionOrder> another = conditionOrderRepository.findOne(priceOrder.getOrderId());

@@ -80,10 +80,10 @@ public class PriceOrderBuilder implements ConvertibleBuilder<PriceOrder> {
         return new PriceOrder(
                 orderId,
                 tradeCustomerInfo,
-                securityInfo.build(),
+                orderState, securityInfo.build(),
                 priceCondition,
                 expireTime,
-                (BasicTradePlan) tradePlan.build(),
-                orderState);
+                (BasicTradePlan) tradePlan.build()
+        );
     }
 }
