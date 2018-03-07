@@ -16,7 +16,12 @@ public class MarketSignalPayload extends SignalPayload {
     private final RealTimeMarket realTimeMarket;
 
     public MarketSignalPayload(Signal signal, Strategy strategy, RealTimeMarket realTimeMarket) {
-        super(SignalPayloads.triggerId((int) strategy.getStrategyId(), LocalTime.now()), signal, strategy);
+        super(SignalPayloads.triggerId((int) strategy.getStrategyId(), realTimeMarket.getMarketTime().toLocalTime()), signal, strategy);
+        this.realTimeMarket = realTimeMarket;
+    }
+
+    public MarketSignalPayload(int triggerId, Signal signal, Strategy strategy, RealTimeMarket realTimeMarket) {
+        super(triggerId, signal, strategy);
         this.realTimeMarket = realTimeMarket;
     }
 

@@ -11,14 +11,14 @@ import hbec.intellitrade.strategy.domain.signal.*;
  */
 public class SignalDTOBuilder implements SignalVisitor {
 
-    private TradeSignalDTO tradeSignalDTO;
+    private SignalDTO signalDTO;
 
     public SignalDTOBuilder(Signal signal) {
         signal.accept(this);
     }
 
-    public TradeSignalDTO build() {
-        return Preconditions.checkNotNull(tradeSignalDTO);
+    public SignalDTO build() {
+        return Preconditions.checkNotNull(signalDTO);
     }
 
     @Override
@@ -27,22 +27,22 @@ public class SignalDTOBuilder implements SignalVisitor {
     }
 
     @Override
-    public void visitBS(BS BS) {
-        this.tradeSignalDTO = new GeneralSignalDTO();
+    public void visitBS(BS bs) {
+        this.signalDTO = new BsSignalDTO();
     }
 
     @Override
     public void visitCacheSync(CacheSync cacheSync) {
-        this.tradeSignalDTO = new CacheSyncSignalDTO();
+        this.signalDTO = new CacheSyncSignalDTO();
     }
 
     @Override
     public void visitBuy(Buy buy) {
-        this.tradeSignalDTO = new BuySignalDTO();
+        this.signalDTO = new BuySignalDTO();
     }
 
     @Override
     public void visitSell(Sell sell) {
-        this.tradeSignalDTO = new SellSignalDTO();
+        this.signalDTO = new SellSignalDTO();
     }
 }

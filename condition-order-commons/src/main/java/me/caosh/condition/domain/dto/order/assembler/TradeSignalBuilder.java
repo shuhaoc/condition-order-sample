@@ -3,9 +3,9 @@ package me.caosh.condition.domain.dto.order.assembler;
 import com.google.common.base.Preconditions;
 import me.caosh.condition.domain.dto.order.BuySignalDTO;
 import me.caosh.condition.domain.dto.order.CacheSyncSignalDTO;
-import me.caosh.condition.domain.dto.order.GeneralSignalDTO;
+import me.caosh.condition.domain.dto.order.BsSignalDTO;
 import me.caosh.condition.domain.dto.order.SellSignalDTO;
-import me.caosh.condition.domain.dto.order.TradeSignalDTO;
+import me.caosh.condition.domain.dto.order.SignalDTO;
 import me.caosh.condition.domain.dto.order.TradeSignalDTOVisitor;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
@@ -19,8 +19,8 @@ public class TradeSignalBuilder implements TradeSignalDTOVisitor {
 
     private Signal signal;
 
-    public TradeSignalBuilder(TradeSignalDTO tradeSignalDTO) {
-        tradeSignalDTO.accept(this);
+    public TradeSignalBuilder(SignalDTO signalDTO) {
+        signalDTO.accept(this);
     }
 
     public Signal build() {
@@ -28,7 +28,7 @@ public class TradeSignalBuilder implements TradeSignalDTOVisitor {
     }
 
     @Override
-    public void visitGeneralSignalDTO(GeneralSignalDTO generalSignalDTO) {
+    public void visitGeneralSignalDTO(BsSignalDTO bsSignalDTO) {
         this.signal = Signals.buyOrSell();
     }
 

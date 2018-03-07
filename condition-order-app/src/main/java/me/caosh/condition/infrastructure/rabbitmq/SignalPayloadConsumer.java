@@ -1,15 +1,20 @@
 package me.caosh.condition.infrastructure.rabbitmq;
 
-import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
-import me.caosh.condition.domain.dto.order.assembler.TriggerMessageAssembler;
-import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
-import me.caosh.condition.domain.model.order.TriggerMessage;
-import me.caosh.condition.domain.model.share.Retry;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.strategy.domain.signalpayload.MarketSignalPayload;
+import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
+import hbec.intellitrade.strategy.domain.signalpayload.SignalPayloadBuilder;
+import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.application.order.SignalHandlerService;
+import me.caosh.condition.domain.dto.order.SignalPayloadDTO;
+import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.AmqpRejectAndDontRequeueException;
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageListener;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -24,8 +29,8 @@ import java.util.Collections;
  */
 @ConfigurationProperties(prefix = "me.caosh.condition.triggerMessage")
 @Component
-public class TriggerMessageConsumer {
-    private static final Logger logger = LoggerFactory.getLogger(TriggerMessageConsumer.class);
+public class SignalPayloadConsumer {
+    private static final Logger logger = LoggerFactory.getLogger(SignalPayloadConsumer.class);
 
     private String exchangeName;
     private String queueName;
@@ -35,7 +40,7 @@ public class TriggerMessageConsumer {
     private final AmqpAdmin amqpAdmin;
     private final SignalHandlerService signalHandlerService;
     // TODO: converter to domain model
-    private final MessageConverter messageConverter = new ConditionOrderGSONMessageConverter<>(TriggerMessageDTO.class);
+    private final MessageConverter messageConverter = new ConditionOrderGSONMessageConverter<>(SignalPayloadDTO.class);
 
     public void setExchangeName(String exchangeName) {
         this.exchangeName = exchangeName;
@@ -49,7 +54,7 @@ public class TriggerMessageConsumer {
         this.routingKey = routingKey;
     }
 
-    public TriggerMessageConsumer(ConnectionFactory connectionFactory, AmqpAdmin amqpAdmin, SignalHandlerService signalHandlerService) {
+    public SignalPayloadConsumer(ConnectionFactory connectionFactory, AmqpAdmin amqpAdmin, SignalHandlerService signalHandlerService) {
         this.connectionFactory = connectionFactory;
         this.amqpAdmin = amqpAdmin;
         this.signalHandlerService = signalHandlerService;
@@ -77,30 +82,12 @@ public class TriggerMessageConsumer {
     }
 
     private void handleTriggerMessage(final Message message) {
-        try {
-            Retry.times(3).onException(RuntimeException.class).execute(new Retry.BaseRetryAction<Void>() {
-                @Override
-                public Void onTry() throws Exception {
-                    tryHandleTriggerMessage(message);
-                    return null;
-                }
+        SignalPayloadDTO signalPayloadDTO = (SignalPayloadDTO) messageConverter.fromMessage(message);
+        logger.debug("Receive trigger message <== {}", signalPayloadDTO);
 
-                @Override
-                public void onFailedOnce(Exception e, int retriedTimes) {
-                    logger.warn("Try handle trigger message failed, retriedTimes=" + retriedTimes, e);
-                }
-            });
-        } catch (Exception e) {
-            throw new AmqpRejectAndDontRequeueException(e);
-        }
+        SignalPayload signalPayload = AutoAssemblers.getDefault().disassemble(signalPayloadDTO, SignalPayloadBuilder.class).build();
+        signalHandlerService.handleTriggerContext(signalPayload.getSignal(), (ConditionOrder) signalPayload.getStrategy(),
+                ((MarketSignalPayload) signalPayload).getRealTimeMarket());
     }
 
-    private void tryHandleTriggerMessage(Message message) {
-        TriggerMessageDTO triggerMessageDTO = (TriggerMessageDTO) messageConverter.fromMessage(message);
-        logger.debug("Receive trigger message <== {}", triggerMessageDTO);
-
-        TriggerMessage triggerMessage = TriggerMessageAssembler.fromDTO(triggerMessageDTO);
-        signalHandlerService.handleTriggerContext(triggerMessage.getSignal(), triggerMessage.getConditionOrder(),
-                triggerMessage.getRealTimeMarket().orNull());
-    }
 }

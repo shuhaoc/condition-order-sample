@@ -22,7 +22,6 @@ public class MarketID implements BucketKey {
     }
 
     public MarketID(SecurityType type, String code) {
-
         this.type = type;
         this.code = code;
     }

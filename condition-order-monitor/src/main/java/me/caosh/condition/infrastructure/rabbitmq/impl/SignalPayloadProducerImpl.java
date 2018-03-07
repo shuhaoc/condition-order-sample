@@ -1,9 +1,9 @@
 package me.caosh.condition.infrastructure.rabbitmq.impl;
 
-import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
-import me.caosh.condition.domain.dto.order.assembler.TriggerMessageAssembler;
+import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
+import me.caosh.autoasm.AutoAssemblers;
+import me.caosh.condition.domain.dto.order.SignalPayloadDTO;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
-import me.caosh.condition.domain.model.order.TriggerMessage;
 import me.caosh.condition.infrastructure.rabbitmq.SignalPayloadProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public class SignalPayloadProducerImpl implements SignalPayloadProducer {
     private final AmqpAdmin amqpAdmin;
     private final AmqpTemplate amqpTemplate;
 
-    private final MessageConverter messageConverter = new ConditionOrderGSONMessageConverter<>(TriggerMessageDTO.class);
+    private final MessageConverter messageConverter = new ConditionOrderGSONMessageConverter<>(SignalPayloadDTO.class);
 
     public SignalPayloadProducerImpl(AmqpAdmin amqpAdmin, AmqpTemplate amqpTemplate) {
         this.amqpAdmin = amqpAdmin;
@@ -56,14 +56,14 @@ public class SignalPayloadProducerImpl implements SignalPayloadProducer {
     }
 
     @Override
-    public void send(TriggerMessage triggerMessage) {
-        TriggerMessageDTO triggerMessageDTO = TriggerMessageAssembler.toDTO(triggerMessage);
-        send(triggerMessageDTO);
+    public void send(SignalPayload signalPayload) {
+        SignalPayloadDTO signalPayloadDTO = AutoAssemblers.getDefault().assemble(signalPayload, SignalPayloadDTO.class);
+        send(signalPayloadDTO);
     }
 
-    private void send(TriggerMessageDTO triggerMessageDTO) {
-        Message message = messageConverter.toMessage(triggerMessageDTO, new MessageProperties());
+    private void send(SignalPayloadDTO signalPayloadDTO) {
+        Message message = messageConverter.toMessage(signalPayloadDTO, new MessageProperties());
         amqpTemplate.send(exchangeName, routingKey, message);
-        logger.info("Send trigger message ==> {}", triggerMessageDTO);
+        logger.info("Send signal payload ==> {}", signalPayloadDTO);
     }
 }

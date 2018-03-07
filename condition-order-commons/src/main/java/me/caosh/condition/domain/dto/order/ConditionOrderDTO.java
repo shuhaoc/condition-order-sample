@@ -1,6 +1,7 @@
 package me.caosh.condition.domain.dto.order;
 
 import com.google.common.base.MoreObjects;
+import me.caosh.autoasm.Convertible;
 import me.caosh.autoasm.FieldMapping;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
 
@@ -12,6 +13,7 @@ import java.util.Date;
  *
  * @author caoshuhao@touker.com
  */
+@Convertible
 public class ConditionOrderDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 

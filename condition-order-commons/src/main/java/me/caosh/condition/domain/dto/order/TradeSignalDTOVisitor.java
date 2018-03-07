@@ -6,7 +6,7 @@ package me.caosh.condition.domain.dto.order;
  * @author caoshuhao@touker.com
  */
 public interface TradeSignalDTOVisitor {
-    void visitGeneralSignalDTO(GeneralSignalDTO generalSignalDTO);
+    void visitGeneralSignalDTO(BsSignalDTO bsSignalDTO);
     void visitCacheSyncDTO(CacheSyncSignalDTO cacheSyncSignalDTO);
 
     void visitBuySignalDTO(BuySignalDTO buySignalDTO);

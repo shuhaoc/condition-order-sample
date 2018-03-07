@@ -6,13 +6,14 @@ import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 import me.caosh.condition.domain.dto.order.BuySignalDTO;
 import me.caosh.condition.domain.dto.order.CacheSyncSignalDTO;
 import me.caosh.condition.domain.dto.order.ConditionDTO;
-import me.caosh.condition.domain.dto.order.GeneralSignalDTO;
+import me.caosh.condition.domain.dto.order.BsSignalDTO;
+import me.caosh.condition.domain.dto.order.ExpireSignalDTO;
 import me.caosh.condition.domain.dto.order.GridConditionDTO;
 import me.caosh.condition.domain.dto.order.NewStockPurchaseConditionDTO;
 import me.caosh.condition.domain.dto.order.PriceConditionDTO;
 import me.caosh.condition.domain.dto.order.SellSignalDTO;
 import me.caosh.condition.domain.dto.order.SimpleTimeConditionDTO;
-import me.caosh.condition.domain.dto.order.TradeSignalDTO;
+import me.caosh.condition.domain.dto.order.SignalDTO;
 import me.caosh.condition.domain.dto.order.TurnUpConditionDTO;
 
 /**
@@ -40,11 +41,12 @@ public class ConditionOrderDTOGSONUtils {
                         .registerSubtype(SimpleTimeConditionDTO.class)
                         .registerSubtype(GridConditionDTO.class)
                         .registerSubtype(NewStockPurchaseConditionDTO.class))
-                .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(TradeSignalDTO.class)
-                        .registerSubtype(GeneralSignalDTO.class)
+                .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(SignalDTO.class)
+                        .registerSubtype(BsSignalDTO.class)
                         .registerSubtype(CacheSyncSignalDTO.class)
                         .registerSubtype(BuySignalDTO.class)
-                        .registerSubtype(SellSignalDTO.class))
+                        .registerSubtype(SellSignalDTO.class)
+                        .registerSubtype(ExpireSignalDTO.class))
                 .create();
     }
 

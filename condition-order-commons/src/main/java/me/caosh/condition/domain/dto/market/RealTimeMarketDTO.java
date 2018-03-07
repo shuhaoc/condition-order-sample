@@ -1,9 +1,13 @@
 package me.caosh.condition.domain.dto.market;
 
 import com.google.common.base.MoreObjects;
+import me.caosh.autoasm.Convertible;
+import me.caosh.autoasm.FieldMapping;
+import org.joda.time.LocalDateTime;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,23 +15,18 @@ import java.util.List;
  *
  * @author caoshuhao@touker.com
  */
+@Convertible
 public class RealTimeMarketDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @FieldMapping(mappedProperty = "marketID.type")
     private Integer type;
+    @FieldMapping(mappedProperty = "marketID.code")
     private String code;
     private BigDecimal currentPrice;
+    private BigDecimal previousPrice;
     private List<BigDecimal> offeredPrices;
-
-    public RealTimeMarketDTO() {
-    }
-
-    public RealTimeMarketDTO(Integer type, String code, BigDecimal currentPrice, List<BigDecimal> offeredPrices) {
-        this.type = type;
-        this.code = code;
-        this.currentPrice = currentPrice;
-        this.offeredPrices = offeredPrices;
-    }
+    private Date marketTime;
 
     public Integer getType() {
         return type;
@@ -53,6 +52,14 @@ public class RealTimeMarketDTO implements Serializable {
         this.currentPrice = currentPrice;
     }
 
+    public BigDecimal getPreviousPrice() {
+        return previousPrice;
+    }
+
+    public void setPreviousPrice(BigDecimal previousPrice) {
+        this.previousPrice = previousPrice;
+    }
+
     public List<BigDecimal> getOfferedPrices() {
         return offeredPrices;
     }
@@ -61,13 +68,23 @@ public class RealTimeMarketDTO implements Serializable {
         this.offeredPrices = offeredPrices;
     }
 
+    public Date getMarketTime() {
+        return marketTime;
+    }
+
+    public void setMarketTime(Date marketTime) {
+        this.marketTime = marketTime;
+    }
+
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects.toStringHelper(RealTimeMarketDTO.class).omitNullValues()
                 .add("type", type)
                 .add("code", code)
                 .add("currentPrice", currentPrice)
+                .add("previousPrice", previousPrice)
                 .add("offeredPrices", offeredPrices)
+                .add("marketTime", marketTime)
                 .toString();
     }
 }
