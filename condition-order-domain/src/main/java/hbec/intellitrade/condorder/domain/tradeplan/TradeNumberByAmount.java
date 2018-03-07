@@ -58,8 +58,4 @@ public class TradeNumberByAmount implements TradeNumber {
                 .toString();
     }
 
-    @Override
-    public void accept(TradeNumberVisitor visitor) {
-        visitor.visitTradeNumberByAmount(this);
-    }
 }

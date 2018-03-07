@@ -51,8 +51,4 @@ public class TradeNumberDirect implements TradeNumber {
                 .toString();
     }
 
-    @Override
-    public void accept(TradeNumberVisitor visitor) {
-        visitor.visitTradeNumberDirect(this);
-    }
 }

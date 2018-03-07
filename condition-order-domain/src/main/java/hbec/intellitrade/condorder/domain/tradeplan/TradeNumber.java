@@ -11,8 +11,6 @@ import java.math.BigDecimal;
  * @date 2018/2/24
  */
 public interface TradeNumber {
-    void accept(TradeNumberVisitor visitor);
-
     /**
      * 委托方法
      *
