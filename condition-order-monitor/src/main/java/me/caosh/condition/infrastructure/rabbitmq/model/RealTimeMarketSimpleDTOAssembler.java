@@ -6,6 +6,7 @@ import com.google.common.collect.Maps;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.security.SecurityType;
+import org.joda.time.LocalDateTime;
 
 import java.util.Map;
 
@@ -17,18 +18,19 @@ import java.util.Map;
 public class RealTimeMarketSimpleDTOAssembler {
     public static RealTimeMarket fromDTO(SecurityType securityType, RealTimeMarketSimpleDTO realTimeMarketSimpleDTO) {
         MarketID marketID = new MarketID(securityType, realTimeMarketSimpleDTO.getC());
-        return new RealTimeMarket(marketID, realTimeMarketSimpleDTO.getP(), Lists.newArrayList(
-                realTimeMarketSimpleDTO.getSp5(),
-                realTimeMarketSimpleDTO.getSp4(),
-                realTimeMarketSimpleDTO.getSp3(),
-                realTimeMarketSimpleDTO.getSp2(),
-                realTimeMarketSimpleDTO.getSp1(),
-                realTimeMarketSimpleDTO.getBp1(),
-                realTimeMarketSimpleDTO.getBp2(),
-                realTimeMarketSimpleDTO.getBp3(),
-                realTimeMarketSimpleDTO.getBp4(),
-                realTimeMarketSimpleDTO.getBp5()
-        ));
+        return new RealTimeMarket(marketID, realTimeMarketSimpleDTO.getP(), realTimeMarketSimpleDTO.getPp(),
+                Lists.newArrayList(
+                        realTimeMarketSimpleDTO.getSp5(),
+                        realTimeMarketSimpleDTO.getSp4(),
+                        realTimeMarketSimpleDTO.getSp3(),
+                        realTimeMarketSimpleDTO.getSp2(),
+                        realTimeMarketSimpleDTO.getSp1(),
+                        realTimeMarketSimpleDTO.getBp1(),
+                        realTimeMarketSimpleDTO.getBp2(),
+                        realTimeMarketSimpleDTO.getBp3(),
+                        realTimeMarketSimpleDTO.getBp4(),
+                        realTimeMarketSimpleDTO.getBp5()
+                ), LocalDateTime.fromDateFields(realTimeMarketSimpleDTO.getDt()));
     }
 
     public static Map<String, RealTimeMarket> transformMap(final SecurityType securityType, Map<String, RealTimeMarketSimpleDTO> realTimeMarketDTOMap) {

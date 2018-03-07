@@ -18,7 +18,7 @@ import java.util.Map;
  * Created by caosh on 2017/8/11.
  */
 @ConfigurationProperties(prefix = "me.caosh.condition.conditionOrder")
-@Repository("redis")
+@Repository
 public class MonitorRepositoryRedisImpl implements MonitorRepository {
 
     private final RedisTemplate<String, ConditionOrder> redisTemplate;
@@ -49,14 +49,8 @@ public class MonitorRepositoryRedisImpl implements MonitorRepository {
         return getAll().values();
     }
 
-    @Override
-    public Map<Long, ConditionOrder> getAll() {
+    private Map<Long, ConditionOrder> getAll() {
         return redisTemplate.<Long, ConditionOrder>opsForHash().entries(monitorOrdersKey);
-    }
-
-    @Override
-    public void save(ConditionOrder conditionOrder) {
-        update(conditionOrder);
     }
 
     @Override

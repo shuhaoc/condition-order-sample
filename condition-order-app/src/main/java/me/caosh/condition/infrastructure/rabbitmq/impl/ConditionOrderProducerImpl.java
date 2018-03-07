@@ -2,7 +2,6 @@ package me.caosh.condition.infrastructure.rabbitmq.impl;
 
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.OrderState;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
@@ -63,24 +62,18 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
     }
 
     @Override
-    public void save(ConditionOrder conditionOrder) {
-        Preconditions.checkArgument(conditionOrder.getOrderState() == OrderState.ACTIVE);
-        send(exchangeName, routingKey, OrderCommandType.CREATE, conditionOrder);
-    }
-
-    @Override
     public void update(ConditionOrder conditionOrder) {
-        Preconditions.checkArgument(conditionOrder.getOrderState() == OrderState.ACTIVE,
-                "Order state should be ACTIVE");
-        send(exchangeName, routingKey, OrderCommandType.UPDATE, conditionOrder);
+        Preconditions.checkArgument(conditionOrder.isMonitoringState(),
+                "Order should be monitoring state");
+        sendUpdateCommand(exchangeName, routingKey, conditionOrder);
     }
 
-    private void send(String exchangeName, String routingKey, OrderCommandType update, ConditionOrder conditionOrder) {
+    private void sendUpdateCommand(String exchangeName, String routingKey, ConditionOrder conditionOrder) {
         ConditionOrderDTO conditionOrderDTO = AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDTO.class);
-        ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(update.getValue(), conditionOrderDTO);
+        ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(OrderCommandType.UPDATE.getValue(), conditionOrderDTO);
         Message message = messageConverter.toMessage(conditionOrderMonitorDTO, new MessageProperties());
         amqpTemplate.send(exchangeName, routingKey, message);
-        logger.info("Send condition order ==> {}", conditionOrderDTO);
+        logger.info("Send <UPDATE> command ==> {}", conditionOrderDTO);
     }
 
     @Override

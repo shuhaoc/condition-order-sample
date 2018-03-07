@@ -1,4 +1,4 @@
-package me.caosh.condition.infrastructure.timer.event;
+package me.caosh.condition.domain.event;
 
 /**
  * Created by caosh on 2017/8/16.

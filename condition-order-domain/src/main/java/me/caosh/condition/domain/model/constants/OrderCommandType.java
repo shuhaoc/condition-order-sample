@@ -6,9 +6,8 @@ import hbec.intellitrade.common.ValuedEnum;
  * Created by caosh on 2017/8/13.
  */
 public enum OrderCommandType implements ValuedEnum<Integer> {
-    CREATE(1),
-    UPDATE(2),
-    DELETE(3);
+    UPDATE(1),
+    DELETE(2);
 
     int value;
 

@@ -10,10 +10,6 @@ import java.util.Map;
 public interface MonitorRepository {
     Iterable<ConditionOrder> getAllOrders();
     
-    Map<Long, ConditionOrder> getAll();
-
-    void save(ConditionOrder conditionOrder);
-
     void update(ConditionOrder conditionOrder);
 
     void remove(Long orderId);

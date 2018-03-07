@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.order.event;
+package me.caosh.condition.domain.event;
 
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 
@@ -7,10 +7,10 @@ import hbec.intellitrade.condorder.domain.ConditionOrder;
  *
  * @author caoshuhao@touker.com
  */
-public class ConditionOrderCreateCommandEvent implements ConditionOrderCommandEvent {
+public class OrderUpdateCommandEvent implements OrderCommandEvent {
     private final ConditionOrder conditionOrder;
 
-    public ConditionOrderCreateCommandEvent(ConditionOrder conditionOrder) {
+    public OrderUpdateCommandEvent(ConditionOrder conditionOrder) {
         this.conditionOrder = conditionOrder;
     }
 

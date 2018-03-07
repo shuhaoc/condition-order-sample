@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.order.event;
+package me.caosh.condition.domain.event;
 
 import com.google.common.base.MoreObjects;
 
@@ -7,10 +7,10 @@ import com.google.common.base.MoreObjects;
  *
  * @author caoshuhao@touker.com
  */
-public class ConditionOrderDeleteCommandEvent implements ConditionOrderCommandEvent {
+public class OrderDeleteCommandEvent implements OrderCommandEvent {
     private final Long orderId;
 
-    public ConditionOrderDeleteCommandEvent(Long orderId) {
+    public OrderDeleteCommandEvent(Long orderId) {
         this.orderId = orderId;
     }
 

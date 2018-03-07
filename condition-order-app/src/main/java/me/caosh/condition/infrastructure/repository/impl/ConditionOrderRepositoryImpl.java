@@ -32,7 +32,7 @@ public class ConditionOrderRepositoryImpl implements ConditionOrderRepository {
         ConditionOrderDO conditionOrderDO = AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDO.class);
         conditionOrderTunnel.save(conditionOrderDO);
 
-        conditionOrderProducer.save(conditionOrder);
+        conditionOrderProducer.update(conditionOrder);
     }
 
     @Override

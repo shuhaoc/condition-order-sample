@@ -1,9 +1,15 @@
 package me.caosh.condition.infrastructure.rabbitmq;
 
+import hbec.intellitrade.common.ValuedEnumUtil;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.condorder.domain.ConditionOrderBuilder;
+import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
-import me.caosh.condition.domain.dto.order.assembler.ConditionOrderCommandEventFactory;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
-import me.caosh.condition.domain.model.order.event.ConditionOrderCommandEvent;
+import me.caosh.condition.domain.event.OrderUpdateCommandEvent;
+import me.caosh.condition.domain.model.constants.OrderCommandType;
+import me.caosh.condition.domain.event.OrderCommandEvent;
+import me.caosh.condition.domain.event.OrderDeleteCommandEvent;
 import me.caosh.condition.infrastructure.eventbus.MonitorEventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,10 +73,24 @@ public class ConditionOrderConsumer {
             public void onMessage(Message message) {
                 ConditionOrderMonitorDTO conditionOrderMonitorDTO = (ConditionOrderMonitorDTO) messageConverter.fromMessage(message);
                 logger.debug("Receive condition order message <== {}", conditionOrderMonitorDTO);
-                ConditionOrderCommandEvent event = ConditionOrderCommandEventFactory.getInstance().create(conditionOrderMonitorDTO);
+                OrderCommandEvent event = create(conditionOrderMonitorDTO);
                 MonitorEventBus.EVENT_SERIALIZED.post(event);
             }
         });
         container.start();
+    }
+
+    private OrderCommandEvent create(ConditionOrderMonitorDTO dto) {
+        OrderCommandType orderCommandType = ValuedEnumUtil.valueOf(dto.getOrderCommandType(), OrderCommandType.class);
+        switch (orderCommandType) {
+            case UPDATE:
+                ConditionOrder conditionOrder = AutoAssemblers.getDefault().disassemble(dto.getConditionOrderDTO(),
+                        ConditionOrderBuilder.class).build();
+                return new OrderUpdateCommandEvent(conditionOrder);
+            case DELETE:
+                return new OrderDeleteCommandEvent(dto.getOrderId());
+            default:
+                throw new IllegalArgumentException("orderCommandType" + dto.getOrderCommandType());
+        }
     }
 }

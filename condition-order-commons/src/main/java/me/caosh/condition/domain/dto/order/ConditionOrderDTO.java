@@ -20,6 +20,7 @@ public class ConditionOrderDTO implements Serializable {
     private Boolean deleted = false;
     private Integer orderState;
     private SecurityInfoDTO securityInfo;
+    @FieldMapping(mappedProperty = "strategyInfo.strategyType")
     private Integer strategyType;
     private ConditionDTO rawCondition;
     private String expireTime;
