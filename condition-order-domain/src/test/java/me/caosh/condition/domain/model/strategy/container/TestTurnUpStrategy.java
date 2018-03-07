@@ -54,11 +54,6 @@ public class TestTurnUpStrategy implements MarketDrivenStrategy, DirtyFlag {
     }
 
     @Override
-    public Optional<LocalDateTime> getExpireTime() {
-        return Optional.absent();
-    }
-
-    @Override
     public StrategyState getStrategyState() {
         return strategyState;
     }

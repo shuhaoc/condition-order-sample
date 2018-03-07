@@ -38,13 +38,6 @@ public interface Strategy {
     StrategyState getStrategyState();
 
     /**
-     * 获取过期时间
-     *
-     * @return 过期时间
-     */
-    Optional<LocalDateTime> getExpireTime();
-
-    /**
      * 接受时间Tick返回交易信号
      * <p>
      * {@link TradeSignal#isValid()}返回false表示无信号

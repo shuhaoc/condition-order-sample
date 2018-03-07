@@ -88,11 +88,6 @@ class TestPriceStrategy implements MarketDrivenStrategy {
     }
 
     @Override
-    public Optional<LocalDateTime> getExpireTime() {
-        return Optional.fromNullable(expireTime);
-    }
-
-    @Override
     public StrategyState getStrategyState() {
         return strategyState;
     }

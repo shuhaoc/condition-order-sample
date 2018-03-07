@@ -34,11 +34,6 @@ class TestTimeStrategy implements TimeDrivenStrategy {
     }
 
     @Override
-    public Optional<LocalDateTime> getExpireTime() {
-        return Optional.absent();
-    }
-
-    @Override
     public Signal onTimeTick(LocalDateTime localDateTime) {
         return timeReachedCondition.onTimeTick(localDateTime);
     }

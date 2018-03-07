@@ -79,7 +79,11 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
         return securityInfo;
     }
 
-    @Override
+    /**
+     * 获取过期时间
+     *
+     * @return 过期时间
+     */
     public Optional<LocalDateTime> getExpireTime() {
         return Optional.fromNullable(expireTime);
     }
@@ -89,9 +93,9 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
     }
 
     protected boolean isExpiredAt(LocalDateTime localDateTime) {
-        boolean expireTimeConfigured = getExpireTime().isPresent();
+        boolean expireTimeConfigured = expireTime != null;
         if (expireTimeConfigured) {
-            return localDateTime.compareTo(getExpireTime().get()) >= 0;
+            return localDateTime.compareTo(expireTime) >= 0;
         }
         return false;
     }
