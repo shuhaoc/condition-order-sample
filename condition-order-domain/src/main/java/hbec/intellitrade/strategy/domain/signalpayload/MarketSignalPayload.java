@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.signalpayload;
+package hbec.intellitrade.strategy.domain.signalpayload;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.market.RealTimeMarket;

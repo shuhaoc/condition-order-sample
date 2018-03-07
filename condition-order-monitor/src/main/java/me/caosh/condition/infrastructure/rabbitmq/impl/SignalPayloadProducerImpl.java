@@ -4,7 +4,7 @@ import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
 import me.caosh.condition.domain.dto.order.assembler.TriggerMessageAssembler;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
 import me.caosh.condition.domain.model.order.TriggerMessage;
-import me.caosh.condition.infrastructure.rabbitmq.TriggerMessageTriggerProducer;
+import me.caosh.condition.infrastructure.rabbitmq.SignalPayloadProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpAdmin;
@@ -23,8 +23,8 @@ import javax.annotation.PostConstruct;
  */
 @ConfigurationProperties(prefix = "me.caosh.condition.triggerMessage")
 @Service
-public class TriggerMessageTriggerProducerImpl implements TriggerMessageTriggerProducer {
-    private static final Logger logger = LoggerFactory.getLogger(TriggerMessageTriggerProducerImpl.class);
+public class SignalPayloadProducerImpl implements SignalPayloadProducer {
+    private static final Logger logger = LoggerFactory.getLogger(SignalPayloadProducerImpl.class);
 
     private String exchangeName;
     private String routingKey;
@@ -34,7 +34,7 @@ public class TriggerMessageTriggerProducerImpl implements TriggerMessageTriggerP
 
     private final MessageConverter messageConverter = new ConditionOrderGSONMessageConverter<>(TriggerMessageDTO.class);
 
-    public TriggerMessageTriggerProducerImpl(AmqpAdmin amqpAdmin, AmqpTemplate amqpTemplate) {
+    public SignalPayloadProducerImpl(AmqpAdmin amqpAdmin, AmqpTemplate amqpTemplate) {
         this.amqpAdmin = amqpAdmin;
         this.amqpTemplate = amqpTemplate;
     }

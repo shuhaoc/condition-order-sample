@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.signalpayload;
+package hbec.intellitrade.strategy.domain.signalpayload;
 
 import org.joda.time.LocalTime;
 

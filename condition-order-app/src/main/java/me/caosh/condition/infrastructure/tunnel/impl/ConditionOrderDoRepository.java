@@ -1,4 +1,4 @@
-package me.caosh.condition.infrastructure.tunnel;
+package me.caosh.condition.infrastructure.tunnel.impl;
 
 import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by caosh on 2017/8/3.
  */
-public interface ConditionOrderTunnel extends CrudRepository<ConditionOrderDO, Long> {
+public interface ConditionOrderDoRepository extends CrudRepository<ConditionOrderDO, Long> {
 
     @Query("select c from ConditionOrderDO c where c.deleted = 0 and c.orderId = ?1")
     ConditionOrderDO findNotDeleted(Long orderId);

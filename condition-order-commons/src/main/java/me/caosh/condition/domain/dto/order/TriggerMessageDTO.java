@@ -11,25 +11,25 @@ import java.io.Serializable;
 public class TriggerMessageDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private TradeSignalDTO tradeSignalDTO;
+    private TradeSignalDTO tradeSignal;
     private ConditionOrderDTO conditionOrderDTO;
     private RealTimeMarketDTO realTimeMarketDTO;
 
     public TriggerMessageDTO() {
     }
 
-    public TriggerMessageDTO(TradeSignalDTO tradeSignalDTO, ConditionOrderDTO conditionOrderDTO, RealTimeMarketDTO realTimeMarketDTO) {
-        this.tradeSignalDTO = tradeSignalDTO;
+    public TriggerMessageDTO(TradeSignalDTO tradeSignal, ConditionOrderDTO conditionOrderDTO, RealTimeMarketDTO realTimeMarketDTO) {
+        this.tradeSignal = tradeSignal;
         this.conditionOrderDTO = conditionOrderDTO;
         this.realTimeMarketDTO = realTimeMarketDTO;
     }
 
-    public TradeSignalDTO getTradeSignalDTO() {
-        return tradeSignalDTO;
+    public TradeSignalDTO getTradeSignal() {
+        return tradeSignal;
     }
 
-    public void setTradeSignalDTO(TradeSignalDTO tradeSignalDTO) {
-        this.tradeSignalDTO = tradeSignalDTO;
+    public void setTradeSignal(TradeSignalDTO tradeSignal) {
+        this.tradeSignal = tradeSignal;
     }
 
     public ConditionOrderDTO getConditionOrderDTO() {
@@ -52,7 +52,7 @@ public class TriggerMessageDTO implements Serializable {
     public String toString() {
         return MoreObjects.toStringHelper(TriggerMessageDTO.class).omitNullValues()
                 .addValue(TriggerMessageDTO.class.getSuperclass() != Object.class ? super.toString() : null)
-                .add("tradeSignalDTO", tradeSignalDTO)
+                .add("tradeSignal", tradeSignal)
                 .add("conditionOrderDTO", conditionOrderDTO)
                 .add("realTimeMarketDTO", realTimeMarketDTO)
                 .toString();

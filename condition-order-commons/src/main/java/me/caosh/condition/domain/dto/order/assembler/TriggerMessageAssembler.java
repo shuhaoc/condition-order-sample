@@ -25,7 +25,7 @@ public class TriggerMessageAssembler {
     }
 
     public static TriggerMessage fromDTO(TriggerMessageDTO triggerMessageDTO) {
-        Signal signal = new TradeSignalBuilder(triggerMessageDTO.getTradeSignalDTO()).build();
+        Signal signal = new TradeSignalBuilder(triggerMessageDTO.getTradeSignal()).build();
         ConditionOrder conditionOrder = null;//AutoAssemblers.getDefault().disassemble(triggerMessageDTO.getConditionOrderDTO(), ConditionOrder.class);
         RealTimeMarket realTimeMarket = null;
         if (triggerMessageDTO.getRealTimeMarketDTO() != null) {

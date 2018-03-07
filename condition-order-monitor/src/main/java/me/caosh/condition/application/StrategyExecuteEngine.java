@@ -6,7 +6,7 @@ import hbec.intellitrade.condorder.domain.ConditionOrder;
 import me.caosh.condition.domain.event.OrderDeleteCommandEvent;
 import me.caosh.condition.domain.event.OrderUpdateCommandEvent;
 import me.caosh.condition.domain.model.market.event.RealTimeMarketPushEvent;
-import me.caosh.condition.domain.model.signalpayload.SignalPayload;
+import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
 import me.caosh.condition.domain.model.strategy.container.StrategyContainer;
 import me.caosh.condition.infrastructure.eventbus.MonitorEventBus;
 import me.caosh.condition.infrastructure.repository.MonitorRepository;

@@ -8,7 +8,7 @@ import me.caosh.condition.interfaces.facade.ConditionOrderQueryFacade;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.infrastructure.repository.EntrustOrderRepository;
 import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;
-import me.caosh.condition.infrastructure.tunnel.ConditionOrderTunnel;
+import me.caosh.condition.infrastructure.tunnel.impl.ConditionOrderDoRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,18 +21,18 @@ import java.util.List;
 @Service
 public class ConditionOrderQueryFacadeImpl implements ConditionOrderQueryFacade {
 
-    private final ConditionOrderTunnel conditionOrderTunnel;
+    private final ConditionOrderDoRepository conditionOrderDoRepository;
     private final EntrustOrderRepository entrustOrderRepository;
 
-    public ConditionOrderQueryFacadeImpl(ConditionOrderTunnel conditionOrderTunnel,
+    public ConditionOrderQueryFacadeImpl(ConditionOrderDoRepository conditionOrderDoRepository,
                                          EntrustOrderRepository entrustOrderRepository) {
-        this.conditionOrderTunnel = conditionOrderTunnel;
+        this.conditionOrderDoRepository = conditionOrderDoRepository;
         this.entrustOrderRepository = entrustOrderRepository;
     }
 
     @Override
     public List<ConditionOrderDTO> listMonitoringOrders(String customerNo) {
-        List<ConditionOrderDO> conditionOrderDOList = conditionOrderTunnel.findMonitoring(customerNo);
+        List<ConditionOrderDO> conditionOrderDOList = conditionOrderDoRepository.findMonitoring(customerNo);
         return  Lists.transform(conditionOrderDOList, new Function<ConditionOrderDO, ConditionOrderDTO>() {
             @Override
             public ConditionOrderDTO apply(ConditionOrderDO conditionOrderDO) {
@@ -43,7 +43,7 @@ public class ConditionOrderQueryFacadeImpl implements ConditionOrderQueryFacade 
 
     @Override
     public ConditionOrderDTO getConditionOrder(Long orderId) {
-        ConditionOrderDO conditionOrderDO = conditionOrderTunnel.findOne(orderId);
+        ConditionOrderDO conditionOrderDO = conditionOrderDoRepository.findOne(orderId);
         return AutoAssemblers.getDefault().disassemble(conditionOrderDO, ConditionOrderDTO.class);
     }
 
