@@ -31,13 +31,6 @@ public interface Strategy {
     Condition getCondition();
 
     /**
-     * 获取策略状态
-     *
-     * @return 策略状态
-     */
-    StrategyState getStrategyState();
-
-    /**
      * 接受时间Tick返回交易信号
      * <p>
      * {@link TradeSignal#isValid()}返回false表示无信号

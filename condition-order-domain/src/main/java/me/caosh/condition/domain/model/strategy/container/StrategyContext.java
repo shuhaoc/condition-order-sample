@@ -102,20 +102,14 @@ public class StrategyContext {
     /**
      * 接受秒级时间通知，对所有策略适用
      *
+     * @param localDateTime 时间点
      * @return 信号
-     * @param localDateTime
      */
     public Signal onTimeTick(LocalDateTime localDateTime) {
         // 触发锁定期间不执行
         if (isTriggerLocked()) {
             logger.warn("Trigger locked, strategyId={}, lockedDuration={}", getStrategy().getStrategyId(),
                     getTriggerLockedDuration());
-            return Signals.none();
-        }
-
-        if (getStrategy().getStrategyState() != StrategyState.ACTIVE) {
-            logger.warn("Illegal state, strategyId={}, strategyState={}", getStrategy().getStrategyId(),
-                    getStrategy().getStrategyState());
             return Signals.none();
         }
 

@@ -1,7 +1,6 @@
 package me.caosh.condition.domain.model.strategy.container;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Optional;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
@@ -51,11 +50,6 @@ public class TestTurnUpStrategy implements MarketDrivenStrategy, DirtyFlag {
     @Override
     public Signal onTimeTick(LocalDateTime localDateTime) {
         return Signals.none();
-    }
-
-    @Override
-    public StrategyState getStrategyState() {
-        return strategyState;
     }
 
     @Override

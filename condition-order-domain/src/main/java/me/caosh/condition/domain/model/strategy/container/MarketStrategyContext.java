@@ -44,12 +44,6 @@ public class MarketStrategyContext extends StrategyContext {
             return Signals.none();
         }
 
-        if (getStrategy().getStrategyState() != StrategyState.ACTIVE) {
-            logger.warn("Illegal state, strategyId={}, orderState={}", getStrategy().getStrategyId(),
-                    getStrategy().getStrategyState());
-            return Signals.none();
-        }
-
         // 非行情驱动策略不计算
         if (!(getStrategy() instanceof MarketDrivenStrategy)) {
             return Signals.none();

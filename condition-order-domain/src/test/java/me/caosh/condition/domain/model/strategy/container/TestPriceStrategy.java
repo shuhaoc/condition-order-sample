@@ -1,7 +1,6 @@
 package me.caosh.condition.domain.model.strategy.container;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Optional;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
@@ -85,11 +84,6 @@ class TestPriceStrategy implements MarketDrivenStrategy {
 
     public void setExpireTime(LocalDateTime expireTime) {
         this.expireTime = expireTime;
-    }
-
-    @Override
-    public StrategyState getStrategyState() {
-        return strategyState;
     }
 
     @Override

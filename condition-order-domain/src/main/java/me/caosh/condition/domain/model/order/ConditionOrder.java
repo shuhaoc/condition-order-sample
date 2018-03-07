@@ -28,7 +28,6 @@ public interface ConditionOrder extends Strategy {
 
     TradePlan getTradePlan();
 
-    @Override
     StrategyState getStrategyState();
 
     void onTradeSignal(TriggerTradingContext triggerTradingContext);
