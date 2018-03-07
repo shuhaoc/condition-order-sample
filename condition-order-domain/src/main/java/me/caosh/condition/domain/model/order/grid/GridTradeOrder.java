@@ -3,7 +3,7 @@ package me.caosh.condition.domain.model.order.grid;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.AbstractMarketConditionOrder;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
@@ -25,8 +25,8 @@ public class GridTradeOrder extends AbstractMarketConditionOrder {
     private final DoubleDirectionTradePlan tradePlan;
 
     public GridTradeOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                          GridCondition gridCondition, DoubleDirectionTradePlan tradePlan, StrategyState strategyState) {
-        super(orderId, tradeCustomerInfo, securityInfo, strategyState);
+                          GridCondition gridCondition, DoubleDirectionTradePlan tradePlan, OrderState orderState) {
+        super(orderId, tradeCustomerInfo, securityInfo, orderState);
         this.gridCondition = gridCondition;
         this.tradePlan = tradePlan;
     }

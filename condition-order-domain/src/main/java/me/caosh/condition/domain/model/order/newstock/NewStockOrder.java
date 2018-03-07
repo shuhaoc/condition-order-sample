@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.AbstractConditionOrder;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
@@ -42,8 +42,8 @@ public class NewStockOrder extends AbstractConditionOrder {
     private final NewStockPurchaseCondition newStockPurchaseCondition;
 
     public NewStockOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo,
-                         NewStockPurchaseCondition newStockPurchaseCondition, StrategyState strategyState) {
-        super(orderId, tradeCustomerInfo, SecurityInfoConstants.NEW_STOCK_PURCHASE, strategyState);
+                         NewStockPurchaseCondition newStockPurchaseCondition, OrderState orderState) {
+        super(orderId, tradeCustomerInfo, SecurityInfoConstants.NEW_STOCK_PURCHASE, orderState);
         this.newStockPurchaseCondition = newStockPurchaseCondition;
     }
 
@@ -71,7 +71,7 @@ public class NewStockOrder extends AbstractConditionOrder {
             return Signals.expire();
         }
 
-        if (getStrategyState() != StrategyState.ACTIVE) {
+        if (getOrderState() != OrderState.ACTIVE) {
             return Signals.none();
         }
 

@@ -5,7 +5,7 @@ import hbec.intellitrade.common.market.RealTimeMarketSupplier;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.DoubleDirectionTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
@@ -52,7 +52,7 @@ public class GridOrderTest {
         DoubleDirectionTradePlan tradePlan = TradePlanFactory.getInstance().createDouble(
                 EntrustStrategy.CURRENT_PRICE.getValue(), EntrustMethod.AMOUNT.getValue(), 0, new BigDecimal("4500"));
         GridTradeOrder gridTradeOrder = new GridTradeOrder(123L, tradeCustomerInfo, pfyh, gridCondition,
-                tradePlan, StrategyState.ACTIVE);
+                tradePlan, OrderState.ACTIVE);
 
         assertEquals(Signals.none(),
                 gridTradeOrder.getCondition().onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("13.01"))));
@@ -66,7 +66,7 @@ public class GridOrderTest {
 
         gridTradeOrder.onTradeSignal(triggerTradingContext);
         gridTradeOrder.afterEntrustCommandsExecuted(triggerTradingContext);
-        assertEquals(gridTradeOrder.getStrategyState(), StrategyState.ACTIVE);
+        assertEquals(gridTradeOrder.getOrderState(), OrderState.ACTIVE);
         assertEquals(gridTradeOrder.getGridCondition().getBasePrice(), new BigDecimal("14.00"));
 
        RealTimeMarket realTimeMarket2 = MockMarkets.withCurrentPrice(new BigDecimal("13.00"));
@@ -76,7 +76,7 @@ public class GridOrderTest {
                 realTimeMarketSupplier, entrustOrderWriter, realTimeMarket2);
 
         gridTradeOrder.onTradeSignal(triggerTradingContext);
-        assertEquals(gridTradeOrder.getStrategyState(), StrategyState.ACTIVE);
+        assertEquals(gridTradeOrder.getOrderState(), OrderState.ACTIVE);
         assertEquals(gridTradeOrder.getGridCondition().getBasePrice(), new BigDecimal("13.00"));
     }
 }

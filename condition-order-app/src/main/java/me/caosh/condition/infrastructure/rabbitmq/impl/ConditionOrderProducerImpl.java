@@ -2,7 +2,7 @@ package me.caosh.condition.infrastructure.rabbitmq.impl;
 
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
@@ -64,13 +64,13 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
 
     @Override
     public void save(ConditionOrder conditionOrder) {
-        Preconditions.checkArgument(conditionOrder.getStrategyState() == StrategyState.ACTIVE);
+        Preconditions.checkArgument(conditionOrder.getOrderState() == OrderState.ACTIVE);
         send(exchangeName, routingKey, OrderCommandType.CREATE, conditionOrder);
     }
 
     @Override
     public void update(ConditionOrder conditionOrder) {
-        Preconditions.checkArgument(conditionOrder.getStrategyState() == StrategyState.ACTIVE);
+        Preconditions.checkArgument(conditionOrder.getOrderState() == OrderState.ACTIVE);
         send(exchangeName, routingKey, OrderCommandType.UPDATE, conditionOrder);
     }
 

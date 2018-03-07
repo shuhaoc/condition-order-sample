@@ -6,14 +6,14 @@ import me.caosh.autoasm.ConvertibleEnum;
 /**
  * Created by caosh on 2017/8/6.
  */
-public enum StrategyState implements ValuedEnum<Integer>, ConvertibleEnum<Integer> {
+public enum OrderState implements ValuedEnum<Integer>, ConvertibleEnum<Integer> {
     ACTIVE(1),
     PAUSED(2),
     TERMINATED(3);
 
     int value;
 
-    StrategyState(int value) {
+    OrderState(int value) {
         this.value = value;
     }
 

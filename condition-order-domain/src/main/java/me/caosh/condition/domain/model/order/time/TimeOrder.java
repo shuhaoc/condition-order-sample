@@ -3,7 +3,7 @@ package me.caosh.condition.domain.model.order.time;
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.AbstractConditionOrder;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
@@ -27,8 +27,8 @@ public class TimeOrder extends AbstractConditionOrder {
     private final BasicTradePlan tradePlan;
 
     public TimeOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                     TimeReachedCondition timeCondition, BasicTradePlan tradePlan, StrategyState strategyState) {
-        super(orderId, tradeCustomerInfo, securityInfo, strategyState);
+                     TimeReachedCondition timeCondition, BasicTradePlan tradePlan, OrderState orderState) {
+        super(orderId, tradeCustomerInfo, securityInfo, orderState);
         this.timeReachedCondition = timeCondition;
         this.tradePlan = tradePlan;
     }
@@ -48,7 +48,7 @@ public class TimeOrder extends AbstractConditionOrder {
             return Signals.expire();
         }
 
-        if (getStrategyState() != StrategyState.ACTIVE) {
+        if (getOrderState() != OrderState.ACTIVE) {
             return Signals.none();
         }
 

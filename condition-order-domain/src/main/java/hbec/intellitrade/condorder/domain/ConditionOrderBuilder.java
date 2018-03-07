@@ -19,7 +19,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
     private Condition rawCondition;
     private LocalDateTime expireTime;
     private TradePlanBuilder tradePlan = new TradePlanBuilder();
-    private StrategyState strategyState;
+    private OrderState orderState;
 
     public ConditionOrderBuilder setOrderId(Long orderId) {
         this.orderId = orderId;
@@ -75,8 +75,8 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return this;
     }
 
-    public ConditionOrderBuilder setStrategyState(StrategyState strategyState) {
-        this.strategyState = strategyState;
+    public ConditionOrderBuilder setOrderState(OrderState orderState) {
+        this.orderState = orderState;
         return this;
     }
 
@@ -85,7 +85,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return ConditionOrderFactory.getInstance().create(
                 orderId,
                 customer.build(),
-                strategyState,
+                orderState,
                 securityInfo.build(),
                 strategyInfo.getStrategyType(),
                 rawCondition,

@@ -3,7 +3,7 @@ package me.caosh.condition.domain.service.impl;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.market.RealTimeMarketSupplier;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.trigger.BasicTriggerTradingContext;
 import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.signal.BS;
@@ -52,7 +52,7 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void handleTriggerContext(Signal signal, ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {
-        if (conditionOrder.getStrategyState() != StrategyState.ACTIVE) {
+        if (conditionOrder.getOrderState() != OrderState.ACTIVE) {
             logger.warn("Order illegal state: {}", conditionOrder);
             return;
         }

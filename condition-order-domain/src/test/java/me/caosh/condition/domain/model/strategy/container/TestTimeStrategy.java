@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.model.strategy.container;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
@@ -14,7 +14,7 @@ import org.joda.time.LocalDateTime;
 class TestTimeStrategy implements TimeDrivenStrategy {
     private final int strategyId;
     private final TimeReachedCondition timeReachedCondition;
-    private StrategyState strategyState = StrategyState.ACTIVE;
+    private OrderState orderState = OrderState.ACTIVE;
 
     public TestTimeStrategy(int strategyId, TimeReachedCondition timeReachedCondition) {
         this.strategyId = strategyId;
@@ -51,7 +51,7 @@ class TestTimeStrategy implements TimeDrivenStrategy {
         return MoreObjects.toStringHelper(TestTimeStrategy.class).omitNullValues()
                 .add("strategyId", strategyId)
                 .add("timeReachedCondition", timeReachedCondition)
-                .add("strategyState", strategyState)
+                .add("strategyState", orderState)
                 .toString();
     }
 }

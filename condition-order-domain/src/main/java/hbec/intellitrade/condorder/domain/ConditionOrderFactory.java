@@ -29,23 +29,23 @@ public class ConditionOrderFactory {
         return INSTANCE;
     }
 
-    public ConditionOrder create(Long orderId, TradeCustomerInfo tradeCustomerInfo, StrategyState strategyState,
+    public ConditionOrder create(Long orderId, TradeCustomerInfo tradeCustomerInfo, OrderState orderState,
                                  SecurityInfo securityInfo, StrategyInfo strategyInfo, Condition condition,
                                  LocalDateTime expireTime, TradePlan tradePlan) {
         if (strategyInfo == NativeStrategyInfo.PRICE) {
             return new PriceOrder(orderId, tradeCustomerInfo, securityInfo, (PriceCondition) condition, expireTime,
-                    (BasicTradePlan) tradePlan, strategyState);
+                    (BasicTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {
             return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,
-                    (BasicTradePlan) tradePlan, strategyState);
+                    (BasicTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.TIME) {
             return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, (TimeReachedCondition) condition,
-                    (BasicTradePlan) tradePlan, strategyState);
+                    (BasicTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.GRID) {
             return new GridTradeOrder(orderId, tradeCustomerInfo, securityInfo, (GridCondition) condition,
-                    (DoubleDirectionTradePlan) tradePlan, strategyState);
+                    (DoubleDirectionTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.NEW_STOCK) {
-            return new NewStockOrder(orderId, tradeCustomerInfo, (NewStockPurchaseCondition) condition, strategyState);
+            return new NewStockOrder(orderId, tradeCustomerInfo, (NewStockPurchaseCondition) condition, orderState);
         }
         throw new IllegalArgumentException("strategyInfo=" + strategyInfo);
     }

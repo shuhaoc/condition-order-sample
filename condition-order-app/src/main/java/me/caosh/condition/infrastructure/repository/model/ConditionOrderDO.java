@@ -28,7 +28,7 @@ public class ConditionOrderDO {
     private String customerNo;
     @FieldMapping(value = "false")
     private Boolean deleted;
-    @FieldMapping(mappedProperty = "strategyState")
+    @FieldMapping(mappedProperty = "orderState")
     private Integer orderState;
     @FieldMapping(mappedProperty = "securityInfo.type")
     private Integer securityType;

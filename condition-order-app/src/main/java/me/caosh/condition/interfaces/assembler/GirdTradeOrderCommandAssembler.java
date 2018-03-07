@@ -4,7 +4,7 @@ import hbec.intellitrade.common.ValuedEnumUtil;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.DoubleDirectionTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanFactory;
@@ -18,7 +18,7 @@ import me.caosh.condition.interfaces.command.GridTradeOrderUpdateCommand;
  */
 public class GirdTradeOrderCommandAssembler {
     public static GridTradeOrder assemble(Long orderId, TradeCustomerInfo tradeCustomerInfo, GridTradeOrderCreateCommand command) {
-        StrategyState strategyState = StrategyState.ACTIVE;
+        OrderState orderState = OrderState.ACTIVE;
         SecurityType securityType = ValuedEnumUtil.valueOf(command.getSecurityType(), SecurityType.class);
         SecurityExchange securityExchange = SecurityExchange.valueOf(command.getSecurityExchange());
         SecurityInfo securityInfo = new SecurityInfo(securityType, command.getSecurityCode(), securityExchange, command.getSecurityName());
@@ -32,11 +32,11 @@ public class GirdTradeOrderCommandAssembler {
                 securityInfo,
                 gridCondition,
                 tradePlan,
-                strategyState);
+                orderState);
     }
 
     public static GridTradeOrder merge(GridTradeOrder oldOrder, GridTradeOrderUpdateCommand command) {
-        StrategyState strategyState = StrategyState.ACTIVE;
+        OrderState orderState = OrderState.ACTIVE;
         GridCondition gridCondition = new GridCondition(command.getGridLength(), command.getBasePrice());
         DoubleDirectionTradePlan tradePlan = TradePlanFactory.getInstance().createDouble(
                 command.getEntrustStrategy(),
@@ -46,7 +46,7 @@ public class GirdTradeOrderCommandAssembler {
         return new GridTradeOrder(oldOrder.getOrderId(),
                 oldOrder.getCustomer(),
                 oldOrder.getSecurityInfo(),
-                gridCondition, tradePlan, strategyState
+                gridCondition, tradePlan, orderState
         );
     }
 

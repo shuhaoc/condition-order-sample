@@ -1,7 +1,7 @@
 package me.caosh.condition.application.order.impl;
 
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
 import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
@@ -35,7 +35,7 @@ public class ConditionOrderCommandServiceImpl implements ConditionOrderCommandSe
     @Override
     public void update(ConditionOrder conditionOrder) {
         conditionOrderRepository.save(conditionOrder);
-        if (conditionOrder.getStrategyState() == StrategyState.ACTIVE) {
+        if (conditionOrder.getOrderState() == OrderState.ACTIVE) {
             conditionOrderProducer.update(conditionOrder);
         } else {
             conditionOrderProducer.remove(conditionOrder.getOrderId());

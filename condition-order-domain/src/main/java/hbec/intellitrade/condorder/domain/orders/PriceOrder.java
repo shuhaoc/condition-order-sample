@@ -3,7 +3,7 @@ package hbec.intellitrade.condorder.domain.orders;
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.AbstractSimpleMarketConditionOrder;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
@@ -24,15 +24,15 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder {
     private final PriceCondition priceCondition;
 
     public PriceOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                      PriceCondition priceCondition, BasicTradePlan tradePlan, StrategyState strategyState) {
-        super(orderId, tradeCustomerInfo, securityInfo, tradePlan, strategyState);
+                      PriceCondition priceCondition, BasicTradePlan tradePlan, OrderState orderState) {
+        super(orderId, tradeCustomerInfo, securityInfo, tradePlan, orderState);
         this.priceCondition = priceCondition;
     }
 
     public PriceOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                       PriceCondition priceCondition, LocalDateTime expireTime, BasicTradePlan tradePlan,
-                      StrategyState strategyState) {
-        super(orderId, tradeCustomerInfo, securityInfo, expireTime, tradePlan, strategyState);
+                      OrderState orderState) {
+        super(orderId, tradeCustomerInfo, securityInfo, expireTime, tradePlan, orderState);
         this.priceCondition = priceCondition;
     }
 
@@ -80,7 +80,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder {
         return MoreObjects.toStringHelper(PriceOrder.class).omitNullValues()
                 .add("orderId", getOrderId())
                 .add("customer", getCustomer())
-                .add("strategyState", getStrategyState())
+                .add("strategyState", getOrderState())
                 .add("securityInfo", getSecurityInfo())
                 .add("rawCondition", getRawCondition())
                 .add("expireTime", getExpireTime())

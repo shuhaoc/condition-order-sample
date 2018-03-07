@@ -5,7 +5,7 @@ import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.ConditionOrderBuilder;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.orders.PriceOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
@@ -46,13 +46,13 @@ public class ConditionOrderDoAssemblerTest {
                 new PriceCondition(CompareOperator.GE, new BigDecimal("10.00")),
                 new BasicTradePlan(ExchangeType.SELL, EntrustStrategy.BUY1,
                         new TradeNumberByAmount(new BigDecimal("10000.00"))),
-                StrategyState.ACTIVE);
+                OrderState.ACTIVE);
         ConditionOrderDO conditionOrderDO = AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDO.class);
         assertEquals(conditionOrderDO.getOrderId().longValue(), ORDER_ID);
         assertEquals(conditionOrderDO.getUserId().intValue(), USER_ID);
         assertEquals(conditionOrderDO.getCustomerNo(), CUSTOMER_NO);
         assertEquals(conditionOrderDO.getDeleted(), Boolean.FALSE);
-        assertEquals(conditionOrderDO.getOrderState(), StrategyState.ACTIVE.getValue());
+        assertEquals(conditionOrderDO.getOrderState(), OrderState.ACTIVE.getValue());
         assertEquals(conditionOrderDO.getSecurityType(), SecurityType.STOCK.getValue());
         assertEquals(conditionOrderDO.getSecurityCode(), SECURITY_CODE);
         assertEquals(conditionOrderDO.getSecurityExchange(), SecurityExchange.SH.name());

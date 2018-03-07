@@ -3,7 +3,7 @@ package me.caosh.condition.domain.model.strategy.container;
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import hbec.intellitrade.strategy.domain.shared.DirtyFlag;
 import hbec.intellitrade.strategy.domain.signal.Signal;
@@ -20,7 +20,7 @@ public class TestTurnUpStrategy implements MarketDrivenStrategy, DirtyFlag {
     private final int strategyId;
     private final MarketID marketID;
     private final TurnUpCondition turnUpCondition;
-    private StrategyState strategyState = StrategyState.ACTIVE;
+    private OrderState orderState = OrderState.ACTIVE;
 
     public TestTurnUpStrategy(int strategyId, MarketID marketID, TurnUpCondition turnUpCondition) {
         this.strategyId = strategyId;
@@ -83,7 +83,7 @@ public class TestTurnUpStrategy implements MarketDrivenStrategy, DirtyFlag {
                 .add("strategyId", strategyId)
                 .add("marketID", marketID)
                 .add("turnUpCondition", turnUpCondition)
-                .add("strategyState", strategyState)
+                .add("strategyState", orderState)
                 .toString();
     }
 }

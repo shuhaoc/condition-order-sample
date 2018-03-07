@@ -28,26 +28,26 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
 
     private final Long orderId;
     private final TradeCustomerInfo tradeCustomerInfo;
-    private StrategyState strategyState;
+    private OrderState orderState;
     private final SecurityInfo securityInfo;
     private final LocalDateTime expireTime;
 
     public AbstractConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                                  StrategyState strategyState) {
+                                  OrderState orderState) {
         this.orderId = orderId;
         this.tradeCustomerInfo = tradeCustomerInfo;
         this.securityInfo = securityInfo;
         this.expireTime = null;
-        this.strategyState = strategyState;
+        this.orderState = orderState;
     }
 
     public AbstractConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                                  LocalDateTime expireTime, StrategyState strategyState) {
+                                  LocalDateTime expireTime, OrderState orderState) {
         this.orderId = orderId;
         this.tradeCustomerInfo = tradeCustomerInfo;
         this.securityInfo = securityInfo;
         this.expireTime = expireTime;
-        this.strategyState = strategyState;
+        this.orderState = orderState;
     }
 
     @Override
@@ -66,12 +66,12 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
     }
 
     @Override
-    public StrategyState getStrategyState() {
-        return strategyState;
+    public OrderState getOrderState() {
+        return orderState;
     }
 
-    protected void setStrategyState(StrategyState strategyState) {
-        this.strategyState = strategyState;
+    protected void setOrderState(OrderState orderState) {
+        this.orderState = orderState;
     }
 
     @Override
@@ -89,7 +89,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
     }
 
     protected boolean isMonitoringState() {
-        return strategyState == StrategyState.ACTIVE || strategyState == StrategyState.PAUSED;
+        return orderState == OrderState.ACTIVE || orderState == OrderState.PAUSED;
     }
 
     protected boolean isExpiredAt(LocalDateTime localDateTime) {
@@ -135,7 +135,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
 
     @Override
     public void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext) {
-        setStrategyState(StrategyState.TERMINATED);
+        setOrderState(OrderState.TERMINATED);
     }
 
     @Override
@@ -161,7 +161,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
         if (expireTime != null ? !expireTime.equals(that.expireTime) : that.expireTime != null) {
             return false;
         }
-        return strategyState == that.strategyState;
+        return orderState == that.orderState;
     }
 
     @Override
@@ -170,7 +170,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
         result = 31 * result + tradeCustomerInfo.hashCode();
         result = 31 * result + securityInfo.hashCode();
         result = 31 * result + (expireTime != null ? expireTime.hashCode() : 0);
-        result = 31 * result + strategyState.hashCode();
+        result = 31 * result + orderState.hashCode();
         return result;
     }
 }

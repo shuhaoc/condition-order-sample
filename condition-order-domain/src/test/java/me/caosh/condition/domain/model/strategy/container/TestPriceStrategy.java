@@ -3,7 +3,7 @@ package me.caosh.condition.domain.model.strategy.container;
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
@@ -20,7 +20,7 @@ class TestPriceStrategy implements MarketDrivenStrategy {
     private final MarketID marketID;
     private final PriceCondition priceCondition;
     private LocalDateTime expireTime;
-    private StrategyState strategyState = StrategyState.ACTIVE;
+    private OrderState orderState = OrderState.ACTIVE;
 
     public TestPriceStrategy(Integer strategyId, MarketID marketID, PriceCondition priceCondition) {
         this.strategyId = strategyId;
@@ -37,12 +37,12 @@ class TestPriceStrategy implements MarketDrivenStrategy {
     }
 
     public TestPriceStrategy(int strategyId, MarketID marketID, PriceCondition priceCondition, LocalDateTime expireTime,
-                             StrategyState strategyState) {
+                             OrderState orderState) {
         this.strategyId = strategyId;
         this.marketID = marketID;
         this.priceCondition = priceCondition;
         this.expireTime = expireTime;
-        this.strategyState = strategyState;
+        this.orderState = orderState;
     }
 
     @Override
@@ -52,7 +52,7 @@ class TestPriceStrategy implements MarketDrivenStrategy {
 
     @Override
     public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
-        if (strategyState != StrategyState.ACTIVE) {
+        if (orderState != OrderState.ACTIVE) {
             return Signals.none();
         }
         return priceCondition.onMarketTick(realTimeMarket);
@@ -104,7 +104,7 @@ class TestPriceStrategy implements MarketDrivenStrategy {
                 .add("strategyId", strategyId)
                 .add("marketID", marketID)
                 .add("priceCondition", priceCondition)
-                .add("strategyState", strategyState)
+                .add("strategyState", orderState)
                 .toString();
     }
 }

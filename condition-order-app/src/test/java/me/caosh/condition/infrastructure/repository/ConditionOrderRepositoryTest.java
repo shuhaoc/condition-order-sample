@@ -5,7 +5,7 @@ import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.orders.PriceOrder;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
@@ -49,7 +49,7 @@ public class ConditionOrderRepositoryTest extends AbstractTestNGSpringContextTes
                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                 LocalDateTime.parse("2018-03-09T15:00:00"),
                 new BasicTradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
-                StrategyState.ACTIVE);
+                OrderState.ACTIVE);
         conditionOrderRepository.save(priceOrder);
 
         Optional<ConditionOrder> another = conditionOrderRepository.findOne(priceOrder.getOrderId());

@@ -3,7 +3,7 @@ package me.caosh.condition.domain.model.strategy.container;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.security.SecurityType;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
@@ -110,7 +110,7 @@ public class StrategyContainerTest {
     @Test
     public void testState() throws Exception {
         TestPriceStrategy testPriceStrategy = new TestPriceStrategy(1, MARKET_ID, PRICE_CONDITION, null,
-                StrategyState.PAUSED);
+                OrderState.PAUSED);
 
         StrategyContainer container = new StrategyContainer();
         container.add(testPriceStrategy);

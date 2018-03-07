@@ -35,7 +35,7 @@ public interface ConditionOrder extends Strategy {
 
     TradePlan getTradePlan();
 
-    StrategyState getStrategyState();
+    OrderState getOrderState();
 
     void onTradeSignal(TriggerTradingContext triggerTradingContext);
 }

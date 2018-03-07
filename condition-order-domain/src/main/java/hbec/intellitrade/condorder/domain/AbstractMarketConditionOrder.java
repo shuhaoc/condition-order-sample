@@ -20,13 +20,13 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
     private static final Logger logger = LoggerFactory.getLogger(AbstractMarketConditionOrder.class);
 
     public AbstractMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                                        StrategyState strategyState) {
-        super(orderId, tradeCustomerInfo, securityInfo, strategyState);
+                                        OrderState orderState) {
+        super(orderId, tradeCustomerInfo, securityInfo, orderState);
     }
 
     public AbstractMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                                        LocalDateTime expireTime, StrategyState strategyState) {
-        super(orderId, tradeCustomerInfo, securityInfo, expireTime, strategyState);
+                                        LocalDateTime expireTime, OrderState orderState) {
+        super(orderId, tradeCustomerInfo, securityInfo, expireTime, orderState);
     }
 
     /**
@@ -43,7 +43,7 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
 
     @Override
     public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
-        if (getStrategyState() != StrategyState.ACTIVE) {
+        if (getOrderState() != OrderState.ACTIVE) {
             return Signals.none();
         }
         return getCondition().onMarketTick(realTimeMarket);

@@ -4,7 +4,7 @@ import hbec.intellitrade.common.ValuedEnumUtil;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
@@ -21,7 +21,7 @@ import me.caosh.condition.interfaces.command.TurnUpBuyOrderUpdateCommand;
  */
 public class TurnUpBuyOrderCommandAssembler {
     public static TurnUpBuyOrder assemble(Long orderId, TradeCustomerInfo tradeCustomerInfo, TurnUpBuyOrderCreateCommand command) {
-        StrategyState strategyState = StrategyState.ACTIVE;
+        OrderState orderState = OrderState.ACTIVE;
         SecurityType securityType = ValuedEnumUtil.valueOf(command.getSecurityType(), SecurityType.class);
         SecurityExchange securityExchange = SecurityExchange.valueOf(command.getSecurityExchange());
         SecurityInfo securityInfo = new SecurityInfo(securityType, command.getSecurityCode(), securityExchange,
@@ -31,11 +31,11 @@ public class TurnUpBuyOrderCommandAssembler {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
         BasicTradePlan tradePlan = new BasicTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
-        return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, turnUpCondition, tradePlan, strategyState);
+        return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, turnUpCondition, tradePlan, orderState);
     }
 
     public static TurnUpBuyOrder merge(TurnUpBuyOrder oldOrder, TurnUpBuyOrderUpdateCommand command) {
-        StrategyState strategyState = StrategyState.ACTIVE;
+        OrderState orderState = OrderState.ACTIVE;
         TurnUpCondition turnUpCondition = new TurnUpCondition(command.getBreakPrice(), command.getTurnUpPercent());
         if (turnUpCondition.isNeedSwap(oldOrder.getTurnUpCondition())) {
             turnUpCondition.swap(oldOrder.getTurnUpCondition());
@@ -45,7 +45,7 @@ public class TurnUpBuyOrderCommandAssembler {
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
         BasicTradePlan tradePlan = new BasicTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
         return new TurnUpBuyOrder(oldOrder.getOrderId(), oldOrder.getCustomer(), oldOrder.getSecurityInfo(),
-                turnUpCondition, tradePlan, strategyState);
+                turnUpCondition, tradePlan, orderState);
     }
 
     private TurnUpBuyOrderCommandAssembler() {

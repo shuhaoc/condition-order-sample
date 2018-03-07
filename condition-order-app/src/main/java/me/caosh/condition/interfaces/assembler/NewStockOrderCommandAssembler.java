@@ -1,6 +1,6 @@
 package me.caosh.condition.interfaces.assembler;
 
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.newstock.NewStockOrder;
 import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
@@ -15,18 +15,18 @@ import org.joda.time.LocalTime;
  */
 public class NewStockOrderCommandAssembler {
     public static NewStockOrder assemble(Long orderId, TradeCustomerInfo tradeCustomerInfo, NewStockOrderCreateCommand command) {
-        StrategyState strategyState = StrategyState.ACTIVE;
+        OrderState orderState = OrderState.ACTIVE;
         LocalTime purchaseTime = LocalTime.parse(command.getPurchaseTime(), DateFormats.HH_MM_SS);
         NewStockPurchaseCondition newStockPurchaseCondition = new NewStockPurchaseCondition(purchaseTime);
-        return new NewStockOrder(orderId, tradeCustomerInfo, newStockPurchaseCondition, strategyState);
+        return new NewStockOrder(orderId, tradeCustomerInfo, newStockPurchaseCondition, orderState);
     }
 
     public static NewStockOrder merge(NewStockOrder oldOrder, NewStockOrderUpdateCommand command) {
-        StrategyState strategyState = StrategyState.ACTIVE;
+        OrderState orderState = OrderState.ACTIVE;
         LocalTime purchaseTime = LocalTime.parse(command.getPurchaseTime(), DateFormats.HH_MM_SS);
         NewStockPurchaseCondition newStockPurchaseCondition = new NewStockPurchaseCondition(purchaseTime);
         return new NewStockOrder(oldOrder.getOrderId(), oldOrder.getCustomer(),
-                newStockPurchaseCondition, strategyState);
+                newStockPurchaseCondition, orderState);
     }
 
     private NewStockOrderCommandAssembler() {

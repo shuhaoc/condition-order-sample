@@ -2,7 +2,7 @@ package me.caosh.condition.interfaces.web;
 
 import com.google.common.base.Optional;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpBuyOrder;
@@ -53,7 +53,7 @@ public class TurnUpBuyOrderController {
             return -1L;
         }
         ConditionOrder conditionOrder = conditionOrderOptional.get();
-        if (conditionOrder.getStrategyState() != StrategyState.ACTIVE && conditionOrder.getStrategyState() != StrategyState.PAUSED) {
+        if (conditionOrder.getOrderState() != OrderState.ACTIVE && conditionOrder.getOrderState() != OrderState.PAUSED) {
             return -2L;
         }
         TurnUpBuyOrder oldOrder = (TurnUpBuyOrder) conditionOrder;
