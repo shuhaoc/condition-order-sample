@@ -53,12 +53,4 @@ public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketC
         result = 31 * result + tradePlan.hashCode();
         return result;
     }
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .addValue(super.toString())
-                .add("tradePlan", tradePlan)
-                .toString();
-    }
 }

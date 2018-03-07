@@ -169,14 +169,4 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
         result = 31 * result + strategyState.hashCode();
         return result;
     }
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(AbstractConditionOrder.class).omitNullValues()
-                .add("orderId", orderId)
-                .add("tradeCustomerInfo", tradeCustomerInfo)
-                .add("securityInfo", securityInfo)
-                .add("strategyState", strategyState)
-                .toString();
-    }
 }
