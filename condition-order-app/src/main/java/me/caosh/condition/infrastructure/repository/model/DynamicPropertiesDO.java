@@ -11,5 +11,4 @@ import me.caosh.autoasm.RuntimeType;
         NewStockPurchaseDynamicPropertiesDO.class
 })
 public interface DynamicPropertiesDO {
-    void accept(DynamicPropertiesDOVisitor visitor);
 }

@@ -45,9 +45,4 @@ public class TurnUpDynamicPropertiesDO implements DynamicPropertiesDO {
                 .add("lowestPrice", lowestPrice)
                 .toString();
     }
-
-    @Override
-    public void accept(DynamicPropertiesDOVisitor visitor) {
-        visitor.visitTurnUpDynamicPropertiesDO(this);
-    }
 }

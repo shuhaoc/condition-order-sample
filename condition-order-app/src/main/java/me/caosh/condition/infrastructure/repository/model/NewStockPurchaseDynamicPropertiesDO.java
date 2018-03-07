@@ -39,11 +39,6 @@ public class NewStockPurchaseDynamicPropertiesDO implements DynamicPropertiesDO 
     }
 
     @Override
-    public void accept(DynamicPropertiesDOVisitor visitor) {
-        visitor.visitNewStockPurchaseDynamicPropertiesDO(this);
-    }
-
-    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("purchasedCount", purchasedCount)

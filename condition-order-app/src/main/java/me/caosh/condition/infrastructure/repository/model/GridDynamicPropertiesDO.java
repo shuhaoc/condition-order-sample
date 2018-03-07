@@ -35,8 +35,4 @@ public class GridDynamicPropertiesDO implements DynamicPropertiesDO {
                 .toString();
     }
 
-    @Override
-    public void accept(DynamicPropertiesDOVisitor visitor) {
-        visitor.visitGridDynamicPropertiesDO(this);
-    }
 }
