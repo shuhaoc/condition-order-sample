@@ -1,6 +1,7 @@
 package me.caosh.condition.infrastructure.repository.serializer;
 
 import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.condorder.domain.ConditionOrderBuilder;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.util.ConditionOrderDTOGSONUtils;
@@ -24,6 +25,6 @@ public class ConditionOrderRedisSerializer implements RedisSerializer<ConditionO
     public ConditionOrder deserialize(byte[] bytes) throws SerializationException {
         String json = new String(bytes, Charset.forName("utf-8"));
         ConditionOrderDTO conditionOrderDTO = ConditionOrderDTOGSONUtils.getConditionGSON().fromJson(json, ConditionOrderDTO.class);
-        return AutoAssemblers.getDefault().disassemble(conditionOrderDTO, ConditionOrder.class);
+        return AutoAssemblers.getDefault().disassemble(conditionOrderDTO, ConditionOrderBuilder.class).build();
     }
 }
