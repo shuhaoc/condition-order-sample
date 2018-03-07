@@ -1,7 +1,8 @@
 package me.caosh.condition.domain.factory;
 
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
-import me.caosh.condition.domain.model.account.TradeCustomer;
+import me.caosh.condition.domain.model.mock.MockTradeCustomer;
+import hbec.intellitrade.trade.domain.TradeCustomer;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,6 +12,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class TradeCustomerFactory {
     public TradeCustomer createTradeCustomer(TradeCustomerInfo tradeCustomerInfo) {
-        return new TradeCustomer(tradeCustomerInfo.getUserId(), tradeCustomerInfo.getCustomerNo());
+        return new MockTradeCustomer(tradeCustomerInfo.getCustomerNo());
     }
 }

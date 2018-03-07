@@ -9,7 +9,7 @@ import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import hbec.intellitrade.trade.domain.EntrustCommand;
 import hbec.intellitrade.trade.domain.EntrustOrderInfo;
 import hbec.intellitrade.trade.domain.EntrustResult;
-import me.caosh.condition.domain.model.account.TradeCustomer;
+import hbec.intellitrade.trade.domain.TradeCustomer;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

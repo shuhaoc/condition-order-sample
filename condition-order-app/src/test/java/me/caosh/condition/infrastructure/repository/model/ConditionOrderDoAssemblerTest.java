@@ -16,7 +16,7 @@ import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import me.caosh.autoasm.AutoAssemblers;
-import me.caosh.condition.domain.model.constants.EntrustMethod;
+import hbec.intellitrade.condorder.domain.tradeplan.EntrustMethod;
 import org.junit.Test;
 
 import java.math.BigDecimal;

@@ -14,7 +14,7 @@ import hbec.intellitrade.trade.domain.EntrustOrderInfo;
 import hbec.intellitrade.trade.domain.EntrustOrderWriter;
 import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.domain.factory.TradeCustomerFactory;
-import me.caosh.condition.domain.model.account.TradeCustomer;
+import hbec.intellitrade.trade.domain.TradeCustomer;
 import me.caosh.condition.domain.service.ConditionTradeService;
 import me.caosh.condition.domain.service.NewStockQueryService;
 import me.caosh.condition.infrastructure.repository.EntrustOrderRepository;

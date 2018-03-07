@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.dto.order;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.model.constants.EntrustMethod;
+import hbec.intellitrade.condorder.domain.tradeplan.EntrustMethod;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

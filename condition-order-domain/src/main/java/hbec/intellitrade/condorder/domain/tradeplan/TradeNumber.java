@@ -1,7 +1,5 @@
 package hbec.intellitrade.condorder.domain.tradeplan;
 
-import me.caosh.condition.domain.model.constants.EntrustMethod;
-
 import java.math.BigDecimal;
 
 /**

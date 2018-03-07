@@ -1,26 +1,24 @@
-package me.caosh.condition.domain.model.account;
+package me.caosh.condition.domain.model.mock;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.trade.domain.EntrustCommand;
 import hbec.intellitrade.trade.domain.EntrustResult;
 import hbec.intellitrade.trade.domain.ExchangeType;
+import hbec.intellitrade.trade.domain.TradeCustomer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 交易客户
- *
  * @author caosh/caoshuhao@touker.com
- * @date 2017/8/14
+ * @date 2018/3/7
  */
-public class TradeCustomer extends User {
-    private static final Logger logger = LoggerFactory.getLogger(TradeCustomer.class);
-    private static int theEntrustCode = 0;
+public class MockTradeCustomer implements TradeCustomer {
+    private static final Logger logger = LoggerFactory.getLogger(MockTradeCustomer.class);
 
+    private static int theEntrustCode = 0;
     private final String customerNo;
 
-    public TradeCustomer(Integer userId, String customerNo) {
-        super(userId);
+    public MockTradeCustomer(String customerNo) {
         this.customerNo = customerNo;
     }
 
@@ -28,12 +26,7 @@ public class TradeCustomer extends User {
         return customerNo;
     }
 
-    /**
-     * 执行证券委托
-     *
-     * @param entrustCommand 委托命令
-     * @return 委托结果
-     */
+    @Override
     public EntrustResult entrust(EntrustCommand entrustCommand) {
         logger.info("Executing entrust command for {} ==> {}", customerNo, entrustCommand);
         int seed = Integer.parseInt(entrustCommand.getSecurityInfo().getCode()) % 4;
@@ -56,31 +49,22 @@ public class TradeCustomer extends User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        TradeCustomer that = (TradeCustomer) o;
+        MockTradeCustomer that = (MockTradeCustomer) o;
 
         return customerNo.equals(that.customerNo);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + customerNo.hashCode();
-        return result;
+        return customerNo.hashCode();
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(TradeCustomer.class).omitNullValues()
+        return MoreObjects.toStringHelper(MockTradeCustomer.class).omitNullValues()
                 .add("customerNo", customerNo)
                 .toString();
     }

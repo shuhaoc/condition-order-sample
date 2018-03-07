@@ -17,7 +17,8 @@ import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.trade.domain.EntrustOrderInfo;
 import hbec.intellitrade.trade.domain.EntrustOrderWriter;
 import hbec.intellitrade.trade.domain.ExchangeType;
-import me.caosh.condition.domain.model.account.TradeCustomer;
+import me.caosh.condition.domain.model.mock.MockTradeCustomer;
+import hbec.intellitrade.trade.domain.TradeCustomer;
 import me.caosh.condition.domain.util.MockMarkets;
 import org.joda.time.LocalDateTime;
 import org.mockito.Matchers;
@@ -78,7 +79,7 @@ public class PriceOrderTest {
             }
         }).when(entrustOrderWriter).save(Matchers.<EntrustOrderInfo>any());
 
-        TradeCustomer tradeCustomer = new TradeCustomer(tradeCustomerInfo.getUserId(), tradeCustomerInfo.getCustomerNo());
+        TradeCustomer tradeCustomer = new MockTradeCustomer(tradeCustomerInfo.getCustomerNo());
         BasicTriggerTradingContext triggerTradingContext = new BasicTriggerTradingContext(Signals.buyOrSell(),
                 priceOrder, tradeCustomer, realTimeMarketSupplier, entrustOrderWriter, realTimeMarket);
 

@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.constants;
+package hbec.intellitrade.condorder.domain.tradeplan;
 
 import me.caosh.autoasm.ConvertibleEnum;
 import hbec.intellitrade.common.ValuedEnum;

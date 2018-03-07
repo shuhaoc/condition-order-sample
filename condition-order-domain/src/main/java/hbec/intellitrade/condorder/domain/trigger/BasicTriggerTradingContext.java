@@ -8,7 +8,7 @@ import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.trade.domain.EntrustOrderInfo;
 import hbec.intellitrade.trade.domain.EntrustOrderWriter;
-import me.caosh.condition.domain.model.account.TradeCustomer;
+import hbec.intellitrade.trade.domain.TradeCustomer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -15,8 +15,9 @@ import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.trade.domain.EntrustOrderWriter;
-import me.caosh.condition.domain.model.account.TradeCustomer;
-import me.caosh.condition.domain.model.constants.EntrustMethod;
+import me.caosh.condition.domain.model.mock.MockTradeCustomer;
+import hbec.intellitrade.trade.domain.TradeCustomer;
+import hbec.intellitrade.condorder.domain.tradeplan.EntrustMethod;
 import me.caosh.condition.domain.util.MockMarkets;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -60,7 +61,7 @@ public class GridOrderTest {
         RealTimeMarket realTimeMarket = MockMarkets.withCurrentPrice(new BigDecimal("14.00"));
         Signal signal = gridTradeOrder.getCondition().onMarketTick(realTimeMarket);
         assertEquals(Signals.sell(), signal);
-        TradeCustomer tradeCustomer = new TradeCustomer(303348, "010000061086");
+        TradeCustomer tradeCustomer = new MockTradeCustomer("010000061086");
         TriggerTradingContext triggerTradingContext = new BasicTriggerTradingContext(signal, gridTradeOrder, tradeCustomer,
                 realTimeMarketSupplier, entrustOrderWriter, realTimeMarket);
 
