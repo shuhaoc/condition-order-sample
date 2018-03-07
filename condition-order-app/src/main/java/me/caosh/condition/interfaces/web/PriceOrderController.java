@@ -60,6 +60,7 @@ public class PriceOrderController {
         }
         PriceOrder oldPriceOrder = (PriceOrder) conditionOrder;
         PriceOrder newPriceOlder = PriceOrderCommandAssembler.mergePriceOrder(oldPriceOrder, command);
+        logger.info("Updating order => {}", newPriceOlder);
         conditionOrderCommandService.update(newPriceOlder);
         return orderId;
     }

@@ -28,20 +28,20 @@ public class ConditionOrderCommandServiceImpl implements ConditionOrderCommandSe
     @Override
     public void save(ConditionOrder conditionOrder) {
         conditionOrderRepository.save(conditionOrder);
-        conditionOrderProducer.save(conditionOrder);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void update(ConditionOrder conditionOrder) {
         conditionOrderRepository.save(conditionOrder);
-        if (conditionOrder.getOrderState() == OrderState.ACTIVE) {
-            conditionOrderProducer.update(conditionOrder);
-        } else {
-            conditionOrderProducer.remove(conditionOrder.getOrderId());
-        }
+//        if (conditionOrder.getOrderState() == OrderState.ACTIVE) {
+//            conditionOrderProducer.update(conditionOrder);
+//        } else {
+//            conditionOrderProducer.remove(conditionOrder.getOrderId());
+//        }
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateDynamicProperties(ConditionOrder conditionOrder) {
         conditionOrderRepository.save(conditionOrder);
@@ -51,6 +51,5 @@ public class ConditionOrderCommandServiceImpl implements ConditionOrderCommandSe
     @Override
     public void remove(Long orderId) {
         conditionOrderRepository.remove(orderId);
-        conditionOrderProducer.remove(orderId);
     }
 }

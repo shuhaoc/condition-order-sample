@@ -2,12 +2,10 @@ package me.caosh.condition.interfaces.web;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.trade.domain.EntrustOrder;
 import me.caosh.condition.application.order.ConditionOrderCommandService;
-import me.caosh.condition.application.order.ConditionOrderQueryService;
+import me.caosh.condition.interfaces.facade.ConditionOrderQueryFacade;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
-import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
 import me.caosh.condition.domain.dto.trade.EntrustOrderDTO;
 import me.caosh.condition.domain.dto.trade.EntrustOrderDTOAssembler;
 import me.caosh.condition.interfaces.command.PageRequestDTO;
@@ -25,12 +23,12 @@ import java.util.List;
 public class ConditionOrderController {
 
     private final ConditionOrderCommandService conditionOrderCommandService;
-    private final ConditionOrderQueryService conditionOrderQueryService;
+    private final ConditionOrderQueryFacade conditionOrderQueryFacade;
 
     public ConditionOrderController(ConditionOrderCommandService conditionOrderCommandService,
-                                    ConditionOrderQueryService conditionOrderQueryService) {
+                                    ConditionOrderQueryFacade conditionOrderQueryFacade) {
         this.conditionOrderCommandService = conditionOrderCommandService;
-        this.conditionOrderQueryService = conditionOrderQueryService;
+        this.conditionOrderQueryFacade = conditionOrderQueryFacade;
     }
 
     @RequestMapping("/remove")
@@ -41,18 +39,13 @@ public class ConditionOrderController {
 
     @RequestMapping("/monitoring")
     public List<ConditionOrderDTO> monitoring(String customerNo) {
-        List<ConditionOrder> conditionOrders = conditionOrderQueryService.listMonitoringOrders(customerNo);
-        return Lists.transform(conditionOrders, new Function<ConditionOrder, ConditionOrderDTO>() {
-            @Override
-            public ConditionOrderDTO apply(ConditionOrder conditionOrder) {
-                return ConditionOrderDTOAssembler.toDTO(conditionOrder);
-            }
-        });
+        return conditionOrderQueryFacade.listMonitoringOrders(customerNo);
+
     }
 
     @RequestMapping("/entrusts")
     public List<EntrustOrderDTO> entrusts(String customerNo, PageRequestDTO pageRequestDTO) {
-        Page<EntrustOrder> entrustOrders = conditionOrderQueryService.listEntrustOrders(customerNo, pageRequestDTO.asPageable());
+        Page<EntrustOrder> entrustOrders = conditionOrderQueryFacade.listEntrustOrders(customerNo, pageRequestDTO.asPageable());
         return Lists.transform(entrustOrders.getContent(), new Function<EntrustOrder, EntrustOrderDTO>() {
             @Override
             public EntrustOrderDTO apply(EntrustOrder entrustOrder) {

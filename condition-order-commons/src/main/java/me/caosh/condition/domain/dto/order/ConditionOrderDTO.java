@@ -1,9 +1,11 @@
 package me.caosh.condition.domain.dto.order;
 
 import com.google.common.base.MoreObjects;
+import me.caosh.autoasm.FieldMapping;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by caosh on 2017/8/11.
@@ -14,28 +16,14 @@ public class ConditionOrderDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long orderId;
-    private Integer userId;
-    private String customerNo;
+    private TradeCustomerInfoDTO customer;
+    private Boolean deleted = false;
     private Integer orderState;
-    private SecurityInfoDTO securityInfoDTO;
-    private Integer strategyId;
-    private ConditionDTO conditionDTO;
-    private TradePlanDTO tradePlanDTO;
-
-    public ConditionOrderDTO() {
-    }
-
-    public ConditionOrderDTO(Long orderId, Integer userId, String customerNo, Integer orderState, SecurityInfoDTO securityInfoDTO,
-                             Integer strategyId, ConditionDTO conditionDTO, TradePlanDTO tradePlanDTO) {
-        this.orderId = orderId;
-        this.userId = userId;
-        this.customerNo = customerNo;
-        this.orderState = orderState;
-        this.securityInfoDTO = securityInfoDTO;
-        this.strategyId = strategyId;
-        this.conditionDTO = conditionDTO;
-        this.tradePlanDTO = tradePlanDTO;
-    }
+    private SecurityInfoDTO securityInfo;
+    private Integer strategyType;
+    private ConditionDTO rawCondition;
+    private String expireTime;
+    private TradePlanDTO tradePlan;
 
     public Long getOrderId() {
         return orderId;
@@ -45,20 +33,20 @@ public class ConditionOrderDTO implements Serializable {
         this.orderId = orderId;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public TradeCustomerInfoDTO getCustomer() {
+        return customer;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setCustomer(TradeCustomerInfoDTO customer) {
+        this.customer = customer;
     }
 
-    public String getCustomerNo() {
-        return customerNo;
+    public Boolean getDeleted() {
+        return deleted;
     }
 
-    public void setCustomerNo(String customerNo) {
-        this.customerNo = customerNo;
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 
     public Integer getOrderState() {
@@ -69,50 +57,57 @@ public class ConditionOrderDTO implements Serializable {
         this.orderState = orderState;
     }
 
-    public SecurityInfoDTO getSecurityInfoDTO() {
-        return securityInfoDTO;
+    public SecurityInfoDTO getSecurityInfo() {
+        return securityInfo;
     }
 
-    public void setSecurityInfoDTO(SecurityInfoDTO securityInfoDTO) {
-        this.securityInfoDTO = securityInfoDTO;
+    public void setSecurityInfo(SecurityInfoDTO securityInfo) {
+        this.securityInfo = securityInfo;
     }
 
-    public Integer getStrategyId() {
-        return strategyId;
+    public Integer getStrategyType() {
+        return strategyType;
     }
 
-    public void setStrategyId(Integer strategyId) {
-        this.strategyId = strategyId;
+    public void setStrategyType(Integer strategyType) {
+        this.strategyType = strategyType;
     }
 
-    public ConditionDTO getConditionDTO() {
-        return conditionDTO;
+    public ConditionDTO getRawCondition() {
+        return rawCondition;
     }
 
-    public void setConditionDTO(ConditionDTO conditionDTO) {
-        this.conditionDTO = conditionDTO;
+    public void setRawCondition(ConditionDTO rawCondition) {
+        this.rawCondition = rawCondition;
     }
 
-    public TradePlanDTO getTradePlanDTO() {
-        return tradePlanDTO;
+    public String getExpireTime() {
+        return expireTime;
     }
 
-    public void setTradePlanDTO(TradePlanDTO tradePlanDTO) {
-        this.tradePlanDTO = tradePlanDTO;
+    public void setExpireTime(String expireTime) {
+        this.expireTime = expireTime;
+    }
+
+    public TradePlanDTO getTradePlan() {
+        return tradePlan;
+    }
+
+    public void setTradePlan(TradePlanDTO tradePlan) {
+        this.tradePlan = tradePlan;
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(ConditionOrderDTO.class).omitNullValues()
-                .addValue(ConditionOrderDTO.class.getSuperclass() != Object.class ? super.toString() : null)
                 .add("orderId", orderId)
-                .add("userId", userId)
-                .add("customerNo", customerNo)
+                .add("customer", customer)
+                .add("deleted", deleted)
                 .add("orderState", orderState)
-                .add("securityInfo", securityInfoDTO)
-                .add("strategyId", strategyId)
-                .add("condition", conditionDTO)
-                .add("tradePlanDTO", tradePlanDTO)
+                .add("securityInfo", securityInfo)
+                .add("strategyType", strategyType)
+                .add("rawCondition", rawCondition)
+                .add("tradePlan", tradePlan)
                 .toString();
     }
 }

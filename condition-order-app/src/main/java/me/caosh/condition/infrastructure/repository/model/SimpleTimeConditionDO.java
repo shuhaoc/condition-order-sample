@@ -32,8 +32,4 @@ public class SimpleTimeConditionDO implements ConditionDO {
                 .toString();
     }
 
-    @Override
-    public void accept(ConditionDOVisitor visitor) {
-        visitor.visitSimpleTimeConditionDO(this);
-    }
 }

@@ -3,9 +3,9 @@ package me.caosh.condition.infrastructure.rabbitmq.impl;
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
+import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
-import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
 import me.caosh.condition.domain.model.constants.OrderCommandType;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
@@ -70,12 +70,13 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
 
     @Override
     public void update(ConditionOrder conditionOrder) {
-        Preconditions.checkArgument(conditionOrder.getOrderState() == OrderState.ACTIVE);
+        Preconditions.checkArgument(conditionOrder.getOrderState() == OrderState.ACTIVE,
+                "Order state should be ACTIVE");
         send(exchangeName, routingKey, OrderCommandType.UPDATE, conditionOrder);
     }
 
     private void send(String exchangeName, String routingKey, OrderCommandType update, ConditionOrder conditionOrder) {
-        ConditionOrderDTO conditionOrderDTO = ConditionOrderDTOAssembler.toDTO(conditionOrder);
+        ConditionOrderDTO conditionOrderDTO = AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDTO.class);
         ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(update.getValue(), conditionOrderDTO);
         Message message = messageConverter.toMessage(conditionOrderMonitorDTO, new MessageProperties());
         amqpTemplate.send(exchangeName, routingKey, message);

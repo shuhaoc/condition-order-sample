@@ -24,11 +24,6 @@ public class NewStockPurchaseConditionDO implements ConditionDO {
     }
 
     @Override
-    public void accept(ConditionDOVisitor visitor) {
-        visitor.visitNewStockPurchaseConditionDO(this);
-    }
-
-    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("purchaseTime", purchaseTime)

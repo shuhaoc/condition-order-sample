@@ -1,5 +1,7 @@
 package me.caosh.condition.domain.dto.order;
 
+import me.caosh.autoasm.RuntimeType;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,9 @@ import java.io.Serializable;
  *
  * @author caoshuhao@touker.com
  */
+@RuntimeType({
+        PriceConditionDTO.class
+})
 public interface ConditionDTO extends Serializable {
     void accept(ConditionDTOVisitor visitor);
 }

@@ -14,5 +14,4 @@ import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
         NewStockPurchaseCondition.class
 })
 public interface ConditionDO {
-    void accept(ConditionDOVisitor visitor);
 }

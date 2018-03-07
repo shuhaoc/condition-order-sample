@@ -43,8 +43,4 @@ public class TurnUpConditionDO implements ConditionDO {
                 .toString();
     }
 
-    @Override
-    public void accept(ConditionDOVisitor visitor) {
-        visitor.visitTurnUpConditionDO(this);
-    }
 }

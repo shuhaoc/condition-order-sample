@@ -11,11 +11,11 @@ import java.util.List;
 public interface ConditionOrderRepository {
     void save(ConditionOrder conditionOrder);
 
+    void update(ConditionOrder conditionOrder);
+
     void remove(Long orderId);
 
     Optional<ConditionOrder> findOne(Long orderId);
 
-    List<ConditionOrder> findAllActive();
-
-    List<ConditionOrder> findMonitoringOrders(String customerNo);
+    List<ConditionOrder> findAllMonitoring();
 }

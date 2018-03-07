@@ -1,5 +1,6 @@
 package me.caosh.condition.domain.dto.order.assembler;
 
+import hbec.intellitrade.condorder.domain.ConditionOrder;
 import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
 import me.caosh.condition.domain.model.constants.OrderCommandType;
 import me.caosh.condition.domain.model.order.event.ConditionOrderCommandEvent;
@@ -24,9 +25,9 @@ public class ConditionOrderCommandEventFactory {
         OrderCommandType orderCommandType = ValuedEnumUtil.valueOf(dto.getOrderCommandType(), OrderCommandType.class);
         switch (orderCommandType) {
             case CREATE:
-                return new ConditionOrderCreateCommandEvent(ConditionOrderDTOAssembler.fromDTO(dto.getConditionOrderDTO()));
+//                return new ConditionOrderCreateCommandEvent(AutoAssemblers.getDefault().disassemble(dto.getConditionOrderDTO(), ConditionOrder.class));
             case UPDATE:
-                return new ConditionOrderUpdateCommandEvent(ConditionOrderDTOAssembler.fromDTO(dto.getConditionOrderDTO()));
+//                return new ConditionOrderUpdateCommandEvent(AutoAssemblers.getDefault().disassemble(dto.getConditionOrderDTO(), ConditionOrder.class));
             case DELETE:
                 return new ConditionOrderDeleteCommandEvent(dto.getOrderId());
             default:

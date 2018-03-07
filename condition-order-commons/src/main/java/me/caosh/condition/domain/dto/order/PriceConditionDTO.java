@@ -3,7 +3,6 @@ package me.caosh.condition.domain.dto.order;
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceConditionBuilder;
-import me.caosh.autoasm.Convertible;
 import me.caosh.autoasm.MappedClass;
 import org.hibernate.validator.constraints.Range;
 
@@ -26,15 +25,6 @@ public class PriceConditionDTO implements ConditionDTO {
     @NotNull
     @DecimalMin("0")
     private BigDecimal targetPrice;
-
-    public PriceConditionDTO() {
-    }
-
-    @Deprecated
-    public PriceConditionDTO(Integer compareOperator, BigDecimal targetPrice) {
-        this.compareOperator = compareOperator;
-        this.targetPrice = targetPrice;
-    }
 
     public Integer getCompareOperator() {
         return compareOperator;

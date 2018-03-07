@@ -32,8 +32,4 @@ public class GridConditionDO implements ConditionDO {
                 .toString();
     }
 
-    @Override
-    public void accept(ConditionDOVisitor visitor) {
-        visitor.visitGridConditionDO(this);
-    }
 }

@@ -16,7 +16,7 @@ import me.caosh.condition.domain.model.order.TriggerMessage;
 public class TriggerMessageAssembler {
     public static TriggerMessageDTO toDTO(TriggerMessage triggerMessage) {
         TradeSignalDTO tradeSignalDTO = new SignalDTOBuilder(triggerMessage.getSignal()).build();
-        ConditionOrderDTO conditionOrderDTO = ConditionOrderDTOAssembler.toDTO(triggerMessage.getConditionOrder());
+        ConditionOrderDTO conditionOrderDTO = null;//AutoAssemblers.getDefault().assemble(triggerMessage.getConditionOrder(), ConditionOrderDTO.class);
         RealTimeMarketDTO realTimeMarketDTO = null;
         if (triggerMessage.getRealTimeMarket().isPresent()) {
             realTimeMarketDTO = RealTimeMarketDTOAssembler.toDTO(triggerMessage.getRealTimeMarket().get());
@@ -26,7 +26,7 @@ public class TriggerMessageAssembler {
 
     public static TriggerMessage fromDTO(TriggerMessageDTO triggerMessageDTO) {
         Signal signal = new TradeSignalBuilder(triggerMessageDTO.getTradeSignalDTO()).build();
-        ConditionOrder conditionOrder = ConditionOrderDTOAssembler.fromDTO(triggerMessageDTO.getConditionOrderDTO());
+        ConditionOrder conditionOrder = null;//AutoAssemblers.getDefault().disassemble(triggerMessageDTO.getConditionOrderDTO(), ConditionOrder.class);
         RealTimeMarket realTimeMarket = null;
         if (triggerMessageDTO.getRealTimeMarketDTO() != null) {
             realTimeMarket = RealTimeMarketDTOAssembler.fromDTO(triggerMessageDTO.getRealTimeMarketDTO());

@@ -5,10 +5,12 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.ConditionOrderBuilder;
+import hbec.intellitrade.condorder.domain.OrderState;
 import me.caosh.autoasm.AutoAssemblers;
+import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
 import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
 import me.caosh.condition.infrastructure.repository.model.ConditionOrderDO;
-import org.springframework.beans.factory.annotation.Autowired;
+import me.caosh.condition.infrastructure.tunnel.ConditionOrderTunnel;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,27 +20,48 @@ import java.util.List;
  */
 @Repository
 public class ConditionOrderRepositoryImpl implements ConditionOrderRepository {
-    @Autowired
-    private ConditionOrderDORepository conditionOrderDORepository;
+    private final ConditionOrderTunnel conditionOrderTunnel;
+    private final ConditionOrderProducer conditionOrderProducer;
+
+    public ConditionOrderRepositoryImpl(ConditionOrderTunnel conditionOrderTunnel, ConditionOrderProducer conditionOrderProducer) {
+        this.conditionOrderTunnel = conditionOrderTunnel;
+        this.conditionOrderProducer = conditionOrderProducer;
+    }
 
     @Override
     public void save(ConditionOrder conditionOrder) {
         ConditionOrderDO conditionOrderDO = AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDO.class);
-        conditionOrderDORepository.save(conditionOrderDO);
+        conditionOrderTunnel.save(conditionOrderDO);
+
+        conditionOrderProducer.save(conditionOrder);
     }
 
     @Override
-    public void remove(Long orderId) {
-        ConditionOrderDO conditionOrderDO = conditionOrderDORepository.findOne(orderId);
-        if (conditionOrderDO != null) {
-            conditionOrderDO.setDeleted(true);
-            conditionOrderDORepository.save(conditionOrderDO);
+    public void update(ConditionOrder conditionOrder) {
+        ConditionOrderDO conditionOrderDO = AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDO.class);
+        conditionOrderTunnel.save(conditionOrderDO);
+
+        if (conditionOrder.isMonitoringState()) {
+            conditionOrderProducer.update(conditionOrder);
+        } else {
+            conditionOrderProducer.remove(conditionOrder.getOrderId());
         }
     }
 
     @Override
+    public void remove(Long orderId) {
+        ConditionOrderDO conditionOrderDO = conditionOrderTunnel.findOne(orderId);
+        if (conditionOrderDO != null) {
+            conditionOrderDO.setDeleted(true);
+            conditionOrderTunnel.save(conditionOrderDO);
+        }
+
+        conditionOrderProducer.remove(orderId);
+    }
+
+    @Override
     public Optional<ConditionOrder> findOne(Long orderId) {
-        ConditionOrderDO conditionOrderDO = conditionOrderDORepository.findNotDeleted(orderId);
+        ConditionOrderDO conditionOrderDO = conditionOrderTunnel.findNotDeleted(orderId);
         if (conditionOrderDO == null) {
             return Optional.absent();
         }
@@ -49,8 +72,8 @@ public class ConditionOrderRepositoryImpl implements ConditionOrderRepository {
     }
 
     @Override
-    public List<ConditionOrder> findAllActive() {
-        List<ConditionOrderDO> conditionOrderDOs = conditionOrderDORepository.findAllActive();
+    public List<ConditionOrder> findAllMonitoring() {
+        List<ConditionOrderDO> conditionOrderDOs = conditionOrderTunnel.findAllMonitoring();
         return Lists.transform(conditionOrderDOs, new Function<ConditionOrderDO, ConditionOrder>() {
             @Override
             public ConditionOrder apply(ConditionOrderDO conditionOrderDO) {
@@ -59,14 +82,4 @@ public class ConditionOrderRepositoryImpl implements ConditionOrderRepository {
         });
     }
 
-    @Override
-    public List<ConditionOrder> findMonitoringOrders(String customerNo) {
-        List<ConditionOrderDO> monitoring = conditionOrderDORepository.findMonitoring(customerNo);
-        return Lists.transform(monitoring, new Function<ConditionOrderDO, ConditionOrder>() {
-            @Override
-            public ConditionOrder apply(ConditionOrderDO conditionOrderDO) {
-                return AutoAssemblers.getDefault().disassemble(conditionOrderDO, ConditionOrderBuilder.class).build();
-            }
-        });
-    }
 }

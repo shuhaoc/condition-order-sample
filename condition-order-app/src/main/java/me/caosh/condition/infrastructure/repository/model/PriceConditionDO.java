@@ -15,14 +15,6 @@ public class PriceConditionDO implements ConditionDO {
     private Integer compareOperator;
     private BigDecimal targetPrice;
 
-    public PriceConditionDO() {
-    }
-
-    public PriceConditionDO(Integer compareOperator, BigDecimal targetPrice) {
-        this.compareOperator = compareOperator;
-        this.targetPrice = targetPrice;
-    }
-
     public Integer getCompareOperator() {
         return compareOperator;
     }
@@ -37,11 +29,6 @@ public class PriceConditionDO implements ConditionDO {
 
     public void setTargetPrice(BigDecimal targetPrice) {
         this.targetPrice = targetPrice;
-    }
-
-    @Override
-    public void accept(ConditionDOVisitor visitor) {
-        visitor.visitPriceConditionDO(this);
     }
 
     @Override
