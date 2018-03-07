@@ -3,7 +3,6 @@ package me.caosh.condition.domain.model.order.grid;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.common.market.RealTimeMarket;
-import hbec.intellitrade.condorder.domain.ConditionVisitor;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
@@ -40,11 +39,6 @@ public class GridCondition implements MarketCondition {
 
     void setBasePrice(BigDecimal basePrice) {
         this.basePrice = basePrice;
-    }
-
-    @Override
-    public void accept(ConditionVisitor visitor) {
-        visitor.visitGridCondition(this);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package me.caosh.condition.domain.model.condition;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.condorder.domain.ConditionVisitor;
 import hbec.intellitrade.strategy.domain.condition.AbstractBasicTimeCondition;
 import hbec.intellitrade.strategy.domain.factor.JustAfterTargetTimeFactor;
 import org.joda.time.LocalDateTime;
@@ -30,11 +29,6 @@ public class TimeReachedCondition extends AbstractBasicTimeCondition {
     @Override
     public JustAfterTargetTimeFactor getTimeFactor() {
         return timeFactor;
-    }
-
-    @Override
-    public void accept(ConditionVisitor visitor) {
-        visitor.visitSimpleTimeCondition(this);
     }
 
     @Override

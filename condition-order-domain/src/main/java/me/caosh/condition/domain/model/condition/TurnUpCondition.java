@@ -3,7 +3,6 @@ package me.caosh.condition.domain.model.condition;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import hbec.intellitrade.condorder.domain.ConditionVisitor;
 import hbec.intellitrade.strategy.domain.condition.AbstractBasicMarketCondition;
 import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
 import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
@@ -89,11 +88,6 @@ public class TurnUpCondition extends AbstractBasicMarketCondition implements Dyn
                 inflexionFactor.getTurnBackBinaryPriceFactor(),
                 that.isBroken(),
                 that.getLowestPrice().orNull());
-    }
-
-    @Override
-    public void accept(ConditionVisitor visitor) {
-        visitor.visitTurnUpCondition(this);
     }
 
     @Override

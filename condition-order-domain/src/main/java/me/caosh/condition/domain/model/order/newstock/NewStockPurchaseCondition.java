@@ -2,7 +2,6 @@ package me.caosh.condition.domain.model.order.newstock;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
-import hbec.intellitrade.condorder.domain.ConditionVisitor;
 import hbec.intellitrade.strategy.domain.condition.AbstractBasicTimeCondition;
 import hbec.intellitrade.strategy.domain.factor.DailyTargetTimeFactor;
 import hbec.intellitrade.strategy.domain.factor.TimeFactor;
@@ -54,8 +53,4 @@ public class NewStockPurchaseCondition extends AbstractBasicTimeCondition {
         return timeFactor;
     }
 
-    @Override
-    public void accept(ConditionVisitor visitor) {
-        visitor.visitNewStockPurchaseCondition(this);
-    }
 }

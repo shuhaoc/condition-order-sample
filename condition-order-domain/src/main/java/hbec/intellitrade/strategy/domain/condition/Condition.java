@@ -1,6 +1,5 @@
 package hbec.intellitrade.strategy.domain.condition;
 
-import hbec.intellitrade.condorder.domain.ConditionVisitor;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.condition.time.TimeCondition;
 
@@ -19,10 +18,4 @@ import hbec.intellitrade.strategy.domain.condition.time.TimeCondition;
  * @date 2018/1/29
  */
 public interface Condition {
-    /**
-     * accept visitor
-     *
-     * @param visitor visitor
-     */
-    void accept(ConditionVisitor visitor);
 }

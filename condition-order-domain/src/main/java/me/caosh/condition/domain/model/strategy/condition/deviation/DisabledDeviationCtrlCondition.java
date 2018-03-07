@@ -1,7 +1,6 @@
 package me.caosh.condition.domain.model.strategy.condition.deviation;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
-import hbec.intellitrade.condorder.domain.ConditionVisitor;
 import hbec.intellitrade.strategy.domain.condition.market.PredictableMarketCondition;
 import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
@@ -31,8 +30,4 @@ public class DisabledDeviationCtrlCondition implements DeviationCtrlCondition, P
         return predictableMarketCondition.onMarketTick(realTimeMarket);
     }
 
-    @Override
-    public void accept(ConditionVisitor visitor) {
-        predictableMarketCondition.accept(visitor);
-    }
 }

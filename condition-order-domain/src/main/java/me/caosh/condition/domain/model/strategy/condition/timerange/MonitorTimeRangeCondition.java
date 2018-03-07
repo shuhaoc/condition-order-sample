@@ -1,7 +1,6 @@
 package me.caosh.condition.domain.model.strategy.condition.timerange;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
-import hbec.intellitrade.condorder.domain.ConditionVisitor;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
@@ -32,8 +31,4 @@ public class MonitorTimeRangeCondition implements MarketCondition {
         return marketCondition.onMarketTick(realTimeMarket);
     }
 
-    @Override
-    public void accept(ConditionVisitor visitor) {
-        marketCondition.accept(visitor);
-    }
 }

@@ -1,7 +1,6 @@
 package hbec.intellitrade.strategy.domain.strategies.condition;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.condorder.domain.ConditionVisitor;
 import hbec.intellitrade.strategy.domain.condition.AbstractBasicMarketCondition;
 import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
@@ -32,11 +31,6 @@ public class PriceCondition extends AbstractBasicMarketCondition {
     @Override
     public BasicTargetPriceFactor getTargetPriceFactor() {
         return targetPriceFactor;
-    }
-
-    @Override
-    public void accept(ConditionVisitor visitor) {
-        visitor.visitPriceCondition(this);
     }
 
     @Override
