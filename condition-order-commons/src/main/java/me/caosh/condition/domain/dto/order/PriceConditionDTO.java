@@ -43,11 +43,6 @@ public class PriceConditionDTO implements ConditionDTO {
     }
 
     @Override
-    public void accept(ConditionDTOVisitor visitor) {
-        visitor.visitPriceConditionDTO(this);
-    }
-
-    @Override
     public String toString() {
         return MoreObjects.toStringHelper(PriceConditionDTO.class).omitNullValues()
                 .add("compareOperator", compareOperator)

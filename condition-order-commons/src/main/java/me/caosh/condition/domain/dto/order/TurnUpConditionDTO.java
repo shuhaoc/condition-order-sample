@@ -67,9 +67,5 @@ public class TurnUpConditionDTO implements ConditionDTO {
                 .toString();
     }
 
-    @Override
-    public void accept(ConditionDTOVisitor visitor) {
-        visitor.visitTurnUpConditionDTO(this);
-    }
 }
 

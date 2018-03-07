@@ -46,11 +46,6 @@ public class NewStockPurchaseConditionDTO implements ConditionDTO {
     }
 
     @Override
-    public void accept(ConditionDTOVisitor visitor) {
-        visitor.visitNewStockPurchaseConditionDTO(this);
-    }
-
-    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("purchaseTime", purchaseTime)

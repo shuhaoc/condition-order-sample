@@ -37,11 +37,6 @@ public class GridConditionDTO implements ConditionDTO {
     }
 
     @Override
-    public void accept(ConditionDTOVisitor visitor) {
-        visitor.visitGridConditionDTO(this);
-    }
-
-    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("gridLength", gridLength)

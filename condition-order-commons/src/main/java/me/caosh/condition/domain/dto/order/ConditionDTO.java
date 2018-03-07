@@ -13,5 +13,4 @@ import java.io.Serializable;
         PriceConditionDTO.class
 })
 public interface ConditionDTO extends Serializable {
-    void accept(ConditionDTOVisitor visitor);
 }
