@@ -73,7 +73,7 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
         } else if (signal instanceof CacheSync) {
             // TODO: use visitor pattern
             conditionOrderCommandService.updateDynamicProperties(conditionOrder);
-            logger.info("Sync dynamic properties, orderId={}, condition={}", conditionOrder.getOrderId(), conditionOrder.getCondition());
+            logger.info("Sync dynamic properties, conditionOrder={}", conditionOrder);
         }
     }
 

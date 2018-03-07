@@ -23,7 +23,7 @@ import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
  */
 public class ConditionOrderDTOAssembler {
     public static ConditionOrderDTO toDTO(ConditionOrder conditionOrder) {
-        ConditionDTOBuilder conditionDTOBuilder = new ConditionDTOBuilder(conditionOrder.getCondition());
+        ConditionDTOBuilder conditionDTOBuilder = new ConditionDTOBuilder(conditionOrder.getRawCondition());
         ConditionDTO conditionDTO = conditionDTOBuilder.build();
 
         return ConditionOrderDTOBuilder.aConditionOrderDTO()
