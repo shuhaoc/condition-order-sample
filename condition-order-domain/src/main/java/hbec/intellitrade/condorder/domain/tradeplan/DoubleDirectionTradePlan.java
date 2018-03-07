@@ -36,14 +36,8 @@ public class DoubleDirectionTradePlan implements SingleEntrustTradePlan {
         return getBuyPlan().getEntrustStrategy();
     }
 
-    @Override
     public TradeNumber getTradeNumber() {
         return buyPlan.getTradeNumber();
-    }
-
-    @Override
-    public void accept(TradePlanVisitor visitor) {
-        visitor.visitDoubleDirectionTradePlan(this);
     }
 
     @Override

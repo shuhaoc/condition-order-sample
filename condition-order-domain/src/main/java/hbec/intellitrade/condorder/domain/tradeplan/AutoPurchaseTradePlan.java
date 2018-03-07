@@ -10,7 +10,6 @@ import hbec.intellitrade.trade.domain.ExchangeType;
 public class AutoPurchaseTradePlan implements TradePlan {
     private final TradeNumberDirect placeholder = new TradeNumberDirect(0);
 
-    @Override
     public TradeNumber getTradeNumber() {
         return placeholder;
     }
@@ -23,8 +22,4 @@ public class AutoPurchaseTradePlan implements TradePlan {
         return EntrustStrategy.ASSIGNED_PRICE.getValue();
     }
 
-    @Override
-    public void accept(TradePlanVisitor visitor) {
-        visitor.visitAutoPurchaseTradePlan(this);
-    }
 }

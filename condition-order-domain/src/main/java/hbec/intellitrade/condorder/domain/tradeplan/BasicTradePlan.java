@@ -36,14 +36,8 @@ public class BasicTradePlan implements SingleEntrustTradePlan {
         return entrustStrategy;
     }
 
-    @Override
     public TradeNumber getTradeNumber() {
         return tradeNumber;
-    }
-
-    @Override
-    public void accept(TradePlanVisitor visitor) {
-        visitor.visitSingleDirectionTradePlan(this);
     }
 
     @Override
