@@ -23,7 +23,7 @@ import java.util.List;
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/2
  */
-public abstract class AbstractConditionOrder implements ConditionOrder {
+public abstract class AbstractConditionOrder implements ConditionOrder, AutoTradeAction {
     private static final Logger logger = LoggerFactory.getLogger(AbstractConditionOrder.class);
 
     private final Long orderId;
@@ -106,12 +106,11 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     }
 
     private void handleEntrustCommand(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand) {
-        ConditionOrder conditionOrder = triggerTradingContext.getConditionOrder();
         TradeCustomer tradeCustomer = triggerTradingContext.getTradeCustomer();
         try {
             EntrustResult entrustResult = tradeCustomer.entrust(entrustCommand);
             logger.info("Entrust result <== {}", entrustResult);
-            conditionOrder.afterEntrustSuccess(triggerTradingContext, entrustCommand, entrustResult);
+            afterEntrustSuccess(triggerTradingContext, entrustCommand, entrustResult);
         } catch (Exception e) {
             // TODO: handle exception
         }

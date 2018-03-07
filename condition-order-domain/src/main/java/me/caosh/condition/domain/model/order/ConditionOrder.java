@@ -15,7 +15,7 @@ import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/29
  */
-public interface ConditionOrder extends Strategy, AutoTradeAction {
+public interface ConditionOrder extends Strategy {
     Long getOrderId();
 
     TradeCustomerInfo getCustomer();
