@@ -88,7 +88,8 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
         return Optional.fromNullable(expireTime);
     }
 
-    protected boolean isMonitoringState() {
+    @Override
+    public boolean isMonitoringState() {
         return orderState == OrderState.ACTIVE || orderState == OrderState.PAUSED;
     }
 

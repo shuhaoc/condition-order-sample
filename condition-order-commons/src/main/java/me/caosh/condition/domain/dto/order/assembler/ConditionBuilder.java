@@ -35,7 +35,7 @@ public class ConditionBuilder implements ConditionDTOVisitor {
 
     @Override
     public void visitPriceConditionDTO(PriceConditionDTO priceConditionDTO) {
-        CompareOperator compareOperator = ValuedEnumUtil.valueOf(priceConditionDTO.getCompareCondition(), CompareOperator.class);
+        CompareOperator compareOperator = ValuedEnumUtil.valueOf(priceConditionDTO.getCompareOperator(), CompareOperator.class);
         this.condition = new PriceCondition(compareOperator, priceConditionDTO.getTargetPrice());
     }
 

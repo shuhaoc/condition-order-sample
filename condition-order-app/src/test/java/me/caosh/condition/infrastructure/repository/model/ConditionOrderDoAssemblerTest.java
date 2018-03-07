@@ -44,6 +44,7 @@ public class ConditionOrderDoAssemblerTest {
                 new TradeCustomerInfo(USER_ID, CUSTOMER_NO),
                 securityInfo,
                 new PriceCondition(CompareOperator.GE, new BigDecimal("10.00")),
+                null,
                 new BasicTradePlan(ExchangeType.SELL, EntrustStrategy.BUY1,
                         new TradeNumberByAmount(new BigDecimal("10000.00"))),
                 OrderState.ACTIVE);

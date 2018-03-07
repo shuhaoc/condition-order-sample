@@ -1,7 +1,14 @@
 package me.caosh.condition.domain.dto.order;
 
 import com.google.common.base.MoreObjects;
+import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
+import hbec.intellitrade.strategy.domain.strategies.condition.PriceConditionBuilder;
+import me.caosh.autoasm.Convertible;
+import me.caosh.autoasm.MappedClass;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
@@ -9,26 +16,32 @@ import java.math.BigDecimal;
  *
  * @author caoshuhao@touker.com
  */
+@MappedClass(value = PriceCondition.class, builderClass = PriceConditionBuilder.class)
 public class PriceConditionDTO implements ConditionDTO {
     private static final long serialVersionUID = 1L;
 
-    private Integer compareCondition;
+    @NotNull
+    @Range(min = 0, max = 1)
+    private Integer compareOperator;
+    @NotNull
+    @DecimalMin("0")
     private BigDecimal targetPrice;
 
     public PriceConditionDTO() {
     }
 
-    public PriceConditionDTO(Integer compareCondition, BigDecimal targetPrice) {
-        this.compareCondition = compareCondition;
+    @Deprecated
+    public PriceConditionDTO(Integer compareOperator, BigDecimal targetPrice) {
+        this.compareOperator = compareOperator;
         this.targetPrice = targetPrice;
     }
 
-    public Integer getCompareCondition() {
-        return compareCondition;
+    public Integer getCompareOperator() {
+        return compareOperator;
     }
 
-    public void setCompareCondition(Integer compareCondition) {
-        this.compareCondition = compareCondition;
+    public void setCompareOperator(Integer compareOperator) {
+        this.compareOperator = compareOperator;
     }
 
     public BigDecimal getTargetPrice() {
@@ -47,8 +60,7 @@ public class PriceConditionDTO implements ConditionDTO {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(PriceConditionDTO.class).omitNullValues()
-                .addValue(PriceConditionDTO.class.getSuperclass() != Object.class ? super.toString() : null)
-                .add("compareCondition", compareCondition)
+                .add("compareOperator", compareOperator)
                 .add("targetPrice", targetPrice)
                 .toString();
     }

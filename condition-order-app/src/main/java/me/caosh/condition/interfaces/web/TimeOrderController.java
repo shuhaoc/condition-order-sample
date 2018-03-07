@@ -22,6 +22,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/time")
+@Deprecated
 public class TimeOrderController {
 
     private final ConditionOrderIdGenerator idGenerator;

@@ -100,8 +100,9 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
             return strategyType;
         }
 
-        public void setStrategyType(NativeStrategyInfo strategyType) {
+        public StrategyInfoBuilder setStrategyType(NativeStrategyInfo strategyType) {
             this.strategyType = strategyType;
+            return this;
         }
     }
 }

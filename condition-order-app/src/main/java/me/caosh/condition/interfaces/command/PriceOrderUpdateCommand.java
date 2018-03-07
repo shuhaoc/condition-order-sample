@@ -1,13 +1,19 @@
 package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
+import me.caosh.autoasm.FieldMapping;
+import me.caosh.condition.domain.dto.order.PriceConditionDTO;
+import me.caosh.condition.domain.dto.order.TradePlanDTO;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created by caosh on 2017/8/9.
@@ -17,25 +23,16 @@ public class PriceOrderUpdateCommand implements Serializable {
 
     @NotNull
     private Long orderId;
+
     @NotNull
-    @Range(min = 1, max = 2)
-    private Integer compareCondition;
+    private PriceConditionDTO priceCondition;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Future
+    private Date expireTime;
+
     @NotNull
-    @DecimalMin("0")
-    private BigDecimal targetPrice;
-    @NotNull
-    @Range(min = 1, max = 2)
-    private Integer exchangeType;
-    @NotNull
-    @Range(min = 1, max = 11)
-    private Integer entrustStrategy;
-//    @NotNull
-    @Range(min = 0, max = 1)
-    private Integer entrustMethod;
-    @Min(100)
-    private Integer entrustNumber;
-    @DecimalMin("1")
-    private BigDecimal entrustAmount;
+    private TradePlanDTO tradePlan;
 
     public Long getOrderId() {
         return orderId;
@@ -45,73 +42,37 @@ public class PriceOrderUpdateCommand implements Serializable {
         this.orderId = orderId;
     }
 
-    public Integer getCompareCondition() {
-        return compareCondition;
+    public PriceConditionDTO getPriceCondition() {
+        return priceCondition;
     }
 
-    public void setCompareCondition(Integer compareCondition) {
-        this.compareCondition = compareCondition;
+    public void setPriceCondition(PriceConditionDTO priceCondition) {
+        this.priceCondition = priceCondition;
     }
 
-    public BigDecimal getTargetPrice() {
-        return targetPrice;
+    public Date getExpireTime() {
+        return expireTime;
     }
 
-    public void setTargetPrice(BigDecimal targetPrice) {
-        this.targetPrice = targetPrice;
+    public void setExpireTime(Date expireTime) {
+        this.expireTime = expireTime;
     }
 
-    public Integer getExchangeType() {
-        return exchangeType;
+    public TradePlanDTO getTradePlan() {
+        return tradePlan;
     }
 
-    public void setExchangeType(Integer exchangeType) {
-        this.exchangeType = exchangeType;
-    }
-
-    public Integer getEntrustStrategy() {
-        return entrustStrategy;
-    }
-
-    public void setEntrustStrategy(Integer entrustStrategy) {
-        this.entrustStrategy = entrustStrategy;
-    }
-
-    public Integer getEntrustNumber() {
-        return entrustNumber;
-    }
-
-    public void setEntrustNumber(Integer entrustNumber) {
-        this.entrustNumber = entrustNumber;
-    }
-
-    public Integer getEntrustMethod() {
-        return entrustMethod;
-    }
-
-    public void setEntrustMethod(Integer entrustMethod) {
-        this.entrustMethod = entrustMethod;
-    }
-
-    public BigDecimal getEntrustAmount() {
-        return entrustAmount;
-    }
-
-    public void setEntrustAmount(BigDecimal entrustAmount) {
-        this.entrustAmount = entrustAmount;
+    public void setTradePlan(TradePlanDTO tradePlan) {
+        this.tradePlan = tradePlan;
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects.toStringHelper(PriceOrderUpdateCommand.class).omitNullValues()
                 .add("orderId", orderId)
-                .add("compareCondition", compareCondition)
-                .add("targetPrice", targetPrice)
-                .add("exchangeType", exchangeType)
-                .add("entrustStrategy", entrustStrategy)
-                .add("entrustMethod", entrustMethod)
-                .add("entrustNumber", entrustNumber)
-                .add("entrustAmount", entrustAmount)
+                .add("priceCondition", priceCondition)
+                .add("expireTime", expireTime)
+                .add("tradePlan", tradePlan)
                 .toString();
     }
 }

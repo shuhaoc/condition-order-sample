@@ -1,8 +1,11 @@
 package me.caosh.condition.domain.dto.order;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.condorder.domain.tradeplan.EntrustMethod;
+import me.caosh.autoasm.Convertible;
+import me.caosh.autoasm.FieldMapping;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -11,20 +14,23 @@ import java.math.BigDecimal;
  *
  * @author caoshuhao@touker.com
  */
+@Convertible
 public class TradePlanDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @NotNull
+    @Range(min = 1, max = 2)
     private Integer exchangeType;
+    @NotNull
+    @Range(min = 1, max = 11)
     private Integer entrustStrategy;
-    /**
-     * @see EntrustMethod
-     */
+    @NotNull
+    @Range(min = 0, max = 1)
+    @FieldMapping(mappedProperty = "tradeNumber.entrustMethod")
     private Integer entrustMethod;
-    private Integer number;
-    private BigDecimal entrustAmount;
-
-    public TradePlanDTO() {
-    }
+    @NotNull
+    @FieldMapping(mappedProperty = "tradeNumber.number")
+    private BigDecimal number;
 
     public Integer getExchangeType() {
         return exchangeType;
@@ -50,30 +56,21 @@ public class TradePlanDTO implements Serializable {
         this.entrustMethod = entrustMethod;
     }
 
-    public Integer getNumber() {
+    public BigDecimal getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(BigDecimal number) {
         this.number = number;
-    }
-
-    public BigDecimal getEntrustAmount() {
-        return entrustAmount;
-    }
-
-    public void setEntrustAmount(BigDecimal entrustAmount) {
-        this.entrustAmount = entrustAmount;
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects.toStringHelper(TradePlanDTO.class).omitNullValues()
                 .add("exchangeType", exchangeType)
                 .add("entrustStrategy", entrustStrategy)
                 .add("entrustMethod", entrustMethod)
                 .add("number", number)
-                .add("entrustAmount", entrustAmount)
                 .toString();
     }
 }

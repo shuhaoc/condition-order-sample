@@ -22,6 +22,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/turnup")
+@Deprecated
 public class TurnUpBuyOrderController {
 
     private final ConditionOrderIdGenerator idGenerator;

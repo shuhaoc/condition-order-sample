@@ -1,156 +1,76 @@
 package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.Range;
+import me.caosh.autoasm.FieldMapping;
+import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
+import me.caosh.condition.domain.dto.order.PriceConditionDTO;
+import me.caosh.condition.domain.dto.order.TradePlanDTO;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.Date;
 
 /**
- * Created by caosh on 2017/8/9.
+ * @author caosh/caoshuhao@touker.com
+ * @date 2017/8/9
  */
 public class PriceOrderCreateCommand implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    @Range(min = 3, max = 4)
-    private Integer securityType;
-    @NotBlank
-    @Length(min = 6, max = 6)
-    private String securityCode;
-    @NotBlank
-    @Length(min = 2, max = 2)
-    private String securityExchange;
-    @NotBlank
-    @Length(min = 1, max = 4)
-    private String securityName;
+    private SecurityInfoDTO securityInfo;
+
     @NotNull
-    @Range(min = 1, max = 2)
-    private Integer compareCondition;
+    private PriceConditionDTO priceCondition;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Future
+    private Date expireTime;
+
     @NotNull
-    @DecimalMin("0")
-    private BigDecimal targetPrice;
-    @NotNull
-    @Range(min = 1, max = 2)
-    private Integer exchangeType;
-    @NotNull
-    @Range(min = 1, max = 11)
-    private Integer entrustStrategy;
-    //    @NotNull
-    @Range(min = 0, max = 1)
-    private Integer entrustMethod;
-    @Min(100)
-    private Integer entrustNumber;
-    @DecimalMin("1")
-    private BigDecimal entrustAmount;
+    private TradePlanDTO tradePlan;
 
-    public Integer getSecurityType() {
-        return securityType;
+    public SecurityInfoDTO getSecurityInfo() {
+        return securityInfo;
     }
 
-    public void setSecurityType(Integer securityType) {
-        this.securityType = securityType;
+    public void setSecurityInfo(SecurityInfoDTO securityInfo) {
+        this.securityInfo = securityInfo;
     }
 
-    public String getSecurityCode() {
-        return securityCode;
+    public PriceConditionDTO getPriceCondition() {
+        return priceCondition;
     }
 
-    public void setSecurityCode(String securityCode) {
-        this.securityCode = securityCode;
+    public void setPriceCondition(PriceConditionDTO priceCondition) {
+        this.priceCondition = priceCondition;
     }
 
-    public String getSecurityExchange() {
-        return securityExchange;
+    public Date getExpireTime() {
+        return expireTime;
     }
 
-    public void setSecurityExchange(String securityExchange) {
-        this.securityExchange = securityExchange;
+    public void setExpireTime(Date expireTime) {
+        this.expireTime = expireTime;
     }
 
-    public String getSecurityName() {
-        return securityName;
+    public TradePlanDTO getTradePlan() {
+        return tradePlan;
     }
 
-    public void setSecurityName(String securityName) {
-        this.securityName = securityName;
-    }
-
-    public Integer getCompareCondition() {
-        return compareCondition;
-    }
-
-    public void setCompareCondition(Integer compareCondition) {
-        this.compareCondition = compareCondition;
-    }
-
-    public BigDecimal getTargetPrice() {
-        return targetPrice;
-    }
-
-    public void setTargetPrice(BigDecimal targetPrice) {
-        this.targetPrice = targetPrice;
-    }
-
-    public Integer getExchangeType() {
-        return exchangeType;
-    }
-
-    public void setExchangeType(Integer exchangeType) {
-        this.exchangeType = exchangeType;
-    }
-
-    public Integer getEntrustMethod() {
-        return entrustMethod;
-    }
-
-    public void setEntrustMethod(Integer entrustMethod) {
-        this.entrustMethod = entrustMethod;
-    }
-
-    public Integer getEntrustStrategy() {
-        return entrustStrategy;
-    }
-
-    public void setEntrustStrategy(Integer entrustStrategy) {
-        this.entrustStrategy = entrustStrategy;
-    }
-
-    public Integer getEntrustNumber() {
-        return entrustNumber;
-    }
-
-    public void setEntrustNumber(Integer entrustNumber) {
-        this.entrustNumber = entrustNumber;
-    }
-
-    public BigDecimal getEntrustAmount() {
-        return entrustAmount;
-    }
-
-    public void setEntrustAmount(BigDecimal entrustAmount) {
-        this.entrustAmount = entrustAmount;
+    public void setTradePlan(TradePlanDTO tradePlan) {
+        this.tradePlan = tradePlan;
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("securityType", securityType)
-                .add("securityCode", securityCode)
-                .add("securityExchange", securityExchange)
-                .add("securityName", securityName)
-                .add("compareCondition", compareCondition)
-                .add("targetPrice", targetPrice)
-                .add("exchangeType", exchangeType)
-                .add("entrustMethod", entrustMethod)
-                .add("entrustStrategy", entrustStrategy)
-                .add("entrustNumber", entrustNumber)
-                .add("entrustAmount", entrustAmount)
+        return MoreObjects.toStringHelper(PriceOrderCreateCommand.class).omitNullValues()
+                .add("securityInfo", securityInfo)
+                .add("priceCondition", priceCondition)
+                .add("expireTime", expireTime)
+                .add("tradePlan", tradePlan)
                 .toString();
     }
 }

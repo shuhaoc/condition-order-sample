@@ -22,6 +22,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/newstock")
+@Deprecated
 public class NewStockOrderController {
 
     private final ConditionOrderIdGenerator idGenerator;

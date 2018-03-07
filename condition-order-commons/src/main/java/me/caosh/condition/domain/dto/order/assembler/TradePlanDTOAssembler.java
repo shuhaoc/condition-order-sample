@@ -11,6 +11,8 @@ import hbec.intellitrade.condorder.domain.tradeplan.TradePlanFactory;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanVisitor;
 import me.caosh.condition.domain.dto.order.TradePlanDTO;
 
+import java.math.BigDecimal;
+
 /**
  * Created by caosh on 2017/8/18.
  */
@@ -45,12 +47,12 @@ public class TradePlanDTOAssembler {
         tradePlan.getTradeNumber().accept(new TradeNumberVisitor(){
             @Override
             public void visitTradeNumberDirect(TradeNumberDirect tradeNumberDirect) {
-                tradePlanDTO.setNumber(tradeNumberDirect.getNumber());
+                tradePlanDTO.setNumber(BigDecimal.valueOf(tradeNumberDirect.getNumber()));
             }
 
             @Override
             public void visitTradeNumberByAmount(TradeNumberByAmount tradeNumberByAmount) {
-                tradePlanDTO.setEntrustAmount(tradeNumberByAmount.getAmount());
+                tradePlanDTO.setNumber(tradeNumberByAmount.getAmount());
             }
         });
 
@@ -59,6 +61,6 @@ public class TradePlanDTOAssembler {
 
     public static TradePlan toDomain(TradePlanDTO tradePlanDTO) {
         return TradePlanFactory.getInstance().create(tradePlanDTO.getExchangeType(), tradePlanDTO.getEntrustStrategy(),
-                tradePlanDTO.getEntrustMethod(), tradePlanDTO.getNumber(), tradePlanDTO.getEntrustAmount());
+                tradePlanDTO.getEntrustMethod(), tradePlanDTO.getNumber().intValue(), tradePlanDTO.getNumber());
     }
 }

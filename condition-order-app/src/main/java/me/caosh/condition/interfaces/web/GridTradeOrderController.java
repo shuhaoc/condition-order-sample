@@ -22,6 +22,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/grid")
+@Deprecated
 public class GridTradeOrderController {
 
     private final ConditionOrderIdGenerator idGenerator;
