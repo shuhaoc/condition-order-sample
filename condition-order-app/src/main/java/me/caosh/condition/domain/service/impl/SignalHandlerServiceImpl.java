@@ -12,13 +12,13 @@ import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.trade.domain.EntrustOrder;
 import hbec.intellitrade.trade.domain.EntrustOrderInfo;
 import hbec.intellitrade.trade.domain.EntrustOrderWriter;
-import me.caosh.condition.application.order.ConditionOrderCommandService;
-import me.caosh.condition.domain.factory.TradeCustomerFactory;
 import hbec.intellitrade.trade.domain.TradeCustomer;
-import me.caosh.condition.domain.service.ConditionTradeService;
-import me.caosh.condition.domain.service.NewStockQueryService;
+import me.caosh.condition.application.order.OrderCommandService;
+import me.caosh.condition.application.order.SignalHandlerService;
+import me.caosh.condition.application.trade.factory.TradeCustomerFactory;
+import me.caosh.condition.domain.service.NewStocksSupplier;
 import me.caosh.condition.infrastructure.repository.EntrustOrderRepository;
-import me.caosh.condition.infrastructure.repository.impl.EntrustOrderIdGenerator;
+import me.caosh.condition.infrastructure.tunnel.EntrustOrderIdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -29,24 +29,28 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by caosh on 2017/8/13.
  */
 @Service
-public class ConditionTradeServiceImpl implements ConditionTradeService {
-    private static final Logger logger = LoggerFactory.getLogger(ConditionTradeServiceImpl.class);
+public class SignalHandlerServiceImpl implements SignalHandlerService {
+    private static final Logger logger = LoggerFactory.getLogger(SignalHandlerServiceImpl.class);
 
     private final TradeCustomerFactory tradeCustomerFactory;
-    private final ConditionOrderCommandService conditionOrderCommandService;
+    private final OrderCommandService orderCommandService;
     private final EntrustOrderRepository entrustOrderRepository;
     private final EntrustOrderIdGenerator entrustOrderIdGenerator;
     private final RealTimeMarketSupplier realTimeMarketSupplier;
-    private final NewStockQueryService newStockQueryService;
+    private final NewStocksSupplier newStocksSupplier;
 
-    public ConditionTradeServiceImpl(TradeCustomerFactory tradeCustomerFactory, ConditionOrderCommandService conditionOrderCommandService, EntrustOrderRepository entrustOrderRepository,
-                                     EntrustOrderIdGenerator entrustOrderIdGenerator, RealTimeMarketSupplier realTimeMarketSupplier, NewStockQueryService newStockQueryService) {
+    public SignalHandlerServiceImpl(TradeCustomerFactory tradeCustomerFactory,
+                                    OrderCommandService orderCommandService,
+                                    EntrustOrderRepository entrustOrderRepository,
+                                    EntrustOrderIdGenerator entrustOrderIdGenerator,
+                                    RealTimeMarketSupplier realTimeMarketSupplier,
+                                    NewStocksSupplier newStocksSupplier) {
         this.tradeCustomerFactory = tradeCustomerFactory;
-        this.conditionOrderCommandService = conditionOrderCommandService;
+        this.orderCommandService = orderCommandService;
         this.entrustOrderRepository = entrustOrderRepository;
         this.entrustOrderIdGenerator = entrustOrderIdGenerator;
         this.realTimeMarketSupplier = realTimeMarketSupplier;
-        this.newStockQueryService = newStockQueryService;
+        this.newStocksSupplier = newStocksSupplier;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -69,10 +73,10 @@ public class ConditionTradeServiceImpl implements ConditionTradeService {
 //                }
 
             conditionOrder.onTradeSignal(triggerTradingContext);
-            conditionOrderCommandService.update(conditionOrder);
+            orderCommandService.update(conditionOrder);
         } else if (signal instanceof CacheSync) {
             // TODO: use visitor pattern
-            conditionOrderCommandService.updateDynamicProperties(conditionOrder);
+            orderCommandService.updateDynamicProperties(conditionOrder);
             logger.info("Sync dynamic properties, conditionOrder={}", conditionOrder);
         }
     }

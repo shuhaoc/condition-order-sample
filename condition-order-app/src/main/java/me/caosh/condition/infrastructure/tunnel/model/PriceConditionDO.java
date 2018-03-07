@@ -1,4 +1,4 @@
-package me.caosh.condition.infrastructure.repository.model;
+package me.caosh.condition.infrastructure.tunnel.model;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.autoasm.MappedClass;

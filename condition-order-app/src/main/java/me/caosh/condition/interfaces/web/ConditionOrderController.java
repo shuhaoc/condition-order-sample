@@ -3,7 +3,7 @@ package me.caosh.condition.interfaces.web;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import hbec.intellitrade.trade.domain.EntrustOrder;
-import me.caosh.condition.application.order.ConditionOrderCommandService;
+import me.caosh.condition.application.order.OrderCommandService;
 import me.caosh.condition.interfaces.facade.ConditionOrderQueryFacade;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.trade.EntrustOrderDTO;
@@ -22,18 +22,18 @@ import java.util.List;
 @RequestMapping("/condition")
 public class ConditionOrderController {
 
-    private final ConditionOrderCommandService conditionOrderCommandService;
+    private final OrderCommandService orderCommandService;
     private final ConditionOrderQueryFacade conditionOrderQueryFacade;
 
-    public ConditionOrderController(ConditionOrderCommandService conditionOrderCommandService,
+    public ConditionOrderController(OrderCommandService orderCommandService,
                                     ConditionOrderQueryFacade conditionOrderQueryFacade) {
-        this.conditionOrderCommandService = conditionOrderCommandService;
+        this.orderCommandService = orderCommandService;
         this.conditionOrderQueryFacade = conditionOrderQueryFacade;
     }
 
     @RequestMapping("/remove")
     public Integer remove(Long orderId) {
-        conditionOrderCommandService.remove(orderId);
+        orderCommandService.remove(orderId);
         return 1;
     }
 

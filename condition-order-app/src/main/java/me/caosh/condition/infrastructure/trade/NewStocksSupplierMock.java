@@ -3,7 +3,7 @@ package me.caosh.condition.infrastructure.trade;
 import com.google.common.collect.ImmutableList;
 import hbec.intellitrade.common.security.SecurityExchange;
 import me.caosh.condition.domain.model.newstock.NewStock;
-import me.caosh.condition.domain.service.NewStockQueryService;
+import me.caosh.condition.domain.service.NewStocksSupplier;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,7 +15,7 @@ import java.util.List;
  * @author caoshuhao@touker.com
  */
 @Service
-public class NewStockQueryServiceMock implements NewStockQueryService {
+public class NewStocksSupplierMock implements NewStocksSupplier {
     @Override
     public List<NewStock> getCurrentPurchasable() {
         return ImmutableList.of(new NewStock("732386", "骏亚申购", SecurityExchange.SH,

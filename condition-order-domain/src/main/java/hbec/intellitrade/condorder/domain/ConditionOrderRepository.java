@@ -1,4 +1,4 @@
-package me.caosh.condition.infrastructure.repository;
+package hbec.intellitrade.condorder.domain;
 
 import com.google.common.base.Optional;
 import hbec.intellitrade.condorder.domain.ConditionOrder;

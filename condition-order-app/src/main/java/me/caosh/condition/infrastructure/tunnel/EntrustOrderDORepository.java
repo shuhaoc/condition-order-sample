@@ -1,6 +1,6 @@
-package me.caosh.condition.infrastructure.repository.impl;
+package me.caosh.condition.infrastructure.tunnel;
 
-import me.caosh.condition.infrastructure.repository.model.EntrustOrderDO;
+import me.caosh.condition.infrastructure.tunnel.model.EntrustOrderDO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;

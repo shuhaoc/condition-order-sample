@@ -1,8 +1,6 @@
 package me.caosh.condition.infrastructure.tunnel;
 
-import me.caosh.condition.infrastructure.repository.model.ConditionOrderDO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

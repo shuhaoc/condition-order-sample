@@ -1,9 +1,9 @@
-package me.caosh.condition.infrastructure.repository.impl;
+package me.caosh.condition.infrastructure.tunnel;
 
 import hbec.intellitrade.trade.domain.EntrustOrder;
 import me.caosh.condition.infrastructure.repository.EntrustOrderRepository;
-import me.caosh.condition.infrastructure.repository.model.EntrustOrderDO;
-import me.caosh.condition.infrastructure.repository.model.EntrustOrderDOAssembler;
+import me.caosh.condition.infrastructure.tunnel.model.EntrustOrderDO;
+import me.caosh.condition.infrastructure.tunnel.model.EntrustOrderDOAssembler;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

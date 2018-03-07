@@ -9,6 +9,6 @@ import java.util.List;
  *
  * @author caoshuhao@touker.com
  */
-public interface NewStockQueryService {
+public interface NewStocksSupplier {
     List<NewStock> getCurrentPurchasable();
 }

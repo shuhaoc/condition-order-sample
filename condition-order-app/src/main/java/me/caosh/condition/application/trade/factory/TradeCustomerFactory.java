@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.factory;
+package me.caosh.condition.application.trade.factory;
 
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import me.caosh.condition.domain.model.mock.MockTradeCustomer;

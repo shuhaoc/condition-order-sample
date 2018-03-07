@@ -1,4 +1,4 @@
-package me.caosh.condition.infrastructure.repository.model;
+package me.caosh.condition.infrastructure.tunnel.model;
 
 import hbec.intellitrade.common.ValuedEnumUtil;
 import hbec.intellitrade.common.security.SecurityExchange;

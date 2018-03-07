@@ -1,10 +1,11 @@
-package me.caosh.condition.infrastructure.repository;
+package me.caosh.condition.infrastructure.repository.impl;
 
 import com.google.common.base.Optional;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.orders.PriceOrder;
@@ -14,7 +15,7 @@ import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.trade.domain.ExchangeType;
-import me.caosh.condition.infrastructure.repository.impl.ConditionOrderIdGenerator;
+import me.caosh.condition.infrastructure.tunnel.ConditionOrderIdGenerator;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

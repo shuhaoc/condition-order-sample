@@ -1,4 +1,4 @@
-package me.caosh.condition.infrastructure.repository.model;
+package me.caosh.condition.infrastructure.tunnel.model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

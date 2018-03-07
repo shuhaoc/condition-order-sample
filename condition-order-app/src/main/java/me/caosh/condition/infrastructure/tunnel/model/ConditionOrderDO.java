@@ -1,4 +1,4 @@
-package me.caosh.condition.infrastructure.repository.model;
+package me.caosh.condition.infrastructure.tunnel.model;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.autoasm.FieldMapping;
@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 /**

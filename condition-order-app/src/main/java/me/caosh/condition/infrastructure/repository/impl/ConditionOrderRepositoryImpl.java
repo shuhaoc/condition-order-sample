@@ -5,11 +5,10 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.ConditionOrderBuilder;
-import hbec.intellitrade.condorder.domain.OrderState;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
-import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
-import me.caosh.condition.infrastructure.repository.model.ConditionOrderDO;
+import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
+import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;
 import me.caosh.condition.infrastructure.tunnel.ConditionOrderTunnel;
 import org.springframework.stereotype.Repository;
 

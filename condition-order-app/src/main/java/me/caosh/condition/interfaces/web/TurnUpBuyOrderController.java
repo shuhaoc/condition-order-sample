@@ -4,10 +4,10 @@ import com.google.common.base.Optional;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
-import me.caosh.condition.application.order.ConditionOrderCommandService;
+import me.caosh.condition.application.order.OrderCommandService;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpBuyOrder;
-import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
-import me.caosh.condition.infrastructure.repository.impl.ConditionOrderIdGenerator;
+import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
+import me.caosh.condition.infrastructure.tunnel.ConditionOrderIdGenerator;
 import me.caosh.condition.interfaces.assembler.TurnUpBuyOrderCommandAssembler;
 import me.caosh.condition.interfaces.command.TurnUpBuyOrderCreateCommand;
 import me.caosh.condition.interfaces.command.TurnUpBuyOrderUpdateCommand;
@@ -26,15 +26,15 @@ import javax.validation.Valid;
 public class TurnUpBuyOrderController {
 
     private final ConditionOrderIdGenerator idGenerator;
-    private final ConditionOrderCommandService conditionOrderCommandService;
+    private final OrderCommandService orderCommandService;
     private final ConditionOrderRepository conditionOrderRepository;
 
     @Autowired
     public TurnUpBuyOrderController(ConditionOrderIdGenerator idGenerator,
-                                    ConditionOrderCommandService conditionOrderCommandService,
+                                    OrderCommandService orderCommandService,
                                     ConditionOrderRepository conditionOrderRepository) {
         this.idGenerator = idGenerator;
-        this.conditionOrderCommandService = conditionOrderCommandService;
+        this.orderCommandService = orderCommandService;
         this.conditionOrderRepository = conditionOrderRepository;
     }
 
@@ -43,7 +43,7 @@ public class TurnUpBuyOrderController {
         Long orderId = idGenerator.nextId();
         TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
         TurnUpBuyOrder turnUpBuyOrder = TurnUpBuyOrderCommandAssembler.assemble(orderId, tradeCustomerInfo, command);
-        conditionOrderCommandService.save(turnUpBuyOrder);
+        orderCommandService.save(turnUpBuyOrder);
         return orderId;
     }
     @RequestMapping("/update")
@@ -59,7 +59,7 @@ public class TurnUpBuyOrderController {
         }
         TurnUpBuyOrder oldOrder = (TurnUpBuyOrder) conditionOrder;
         TurnUpBuyOrder newOrder = TurnUpBuyOrderCommandAssembler.merge(oldOrder, command);
-        conditionOrderCommandService.update(newOrder);
+        orderCommandService.update(newOrder);
         return orderId;
     }
 }

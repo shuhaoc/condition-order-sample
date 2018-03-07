@@ -5,7 +5,7 @@ import me.caosh.condition.domain.dto.order.assembler.TriggerMessageAssembler;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
 import me.caosh.condition.domain.model.order.TriggerMessage;
 import me.caosh.condition.domain.model.share.Retry;
-import me.caosh.condition.domain.service.ConditionTradeService;
+import me.caosh.condition.application.order.SignalHandlerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
@@ -33,7 +33,7 @@ public class TriggerMessageConsumer {
 
     private final ConnectionFactory connectionFactory;
     private final AmqpAdmin amqpAdmin;
-    private final ConditionTradeService conditionTradeService;
+    private final SignalHandlerService signalHandlerService;
     // TODO: converter to domain model
     private final MessageConverter messageConverter = new ConditionOrderGSONMessageConverter<>(TriggerMessageDTO.class);
 
@@ -49,10 +49,10 @@ public class TriggerMessageConsumer {
         this.routingKey = routingKey;
     }
 
-    public TriggerMessageConsumer(ConnectionFactory connectionFactory, AmqpAdmin amqpAdmin, ConditionTradeService conditionTradeService) {
+    public TriggerMessageConsumer(ConnectionFactory connectionFactory, AmqpAdmin amqpAdmin, SignalHandlerService signalHandlerService) {
         this.connectionFactory = connectionFactory;
         this.amqpAdmin = amqpAdmin;
-        this.conditionTradeService = conditionTradeService;
+        this.signalHandlerService = signalHandlerService;
     }
 
     @PostConstruct
@@ -100,7 +100,7 @@ public class TriggerMessageConsumer {
         logger.debug("Receive trigger message <== {}", triggerMessageDTO);
 
         TriggerMessage triggerMessage = TriggerMessageAssembler.fromDTO(triggerMessageDTO);
-        conditionTradeService.handleTriggerContext(triggerMessage.getSignal(), triggerMessage.getConditionOrder(),
+        signalHandlerService.handleTriggerContext(triggerMessage.getSignal(), triggerMessage.getConditionOrder(),
                 triggerMessage.getRealTimeMarket().orNull());
     }
 }

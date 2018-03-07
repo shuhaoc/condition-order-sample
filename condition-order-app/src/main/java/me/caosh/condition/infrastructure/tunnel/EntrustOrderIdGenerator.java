@@ -1,4 +1,4 @@
-package me.caosh.condition.infrastructure.repository.impl;
+package me.caosh.condition.infrastructure.tunnel;
 
 import me.caosh.condition.domain.model.share.SnowflakeIdWorker;
 import org.slf4j.Logger;
@@ -13,11 +13,11 @@ import javax.validation.constraints.NotNull;
 /**
  * Created by caosh on 2017/8/6.
  */
-@ConfigurationProperties(prefix = "me.caosh.condition.conditionOrder")
+@ConfigurationProperties(prefix = "me.caosh.condition.entrustOrder")
 @Validated
 @Component
-public class ConditionOrderIdGenerator {
-    private static final Logger logger = LoggerFactory.getLogger(ConditionOrderIdGenerator.class);
+public class EntrustOrderIdGenerator {
+    private static final Logger logger = LoggerFactory.getLogger(EntrustOrderIdGenerator.class);
 
     @NotNull
     private Integer workerId;
@@ -41,7 +41,7 @@ public class ConditionOrderIdGenerator {
 
     @PostConstruct
     public void init() {
-        logger.info("Load config for condition order id generator: workerId={}, datacenterId={}",
+        logger.info("Load config for entrust order id generator: workerId={}, datacenterId={}",
                 workerId, datacenterId);
 
         snowflakeIdWorker = new SnowflakeIdWorker(workerId, datacenterId);

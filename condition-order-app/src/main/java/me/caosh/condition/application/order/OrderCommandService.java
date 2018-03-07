@@ -5,7 +5,7 @@ import hbec.intellitrade.condorder.domain.ConditionOrder;
 /**
  * Created by caosh on 2017/8/2.
  */
-public interface ConditionOrderCommandService {
+public interface OrderCommandService {
     void save(ConditionOrder conditionOrder);
 
     void update(ConditionOrder conditionOrder);

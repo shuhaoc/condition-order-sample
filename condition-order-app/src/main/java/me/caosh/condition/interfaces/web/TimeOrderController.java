@@ -4,10 +4,10 @@ import com.google.common.base.Optional;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
-import me.caosh.condition.application.order.ConditionOrderCommandService;
+import me.caosh.condition.application.order.OrderCommandService;
 import me.caosh.condition.domain.model.order.time.TimeOrder;
-import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
-import me.caosh.condition.infrastructure.repository.impl.ConditionOrderIdGenerator;
+import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
+import me.caosh.condition.infrastructure.tunnel.ConditionOrderIdGenerator;
 import me.caosh.condition.interfaces.assembler.TimeOrderCommandAssembler;
 import me.caosh.condition.interfaces.command.TimeOrderCreateCommand;
 import me.caosh.condition.interfaces.command.TimeOrderUpdateCommand;
@@ -26,15 +26,15 @@ import javax.validation.Valid;
 public class TimeOrderController {
 
     private final ConditionOrderIdGenerator idGenerator;
-    private final ConditionOrderCommandService conditionOrderCommandService;
+    private final OrderCommandService orderCommandService;
     private final ConditionOrderRepository conditionOrderRepository;
 
     @Autowired
     public TimeOrderController(ConditionOrderIdGenerator idGenerator,
-                               ConditionOrderCommandService conditionOrderCommandService,
+                               OrderCommandService orderCommandService,
                                ConditionOrderRepository conditionOrderRepository) {
         this.idGenerator = idGenerator;
-        this.conditionOrderCommandService = conditionOrderCommandService;
+        this.orderCommandService = orderCommandService;
         this.conditionOrderRepository = conditionOrderRepository;
     }
 
@@ -43,7 +43,7 @@ public class TimeOrderController {
         Long orderId = idGenerator.nextId();
         TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
         TimeOrder timeOrder = TimeOrderCommandAssembler.assemble(orderId, tradeCustomerInfo, command);
-        conditionOrderCommandService.save(timeOrder);
+        orderCommandService.save(timeOrder);
         return orderId;
     }
 
@@ -61,7 +61,7 @@ public class TimeOrderController {
         }
         TimeOrder oldOrder = (TimeOrder) conditionOrder;
         TimeOrder newOrder = TimeOrderCommandAssembler.merge(oldOrder, command);
-        conditionOrderCommandService.update(newOrder);
+        orderCommandService.update(newOrder);
         return orderId;
     }
 }

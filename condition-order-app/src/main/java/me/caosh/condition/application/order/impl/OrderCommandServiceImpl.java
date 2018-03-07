@@ -1,10 +1,9 @@
 package me.caosh.condition.application.order.impl;
 
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.OrderState;
-import me.caosh.condition.application.order.ConditionOrderCommandService;
+import me.caosh.condition.application.order.OrderCommandService;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
-import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
+import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,13 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by caosh on 2017/8/9.
  */
 @Service
-public class ConditionOrderCommandServiceImpl implements ConditionOrderCommandService {
+public class OrderCommandServiceImpl implements OrderCommandService {
 
     private final ConditionOrderRepository conditionOrderRepository;
     private final ConditionOrderProducer conditionOrderProducer;
 
     @Autowired
-    public ConditionOrderCommandServiceImpl(ConditionOrderRepository conditionOrderRepository, ConditionOrderProducer conditionOrderProducer) {
+    public OrderCommandServiceImpl(ConditionOrderRepository conditionOrderRepository, ConditionOrderProducer conditionOrderProducer) {
         this.conditionOrderRepository = conditionOrderRepository;
         this.conditionOrderProducer = conditionOrderProducer;
     }

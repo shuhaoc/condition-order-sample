@@ -7,7 +7,7 @@ import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.interfaces.facade.ConditionOrderQueryFacade;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.infrastructure.repository.EntrustOrderRepository;
-import me.caosh.condition.infrastructure.repository.model.ConditionOrderDO;
+import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;
 import me.caosh.condition.infrastructure.tunnel.ConditionOrderTunnel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
