@@ -61,6 +61,7 @@ public class PriceOrderTest {
                 tradeCustomerInfo,
                 pfyh,
                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
+                null,
                 new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
                 OrderState.ACTIVE);
 
@@ -95,12 +96,15 @@ public class PriceOrderTest {
         SecurityInfo pfyh = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
         ExchangeType exchangeType = ExchangeType.BUY;
 
+        LocalDateTime expireTime = LocalDateTime.now().plusDays(1);
         PriceOrder priceOrder1 = new PriceOrder(123L, tradeCustomerInfo, pfyh,
                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
+                expireTime,
                 new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
                 OrderState.ACTIVE);
         PriceOrder priceOrder2 = new PriceOrder(123L, tradeCustomerInfo, pfyh,
                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
+                expireTime,
                 new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
                 OrderState.ACTIVE);
 

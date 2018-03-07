@@ -24,12 +24,6 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder {
     private final PriceCondition priceCondition;
 
     public PriceOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                      PriceCondition priceCondition, BasicTradePlan tradePlan, OrderState orderState) {
-        super(orderId, tradeCustomerInfo, securityInfo, tradePlan, orderState);
-        this.priceCondition = priceCondition;
-    }
-
-    public PriceOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                       PriceCondition priceCondition, LocalDateTime expireTime, BasicTradePlan tradePlan,
                       OrderState orderState) {
         super(orderId, tradeCustomerInfo, securityInfo, expireTime, tradePlan, orderState);
