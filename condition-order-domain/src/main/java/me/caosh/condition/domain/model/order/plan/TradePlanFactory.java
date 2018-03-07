@@ -1,6 +1,5 @@
 package me.caosh.condition.domain.model.order.plan;
 
-import hbec.intellitrade.common.security.SecurityInfo;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import hbec.intellitrade.common.ValuedEnumUtil;
@@ -20,16 +19,16 @@ public class TradePlanFactory {
         return INSTANCE;
     }
 
-    public TradePlan create(SecurityInfo securityInfo, int exchangeType, Integer entrustStrategy,
+    public TradePlan create(int exchangeType, Integer entrustStrategy,
                             Integer entrustMethod, Integer number, BigDecimal entrustAmount) {
         if (exchangeType == DOUBLE_EXCHANGE_TYPE) {
-            return createDouble(securityInfo, entrustStrategy, entrustMethod, number, entrustAmount);
+            return createDouble(entrustStrategy, entrustMethod, number, entrustAmount);
         } else {
-            return createBasic(securityInfo, exchangeType, entrustStrategy, entrustMethod, number, entrustAmount);
+            return createBasic(exchangeType, entrustStrategy, entrustMethod, number, entrustAmount);
         }
     }
 
-    public BasicTradePlan createBasic(SecurityInfo securityInfo, int exchangeType, Integer entrustStrategy, Integer entrustMethod,
+    public BasicTradePlan createBasic(int exchangeType, Integer entrustStrategy, Integer entrustMethod,
                                       Integer number, BigDecimal entrustAmount) {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance().create(entrustMethod, number, entrustAmount);
         EntrustStrategy theEntrustStrategy = ValuedEnumUtil.valueOf(entrustStrategy, EntrustStrategy.class);
@@ -37,7 +36,7 @@ public class TradePlanFactory {
         return new BasicTradePlan(theExchangeType, theEntrustStrategy, tradeNumber);
     }
 
-    public DoubleDirectionTradePlan createDouble(SecurityInfo securityInfo, Integer entrustStrategy, Integer entrustMethod, Integer number, BigDecimal entrustAmount) {
+    public DoubleDirectionTradePlan createDouble(Integer entrustStrategy, Integer entrustMethod, Integer number, BigDecimal entrustAmount) {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance().create(entrustMethod, number, entrustAmount);
         EntrustStrategy buyEntrustStrategy = ValuedEnumUtil.valueOf(entrustStrategy, EntrustStrategy.class);
         EntrustStrategy sellEntrustStrategy;

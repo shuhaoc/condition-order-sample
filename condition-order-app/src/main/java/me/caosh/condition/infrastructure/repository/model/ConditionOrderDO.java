@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -37,13 +38,14 @@ public class ConditionOrderDO {
     private String securityExchange;
     @FieldMapping(mappedProperty = "securityInfo.name")
     private String securityName;
-    @FieldMapping(mappedProperty = "strategyInfo.strategyTemplateId")
+    @FieldMapping(mappedProperty = "strategyInfo.strategyType")
     private Integer strategyType;
     @FieldMapping(mappedProperty = "rawCondition")
     private ConditionDO conditionPropertiesObj;
     @FieldMapping(mappedProperty = "rawCondition")
     private DynamicPropertiesDO dynamicPropertiesObj;
-    @FieldMapping(mappedProperty = "tradePlan.exchangeType", defaultValue = "0")
+    private java.util.Date expireTime;
+    @FieldMapping(mappedProperty = "tradePlan.exchangeType")
     private Integer exchangeType;
     @FieldMapping(mappedProperty = "tradePlan.entrustStrategy")
     private Integer entrustStrategy;
@@ -190,6 +192,16 @@ public class ConditionOrderDO {
 
     public void setDynamicProperties(String dynamicProperties) {
         this.dynamicPropertiesObj = ConditionOrderDOGSONUtils.getGSON().fromJson(dynamicProperties, DynamicPropertiesDO.class);
+    }
+
+    @Basic
+    @Column(name = "expire_time")
+    public java.util.Date getExpireTime() {
+        return expireTime;
+    }
+
+    public void setExpireTime(java.util.Date expireTime) {
+        this.expireTime = expireTime;
     }
 
     @Basic

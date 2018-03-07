@@ -23,7 +23,7 @@ public class GirdTradeOrderCommandAssembler {
         SecurityExchange securityExchange = SecurityExchange.valueOf(command.getSecurityExchange());
         SecurityInfo securityInfo = new SecurityInfo(securityType, command.getSecurityCode(), securityExchange, command.getSecurityName());
         GridCondition gridCondition = new GridCondition(command.getGridLength(), command.getBasePrice());
-        DoubleDirectionTradePlan tradePlan = TradePlanFactory.getInstance().createDouble(securityInfo, command.getEntrustStrategy(),
+        DoubleDirectionTradePlan tradePlan = TradePlanFactory.getInstance().createDouble(command.getEntrustStrategy(),
                 command.getEntrustMethod(),
                 command.getEntrustNumber(),
                 command.getEntrustAmount());
@@ -38,7 +38,7 @@ public class GirdTradeOrderCommandAssembler {
     public static GridTradeOrder merge(GridTradeOrder oldOrder, GridTradeOrderUpdateCommand command) {
         StrategyState strategyState = StrategyState.ACTIVE;
         GridCondition gridCondition = new GridCondition(command.getGridLength(), command.getBasePrice());
-        DoubleDirectionTradePlan tradePlan = TradePlanFactory.getInstance().createDouble(oldOrder.getSecurityInfo(),
+        DoubleDirectionTradePlan tradePlan = TradePlanFactory.getInstance().createDouble(
                 command.getEntrustStrategy(),
                 command.getEntrustMethod(),
                 command.getEntrustNumber(),

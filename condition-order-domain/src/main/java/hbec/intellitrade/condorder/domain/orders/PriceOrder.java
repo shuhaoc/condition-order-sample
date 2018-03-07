@@ -77,9 +77,14 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .addValue(super.toString())
-                .add("priceCondition", priceCondition)
+        return MoreObjects.toStringHelper(PriceOrder.class).omitNullValues()
+                .add("orderId", getOrderId())
+                .add("customer", getCustomer())
+                .add("strategyState", getStrategyState())
+                .add("securityInfo", getSecurityInfo())
+                .add("rawCondition", getRawCondition())
+                .add("expireTime", getExpireTime())
+                .add("tradePlan", getTradePlan())
                 .toString();
     }
 }

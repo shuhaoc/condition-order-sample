@@ -9,7 +9,7 @@ import hbec.intellitrade.common.ValuedEnum;
  */
 public enum NativeStrategyInfo implements StrategyInfo, ValuedEnum<Integer>, ConvertibleEnum<Integer> {
     PRICE(1),
-    TIME(4),
+    TIME(5),
     TURN_UP(7),
     GRID(9),
     NEW_STOCK(10);

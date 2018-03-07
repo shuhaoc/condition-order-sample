@@ -6,6 +6,7 @@ import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.TradePlanBuilder;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
+import org.joda.time.LocalDateTime;
 
 /**
  * @author caosh/caoshuhao@touker.com
@@ -17,6 +18,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
     private SecurityInfoBuilder securityInfo = new SecurityInfoBuilder();
     private StrategyInfoBuilder strategyInfo = new StrategyInfoBuilder();
     private Condition rawCondition;
+    private LocalDateTime expireTime;
     private TradePlanBuilder tradePlan = new TradePlanBuilder();
     private StrategyState strategyState;
 
@@ -57,6 +59,14 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return this;
     }
 
+    public LocalDateTime getExpireTime() {
+        return expireTime;
+    }
+
+    public void setExpireTime(LocalDateTime expireTime) {
+        this.expireTime = expireTime;
+    }
+
     public TradePlanBuilder getTradePlan() {
         return tradePlan;
     }
@@ -78,20 +88,21 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
                 customer.build(),
                 strategyState,
                 securityInfo.build(),
-                strategyInfo.getStrategyTemplateId(),
+                strategyInfo.getStrategyType(),
                 rawCondition,
+                expireTime,
                 tradePlan.build());
     }
 
     public static class StrategyInfoBuilder {
-        private NativeStrategyInfo strategyTemplateId;
+        private NativeStrategyInfo strategyType;
 
-        public NativeStrategyInfo getStrategyTemplateId() {
-            return strategyTemplateId;
+        public NativeStrategyInfo getStrategyType() {
+            return strategyType;
         }
 
-        public void setStrategyTemplateId(NativeStrategyInfo strategyTemplateId) {
-            this.strategyTemplateId = strategyTemplateId;
+        public void setStrategyType(NativeStrategyInfo strategyType) {
+            this.strategyType = strategyType;
         }
     }
 }

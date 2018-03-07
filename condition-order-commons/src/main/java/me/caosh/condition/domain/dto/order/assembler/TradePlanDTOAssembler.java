@@ -1,6 +1,5 @@
 package me.caosh.condition.domain.dto.order.assembler;
 
-import hbec.intellitrade.common.security.SecurityInfo;
 import me.caosh.condition.domain.dto.order.TradePlanDTO;
 import me.caosh.condition.domain.model.order.plan.AutoPurchaseTradePlan;
 import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
@@ -58,8 +57,8 @@ public class TradePlanDTOAssembler {
         return tradePlanDTO;
     }
 
-    public static TradePlan toDomain(SecurityInfo securityInfo, TradePlanDTO tradePlanDTO) {
-        return TradePlanFactory.getInstance().create(securityInfo, tradePlanDTO.getExchangeType(), tradePlanDTO.getEntrustStrategy(),
+    public static TradePlan toDomain(TradePlanDTO tradePlanDTO) {
+        return TradePlanFactory.getInstance().create(tradePlanDTO.getExchangeType(), tradePlanDTO.getEntrustStrategy(),
                 tradePlanDTO.getEntrustMethod(), tradePlanDTO.getNumber(), tradePlanDTO.getEntrustAmount());
     }
 }

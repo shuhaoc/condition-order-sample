@@ -18,6 +18,7 @@ import me.caosh.condition.domain.model.order.turnpoint.TurnUpBuyOrder;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
 import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by caosh on 2017/8/9.
@@ -30,9 +31,10 @@ public class ConditionOrderFactory {
     }
 
     public ConditionOrder create(Long orderId, TradeCustomerInfo tradeCustomerInfo, StrategyState strategyState,
-                                 SecurityInfo securityInfo, StrategyInfo strategyInfo, Condition condition, TradePlan tradePlan) {
+                                 SecurityInfo securityInfo, StrategyInfo strategyInfo, Condition condition,
+                                 LocalDateTime expireTime, TradePlan tradePlan) {
         if (strategyInfo == NativeStrategyInfo.PRICE) {
-            return new PriceOrder(orderId, tradeCustomerInfo, securityInfo, (PriceCondition) condition,
+            return new PriceOrder(orderId, tradeCustomerInfo, securityInfo, (PriceCondition) condition, expireTime,
                     (BasicTradePlan) tradePlan, strategyState);
         } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {
             return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,

@@ -28,9 +28,9 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
 
     private final Long orderId;
     private final TradeCustomerInfo tradeCustomerInfo;
+    private StrategyState strategyState;
     private final SecurityInfo securityInfo;
     private final LocalDateTime expireTime;
-    private StrategyState strategyState;
 
     public AbstractConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                                   StrategyState strategyState) {
@@ -154,6 +154,9 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
         if (!securityInfo.equals(that.securityInfo)) {
             return false;
         }
+        if (expireTime != null ? !expireTime.equals(that.expireTime) : that.expireTime != null) {
+            return false;
+        }
         return strategyState == that.strategyState;
     }
 
@@ -162,6 +165,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
         int result = orderId.hashCode();
         result = 31 * result + tradeCustomerInfo.hashCode();
         result = 31 * result + securityInfo.hashCode();
+        result = 31 * result + (expireTime != null ? expireTime.hashCode() : 0);
         result = 31 * result + strategyState.hashCode();
         return result;
     }

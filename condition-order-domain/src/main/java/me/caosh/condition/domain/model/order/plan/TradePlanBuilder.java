@@ -10,7 +10,6 @@ import java.math.BigDecimal;
  * @date 2018/2/4
  */
 public class TradePlanBuilder implements ConvertibleBuilder<TradePlan> {
-    private SecurityInfoBuilder securityInfo = new SecurityInfoBuilder();
     private int exchangeType;
     private Integer entrustStrategy;
     private TradeNumberBuilder tradeNumber = new TradeNumberBuilder();
@@ -37,7 +36,7 @@ public class TradePlanBuilder implements ConvertibleBuilder<TradePlan> {
     @Override
     public TradePlan build() {
         return TradePlanFactory.getInstance().create(
-                securityInfo.build(), exchangeType, entrustStrategy, tradeNumber.getEntrustMethod(), tradeNumber.getNumber().intValue(),
+                exchangeType, entrustStrategy, tradeNumber.getEntrustMethod(), tradeNumber.getNumber().intValue(),
                 tradeNumber.getNumber());
     }
 

@@ -6,20 +6,17 @@ import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.trade.domain.EntrustOrderWriter;
-import hbec.intellitrade.trade.domain.EntrustResult;
 import me.caosh.condition.domain.model.account.TradeCustomer;
 import me.caosh.condition.domain.model.constants.EntrustMethod;
 import me.caosh.condition.domain.model.order.TriggerTradingContext;
 import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.BasicTriggerTradingContext;
-import me.caosh.condition.domain.model.order.WrapperTradingMarketSupplier;
 import me.caosh.condition.domain.model.order.constant.EntrustStrategy;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
 import me.caosh.condition.domain.model.order.plan.TradePlanFactory;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
-import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import me.caosh.condition.domain.util.MockMarkets;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -27,7 +24,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 
 import static org.testng.Assert.assertEquals;
 
@@ -54,7 +50,7 @@ public class GridOrderTest {
         SecurityInfo pfyh = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
         GridCondition gridCondition = new GridCondition(new BigDecimal("1.00"), new BigDecimal("13.00"));
         DoubleDirectionTradePlan tradePlan = TradePlanFactory.getInstance().createDouble(
-                pfyh, EntrustStrategy.CURRENT_PRICE.getValue(), EntrustMethod.AMOUNT.getValue(), 0, new BigDecimal("4500"));
+                EntrustStrategy.CURRENT_PRICE.getValue(), EntrustMethod.AMOUNT.getValue(), 0, new BigDecimal("4500"));
         GridTradeOrder gridTradeOrder = new GridTradeOrder(123L, tradeCustomerInfo, pfyh, gridCondition,
                 tradePlan, StrategyState.ACTIVE);
 
