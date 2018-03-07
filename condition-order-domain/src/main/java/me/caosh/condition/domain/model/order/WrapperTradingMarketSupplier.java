@@ -2,6 +2,7 @@ package me.caosh.condition.domain.model.order;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.market.RealTimeMarket;
+import hbec.intellitrade.condorder.domain.trigger.TradingMarketSupplier;
 
 /**
  * @author caoshuhao@touker.com

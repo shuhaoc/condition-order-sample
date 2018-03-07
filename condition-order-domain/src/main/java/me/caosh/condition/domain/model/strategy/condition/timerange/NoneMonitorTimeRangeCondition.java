@@ -1,9 +1,9 @@
 package me.caosh.condition.domain.model.strategy.condition.timerange;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
-import me.caosh.condition.domain.model.order.ConditionVisitor;
-import hbec.intellitrade.strategy.domain.signal.TradeSignal;
+import hbec.intellitrade.condorder.domain.ConditionVisitor;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
+import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 
 /**
  * 未启用监控时段的包装类

@@ -1,7 +1,7 @@
 package me.caosh.condition.infrastructure.repository;
 
 import com.google.common.base.Optional;
-import me.caosh.condition.domain.model.order.ConditionOrder;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
 
 import java.util.List;
 

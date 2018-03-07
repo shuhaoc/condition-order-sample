@@ -1,15 +1,15 @@
 package me.caosh.condition.domain.dto.order.assembler;
 
+import hbec.intellitrade.condorder.domain.tradeplan.AutoPurchaseTradePlan;
+import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
+import hbec.intellitrade.condorder.domain.tradeplan.DoubleDirectionTradePlan;
+import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberByAmount;
+import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
+import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberVisitor;
+import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
+import hbec.intellitrade.condorder.domain.tradeplan.TradePlanFactory;
+import hbec.intellitrade.condorder.domain.tradeplan.TradePlanVisitor;
 import me.caosh.condition.domain.dto.order.TradePlanDTO;
-import me.caosh.condition.domain.model.order.plan.AutoPurchaseTradePlan;
-import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
-import me.caosh.condition.domain.model.order.plan.DoubleDirectionTradePlan;
-import me.caosh.condition.domain.model.order.plan.TradeNumberByAmount;
-import me.caosh.condition.domain.model.order.plan.TradeNumberDirect;
-import me.caosh.condition.domain.model.order.plan.TradeNumberVisitor;
-import me.caosh.condition.domain.model.order.plan.TradePlan;
-import me.caosh.condition.domain.model.order.plan.TradePlanFactory;
-import me.caosh.condition.domain.model.order.plan.TradePlanVisitor;
 
 /**
  * Created by caosh on 2017/8/18.

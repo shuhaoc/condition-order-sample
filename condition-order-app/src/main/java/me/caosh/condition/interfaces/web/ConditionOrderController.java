@@ -2,14 +2,14 @@ package me.caosh.condition.interfaces.web;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.trade.domain.EntrustOrder;
 import me.caosh.condition.application.order.ConditionOrderCommandService;
 import me.caosh.condition.application.order.ConditionOrderQueryService;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderDTOAssembler;
 import me.caosh.condition.domain.dto.trade.EntrustOrderDTO;
 import me.caosh.condition.domain.dto.trade.EntrustOrderDTOAssembler;
-import me.caosh.condition.domain.model.order.ConditionOrder;
-import hbec.intellitrade.trade.domain.EntrustOrder;
 import me.caosh.condition.interfaces.command.PageRequestDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;

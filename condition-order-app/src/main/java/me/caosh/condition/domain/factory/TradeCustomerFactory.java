@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.factory;
 
+import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import me.caosh.condition.domain.model.account.TradeCustomer;
-import me.caosh.condition.domain.model.order.TradeCustomerInfo;
 import org.springframework.stereotype.Component;
 
 /**

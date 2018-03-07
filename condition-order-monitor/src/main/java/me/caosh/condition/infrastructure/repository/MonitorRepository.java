@@ -1,6 +1,6 @@
 package me.caosh.condition.infrastructure.repository;
 
-import me.caosh.condition.domain.model.order.ConditionOrder;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
 
 import java.util.Map;
 

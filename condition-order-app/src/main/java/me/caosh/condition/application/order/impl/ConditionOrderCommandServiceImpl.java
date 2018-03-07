@@ -1,8 +1,8 @@
 package me.caosh.condition.application.order.impl;
 
+import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.condorder.domain.StrategyState;
 import me.caosh.condition.application.order.ConditionOrderCommandService;
-import me.caosh.condition.domain.model.order.ConditionOrder;
-import me.caosh.condition.domain.model.order.constant.StrategyState;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
 import me.caosh.condition.infrastructure.repository.ConditionOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,10 @@
 package me.caosh.condition.domain.model.strategy.condition.deviation;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
-import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
-import me.caosh.condition.domain.model.order.ConditionVisitor;
-import hbec.intellitrade.strategy.domain.signal.TradeSignal;
+import hbec.intellitrade.condorder.domain.ConditionVisitor;
 import hbec.intellitrade.strategy.domain.condition.market.PredictableMarketCondition;
+import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
+import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 
 /**
  * 禁用状态下的偏差控制条件包装类

@@ -1,20 +1,20 @@
 package me.caosh.condition.domain.dto.order.assembler;
 
+import hbec.intellitrade.common.ValuedEnumUtil;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.condorder.domain.ConditionOrderFactory;
+import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
+import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
+import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
+import hbec.intellitrade.strategy.domain.condition.Condition;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
 import me.caosh.condition.domain.dto.order.ConditionDTO;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
-import me.caosh.condition.domain.model.order.ConditionOrder;
-import me.caosh.condition.domain.model.order.ConditionOrderFactory;
-import me.caosh.condition.domain.model.order.TradeCustomerInfo;
-import me.caosh.condition.domain.model.order.constant.StrategyState;
-import me.caosh.condition.domain.model.order.plan.TradePlan;
-import hbec.intellitrade.common.ValuedEnumUtil;
-import hbec.intellitrade.strategy.domain.condition.Condition;
-import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
-import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
 
 /**
  * Created by caosh on 2017/8/11.

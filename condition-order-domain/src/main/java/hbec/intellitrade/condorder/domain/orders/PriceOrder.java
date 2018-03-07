@@ -2,15 +2,15 @@ package hbec.intellitrade.condorder.domain.orders;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.security.SecurityInfo;
-import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
-import me.caosh.condition.domain.model.order.AbstractSimpleMarketConditionOrder;
-import me.caosh.condition.domain.model.order.TradeCustomerInfo;
-import me.caosh.condition.domain.model.order.constant.StrategyState;
-import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
+import hbec.intellitrade.condorder.domain.AbstractSimpleMarketConditionOrder;
+import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
+import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
+import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
-import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
-import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
+import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import org.joda.time.LocalDateTime;
 
 /**

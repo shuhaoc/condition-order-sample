@@ -3,16 +3,16 @@ package me.caosh.condition.domain.model.order.turnpoint;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.common.security.SecurityInfo;
-import me.caosh.condition.domain.model.condition.TurnUpCondition;
-import me.caosh.condition.domain.model.order.AbstractSimpleMarketConditionOrder;
-import me.caosh.condition.domain.model.order.TradeCustomerInfo;
-import me.caosh.condition.domain.model.order.constant.ExchangeType;
-import me.caosh.condition.domain.model.order.constant.StrategyState;
-import me.caosh.condition.domain.model.order.plan.BasicTradePlan;
+import hbec.intellitrade.condorder.domain.AbstractSimpleMarketConditionOrder;
+import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
+import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
+import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
-import me.caosh.condition.domain.model.strategyinfo.NativeStrategyInfo;
-import me.caosh.condition.domain.model.strategyinfo.StrategyInfo;
+import hbec.intellitrade.trade.domain.ExchangeType;
+import me.caosh.condition.domain.model.condition.TurnUpCondition;
 
 /**
  * Created by caosh on 2017/8/19.

@@ -1,10 +1,10 @@
 package hbec.intellitrade.strategy.domain.strategies.condition;
 
 import com.google.common.base.MoreObjects;
+import hbec.intellitrade.condorder.domain.ConditionVisitor;
+import hbec.intellitrade.strategy.domain.condition.AbstractBasicMarketCondition;
 import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
-import me.caosh.condition.domain.model.order.ConditionVisitor;
-import hbec.intellitrade.strategy.domain.condition.AbstractBasicMarketCondition;
 
 import java.math.BigDecimal;
 

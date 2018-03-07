@@ -1,6 +1,6 @@
 package me.caosh.condition.infrastructure.rabbitmq;
 
-import me.caosh.condition.domain.model.order.ConditionOrder;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
 
 /**
  * Created by caosh on 2017/8/11.

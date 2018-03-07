@@ -3,10 +3,14 @@ package me.caosh.condition.domain.model.condition;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import hbec.intellitrade.strategy.domain.factor.*;
-import me.caosh.condition.domain.model.order.ConditionVisitor;
+import hbec.intellitrade.condorder.domain.ConditionVisitor;
 import hbec.intellitrade.strategy.domain.condition.AbstractBasicMarketCondition;
 import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
+import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
+import hbec.intellitrade.strategy.domain.factor.CompareOperator;
+import hbec.intellitrade.strategy.domain.factor.InflexionFactor;
+import hbec.intellitrade.strategy.domain.factor.PercentBinaryTargetPriceFactor;
+import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -4,11 +4,10 @@ import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import hbec.intellitrade.strategy.domain.RealTimeMarketAware;
 import hbec.intellitrade.strategy.domain.Strategy;
-import me.caosh.condition.domain.model.order.constant.StrategyState;
+import hbec.intellitrade.strategy.domain.shared.DirtyFlag;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
-import hbec.intellitrade.strategy.domain.shared.DirtyFlag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

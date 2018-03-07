@@ -1,12 +1,12 @@
 package me.caosh.condition.infrastructure.repository.model;
 
+import hbec.intellitrade.condorder.domain.ConditionVisitor;
+import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
 import me.caosh.condition.domain.model.condition.TurnUpCondition;
-import me.caosh.condition.domain.model.order.ConditionVisitor;
 import me.caosh.condition.domain.model.order.grid.GridCondition;
 import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
-import hbec.intellitrade.strategy.domain.condition.Condition;
 import me.caosh.condition.domain.util.DateFormats;
 import me.caosh.condition.domain.util.InstantUtils;
 

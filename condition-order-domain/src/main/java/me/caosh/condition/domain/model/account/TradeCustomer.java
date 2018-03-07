@@ -1,9 +1,9 @@
 package me.caosh.condition.domain.model.account;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.model.order.constant.ExchangeType;
 import hbec.intellitrade.trade.domain.EntrustCommand;
 import hbec.intellitrade.trade.domain.EntrustResult;
+import hbec.intellitrade.trade.domain.ExchangeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

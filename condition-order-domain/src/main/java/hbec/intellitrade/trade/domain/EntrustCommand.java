@@ -2,7 +2,6 @@ package hbec.intellitrade.trade.domain;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.security.SecurityInfo;
-import me.caosh.condition.domain.model.order.constant.ExchangeType;
 
 import java.math.BigDecimal;
 

@@ -1,12 +1,10 @@
 package me.caosh.condition.domain.model.strategy.container;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Optional;
+import hbec.intellitrade.condorder.domain.StrategyState;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
-import me.caosh.condition.domain.model.order.constant.StrategyState;
-import hbec.intellitrade.strategy.domain.condition.time.TimeCondition;
 import org.joda.time.LocalDateTime;
 
 /**

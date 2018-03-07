@@ -3,12 +3,14 @@ package me.caosh.condition.domain.model.order;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
 import hbec.intellitrade.common.market.RealTimeMarket;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 
 
 /**
  * Created by caosh on 2017/8/30.
  */
+@Deprecated
 public class TriggerMessage {
     private final Signal signal;
     private final ConditionOrder conditionOrder;

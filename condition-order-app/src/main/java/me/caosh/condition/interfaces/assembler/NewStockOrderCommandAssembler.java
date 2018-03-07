@@ -1,7 +1,7 @@
 package me.caosh.condition.interfaces.assembler;
 
-import me.caosh.condition.domain.model.order.TradeCustomerInfo;
-import me.caosh.condition.domain.model.order.constant.StrategyState;
+import hbec.intellitrade.condorder.domain.StrategyState;
+import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.newstock.NewStockOrder;
 import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
 import me.caosh.condition.domain.util.DateFormats;

@@ -1,7 +1,7 @@
 package me.caosh.condition.application.order;
 
 import com.google.common.base.Optional;
-import me.caosh.condition.domain.model.order.ConditionOrder;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.trade.domain.EntrustOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

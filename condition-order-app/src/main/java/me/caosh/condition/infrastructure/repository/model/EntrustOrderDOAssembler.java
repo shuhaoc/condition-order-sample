@@ -1,14 +1,14 @@
 package me.caosh.condition.infrastructure.repository.model;
 
+import hbec.intellitrade.common.ValuedEnumUtil;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
-import me.caosh.condition.domain.model.order.TradeCustomerInfo;
-import me.caosh.condition.domain.model.order.constant.ExchangeType;
-import hbec.intellitrade.common.ValuedEnumUtil;
+import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.trade.domain.EntrustCommand;
 import hbec.intellitrade.trade.domain.EntrustOrder;
 import hbec.intellitrade.trade.domain.EntrustResult;
+import hbec.intellitrade.trade.domain.ExchangeType;
 import hbec.intellitrade.trade.domain.OrderType;
 
 /**

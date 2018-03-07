@@ -1,9 +1,9 @@
 package me.caosh.condition.domain.model.condition;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.strategy.domain.factor.JustAfterTargetTimeFactor;
-import me.caosh.condition.domain.model.order.ConditionVisitor;
+import hbec.intellitrade.condorder.domain.ConditionVisitor;
 import hbec.intellitrade.strategy.domain.condition.AbstractBasicTimeCondition;
+import hbec.intellitrade.strategy.domain.factor.JustAfterTargetTimeFactor;
 import org.joda.time.LocalDateTime;
 
 /**

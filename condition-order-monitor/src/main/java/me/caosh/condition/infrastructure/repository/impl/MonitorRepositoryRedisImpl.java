@@ -1,6 +1,6 @@
 package me.caosh.condition.infrastructure.repository.impl;
 
-import me.caosh.condition.domain.model.order.ConditionOrder;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
 import me.caosh.condition.infrastructure.repository.MonitorRepository;
 import me.caosh.condition.infrastructure.repository.serializer.ConditionOrderRedisSerializer;
 import org.springframework.beans.factory.annotation.Qualifier;

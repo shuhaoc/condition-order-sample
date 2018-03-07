@@ -1,14 +1,14 @@
 package me.caosh.condition.domain.dto.order.assembler;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.strategy.domain.signal.Signal;
 import me.caosh.condition.domain.dto.market.RealTimeMarketDTO;
 import me.caosh.condition.domain.dto.market.assembler.RealTimeMarketDTOAssembler;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.TradeSignalDTO;
 import me.caosh.condition.domain.dto.order.TriggerMessageDTO;
-import me.caosh.condition.domain.model.order.ConditionOrder;
 import me.caosh.condition.domain.model.order.TriggerMessage;
-import hbec.intellitrade.strategy.domain.signal.Signal;
 
 /**
  * Created by caosh on 2017/8/30.

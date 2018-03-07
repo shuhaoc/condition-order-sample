@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.service;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
-import me.caosh.condition.domain.model.order.ConditionOrder;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 
 /**
