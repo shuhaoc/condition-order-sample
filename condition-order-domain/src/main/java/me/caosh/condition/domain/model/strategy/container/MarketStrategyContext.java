@@ -60,8 +60,7 @@ public class MarketStrategyContext extends StrategyContext {
             DirtyFlag dirtyFlag = (DirtyFlag) getStrategy();
             if (dirtyFlag.isDirty()) {
                 markDelaySync();
-                logger.info("Mark delay sync, strategyId={}, condition={}", getStrategy().getStrategyId(),
-                        getStrategy().getCondition());
+                logger.info("Mark delay sync, strategy={}", getStrategy());
                 // 清除脏标志，下次动态属性变更时再标记
                 dirtyFlag.clearDirty();
             }

@@ -29,11 +29,6 @@ class TestTimeStrategy implements TimeDrivenStrategy {
     }
 
     @Override
-    public TimeCondition getCondition() {
-        return timeReachedCondition;
-    }
-
-    @Override
     public Signal onTimeTick(LocalDateTime localDateTime) {
         return timeReachedCondition.onTimeTick(localDateTime);
     }

@@ -33,7 +33,6 @@ public class TimeOrder extends AbstractConditionOrder {
         this.tradePlan = tradePlan;
     }
 
-    @Override
     public Condition getCondition() {
         return timeReachedCondition;
     }

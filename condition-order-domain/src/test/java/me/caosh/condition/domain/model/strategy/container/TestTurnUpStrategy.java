@@ -38,11 +38,6 @@ public class TestTurnUpStrategy implements MarketDrivenStrategy, DirtyFlag {
     }
 
     @Override
-    public TurnUpCondition getCondition() {
-        return turnUpCondition;
-    }
-
-    @Override
     public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
         return turnUpCondition.onMarketTick(realTimeMarket);
     }

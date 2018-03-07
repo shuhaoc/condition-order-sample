@@ -24,6 +24,13 @@ public interface ConditionOrder extends Strategy {
 
     StrategyInfo getStrategyInfo();
 
+    /**
+     * 获取策略条件
+     *
+     * @return 策略条件
+     */
+    Condition getCondition();
+
     Condition getRawCondition();
 
     TradePlan getTradePlan();

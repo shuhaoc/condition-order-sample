@@ -52,12 +52,10 @@ class TestPriceStrategy implements MarketDrivenStrategy {
     }
 
     @Override
-    public MarketCondition getCondition() {
-        return priceCondition;
-    }
-
-    @Override
     public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
+        if (strategyState != StrategyState.ACTIVE) {
+            return Signals.none();
+        }
         return priceCondition.onMarketTick(realTimeMarket);
     }
 

@@ -51,7 +51,6 @@ public class NewStockOrder extends AbstractConditionOrder {
         return newStockPurchaseCondition;
     }
 
-    @Override
     public Condition getCondition() {
         return getNewStockPurchaseCondition();
     }

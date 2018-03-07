@@ -4,6 +4,7 @@ import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
+import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import me.caosh.condition.domain.model.order.constant.StrategyState;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
@@ -28,6 +29,13 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
                                         LocalDateTime expireTime, StrategyState strategyState) {
         super(orderId, tradeCustomerInfo, securityInfo, expireTime, strategyState);
     }
+
+    /**
+     * 行情驱动策略的条件必然是行情条件
+     *
+     * @return 行情条件
+     */
+    public abstract MarketCondition getCondition();
 
     @Override
     public MarketID getTrackMarketID() {
