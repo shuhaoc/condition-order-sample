@@ -20,6 +20,7 @@ import hbec.intellitrade.trade.domain.EntrustOrderInfo;
 import hbec.intellitrade.trade.domain.EntrustOrderWriter;
 import hbec.intellitrade.trade.domain.EntrustSuccessResult;
 import hbec.intellitrade.trade.domain.ExchangeType;
+import hbec.intellitrade.trade.domain.OrderType;
 import hbec.intellitrade.trade.domain.TradeCustomer;
 import org.joda.time.LocalDateTime;
 import org.mockito.Matchers;
@@ -92,7 +93,10 @@ public class PriceOrderTest {
 
         priceOrder.onTradeSignal(triggerTradingContext);
 
+        EntrustCommand entrustCommand = new EntrustCommand(pfyh, exchangeType, realTimeMarket.getCurrentPrice(), 100, OrderType.LIMITED);
+
         assertEquals(priceOrder.getOrderState(), OrderState.TERMINATED);
+        verify(tradeCustomer, times(1)).entrust(eq(entrustCommand));
         verify(entrustOrderWriter, times(1)).save(Matchers.<EntrustOrderInfo>any());
     }
 
@@ -132,5 +136,9 @@ public class PriceOrderTest {
 
         assertEquals(priceOrder.onTimeTick(LocalDateTime.parse("2018-03-06T09:59:59")), Signals.none());
         assertEquals(priceOrder.onTimeTick(LocalDateTime.parse("2018-03-06T10:00:00")), Signals.expire());
+
+        priceOrder.onExpired();
+
+        assertEquals(priceOrder.getOrderState(), OrderState.EXPIRED);
     }
 }
