@@ -12,6 +12,7 @@ import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +26,8 @@ public class GridTradeOrder extends AbstractMarketConditionOrder {
     private final DoubleDirectionTradePlan tradePlan;
 
     public GridTradeOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                          GridCondition gridCondition, DoubleDirectionTradePlan tradePlan, OrderState orderState) {
-        super(orderId, tradeCustomerInfo, securityInfo, orderState);
+                          GridCondition gridCondition, LocalDateTime expireTime, DoubleDirectionTradePlan tradePlan, OrderState orderState) {
+        super(orderId, tradeCustomerInfo, securityInfo, expireTime, orderState);
         this.gridCondition = gridCondition;
         this.tradePlan = tradePlan;
     }

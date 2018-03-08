@@ -42,8 +42,10 @@ public class NewStockOrder extends AbstractConditionOrder {
     private final NewStockPurchaseCondition newStockPurchaseCondition;
 
     public NewStockOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo,
-                         NewStockPurchaseCondition newStockPurchaseCondition, OrderState orderState) {
-        super(orderId, tradeCustomerInfo, SecurityInfoConstants.NEW_STOCK_PURCHASE, orderState);
+                         NewStockPurchaseCondition newStockPurchaseCondition,
+                         LocalDateTime expireTime,
+                         OrderState orderState) {
+        super(orderId, tradeCustomerInfo, SecurityInfoConstants.NEW_STOCK_PURCHASE, expireTime, orderState);
         this.newStockPurchaseCondition = newStockPurchaseCondition;
     }
 

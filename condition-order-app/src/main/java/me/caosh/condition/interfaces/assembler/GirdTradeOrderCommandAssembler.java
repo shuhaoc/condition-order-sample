@@ -31,7 +31,7 @@ public class GirdTradeOrderCommandAssembler {
                 tradeCustomerInfo,
                 securityInfo,
                 gridCondition,
-                tradePlan,
+                null, tradePlan,
                 orderState);
     }
 
@@ -46,7 +46,7 @@ public class GirdTradeOrderCommandAssembler {
         return new GridTradeOrder(oldOrder.getOrderId(),
                 oldOrder.getCustomer(),
                 oldOrder.getSecurityInfo(),
-                gridCondition, tradePlan, orderState
+                gridCondition, null, tradePlan, orderState
         );
     }
 

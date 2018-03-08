@@ -27,8 +27,9 @@ public class TimeOrder extends AbstractConditionOrder {
     private final BasicTradePlan tradePlan;
 
     public TimeOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                     TimeReachedCondition timeCondition, BasicTradePlan tradePlan, OrderState orderState) {
-        super(orderId, tradeCustomerInfo, securityInfo, orderState);
+                     TimeReachedCondition timeCondition, LocalDateTime expireTime,
+                     BasicTradePlan tradePlan, OrderState orderState) {
+        super(orderId, tradeCustomerInfo, securityInfo, expireTime, orderState);
         this.timeReachedCondition = timeCondition;
         this.tradePlan = tradePlan;
     }

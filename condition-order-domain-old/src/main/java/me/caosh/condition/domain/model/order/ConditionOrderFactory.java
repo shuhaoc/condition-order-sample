@@ -40,15 +40,15 @@ public class ConditionOrderFactory {
                     (BasicTradePlan) tradePlan);
         } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {
             return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,
-                    (BasicTradePlan) tradePlan, orderState);
+                    null, (BasicTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.TIME) {
-            return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, (TimeReachedCondition) condition,
+            return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, (TimeReachedCondition) condition, expireTime,
                     (BasicTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.GRID) {
             return new GridTradeOrder(orderId, tradeCustomerInfo, securityInfo, (GridCondition) condition,
-                    (DoubleDirectionTradePlan) tradePlan, orderState);
+                    null, (DoubleDirectionTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.NEW_STOCK) {
-            return new NewStockOrder(orderId, tradeCustomerInfo, (NewStockPurchaseCondition) condition, orderState);
+            return new NewStockOrder(orderId, tradeCustomerInfo, (NewStockPurchaseCondition) condition, expireTime, orderState);
         }
         throw new IllegalArgumentException("strategyInfo=" + strategyInfo);
     }

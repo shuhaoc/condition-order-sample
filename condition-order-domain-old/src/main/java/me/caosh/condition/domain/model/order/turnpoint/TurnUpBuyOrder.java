@@ -13,6 +13,7 @@ import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import me.caosh.condition.domain.model.condition.TurnUpCondition;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by caosh on 2017/8/19.
@@ -22,8 +23,8 @@ public class TurnUpBuyOrder extends AbstractSimpleMarketConditionOrder {
     private final TurnUpCondition turnUpCondition;
 
     public TurnUpBuyOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                          TurnUpCondition turnUpCondition, BasicTradePlan tradePlan, OrderState orderState) {
-        super(orderId, tradeCustomerInfo, securityInfo, tradePlan, orderState);
+                          TurnUpCondition turnUpCondition, LocalDateTime expireTime, BasicTradePlan tradePlan, OrderState orderState) {
+        super(orderId, tradeCustomerInfo, securityInfo, expireTime, tradePlan, orderState);
         Preconditions.checkArgument(tradePlan.getExchangeType() == ExchangeType.BUY);
         this.turnUpCondition = turnUpCondition;
     }

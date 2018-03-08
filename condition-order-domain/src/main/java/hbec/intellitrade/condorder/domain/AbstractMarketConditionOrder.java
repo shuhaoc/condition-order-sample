@@ -20,11 +20,6 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
     private static final Logger logger = LoggerFactory.getLogger(AbstractMarketConditionOrder.class);
 
     public AbstractMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                                        OrderState orderState) {
-        super(orderId, tradeCustomerInfo, securityInfo, orderState);
-    }
-
-    public AbstractMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                                         LocalDateTime expireTime, OrderState orderState) {
         super(orderId, tradeCustomerInfo, securityInfo, expireTime, orderState);
     }

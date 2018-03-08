@@ -13,9 +13,9 @@ import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberFactory;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
 import me.caosh.condition.domain.model.order.time.TimeOrder;
-import me.caosh.util.InstantUtils;
 import me.caosh.condition.interfaces.command.TimeOrderCreateCommand;
 import me.caosh.condition.interfaces.command.TimeOrderUpdateCommand;
+import me.caosh.util.InstantUtils;
 
 /**
  * Created by caosh on 2017/8/9.
@@ -33,7 +33,7 @@ public class TimeOrderCommandAssembler {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
         BasicTradePlan tradePlan = new BasicTradePlan(exchangeType, entrustStrategy, tradeNumber);
-        return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, timeReachedCondition, tradePlan, orderState);
+        return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, timeReachedCondition, null, tradePlan, orderState);
     }
 
     public static TimeOrder merge(TimeOrder oldOrder, TimeOrderUpdateCommand command) {
@@ -45,7 +45,7 @@ public class TimeOrderCommandAssembler {
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
         BasicTradePlan tradePlan = new BasicTradePlan(exchangeType, entrustStrategy, tradeNumber);
         return new TimeOrder(oldOrder.getOrderId(), oldOrder.getCustomer(),
-                oldOrder.getSecurityInfo(), timeReachedCondition, tradePlan, orderState);
+                oldOrder.getSecurityInfo(), timeReachedCondition, null, tradePlan, orderState);
     }
 
     private TimeOrderCommandAssembler() {

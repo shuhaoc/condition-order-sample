@@ -39,15 +39,6 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     private final LocalDateTime expireTime;
 
     public AbstractConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                                  OrderState orderState) {
-        this.orderId = orderId;
-        this.tradeCustomerInfo = tradeCustomerInfo;
-        this.securityInfo = securityInfo;
-        this.expireTime = null;
-        this.orderState = orderState;
-    }
-
-    public AbstractConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                                   LocalDateTime expireTime, OrderState orderState) {
         this.orderId = orderId;
         this.tradeCustomerInfo = tradeCustomerInfo;

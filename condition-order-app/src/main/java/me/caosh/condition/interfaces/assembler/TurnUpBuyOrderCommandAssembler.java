@@ -31,7 +31,7 @@ public class TurnUpBuyOrderCommandAssembler {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
         BasicTradePlan tradePlan = new BasicTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
-        return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, turnUpCondition, tradePlan, orderState);
+        return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, turnUpCondition, null, tradePlan, orderState);
     }
 
     public static TurnUpBuyOrder merge(TurnUpBuyOrder oldOrder, TurnUpBuyOrderUpdateCommand command) {
@@ -45,7 +45,7 @@ public class TurnUpBuyOrderCommandAssembler {
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
         BasicTradePlan tradePlan = new BasicTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
         return new TurnUpBuyOrder(oldOrder.getOrderId(), oldOrder.getCustomer(), oldOrder.getSecurityInfo(),
-                turnUpCondition, tradePlan, orderState);
+                turnUpCondition, null, tradePlan, orderState);
     }
 
     private TurnUpBuyOrderCommandAssembler() {
