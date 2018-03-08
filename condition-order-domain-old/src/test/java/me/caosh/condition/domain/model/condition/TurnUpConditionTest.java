@@ -1,6 +1,7 @@
 package me.caosh.condition.domain.model.condition;
 
 import com.google.common.base.Optional;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
@@ -44,13 +45,13 @@ public class TurnUpConditionTest {
         assertTrue(turnUpCondition2.isNeedSwap(turnUpCondition1));
         TurnUpCondition turnUpCondition2Expected = new TurnUpCondition(new BigDecimal("10.000"), new BigDecimal("2.00"),
                 false, null);
-        assertEquals(turnUpCondition2, turnUpCondition2Expected);
+        Assert.assertEquals(turnUpCondition2, turnUpCondition2Expected);
 
-        assertEquals(turnUpCondition2.getBreakPrice(), new BigDecimal("10.000"));
-        assertEquals(turnUpCondition2.getTurnUpPercent(), new BigDecimal("2.00"));
-        assertEquals(turnUpCondition2.getLowestPrice(), Optional.<BigDecimal>absent());
+        Assert.assertEquals(turnUpCondition2.getBreakPrice(), new BigDecimal("10.000"));
+        Assert.assertEquals(turnUpCondition2.getTurnUpPercent(), new BigDecimal("2.00"));
+        Assert.assertEquals(turnUpCondition2.getLowestPrice(), Optional.<BigDecimal>absent());
         assertFalse(turnUpCondition2.isBroken());
-        assertEquals(turnUpCondition2.hashCode(), turnUpCondition2Expected.hashCode());
+        Assert.assertEquals(turnUpCondition2.hashCode(), turnUpCondition2Expected.hashCode());
         System.out.println(turnUpCondition2);
     }
 
@@ -62,7 +63,7 @@ public class TurnUpConditionTest {
         TurnUpCondition turnUpCondition2 = new TurnUpCondition(new BigDecimal("10.000"), new BigDecimal("2.00"));
         assertTrue(turnUpCondition2.isNeedSwap(turnUpCondition1));
         turnUpCondition2.swap(turnUpCondition1);
-        assertEquals(turnUpCondition2, new TurnUpCondition(new BigDecimal("10.000"), new BigDecimal("2.00"),
+        Assert.assertEquals(turnUpCondition2, new TurnUpCondition(new BigDecimal("10.000"), new BigDecimal("2.00"),
                 true, new BigDecimal("9.99")));
 
         TurnUpCondition turnUpCondition3 = new TurnUpCondition(new BigDecimal("10.05"), new BigDecimal("1.00"));

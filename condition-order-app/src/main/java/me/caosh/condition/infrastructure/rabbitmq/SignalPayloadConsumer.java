@@ -3,7 +3,7 @@ package me.caosh.condition.infrastructure.rabbitmq;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.strategy.domain.signalpayload.MarketSignalPayload;
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
-import hbec.intellitrade.strategy.domain.signalpayload.SignalPayloadBuilder;
+import me.caosh.condition.domain.model.strategy.signalpayload.SignalPayloadBuilder;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.application.order.SignalHandlerService;
 import me.caosh.condition.domain.dto.order.SignalPayloadDTO;

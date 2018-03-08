@@ -2,6 +2,7 @@ package me.caosh.condition.domain.model.condition;
 
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import org.joda.time.LocalDateTime;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -20,8 +21,8 @@ public class TimeReachedConditionTest {
 
         assertTrue(timeReachedCondition.onTimeGoesBy(new LocalDateTime(2018, 1, 30, 14, 0, 0)));
 
-        assertEquals(timeReachedCondition.getTargetTime(), new LocalDateTime(2018, 1, 30, 14, 0, 0));
-        assertEquals(timeReachedCondition, new TimeReachedCondition(
+        Assert.assertEquals(timeReachedCondition.getTargetTime(), new LocalDateTime(2018, 1, 30, 14, 0, 0));
+        Assert.assertEquals(timeReachedCondition, new TimeReachedCondition(
                 new LocalDateTime(2018, 1, 30, 14, 0, 0)
         ));
         System.out.println(timeReachedCondition.hashCode());
@@ -31,9 +32,9 @@ public class TimeReachedConditionTest {
     @Test
     public void testOnSecondTick() throws Exception {
         TimeReachedCondition timeReachedCondition1 = new TimeReachedCondition(LocalDateTime.now());
-        assertEquals(timeReachedCondition1.onTimeTick(LocalDateTime.now()), Signals.buyOrSell());
+        Assert.assertEquals(timeReachedCondition1.onTimeTick(LocalDateTime.now()), Signals.buyOrSell());
 
         TimeReachedCondition timeReachedCondition2 = new TimeReachedCondition(LocalDateTime.now().plusMinutes(1));
-        assertEquals(timeReachedCondition2.onTimeTick(LocalDateTime.now()), Signals.none());
+        Assert.assertEquals(timeReachedCondition2.onTimeTick(LocalDateTime.now()), Signals.none());
     }
 }

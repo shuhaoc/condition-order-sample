@@ -2,7 +2,7 @@ package me.caosh.condition.infrastructure.rabbitmq;
 
 import hbec.intellitrade.common.ValuedEnumUtil;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.ConditionOrderBuilder;
+import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;

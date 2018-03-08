@@ -1,7 +1,6 @@
 package hbec.intellitrade.strategy.domain.condition.market;
 
 import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
-import me.caosh.condition.domain.model.strategy.condition.deviation.DeviationCtrlCondition;
 
 /**
  * 可预测的行情条件，即可以求目标价因子的条件
@@ -11,7 +10,6 @@ import me.caosh.condition.domain.model.strategy.condition.deviation.DeviationCtr
  * @author caosh/caoshuhao@touker.com
  * @date 2018/1/29
  * @see TargetPriceFactor
- * @see DeviationCtrlCondition
  */
 public interface PredictableMarketCondition extends MarketCondition {
     /**

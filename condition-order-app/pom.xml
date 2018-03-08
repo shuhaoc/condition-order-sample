@@ -12,7 +12,7 @@
     <dependencies>
         <dependency>
             <groupId>hbec.intellitrade</groupId>
-            <artifactId>condition-order-domain</artifactId>
+            <artifactId>condition-order-domain-old</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>

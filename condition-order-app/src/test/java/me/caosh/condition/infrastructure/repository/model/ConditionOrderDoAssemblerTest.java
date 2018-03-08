@@ -4,7 +4,7 @@ import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.ConditionOrderBuilder;
+import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.orders.PriceOrder;

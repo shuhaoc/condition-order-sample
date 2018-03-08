@@ -4,10 +4,9 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.ConditionOrderBuilder;
+import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.infrastructure.tunnel.ConditionOrderDbTunnel;
-import me.caosh.condition.infrastructure.tunnel.impl.ConditionOrderDoRepository;
 import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;
 import org.springframework.stereotype.Repository;
 

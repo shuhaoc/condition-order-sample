@@ -17,7 +17,7 @@ import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.trade.domain.EntrustOrderWriter;
 import hbec.intellitrade.trade.domain.TradeCustomer;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustMethod;
-import hbec.intellitrade.mock.MockMarkets;
+import me.caosh.condition.mock.MockMarkets;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;

@@ -1,6 +1,9 @@
-package hbec.intellitrade.condorder.domain;
+package me.caosh.condition.domain.model.order;
 
 import hbec.intellitrade.common.security.SecurityInfoBuilder;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.condorder.domain.OrderState;
+import hbec.intellitrade.condorder.domain.TradeCustomerInfoBuilder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanBuilder;
 import hbec.intellitrade.strategy.domain.condition.Condition;
