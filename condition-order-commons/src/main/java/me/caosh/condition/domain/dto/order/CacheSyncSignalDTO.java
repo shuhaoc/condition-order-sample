@@ -12,11 +12,6 @@ public class CacheSyncSignalDTO implements SignalDTO {
     private static final long serialVersionUID = 1L;
 
     @Override
-    public void accept(TradeSignalDTOVisitor visitor) {
-        visitor.visitCacheSyncDTO(this);
-    }
-
-    @Override
     public String toString() {
         return MoreObjects.toStringHelper(CacheSyncSignalDTO.class).omitNullValues()
                 .toString();

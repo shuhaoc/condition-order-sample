@@ -3,12 +3,12 @@ package me.caosh.condition.application.order;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.strategy.domain.signal.Signal;
+import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
 
 /**
- * Created by caosh on 2017/8/13.
- *
- * @implNote 仅作示例，没有并发控制不可用于生产
+ * @author caosh/caoshuhao@touker.com
+ * @date 2017/8/13
  */
 public interface SignalHandlerService {
-    void handleTriggerContext(Signal signal, ConditionOrder conditionOrder, RealTimeMarket realTimeMarket);
+    void handleSignalPaylaod(SignalPayload signalPayload, Signal signal, ConditionOrder conditionOrder, RealTimeMarket realTimeMarket);
 }

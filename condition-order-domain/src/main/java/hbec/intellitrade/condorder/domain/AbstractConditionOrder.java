@@ -57,7 +57,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
 
     @Override
     public long getStrategyId() {
-        return getOrderId().intValue();
+        return getOrderId();
     }
 
     @Override
@@ -117,7 +117,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
             logger.info("Entrust result <== {}", entrustResult);
             afterEntrustSuccess(triggerTradingContext, entrustCommand, entrustResult);
         } catch (Exception e) {
-            // TODO: handle exception
+            logger.error("Entrust error, entrustCommand=" + entrustCommand, e);
         }
     }
 

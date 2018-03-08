@@ -138,25 +138,13 @@ public class StrategyContext {
         if (!bucketKey.equals(that.bucketKey)) {
             return false;
         }
-        if (!strategy.equals(that.strategy)) {
-            return false;
-        }
-        if (!strategyContextConfig.equals(that.strategyContextConfig)) {
-            return false;
-        }
-        if (triggerLock != null ? !triggerLock.equals(that.triggerLock) : that.triggerLock != null) {
-            return false;
-        }
-        return delaySyncMarker != null ? delaySyncMarker.equals(that.delaySyncMarker) : that.delaySyncMarker == null;
+        return strategy.equals(that.strategy);
     }
 
     @Override
     public int hashCode() {
         int result = bucketKey.hashCode();
         result = 31 * result + strategy.hashCode();
-        result = 31 * result + strategyContextConfig.hashCode();
-        result = 31 * result + (triggerLock != null ? triggerLock.hashCode() : 0);
-        result = 31 * result + (delaySyncMarker != null ? delaySyncMarker.hashCode() : 0);
         return result;
     }
 

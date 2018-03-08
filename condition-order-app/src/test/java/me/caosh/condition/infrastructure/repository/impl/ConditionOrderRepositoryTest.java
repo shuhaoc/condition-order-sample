@@ -15,7 +15,7 @@ import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.trade.domain.ExchangeType;
-import me.caosh.condition.infrastructure.tunnel.ConditionOrderIdGenerator;
+import me.caosh.condition.infrastructure.tunnel.impl.ConditionOrderIdGenerator;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

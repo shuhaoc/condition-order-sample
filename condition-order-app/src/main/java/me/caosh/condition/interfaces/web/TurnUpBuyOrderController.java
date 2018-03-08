@@ -7,7 +7,7 @@ import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import me.caosh.condition.application.order.OrderCommandService;
 import me.caosh.condition.domain.model.order.turnpoint.TurnUpBuyOrder;
 import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
-import me.caosh.condition.infrastructure.tunnel.ConditionOrderIdGenerator;
+import me.caosh.condition.infrastructure.tunnel.impl.ConditionOrderIdGenerator;
 import me.caosh.condition.interfaces.assembler.TurnUpBuyOrderCommandAssembler;
 import me.caosh.condition.interfaces.command.TurnUpBuyOrderCreateCommand;
 import me.caosh.condition.interfaces.command.TurnUpBuyOrderUpdateCommand;

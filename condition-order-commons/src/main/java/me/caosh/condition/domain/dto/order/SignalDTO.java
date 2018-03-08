@@ -19,5 +19,4 @@ import java.io.Serializable;
         CacheSyncSignalDTO.class
 })
 public interface SignalDTO extends Serializable {
-    void accept(TradeSignalDTOVisitor visitor);
 }

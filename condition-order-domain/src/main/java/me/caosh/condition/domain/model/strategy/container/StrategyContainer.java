@@ -67,14 +67,14 @@ public class StrategyContainer {
      *
      * @param strategyId 策略ID
      */
-    public void remove(int strategyId) {
+    public void remove(long strategyId) {
         Iterator<Map.Entry<BucketKey, StrategyContext>> iterator = strategies.entries().iterator();
         while (iterator.hasNext()) {
             Map.Entry<BucketKey, StrategyContext> entry = iterator.next();
             StrategyContext strategyContext = entry.getValue();
             Strategy strategy = strategyContext.getStrategy();
             if (strategy.getStrategyId() == strategyId) {
-                iterator.remove();
+                strategies.remove(entry.getKey(), entry.getValue());
                 break;
             }
         }

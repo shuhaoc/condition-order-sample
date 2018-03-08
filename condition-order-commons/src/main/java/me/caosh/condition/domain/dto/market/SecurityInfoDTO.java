@@ -1,7 +1,6 @@
 package me.caosh.condition.domain.dto.market;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.common.security.SecurityInfo;
 import me.caosh.autoasm.Convertible;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -31,25 +30,6 @@ public class SecurityInfoDTO implements Serializable {
     @NotBlank
     @Length(min = 1, max = 4)
     private String name;
-
-    public SecurityInfoDTO() {
-    }
-
-    @Deprecated
-    public SecurityInfoDTO(Integer type, String code, String exchange, String name) {
-        this.type = type;
-        this.code = code;
-        this.exchange = exchange;
-        this.name = name;
-    }
-
-    @Deprecated
-    public static SecurityInfoDTO fromDomain(SecurityInfo securityInfo) {
-        return new SecurityInfoDTO(securityInfo.getType().getValue(),
-                securityInfo.getCode(),
-                securityInfo.getExchange().name(),
-                securityInfo.getName());
-    }
 
     public Integer getType() {
         return type;

@@ -9,6 +9,8 @@ import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.signal.BS;
 import hbec.intellitrade.strategy.domain.signal.CacheSync;
 import hbec.intellitrade.strategy.domain.signal.Signal;
+import hbec.intellitrade.strategy.domain.signalpayload.MarketSignalPayload;
+import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
 import hbec.intellitrade.trade.domain.EntrustOrder;
 import hbec.intellitrade.trade.domain.EntrustOrderInfo;
 import hbec.intellitrade.trade.domain.EntrustOrderWriter;
@@ -17,8 +19,8 @@ import me.caosh.condition.application.order.OrderCommandService;
 import me.caosh.condition.application.order.SignalHandlerService;
 import me.caosh.condition.application.trade.factory.TradeCustomerFactory;
 import me.caosh.condition.domain.service.NewStocksSupplier;
-import me.caosh.condition.infrastructure.repository.EntrustOrderRepository;
-import me.caosh.condition.infrastructure.tunnel.EntrustOrderIdGenerator;
+import hbec.intellitrade.condorder.domain.EntrustOrderRepository;
+import me.caosh.condition.infrastructure.tunnel.impl.EntrustOrderIdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -55,30 +57,35 @@ public class SignalHandlerServiceImpl implements SignalHandlerService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void handleTriggerContext(Signal signal, ConditionOrder conditionOrder, RealTimeMarket realTimeMarket) {
+    public void handleSignalPaylaod(SignalPayload signalPayload, Signal signal2, ConditionOrder conditionOrder2, RealTimeMarket realTimeMarket2) {
+        Signal signal = signalPayload.getSignal();
+        ConditionOrder conditionOrder = (ConditionOrder) signalPayload.getStrategy();
+
         if (conditionOrder.getOrderState() != OrderState.ACTIVE) {
             logger.warn("Order illegal state: {}", conditionOrder);
             return;
         }
 
-        TradeCustomer tradeCustomer = tradeCustomerFactory.createTradeCustomer(conditionOrder.getCustomer());
-        TriggerTradingContext triggerTradingContext = new BasicTriggerTradingContext(signal, conditionOrder, tradeCustomer,
-                realTimeMarketSupplier, new EntrustOrderWriterImpl(), realTimeMarket);
+        TriggerTradingContext triggerTradingContext = createTriggerTradingContext(signalPayload, signal, conditionOrder);
 
         if (signal instanceof BS) {
-//                List<NewStock> currentPurchasable = newStockQueryService.getCurrentPurchasable();
-//                List<EntrustCommand> entrustCommands = ((NewStockPurchaseOnTrigger) conditionOrder).createEntrustCommand(currentPurchasable);
-//                for (EntrustCommand entrustCommand : entrustCommands) {
-//                    handleEntrustCommand(triggerTradingContext, entrustCommand);
-//                }
-
             conditionOrder.onTradeSignal(triggerTradingContext);
             orderCommandService.update(conditionOrder);
         } else if (signal instanceof CacheSync) {
-            // TODO: use visitor pattern
             orderCommandService.updateDynamicProperties(conditionOrder);
             logger.info("Sync dynamic properties, conditionOrder={}", conditionOrder);
         }
+    }
+
+    private TriggerTradingContext createTriggerTradingContext(SignalPayload signalPayload, Signal signal, ConditionOrder conditionOrder) {
+        RealTimeMarket realTimeMarket = null;
+        if (signalPayload instanceof MarketSignalPayload) {
+            realTimeMarket = ((MarketSignalPayload) signalPayload).getRealTimeMarket();
+        }
+
+        TradeCustomer tradeCustomer = tradeCustomerFactory.createTradeCustomer(conditionOrder.getCustomer());
+        return new BasicTriggerTradingContext(signal, conditionOrder, tradeCustomer,
+                realTimeMarketSupplier, new EntrustOrderWriterImpl(), realTimeMarket);
     }
 
     private class EntrustOrderWriterImpl implements EntrustOrderWriter {

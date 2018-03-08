@@ -26,7 +26,7 @@ public class ConditionOrderRepositoryImpl implements ConditionOrderRepository {
     public void save(ConditionOrder conditionOrder) {
         conditionOrderDbTunnel.save(conditionOrder);
 
-        conditionOrderProducer.update(conditionOrder);
+        conditionOrderProducer.save(conditionOrder);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ConditionOrderRepositoryImpl implements ConditionOrderRepository {
         conditionOrderDbTunnel.save(conditionOrder);
 
         if (conditionOrder.isMonitoringState()) {
-            conditionOrderProducer.update(conditionOrder);
+            conditionOrderProducer.save(conditionOrder);
         } else {
             conditionOrderProducer.remove(conditionOrder.getOrderId());
         }

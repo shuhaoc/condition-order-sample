@@ -6,7 +6,6 @@ package hbec.intellitrade.strategy.domain.signal;
  * Created by caosh on 2017/8/1.
  */
 public interface Signal {
-    void accept(SignalVisitor visitor);
 
     /**
      * 信号有否有效，只有无信号（None）返回false，其他为true

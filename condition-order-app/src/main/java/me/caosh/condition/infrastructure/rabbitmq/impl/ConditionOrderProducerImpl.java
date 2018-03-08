@@ -62,18 +62,18 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
     }
 
     @Override
-    public void update(ConditionOrder conditionOrder) {
+    public void save(ConditionOrder conditionOrder) {
         Preconditions.checkArgument(conditionOrder.isMonitoringState(),
                 "Order should be monitoring state");
-        sendUpdateCommand(exchangeName, routingKey, conditionOrder);
+        sendSaveCommand(exchangeName, routingKey, conditionOrder);
     }
 
-    private void sendUpdateCommand(String exchangeName, String routingKey, ConditionOrder conditionOrder) {
+    private void sendSaveCommand(String exchangeName, String routingKey, ConditionOrder conditionOrder) {
         ConditionOrderDTO conditionOrderDTO = AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDTO.class);
         ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(OrderCommandType.UPDATE.getValue(), conditionOrderDTO);
         Message message = messageConverter.toMessage(conditionOrderMonitorDTO, new MessageProperties());
         amqpTemplate.send(exchangeName, routingKey, message);
-        logger.info("Send <UPDATE> command ==> {}", conditionOrderDTO);
+        logger.info("Send <SAVE> command ==> {}", conditionOrderDTO);
     }
 
     @Override

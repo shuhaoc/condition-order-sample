@@ -19,8 +19,4 @@ public final class None extends AbstractSignal implements TradeSignal {
         return this;
     }
 
-    @Override
-    public void accept(SignalVisitor visitor) {
-        visitor.visitNone(this);
-    }
 }

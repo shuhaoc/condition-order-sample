@@ -16,8 +16,4 @@ public class Buy extends BS {
         return new Buy(true);
     }
 
-    @Override
-    public void accept(SignalVisitor visitor) {
-        visitor.visitBuy(this);
-    }
 }

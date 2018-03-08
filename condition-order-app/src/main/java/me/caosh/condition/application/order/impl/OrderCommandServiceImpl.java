@@ -32,12 +32,7 @@ public class OrderCommandServiceImpl implements OrderCommandService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void update(ConditionOrder conditionOrder) {
-        conditionOrderRepository.save(conditionOrder);
-//        if (conditionOrder.getOrderState() == OrderState.ACTIVE) {
-//            conditionOrderProducer.update(conditionOrder);
-//        } else {
-//            conditionOrderProducer.remove(conditionOrder.getOrderId());
-//        }
+        conditionOrderRepository.update(conditionOrder);
     }
 
     @Transactional(rollbackFor = Exception.class)

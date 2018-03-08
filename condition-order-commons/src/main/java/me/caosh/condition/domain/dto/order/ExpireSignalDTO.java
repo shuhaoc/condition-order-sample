@@ -10,10 +10,6 @@ import me.caosh.autoasm.MappedClass;
  */
 @MappedClass(Expire.class)
 public class ExpireSignalDTO implements SignalDTO {
-    @Override
-    public void accept(TradeSignalDTOVisitor visitor) {
-
-    }
 
     @Override
     public String toString() {

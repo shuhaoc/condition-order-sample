@@ -86,7 +86,7 @@ public class SignalPayloadConsumer {
         logger.debug("Receive trigger message <== {}", signalPayloadDTO);
 
         SignalPayload signalPayload = AutoAssemblers.getDefault().disassemble(signalPayloadDTO, SignalPayloadBuilder.class).build();
-        signalHandlerService.handleTriggerContext(signalPayload.getSignal(), (ConditionOrder) signalPayload.getStrategy(),
+        signalHandlerService.handleSignalPaylaod(signalPayload, signalPayload.getSignal(), (ConditionOrder) signalPayload.getStrategy(),
                 ((MarketSignalPayload) signalPayload).getRealTimeMarket());
     }
 

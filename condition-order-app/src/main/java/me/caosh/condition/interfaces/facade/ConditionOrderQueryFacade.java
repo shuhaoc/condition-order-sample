@@ -1,7 +1,7 @@
 package me.caosh.condition.interfaces.facade;
 
-import hbec.intellitrade.trade.domain.EntrustOrder;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
+import me.caosh.condition.domain.dto.trade.EntrustOrderDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,5 +15,5 @@ public interface ConditionOrderQueryFacade {
 
     ConditionOrderDTO getConditionOrder(Long orderId);
 
-    Page<EntrustOrder> listEntrustOrders(String customerNo, Pageable pageable);
+    Page<EntrustOrderDTO> listEntrustOrders(String customerNo, Pageable pageable);
 }

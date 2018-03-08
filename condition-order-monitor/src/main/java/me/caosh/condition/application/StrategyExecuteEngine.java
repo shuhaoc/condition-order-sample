@@ -74,9 +74,9 @@ public class StrategyExecuteEngine {
 
     @Subscribe
     public void onOrderDeleteCommandEvent(OrderDeleteCommandEvent e) {
-        Long orderId = e.getOrderId();
+        long orderId = e.getOrderId();
         monitorRepository.remove(orderId);
-        strategyContainer.remove(orderId.intValue());
+        strategyContainer.remove(orderId);
         logger.info("Remove condition order ==> {}", orderId);
     }
 }

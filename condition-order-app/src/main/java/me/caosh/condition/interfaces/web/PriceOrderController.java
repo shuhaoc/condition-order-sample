@@ -6,7 +6,7 @@ import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.orders.PriceOrder;
 import me.caosh.condition.application.order.OrderCommandService;
 import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
-import me.caosh.condition.infrastructure.tunnel.ConditionOrderIdGenerator;
+import me.caosh.condition.infrastructure.tunnel.impl.ConditionOrderIdGenerator;
 import me.caosh.condition.interfaces.assembler.PriceOrderCommandAssembler;
 import me.caosh.condition.interfaces.command.PriceOrderCreateCommand;
 import me.caosh.condition.interfaces.command.PriceOrderUpdateCommand;

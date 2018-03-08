@@ -5,7 +5,4 @@ package hbec.intellitrade.strategy.domain.signal;
  * @date 2018/2/8
  */
 public final class Expire extends AbstractSignal {
-    @Override
-    public void accept(SignalVisitor visitor) {
-    }
 }

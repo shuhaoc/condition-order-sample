@@ -27,11 +27,6 @@ public class BS extends AbstractSignal implements TradeSignal {
     }
 
     @Override
-    public void accept(SignalVisitor visitor) {
-        visitor.visitBS(this);
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

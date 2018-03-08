@@ -12,11 +12,6 @@ public class BuySignalDTO implements SignalDTO {
     private static final long serialVersionUID = 1L;
 
     @Override
-    public void accept(TradeSignalDTOVisitor visitor) {
-        visitor.visitBuySignalDTO(this);
-    }
-
-    @Override
     public String toString() {
         return MoreObjects.toStringHelper(BuySignalDTO.class).omitNullValues()
                 .toString();

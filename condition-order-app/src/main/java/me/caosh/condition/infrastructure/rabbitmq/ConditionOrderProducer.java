@@ -8,7 +8,7 @@ import hbec.intellitrade.condorder.domain.ConditionOrder;
  * @author caoshuhao@touker.com
  */
 public interface ConditionOrderProducer {
-    void update(ConditionOrder conditionOrder);
+    void save(ConditionOrder conditionOrder);
 
     void remove(Long orderId);
 }

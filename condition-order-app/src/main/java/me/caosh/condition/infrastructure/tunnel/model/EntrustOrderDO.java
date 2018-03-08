@@ -1,5 +1,7 @@
 package me.caosh.condition.infrastructure.tunnel.model;
 
+import me.caosh.autoasm.FieldMapping;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,19 +20,32 @@ import java.sql.Timestamp;
 public class EntrustOrderDO {
     private Long entrustId;
     private Long orderId;
+    @FieldMapping(mappedProperty = "tradeCustomerInfo.userId")
     private Integer userId;
+    @FieldMapping(mappedProperty = "tradeCustomerInfo.customerNo")
     private String customerNo;
+    @FieldMapping(mappedProperty = "entrustCommand.securityInfo.type")
     private Integer securityType;
+    @FieldMapping(mappedProperty = "entrustCommand.securityInfo.code")
     private String securityCode;
+    @FieldMapping(mappedProperty = "entrustCommand.securityInfo.exchange")
     private String securityExchange;
+    @FieldMapping(mappedProperty = "entrustCommand.securityInfo.name")
     private String securityName;
+    @FieldMapping(mappedProperty = "entrustCommand.exchangeType")
     private Integer exchangeType;
+    @FieldMapping(mappedProperty = "entrustCommand.entrustPrice")
     private BigDecimal entrustPrice;
+    @FieldMapping(mappedProperty = "entrustCommand.entrustNumber")
     private Integer entrustNumber;
+    @FieldMapping(mappedProperty = "entrustCommand.orderType")
     private Integer orderType;
+    @FieldMapping(mappedProperty = "entrustResult.entrustState")
     private Integer entrustState;
+    @FieldMapping(mappedProperty = "entrustResult.entrustMessage")
     private String entrustMessage;
-    private Integer entrustCode;
+    @FieldMapping(mappedProperty = "entrustResult.entrustCode")
+    private Integer entrustCode = 0;
     private Timestamp createTime;
     private Timestamp updateTime;
 
