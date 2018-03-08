@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.market.event;
+package me.caosh.condition.domain.event;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
 

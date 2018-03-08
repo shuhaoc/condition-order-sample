@@ -1,7 +1,7 @@
 package me.caosh.condition.application.trade.factory;
 
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
-import me.caosh.condition.domain.model.mock.MockTradeCustomer;
+import me.caosh.condition.application.trade.MockTradeCustomer;
 import hbec.intellitrade.trade.domain.TradeCustomer;
 import org.springframework.stereotype.Component;
 

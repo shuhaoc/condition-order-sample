@@ -2,7 +2,7 @@ package me.caosh.condition.infrastructure.rabbitmq;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.security.SecurityType;
-import me.caosh.condition.domain.model.market.event.RealTimeMarketPushEvent;
+import me.caosh.condition.domain.event.RealTimeMarketPushEvent;
 import me.caosh.condition.infrastructure.eventbus.MonitorEventBus;
 import me.caosh.condition.infrastructure.rabbitmq.model.RealTimeMarketMessageConverter;
 import me.caosh.condition.infrastructure.rabbitmq.model.RealTimeMarketSimpleDTO;

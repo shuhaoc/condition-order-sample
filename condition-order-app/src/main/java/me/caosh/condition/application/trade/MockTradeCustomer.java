@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.mock;
+package me.caosh.condition.application.trade;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.trade.domain.EntrustCommand;
