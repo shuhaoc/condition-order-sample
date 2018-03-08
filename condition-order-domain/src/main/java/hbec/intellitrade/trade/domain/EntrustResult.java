@@ -9,7 +9,7 @@ import com.google.common.base.MoreObjects;
  */
 public class EntrustResult {
     public static final int SUCCESS = 1;
-    public static final int FAIL = 1;
+    public static final int FAIL = 2;
 
     private final int entrustState;
     private final String entrustMessage;
