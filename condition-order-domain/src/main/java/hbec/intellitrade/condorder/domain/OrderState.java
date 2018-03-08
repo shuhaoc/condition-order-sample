@@ -9,7 +9,8 @@ import me.caosh.autoasm.ConvertibleEnum;
 public enum OrderState implements ValuedEnum<Integer>, ConvertibleEnum<Integer> {
     ACTIVE(1),
     PAUSED(2),
-    TERMINATED(3);
+    TERMINATED(3),
+    EXPIRED(4);
 
     int value;
 

@@ -4,11 +4,13 @@ import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.market.RealTimeMarketSupplier;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
+import hbec.intellitrade.condorder.domain.EntrustOrderRepository;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.trigger.BasicTriggerTradingContext;
 import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.signal.BS;
 import hbec.intellitrade.strategy.domain.signal.CacheSync;
+import hbec.intellitrade.strategy.domain.signal.Expire;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signalpayload.MarketSignalPayload;
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
@@ -19,7 +21,6 @@ import hbec.intellitrade.trade.domain.TradeCustomer;
 import me.caosh.condition.application.order.SignalHandlerService;
 import me.caosh.condition.application.trade.factory.TradeCustomerFactory;
 import me.caosh.condition.domain.service.NewStocksSupplier;
-import hbec.intellitrade.condorder.domain.EntrustOrderRepository;
 import me.caosh.condition.infrastructure.tunnel.impl.EntrustOrderIdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +53,7 @@ public class SignalHandlerServiceImpl implements SignalHandlerService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void handleSignalPaylaod(SignalPayload signalPayload, Signal signal2, ConditionOrder conditionOrder2, RealTimeMarket realTimeMarket2) {
+    public void handleSignalPaylaod(SignalPayload signalPayload) {
         Signal signal = signalPayload.getSignal();
         ConditionOrder conditionOrder = (ConditionOrder) signalPayload.getStrategy();
 
@@ -65,6 +66,9 @@ public class SignalHandlerServiceImpl implements SignalHandlerService {
 
         if (signal instanceof BS) {
             conditionOrder.onTradeSignal(triggerTradingContext);
+            conditionOrderRepository.update(conditionOrder);
+        } else if (signal instanceof Expire) {
+            conditionOrder.onExpired();
             conditionOrderRepository.update(conditionOrder);
         } else if (signal instanceof CacheSync) {
             conditionOrderRepository.updateDynamicProperties(conditionOrder);

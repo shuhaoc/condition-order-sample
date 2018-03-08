@@ -229,7 +229,12 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
      * @param triggerTradingContext 触发交易上下文
      */
     protected void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext) {
-        setOrderState(OrderState.TERMINATED);
+        this.orderState = OrderState.TERMINATED;
+    }
+
+    @Override
+    public void onExpired() {
+        this.orderState = OrderState.EXPIRED;
     }
 
     @Override

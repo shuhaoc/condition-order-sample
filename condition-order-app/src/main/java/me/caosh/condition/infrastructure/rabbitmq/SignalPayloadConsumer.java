@@ -1,13 +1,11 @@
 package me.caosh.condition.infrastructure.rabbitmq;
 
-import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.strategy.domain.signalpayload.MarketSignalPayload;
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
-import me.caosh.condition.domain.model.strategy.signalpayload.SignalPayloadBuilder;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.application.order.SignalHandlerService;
 import me.caosh.condition.domain.dto.order.SignalPayloadDTO;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
+import me.caosh.condition.domain.model.strategy.signalpayload.SignalPayloadBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpAdmin;
@@ -86,8 +84,8 @@ public class SignalPayloadConsumer {
         logger.debug("Receive trigger message <== {}", signalPayloadDTO);
 
         SignalPayload signalPayload = AutoAssemblers.getDefault().disassemble(signalPayloadDTO, SignalPayloadBuilder.class).build();
-        signalHandlerService.handleSignalPaylaod(signalPayload, signalPayload.getSignal(), (ConditionOrder) signalPayload.getStrategy(),
-                ((MarketSignalPayload) signalPayload).getRealTimeMarket());
+        signalHandlerService.handleSignalPaylaod(signalPayload
+        );
     }
 
 }
