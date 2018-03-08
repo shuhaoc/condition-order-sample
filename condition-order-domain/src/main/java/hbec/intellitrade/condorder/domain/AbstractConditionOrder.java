@@ -1,6 +1,7 @@
 package hbec.intellitrade.condorder.domain;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.SingleEntrustTradePlan;
 import hbec.intellitrade.condorder.domain.trigger.TradingMarketSupplier;
@@ -23,7 +24,7 @@ import java.util.List;
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/2
  */
-public abstract class AbstractConditionOrder implements ConditionOrder, AutoTradeAction {
+public abstract class AbstractConditionOrder implements ConditionOrder {
     private static final Logger logger = LoggerFactory.getLogger(AbstractConditionOrder.class);
 
     private final Long orderId;
@@ -103,14 +104,16 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
 
     @Override
     public void onTradeSignal(TriggerTradingContext triggerTradingContext) {
+        Preconditions.checkArgument(orderState == OrderState.ACTIVE, "Order state should be ACTIVE");
+
         List<EntrustCommand> entrustCommands = createEntrustCommands((TradeSignal) triggerTradingContext.getSignal(), triggerTradingContext);
         for (EntrustCommand entrustCommand : entrustCommands) {
-            handleEntrustCommand(triggerTradingContext, entrustCommand);
+            executeEntrustCommand(triggerTradingContext, entrustCommand);
         }
         afterEntrustCommandsExecuted(triggerTradingContext);
     }
 
-    private void handleEntrustCommand(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand) {
+    private void executeEntrustCommand(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand) {
         TradeCustomer tradeCustomer = triggerTradingContext.getTradeCustomer();
         try {
             EntrustResult entrustResult = tradeCustomer.entrust(entrustCommand);
@@ -121,21 +124,37 @@ public abstract class AbstractConditionOrder implements ConditionOrder, AutoTrad
         }
     }
 
-    @Override
-    public List<EntrustCommand> createEntrustCommands(TradeSignal tradeSignal, TradingMarketSupplier tradingMarketSupplier) {
+    /**
+     * 交易信号处理行为
+     *
+     * @param tradeSignal           交易信号
+     * @param tradingMarketSupplier 交易标的实时行情supplier
+     * @return 交易指令
+     */
+    protected List<EntrustCommand> createEntrustCommands(TradeSignal tradeSignal, TradingMarketSupplier tradingMarketSupplier) {
         SingleEntrustTradePlan singleEntrustTradePlan = (SingleEntrustTradePlan) getTradePlan();
         EntrustCommand entrustCommand = singleEntrustTradePlan.createEntrustCommand(tradeSignal, getSecurityInfo(),
                 tradingMarketSupplier);
         return Collections.singletonList(entrustCommand);
     }
 
-    @Override
-    public void afterEntrustSuccess(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand, EntrustResult entrustResult) {
+    /**
+     * 委托成功事件
+     *
+     * @param triggerTradingContext 触发交易上下文
+     * @param entrustCommand 委托指令
+     * @param entrustResult 委托结果
+     */
+    protected void afterEntrustSuccess(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand, EntrustResult entrustResult) {
         triggerTradingContext.saveEntrustOrder(new EntrustOrderInfo(orderId, tradeCustomerInfo, entrustCommand, entrustResult));
     }
 
-    @Override
-    public void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext) {
+    /**
+     * 所有委托完成事件
+     *
+     * @param triggerTradingContext 触发交易上下文
+     */
+    protected void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext) {
         setOrderState(OrderState.TERMINATED);
     }
 

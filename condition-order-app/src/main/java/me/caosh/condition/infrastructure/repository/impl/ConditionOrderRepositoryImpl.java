@@ -56,4 +56,9 @@ public class ConditionOrderRepositoryImpl implements ConditionOrderRepository {
     public List<ConditionOrder> findAllMonitoring() {
         return conditionOrderDbTunnel.findAllMonitoring();
     }
+
+    @Override
+    public void updateDynamicProperties(ConditionOrder conditionOrder) {
+        conditionOrderDbTunnel.save(conditionOrder);
+    }
 }

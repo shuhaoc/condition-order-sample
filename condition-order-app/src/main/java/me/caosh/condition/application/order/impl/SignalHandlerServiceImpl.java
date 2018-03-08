@@ -3,6 +3,7 @@ package me.caosh.condition.application.order.impl;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.market.RealTimeMarketSupplier;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.trigger.BasicTriggerTradingContext;
 import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
@@ -15,12 +16,10 @@ import hbec.intellitrade.trade.domain.EntrustOrder;
 import hbec.intellitrade.trade.domain.EntrustOrderInfo;
 import hbec.intellitrade.trade.domain.EntrustOrderWriter;
 import hbec.intellitrade.trade.domain.TradeCustomer;
-import me.caosh.condition.application.order.OrderCommandService;
 import me.caosh.condition.application.order.SignalHandlerService;
 import me.caosh.condition.application.trade.factory.TradeCustomerFactory;
 import me.caosh.condition.domain.service.NewStocksSupplier;
 import hbec.intellitrade.condorder.domain.EntrustOrderRepository;
-import me.caosh.condition.infrastructure.tunnel.ConditionOrderDbTunnel;
 import me.caosh.condition.infrastructure.tunnel.impl.EntrustOrderIdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,21 +35,19 @@ public class SignalHandlerServiceImpl implements SignalHandlerService {
     private static final Logger logger = LoggerFactory.getLogger(SignalHandlerServiceImpl.class);
 
     private final TradeCustomerFactory tradeCustomerFactory;
-    private final OrderCommandService orderCommandService;
-    private final EntrustOrderRepository entrustOrderRepository;
+    private final ConditionOrderRepository conditionOrderRepository;
     private final EntrustOrderIdGenerator entrustOrderIdGenerator;
+    private final EntrustOrderRepository entrustOrderRepository;
     private final RealTimeMarketSupplier realTimeMarketSupplier;
     private final NewStocksSupplier newStocksSupplier;
-    private final ConditionOrderDbTunnel conditionOrderDbTunnel;
 
-    public SignalHandlerServiceImpl(TradeCustomerFactory tradeCustomerFactory, OrderCommandService orderCommandService, EntrustOrderRepository entrustOrderRepository, EntrustOrderIdGenerator entrustOrderIdGenerator, RealTimeMarketSupplier realTimeMarketSupplier, NewStocksSupplier newStocksSupplier, ConditionOrderDbTunnel conditionOrderDbTunnel) {
+    public SignalHandlerServiceImpl(TradeCustomerFactory tradeCustomerFactory, ConditionOrderRepository conditionOrderRepository, EntrustOrderIdGenerator entrustOrderIdGenerator, EntrustOrderRepository entrustOrderRepository, RealTimeMarketSupplier realTimeMarketSupplier, NewStocksSupplier newStocksSupplier) {
         this.tradeCustomerFactory = tradeCustomerFactory;
-        this.orderCommandService = orderCommandService;
-        this.entrustOrderRepository = entrustOrderRepository;
+        this.conditionOrderRepository = conditionOrderRepository;
         this.entrustOrderIdGenerator = entrustOrderIdGenerator;
+        this.entrustOrderRepository = entrustOrderRepository;
         this.realTimeMarketSupplier = realTimeMarketSupplier;
         this.newStocksSupplier = newStocksSupplier;
-        this.conditionOrderDbTunnel = conditionOrderDbTunnel;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -68,9 +65,9 @@ public class SignalHandlerServiceImpl implements SignalHandlerService {
 
         if (signal instanceof BS) {
             conditionOrder.onTradeSignal(triggerTradingContext);
-            orderCommandService.update(conditionOrder);
+            conditionOrderRepository.update(conditionOrder);
         } else if (signal instanceof CacheSync) {
-            conditionOrderDbTunnel.save(conditionOrder);
+            conditionOrderRepository.updateDynamicProperties(conditionOrder);
             logger.info("Sync dynamic properties, conditionOrder={}", conditionOrder);
         }
     }

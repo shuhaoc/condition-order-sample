@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import hbec.intellitrade.common.market.MarketID;
 
 /**
- * 证券信息，含指数
+ * 证券信息
  * 
  * Created by caosh on 2017/8/1.
  */
@@ -51,13 +51,21 @@ public class SecurityInfo {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof SecurityInfo)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof SecurityInfo)) {
+            return false;
+        }
 
         SecurityInfo that = (SecurityInfo) o;
 
-        if (type != that.type) return false;
-        if (code != null ? !code.equals(that.code) : that.code != null) return false;
+        if (type != that.type) {
+            return false;
+        }
+        if (code != null ? !code.equals(that.code) : that.code != null) {
+            return false;
+        }
         return exchange == that.exchange;
         // 由于证券名称可能会变，比如XD，但不影响证券等于比较，因此这里没有比较name
     }

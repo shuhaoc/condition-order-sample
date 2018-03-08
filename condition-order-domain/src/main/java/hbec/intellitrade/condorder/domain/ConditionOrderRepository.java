@@ -18,4 +18,6 @@ public interface ConditionOrderRepository {
     Optional<ConditionOrder> findOne(Long orderId);
 
     List<ConditionOrder> findAllMonitoring();
+
+    void updateDynamicProperties(ConditionOrder conditionOrder);
 }
