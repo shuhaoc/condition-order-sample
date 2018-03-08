@@ -4,7 +4,7 @@ import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import me.caosh.condition.domain.model.order.newstock.NewStockOrder;
 import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
-import me.caosh.condition.domain.util.DateFormats;
+import me.caosh.util.DateFormats;
 import me.caosh.condition.interfaces.command.NewStockOrderCreateCommand;
 import me.caosh.condition.interfaces.command.NewStockOrderUpdateCommand;
 import org.joda.time.LocalTime;

@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.util;
+package hbec.intellitrade.mock;
 
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;

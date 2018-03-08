@@ -1,6 +1,6 @@
 package me.caosh.condition.infrastructure.tunnel.impl;
 
-import me.caosh.condition.domain.model.share.SnowflakeIdWorker;
+import me.caosh.shared.SnowflakeIdWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;

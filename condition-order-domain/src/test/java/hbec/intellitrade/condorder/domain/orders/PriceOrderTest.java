@@ -18,7 +18,7 @@ import hbec.intellitrade.trade.domain.EntrustOrderInfo;
 import hbec.intellitrade.trade.domain.EntrustOrderWriter;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import hbec.intellitrade.trade.domain.TradeCustomer;
-import me.caosh.condition.domain.util.MockMarkets;
+import hbec.intellitrade.mock.MockMarkets;
 import org.joda.time.LocalDateTime;
 import org.mockito.Matchers;
 import org.mockito.Mock;

@@ -1,5 +1,6 @@
-package me.caosh.condition.domain.util;
+package me.caosh.util;
 
+import me.caosh.util.DateFormats;
 import org.joda.time.LocalTime;
 import org.testng.annotations.Test;
 

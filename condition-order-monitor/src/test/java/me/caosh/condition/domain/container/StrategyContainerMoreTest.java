@@ -8,7 +8,7 @@ import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import me.caosh.condition.domain.model.condition.TurnUpCondition;
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
 import hbec.intellitrade.strategy.domain.signal.Signals;
-import me.caosh.condition.domain.util.MockMarkets;
+import hbec.intellitrade.mock.MockMarkets;
 import org.joda.time.LocalDateTime;
 import org.testng.annotations.Test;
 

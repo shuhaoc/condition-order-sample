@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.share;
+package me.caosh.shared;
 
 /**
  * Twitter_Snowflake<br>

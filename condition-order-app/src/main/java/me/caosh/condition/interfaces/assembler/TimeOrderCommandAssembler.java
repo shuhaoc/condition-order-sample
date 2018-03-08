@@ -13,7 +13,7 @@ import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberFactory;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
 import me.caosh.condition.domain.model.order.time.TimeOrder;
-import me.caosh.condition.domain.util.InstantUtils;
+import me.caosh.util.InstantUtils;
 import me.caosh.condition.interfaces.command.TimeOrderCreateCommand;
 import me.caosh.condition.interfaces.command.TimeOrderUpdateCommand;
 

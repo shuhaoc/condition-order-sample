@@ -3,7 +3,7 @@ package me.caosh.condition.domain.model.strategy.condition.delayconfirm;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.strategy.domain.signal.Signals;
-import me.caosh.condition.domain.util.MockMarkets;
+import hbec.intellitrade.mock.MockMarkets;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;

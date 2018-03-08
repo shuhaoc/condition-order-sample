@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.util;
+package me.caosh.util;
 
 import org.joda.time.LocalTime;
 import org.testng.annotations.Test;
