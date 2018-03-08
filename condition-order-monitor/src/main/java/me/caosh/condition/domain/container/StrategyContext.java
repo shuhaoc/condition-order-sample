@@ -1,10 +1,11 @@
-package me.caosh.condition.domain.model.strategy.container;
+package me.caosh.condition.domain.container;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.strategy.domain.Strategy;
 import hbec.intellitrade.strategy.domain.shared.DelayMarker;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
+import hbec.intellitrade.strategy.domain.container.BucketKey;
 import org.joda.time.Duration;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;

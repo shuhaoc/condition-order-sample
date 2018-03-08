@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.constants;
+package me.caosh.condition.domain.dto.order.constants;
 
 import hbec.intellitrade.common.ValuedEnum;
 

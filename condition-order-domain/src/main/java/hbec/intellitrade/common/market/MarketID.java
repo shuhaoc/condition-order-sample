@@ -1,7 +1,7 @@
 package hbec.intellitrade.common.market;
 
 import hbec.intellitrade.common.security.SecurityType;
-import me.caosh.condition.domain.model.strategy.container.BucketKey;
+import hbec.intellitrade.strategy.domain.container.BucketKey;
 
 /**
  * 行情ID，由类别和证券代码组成，支持指数

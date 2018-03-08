@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.container;
+package me.caosh.condition.domain.container;
 
 import com.google.common.base.Function;
 import com.google.common.base.MoreObjects;
@@ -14,6 +14,7 @@ import hbec.intellitrade.strategy.domain.signalpayload.MarketSignalPayload;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
 import hbec.intellitrade.strategy.domain.signal.Signals;
+import hbec.intellitrade.strategy.domain.container.BucketKey;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

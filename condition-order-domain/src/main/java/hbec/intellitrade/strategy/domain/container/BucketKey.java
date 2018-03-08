@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.container;
+package hbec.intellitrade.strategy.domain.container;
 
 /**
  * 策略bucket key

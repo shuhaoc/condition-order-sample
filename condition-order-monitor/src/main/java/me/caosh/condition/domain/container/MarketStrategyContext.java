@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.container;
+package me.caosh.condition.domain.container;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
@@ -8,6 +8,7 @@ import hbec.intellitrade.strategy.domain.shared.DirtyFlag;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
+import hbec.intellitrade.strategy.domain.container.BucketKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

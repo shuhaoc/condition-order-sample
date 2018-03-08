@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.container;
+package me.caosh.condition.domain.container;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.market.MarketID;

@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.container;
+package me.caosh.condition.domain.container;
 
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.strategy.domain.RealTimeMarketAware;
