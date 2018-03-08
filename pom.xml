@@ -79,4 +79,16 @@
         <plugins>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>public</id>
+            <url>http://10.0.30.78:8080/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>
