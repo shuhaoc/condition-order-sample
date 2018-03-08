@@ -1,5 +1,7 @@
 package hbec.intellitrade.trade.domain;
 
+import hbec.intellitrade.trade.domain.exception.TradeException;
+
 /**
  * 交易客户
  *
@@ -12,6 +14,7 @@ public interface TradeCustomer {
      *
      * @param entrustCommand 委托命令
      * @return 委托结果
+     * @throws TradeException 交易异常
      */
-    EntrustResult entrust(EntrustCommand entrustCommand);
+    EntrustSuccessResult entrust(EntrustCommand entrustCommand) throws TradeException;
 }

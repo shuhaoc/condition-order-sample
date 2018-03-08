@@ -11,14 +11,16 @@ import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
 import hbec.intellitrade.condorder.domain.trigger.BasicTriggerTradingContext;
+import hbec.intellitrade.mock.MockMarkets;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
+import hbec.intellitrade.trade.domain.EntrustCommand;
 import hbec.intellitrade.trade.domain.EntrustOrderInfo;
 import hbec.intellitrade.trade.domain.EntrustOrderWriter;
+import hbec.intellitrade.trade.domain.EntrustSuccessResult;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import hbec.intellitrade.trade.domain.TradeCustomer;
-import hbec.intellitrade.mock.MockMarkets;
 import org.joda.time.LocalDateTime;
 import org.mockito.Matchers;
 import org.mockito.Mock;
@@ -52,6 +54,14 @@ public class PriceOrderTest {
     @BeforeMethod
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
+                System.out.println("Save entrust order: " + Arrays.toString(invocationOnMock.getArguments()));
+                return null;
+            }
+        }).when(entrustOrderWriter).save(Matchers.<EntrustOrderInfo>any());
     }
 
     @Test
@@ -74,16 +84,11 @@ public class PriceOrderTest {
         final RealTimeMarket realTimeMarket = MockMarkets.withCurrentPrice(new BigDecimal("13.00"));
         assertEquals(priceOrder.onMarketTick(realTimeMarket), Signals.buyOrSell());
 
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-                System.out.println("Save entrust order: " + Arrays.toString(invocationOnMock.getArguments()));
-                return null;
-            }
-        }).when(entrustOrderWriter).save(Matchers.<EntrustOrderInfo>any());
-
         BasicTriggerTradingContext triggerTradingContext = new BasicTriggerTradingContext(Signals.buyOrSell(),
                 priceOrder, tradeCustomer, realTimeMarketSupplier, entrustOrderWriter, realTimeMarket);
+
+        when(tradeCustomer.entrust(Matchers.<EntrustCommand>any())).thenReturn(new EntrustSuccessResult("OK",
+                123, realTimeMarket.getCurrentPrice()));
 
         priceOrder.onTradeSignal(triggerTradingContext);
 

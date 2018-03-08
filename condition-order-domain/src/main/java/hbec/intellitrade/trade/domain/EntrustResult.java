@@ -9,26 +9,17 @@ import com.google.common.base.MoreObjects;
  */
 public class EntrustResult {
     public static final int SUCCESS = 1;
+    public static final int FAIL = 1;
 
-    private final Integer entrustState;
+    private final int entrustState;
     private final String entrustMessage;
-    private final Integer entrustCode;
 
-    public static EntrustResult ofSuccess(String entrustMessage, Integer entrustCode) {
-        return new EntrustResult(SUCCESS, entrustMessage, entrustCode);
-    }
-
-    public static EntrustResult ofFail(Integer entrustState, String entrustMessage) {
-        return new EntrustResult(entrustState, entrustMessage, null);
-    }
-
-    public EntrustResult(Integer entrustState, String entrustMessage, Integer entrustCode) {
+    public EntrustResult(int entrustState, String entrustMessage) {
         this.entrustState = entrustState;
         this.entrustMessage = entrustMessage;
-        this.entrustCode = entrustCode;
     }
 
-    public Integer getEntrustState() {
+    public int getEntrustState() {
         return entrustState;
     }
 
@@ -36,17 +27,11 @@ public class EntrustResult {
         return entrustMessage;
     }
 
-    public Integer getEntrustCode() {
-        return entrustCode;
-    }
-
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(EntrustResult.class).omitNullValues()
-                .addValue(EntrustResult.class.getSuperclass() != Object.class ? super.toString() : null)
                 .add("entrustState", entrustState)
                 .add("entrustMessage", entrustMessage)
-                .add("entrustCode", entrustCode)
                 .toString();
     }
 }

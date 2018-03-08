@@ -8,9 +8,14 @@ import hbec.intellitrade.condorder.domain.trigger.TradingMarketSupplier;
 import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import hbec.intellitrade.trade.domain.EntrustCommand;
+import hbec.intellitrade.trade.domain.EntrustFailResult;
 import hbec.intellitrade.trade.domain.EntrustOrderInfo;
 import hbec.intellitrade.trade.domain.EntrustResult;
+import hbec.intellitrade.trade.domain.EntrustSuccessResult;
 import hbec.intellitrade.trade.domain.TradeCustomer;
+import hbec.intellitrade.trade.domain.exception.InsufficientCapitalException;
+import hbec.intellitrade.trade.domain.exception.InsufficientPositionException;
+import hbec.intellitrade.trade.domain.exception.TradeException;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -115,12 +120,31 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
 
     private void executeEntrustCommand(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand) {
         TradeCustomer tradeCustomer = triggerTradingContext.getTradeCustomer();
+        EntrustResult entrustResult = null;
         try {
-            EntrustResult entrustResult = tradeCustomer.entrust(entrustCommand);
-            logger.info("Entrust result <== {}", entrustResult);
-            afterEntrustSuccess(triggerTradingContext, entrustCommand, entrustResult);
-        } catch (Exception e) {
-            logger.error("Entrust error, entrustCommand=" + entrustCommand, e);
+            EntrustSuccessResult entrustSuccessResult = tradeCustomer.entrust(entrustCommand);
+            logger.info("Entrust result <== {}", entrustSuccessResult);
+            afterEntrustSuccess(triggerTradingContext, entrustCommand, entrustSuccessResult);
+            entrustResult = entrustSuccessResult;
+        } catch (InsufficientCapitalException e) {
+            logger.info("Insufficient capital result:  {}", e.getMessage());
+            EntrustFailResult entrustFailResult = new EntrustFailResult(e.getMessage());
+            onEntrustInsufficientCapitalException(triggerTradingContext, entrustCommand, entrustFailResult);
+            entrustResult = entrustFailResult;
+        } catch (InsufficientPositionException e) {
+            logger.info("Insufficient position result: {}", e.getMessage());
+            EntrustFailResult entrustFailResult = new EntrustFailResult(e.getMessage());
+            onEntrustInsufficientPositionException(triggerTradingContext, entrustCommand, entrustFailResult);
+            entrustResult = new EntrustFailResult(e.getMessage());
+        } catch (TradeException e) {
+            logger.error("Entrust failed, entrustCommand=" + entrustCommand, e);
+            EntrustFailResult entrustFailResult = new EntrustFailResult(e.getMessage());
+            afterEntrustFailed(triggerTradingContext, entrustCommand, entrustFailResult);
+            entrustResult = entrustFailResult;
+        } finally {
+            if (entrustResult != null) {
+                afterEntrustCommandExecuted(triggerTradingContext, entrustCommand, entrustResult);
+            }
         }
     }
 
@@ -142,10 +166,60 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
      * 委托成功事件
      *
      * @param triggerTradingContext 触发交易上下文
-     * @param entrustCommand 委托指令
-     * @param entrustResult 委托结果
+     * @param entrustCommand        委托指令
+     * @param entrustSuccessResult  委托结果
      */
-    protected void afterEntrustSuccess(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand, EntrustResult entrustResult) {
+    protected void afterEntrustSuccess(TriggerTradingContext triggerTradingContext,
+                                       EntrustCommand entrustCommand,
+                                       EntrustSuccessResult entrustSuccessResult) {
+    }
+
+    /**
+     * 委托出现资金不足事件
+     *
+     * @param triggerTradingContext 触发交易上下文
+     * @param entrustCommand        委托指令
+     * @param entrustFailResult     委托结果
+     */
+    protected void onEntrustInsufficientCapitalException(TriggerTradingContext triggerTradingContext,
+                                                         EntrustCommand entrustCommand,
+                                                         EntrustFailResult entrustFailResult) {
+    }
+
+    /**
+     * 委托出现持仓不足事件
+     *
+     * @param triggerTradingContext 触发交易上下文
+     * @param entrustCommand        委托指令
+     * @param entrustFailResult     委托结果
+     */
+    protected void onEntrustInsufficientPositionException(TriggerTradingContext triggerTradingContext,
+                                                          EntrustCommand entrustCommand,
+                                                          EntrustFailResult entrustFailResult) {
+    }
+
+    /**
+     * 委托失败事件
+     *
+     * @param triggerTradingContext 触发交易上下文
+     * @param entrustCommand        委托指令
+     * @param entrustFailResult     委托结果
+     */
+    protected void afterEntrustFailed(TriggerTradingContext triggerTradingContext,
+                                      EntrustCommand entrustCommand,
+                                      EntrustFailResult entrustFailResult) {
+    }
+
+    /**
+     * 委托完成事件
+     *
+     * @param triggerTradingContext 触发交易上下文
+     * @param entrustCommand        委托指令
+     * @param entrustResult         委托结果
+     */
+    protected void afterEntrustCommandExecuted(TriggerTradingContext triggerTradingContext,
+                                               EntrustCommand entrustCommand,
+                                               EntrustResult entrustResult) {
         triggerTradingContext.saveEntrustOrder(new EntrustOrderInfo(orderId, tradeCustomerInfo, entrustCommand, entrustResult));
     }
 

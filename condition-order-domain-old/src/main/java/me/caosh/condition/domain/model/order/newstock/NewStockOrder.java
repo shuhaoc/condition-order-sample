@@ -18,7 +18,7 @@ import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import hbec.intellitrade.trade.domain.EntrustCommand;
-import hbec.intellitrade.trade.domain.EntrustResult;
+import hbec.intellitrade.trade.domain.EntrustSuccessResult;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import hbec.intellitrade.trade.domain.OrderType;
 import me.caosh.condition.domain.model.market.SecurityInfoConstants;
@@ -101,7 +101,7 @@ public class NewStockOrder extends AbstractConditionOrder {
     }
 
     @Override
-    public void afterEntrustSuccess(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand, EntrustResult entrustResult) {
+    public void afterEntrustSuccess(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand, EntrustSuccessResult entrustSuccessResult) {
         newStockPurchaseCondition.increasePurchasedCount();
     }
 
