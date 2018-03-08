@@ -2,7 +2,6 @@ package me.caosh.condition.application.order.impl;
 
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import me.caosh.condition.application.order.OrderCommandService;
-import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
 import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,12 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderCommandServiceImpl implements OrderCommandService {
 
     private final ConditionOrderRepository conditionOrderRepository;
-    private final ConditionOrderProducer conditionOrderProducer;
 
     @Autowired
-    public OrderCommandServiceImpl(ConditionOrderRepository conditionOrderRepository, ConditionOrderProducer conditionOrderProducer) {
+    public OrderCommandServiceImpl(ConditionOrderRepository conditionOrderRepository) {
         this.conditionOrderRepository = conditionOrderRepository;
-        this.conditionOrderProducer = conditionOrderProducer;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -33,12 +30,6 @@ public class OrderCommandServiceImpl implements OrderCommandService {
     @Override
     public void update(ConditionOrder conditionOrder) {
         conditionOrderRepository.update(conditionOrder);
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public void updateDynamicProperties(ConditionOrder conditionOrder) {
-        conditionOrderRepository.save(conditionOrder);
     }
 
     @Transactional(rollbackFor = Exception.class)

@@ -10,7 +10,5 @@ public interface OrderCommandService {
 
     void update(ConditionOrder conditionOrder);
 
-    void updateDynamicProperties(ConditionOrder conditionOrder);
-
     void remove(Long orderId);
 }
