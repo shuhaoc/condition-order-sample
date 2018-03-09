@@ -6,9 +6,9 @@ import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.signal.Signals;
+import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
-import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
 import me.caosh.condition.mock.MockMarkets;
 import org.joda.time.LocalDateTime;
 import org.testng.annotations.Test;
@@ -49,7 +49,8 @@ public class StrategyContainerTest {
         StrategyContainer container = new StrategyContainer();
         TestPriceStrategy testPriceStrategy1 = new TestPriceStrategy(1, MARKET_ID, PRICE_CONDITION);
         container.add(testPriceStrategy1);
-        TestPriceStrategy testPriceStrategy2 = new TestPriceStrategy(1, MARKET_ID, PRICE_CONDITION);
+        TestPriceStrategy testPriceStrategy2 = new TestPriceStrategy(1, MARKET_ID,
+                new PriceCondition(CompareOperator.GE, new BigDecimal("11.00")));
         container.add(testPriceStrategy2);
         assertEquals(testPriceStrategy1, testPriceStrategy2);
         assertTrue(container.getBucket(new MarketID(SecurityType.FUND, "510050")).isEmpty());

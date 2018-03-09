@@ -2,10 +2,10 @@ package me.caosh.condition.domain.container;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.strategy.domain.Strategy;
+import hbec.intellitrade.strategy.domain.container.BucketKey;
 import hbec.intellitrade.strategy.domain.shared.DelayMarker;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
-import hbec.intellitrade.strategy.domain.container.BucketKey;
 import org.joda.time.Duration;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
@@ -139,13 +139,13 @@ public class StrategyContext {
         if (!bucketKey.equals(that.bucketKey)) {
             return false;
         }
-        return strategy.equals(that.strategy);
+        return strategy.getStrategyId() == that.strategy.getStrategyId();
     }
 
     @Override
     public int hashCode() {
         int result = bucketKey.hashCode();
-        result = 31 * result + strategy.hashCode();
+        result = 31 * result + (int) strategy.getStrategyId();
         return result;
     }
 
