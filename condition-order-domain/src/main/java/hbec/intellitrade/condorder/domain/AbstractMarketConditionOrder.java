@@ -4,6 +4,7 @@ import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
+import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
@@ -16,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/20
  */
-public abstract class AbstractMarketConditionOrder extends AbstractConditionOrder implements MarketDrivenStrategy {
+public abstract class AbstractMarketConditionOrder extends AbstractConditionOrder implements MarketDrivenStrategy, TimeDrivenStrategy {
     private static final Logger logger = LoggerFactory.getLogger(AbstractMarketConditionOrder.class);
 
     public AbstractMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,

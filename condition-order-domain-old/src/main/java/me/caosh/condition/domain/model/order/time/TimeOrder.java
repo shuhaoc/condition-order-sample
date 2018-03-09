@@ -9,6 +9,7 @@ import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
+import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by caosh on 2017/8/20.
  */
-public class TimeOrder extends AbstractConditionOrder {
+public class TimeOrder extends AbstractConditionOrder implements TimeDrivenStrategy {
     private static final Logger logger = LoggerFactory.getLogger(TimeOrder.class);
 
     private final TimeReachedCondition timeReachedCondition;

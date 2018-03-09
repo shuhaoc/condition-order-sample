@@ -2,6 +2,7 @@ package me.caosh.condition.domain.container;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.strategy.domain.Strategy;
+import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import hbec.intellitrade.strategy.domain.container.BucketKey;
 import hbec.intellitrade.strategy.domain.shared.DelayMarker;
 import hbec.intellitrade.strategy.domain.signal.Signal;
@@ -111,10 +112,12 @@ public class StrategyContext {
             return Signals.none();
         }
 
-        Signal signal = strategy.onTimeTick(localDateTime);
-        if (signal.isValid()) {
-            lockTriggering();
-            return signal;
+        if (strategy instanceof TimeDrivenStrategy) {
+            Signal signal = ((TimeDrivenStrategy) strategy).onTimeTick(localDateTime);
+            if (signal.isValid()) {
+                lockTriggering();
+                return signal;
+            }
         }
 
         // 延迟同步到期的触发同步信号（仅行情驱动策略需要延迟同步）

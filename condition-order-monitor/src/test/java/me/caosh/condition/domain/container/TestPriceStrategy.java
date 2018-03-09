@@ -5,6 +5,7 @@ import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
+import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
@@ -15,7 +16,7 @@ import org.joda.time.LocalDateTime;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/2/7
  */
-class TestPriceStrategy implements MarketDrivenStrategy {
+class TestPriceStrategy implements MarketDrivenStrategy, TimeDrivenStrategy {
     private final int strategyId;
     private final MarketID marketID;
     private final PriceCondition priceCondition;

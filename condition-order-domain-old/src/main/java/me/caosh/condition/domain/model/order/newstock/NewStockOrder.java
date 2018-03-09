@@ -13,6 +13,7 @@ import hbec.intellitrade.condorder.domain.tradeplan.AutoPurchaseTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.condorder.domain.trigger.TradingMarketSupplier;
 import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
+import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
@@ -35,7 +36,7 @@ import java.util.List;
  *
  * @author caoshuhao@touker.com
  */
-public class NewStockOrder extends AbstractConditionOrder {
+public class NewStockOrder extends AbstractConditionOrder implements TimeDrivenStrategy {
     private static final Logger logger = LoggerFactory.getLogger(NewStockOrder.class);
 
     private final AutoPurchaseTradePlan autoPurchaseTradePlan = new AutoPurchaseTradePlan();

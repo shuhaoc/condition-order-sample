@@ -1,8 +1,8 @@
 package hbec.intellitrade.strategy.domain.condition;
 
+import hbec.intellitrade.strategy.domain.condition.time.BasicTimeCondition;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
-import hbec.intellitrade.strategy.domain.condition.time.BasicTimeCondition;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -14,8 +14,8 @@ import org.joda.time.LocalDateTime;
 public abstract class AbstractBasicTimeCondition implements BasicTimeCondition {
     @Override
     public TradeSignal onTimeTick(LocalDateTime localDateTime) {
-        boolean satisfiedNow = getTimeFactor().apply(LocalDateTime.now());
-        if (satisfiedNow) {
+        boolean satisfiedAt = getTimeFactor().apply(localDateTime);
+        if (satisfiedAt) {
             return Signals.buyOrSell();
         }
         return Signals.none();
