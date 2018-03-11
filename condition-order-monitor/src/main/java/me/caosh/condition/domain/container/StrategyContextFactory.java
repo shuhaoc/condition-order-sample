@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.container;
 
 import hbec.intellitrade.common.market.MarketID;
-import hbec.intellitrade.strategy.domain.RealTimeMarketAware;
+import hbec.intellitrade.strategy.domain.MarketTrackingStrategy;
 import hbec.intellitrade.strategy.domain.Strategy;
 
 /**
@@ -25,10 +25,10 @@ public class StrategyContextFactory {
      * @return 策略上下文
      */
     public StrategyContext create(Strategy strategy) {
-        if (strategy instanceof RealTimeMarketAware) {
-            RealTimeMarketAware realTimeMarketAware = (RealTimeMarketAware) strategy;
-            MarketID trackMarketID = realTimeMarketAware.getTrackMarketID();
-            return new MarketStrategyContext(trackMarketID, realTimeMarketAware, strategyContextConfig);
+        if (strategy instanceof MarketTrackingStrategy) {
+            MarketTrackingStrategy marketTrackingStrategy = (MarketTrackingStrategy) strategy;
+            MarketID trackMarketID = marketTrackingStrategy.getTrackMarketID();
+            return new MarketStrategyContext(trackMarketID, marketTrackingStrategy, strategyContextConfig);
         }
         return new StrategyContext(TimeDrivenBucketKey.INSTANCE, strategy, strategyContextConfig);
     }

@@ -10,7 +10,7 @@ import hbec.intellitrade.common.market.MarketID;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/2/7
  */
-public interface RealTimeMarketAware extends Strategy {
+public interface MarketTrackingStrategy extends Strategy {
     /**
      * 跟踪行情ID
      *

@@ -1,7 +1,6 @@
 package hbec.intellitrade.strategy.domain;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
-import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 
 /**
@@ -10,7 +9,7 @@ import hbec.intellitrade.strategy.domain.signal.TradeSignal;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/2/1
  */
-public interface MarketDrivenStrategy extends RealTimeMarketAware {
+public interface MarketDrivenStrategy extends MarketTrackingStrategy {
     /**
      * 接受实时行情Tick返回交易信号
      * <p>
