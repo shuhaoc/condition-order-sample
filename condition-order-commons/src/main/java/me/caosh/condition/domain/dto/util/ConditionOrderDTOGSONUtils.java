@@ -3,17 +3,19 @@ package me.caosh.condition.domain.dto.util;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
+import me.caosh.condition.domain.dto.order.BsSignalDTO;
 import me.caosh.condition.domain.dto.order.BuySignalDTO;
 import me.caosh.condition.domain.dto.order.CacheSyncSignalDTO;
 import me.caosh.condition.domain.dto.order.ConditionDTO;
-import me.caosh.condition.domain.dto.order.BsSignalDTO;
+import me.caosh.condition.domain.dto.order.DelayConfirmCounterDTO;
 import me.caosh.condition.domain.dto.order.ExpireSignalDTO;
 import me.caosh.condition.domain.dto.order.GridConditionDTO;
 import me.caosh.condition.domain.dto.order.NewStockPurchaseConditionDTO;
 import me.caosh.condition.domain.dto.order.PriceConditionDTO;
 import me.caosh.condition.domain.dto.order.SellSignalDTO;
-import me.caosh.condition.domain.dto.order.SimpleTimeConditionDTO;
 import me.caosh.condition.domain.dto.order.SignalDTO;
+import me.caosh.condition.domain.dto.order.SimpleTimeConditionDTO;
+import me.caosh.condition.domain.dto.order.SingleDelayConfirmCounterDTO;
 import me.caosh.condition.domain.dto.order.TurnUpConditionDTO;
 
 /**
@@ -47,6 +49,8 @@ public class ConditionOrderDTOGSONUtils {
                         .registerSubtype(BuySignalDTO.class)
                         .registerSubtype(SellSignalDTO.class)
                         .registerSubtype(ExpireSignalDTO.class))
+                .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(DelayConfirmCounterDTO.class)
+                        .registerSubtype(SingleDelayConfirmCounterDTO.class))
                 .create();
     }
 

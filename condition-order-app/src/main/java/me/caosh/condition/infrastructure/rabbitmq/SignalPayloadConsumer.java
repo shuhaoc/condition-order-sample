@@ -84,8 +84,7 @@ public class SignalPayloadConsumer {
         logger.debug("Receive trigger message <== {}", signalPayloadDTO);
 
         SignalPayload signalPayload = AutoAssemblers.getDefault().disassemble(signalPayloadDTO, SignalPayloadBuilder.class).build();
-        signalHandlerService.handleSignalPayload(signalPayload
-        );
+        signalHandlerService.handleSignalPayload(signalPayload);
     }
 
 }

@@ -4,10 +4,10 @@ import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
+import hbec.intellitrade.strategy.domain.signal.Signals;
+import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import me.caosh.condition.domain.model.condition.TurnUpCondition;
-import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
-import hbec.intellitrade.strategy.domain.signal.Signals;
 import me.caosh.condition.mock.MockMarkets;
 import org.joda.time.LocalDateTime;
 import org.testng.annotations.Test;
@@ -48,7 +48,8 @@ public class StrategyContainerMoreTest {
 
     @Test
     public void testTriggerLock() throws Exception {
-        StrategyContainer container = new StrategyContainer(new StrategyContextConfig(1, 1));
+        StrategyContainer container = new StrategyContainer(new StrategyContextConfig(1, 1),
+                NopStrategyWriter.INSTANCE);
         TestPriceStrategy testPriceStrategy = new TestPriceStrategy(1, MARKET_ID, PRICE_CONDITION);
         container.add(testPriceStrategy);
 
@@ -75,7 +76,8 @@ public class StrategyContainerMoreTest {
 
     @Test
     public void testDelaySync() throws Exception {
-        StrategyContainer container = new StrategyContainer(new StrategyContextConfig(1, 1));
+        StrategyContainer container = new StrategyContainer(new StrategyContextConfig(1, 1),
+                NopStrategyWriter.INSTANCE);
         TestTurnUpStrategy testTurnUpStrategy = new TestTurnUpStrategy(1, MARKET_ID,
                 new TurnUpCondition(new BigDecimal("10.00"), new BigDecimal("1.00")));
         container.add(testTurnUpStrategy);

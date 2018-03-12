@@ -77,7 +77,7 @@ public class DelayConfirmCounter implements DirtyFlag {
     /**
      * 重置状态
      */
-    public void reset() {
+    void reset() {
         confirmedCount.set(0);
         lastConfirmedDate.set(null);
     }

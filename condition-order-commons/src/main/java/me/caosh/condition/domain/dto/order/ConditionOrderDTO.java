@@ -27,6 +27,7 @@ public class ConditionOrderDTO implements Serializable {
     private String expireTime;
     private TradePlanDTO tradePlan;
     private DelayConfirmParamDTO delayConfirmParam;
+    private DelayConfirmCounterDTO delayConfirmCounter;
 
     public Long getOrderId() {
         return orderId;
@@ -108,6 +109,14 @@ public class ConditionOrderDTO implements Serializable {
         this.delayConfirmParam = delayConfirmParam;
     }
 
+    public DelayConfirmCounterDTO getDelayConfirmCounter() {
+        return delayConfirmCounter;
+    }
+
+    public void setDelayConfirmCounter(DelayConfirmCounterDTO delayConfirmCounter) {
+        this.delayConfirmCounter = delayConfirmCounter;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(ConditionOrderDTO.class).omitNullValues()
@@ -121,6 +130,7 @@ public class ConditionOrderDTO implements Serializable {
                 .add("expireTime", expireTime)
                 .add("tradePlan", tradePlan)
                 .add("delayConfirmParam", delayConfirmParam)
+                .add("delayConfirmCounter", delayConfirmCounter)
                 .toString();
     }
 }

@@ -1,6 +1,7 @@
 package hbec.intellitrade.condorder.domain.orders;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Optional;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.AbstractSimpleMarketConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
@@ -9,7 +10,11 @@ import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.strategy.domain.MarketClosedEventListener;
+import hbec.intellitrade.strategy.domain.MutableStrategy;
 import hbec.intellitrade.strategy.domain.condition.Condition;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.AbstractDelayConfirmCondition;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmConditionFactory;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmCounter;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParam;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirmParam;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
@@ -22,7 +27,7 @@ import org.joda.time.LocalDateTime;
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/1
  */
-public class PriceOrder extends AbstractSimpleMarketConditionOrder implements MarketClosedEventListener {
+public class PriceOrder extends AbstractSimpleMarketConditionOrder implements MutableStrategy, MarketClosedEventListener {
 
     private final PriceCondition priceCondition;
     private final DelayConfirmParam delayConfirmParam;
@@ -58,6 +63,35 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Ma
     @Override
     public StrategyInfo getStrategyInfo() {
         return NativeStrategyInfo.PRICE;
+    }
+
+    public Optional<DelayConfirmCounter> getDelayConfirmCounter() {
+        if (compositeCondition instanceof AbstractDelayConfirmCondition) {
+            DelayConfirmCounter counter = ((AbstractDelayConfirmCondition) compositeCondition).getCounter();
+            return Optional.of(counter);
+        } else {
+            return Optional.absent();
+        }
+    }
+
+    @Override
+    public boolean isDirty() {
+        Optional<DelayConfirmCounter> delayConfirmCount = getDelayConfirmCounter();
+        return delayConfirmCount.isPresent() && delayConfirmCount.get().isDirty();
+    }
+
+    @Override
+    public void clearDirty() {
+        Optional<DelayConfirmCounter> delayConfirmCount = getDelayConfirmCounter();
+        if (delayConfirmCount.isPresent()) {
+            delayConfirmCount.get().clearDirty();
+        }
+    }
+
+    @Override
+    public boolean isPersistentPropertyDirty() {
+        // 延迟确认次数不需要持久化
+        return false;
     }
 
     @Override

@@ -5,7 +5,6 @@ import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import hbec.intellitrade.strategy.domain.MarketTrackingStrategy;
 import hbec.intellitrade.strategy.domain.Strategy;
 import hbec.intellitrade.strategy.domain.container.BucketKey;
-import hbec.intellitrade.strategy.domain.shared.DirtyFlag;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
@@ -55,16 +54,6 @@ public class MarketStrategyContext extends StrategyContext {
             return tradeSignal;
         }
 
-        // 未触发有效交易信号的，判断是否需要延迟同步
-        if (getStrategy() instanceof DirtyFlag) {
-            DirtyFlag dirtyFlag = (DirtyFlag) getStrategy();
-            if (dirtyFlag.isDirty()) {
-                markDelaySync();
-                logger.info("Mark delay sync, strategy={}", getStrategy());
-                // 清除脏标志，下次动态属性变更时再标记
-                dirtyFlag.clearDirty();
-            }
-        }
-        return tradeSignal;
+        return Signals.none();
     }
 }

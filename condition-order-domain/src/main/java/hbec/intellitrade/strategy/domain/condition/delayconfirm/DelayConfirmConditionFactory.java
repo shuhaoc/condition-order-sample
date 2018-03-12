@@ -1,10 +1,5 @@
-package hbec.intellitrade.condorder.domain.orders;
+package hbec.intellitrade.strategy.domain.condition.delayconfirm;
 
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.AccumulatedDelayConfirmCondition;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.ContinuousDelayConfirmCondition;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParam;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirmParam;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 

@@ -4,10 +4,12 @@ import com.google.common.eventbus.Subscribe;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
 import me.caosh.condition.domain.container.StrategyContainer;
+import me.caosh.condition.domain.container.StrategyContextConfig;
 import me.caosh.condition.domain.event.OrderRemoveCommandEvent;
 import me.caosh.condition.domain.event.OrderSaveCommandEvent;
 import me.caosh.condition.domain.event.RealTimeMarketPushEvent;
 import me.caosh.condition.domain.event.TimerEvent;
+import me.caosh.condition.infrastructure.MonitorRepositoryWriter;
 import me.caosh.condition.infrastructure.eventbus.MonitorEventBus;
 import me.caosh.condition.infrastructure.rabbitmq.SignalPayloadProducer;
 import me.caosh.condition.infrastructure.repository.MonitorRepository;
@@ -26,13 +28,15 @@ import java.util.Collection;
 public class StrategyExecuteEngine {
     private static final Logger logger = LoggerFactory.getLogger(StrategyExecuteEngine.class);
 
-    private final StrategyContainer strategyContainer = new StrategyContainer();
+    private final StrategyContainer strategyContainer;
     private final MonitorRepository monitorRepository;
     private final SignalPayloadProducer signalPayloadProducer;
 
     public StrategyExecuteEngine(MonitorRepository monitorRepository, SignalPayloadProducer signalPayloadProducer) {
         this.monitorRepository = monitorRepository;
         this.signalPayloadProducer = signalPayloadProducer;
+        this.strategyContainer = new StrategyContainer(StrategyContextConfig.DEFAULT,
+                new MonitorRepositoryWriter(monitorRepository));
     }
 
     @PostConstruct
