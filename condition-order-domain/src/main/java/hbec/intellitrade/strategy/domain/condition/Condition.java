@@ -14,6 +14,8 @@ import hbec.intellitrade.strategy.domain.condition.time.TimeCondition;
  * <p>
  * 有状态条件还有一种是动态属性条件{@link DynamicCondition}，比如带有拐点结构的条件，其拐点极值是动态属性，具有变化快、短暂不一致的特点
  *
+ * 约束：在一次Check过程中，触发信号则不改变条件的状态，改变状态则不能触发信号
+ *
  * @author caosh/caoshuhao@touker.com
  * @date 2018/1/29
  */
