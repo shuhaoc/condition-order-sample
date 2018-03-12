@@ -36,7 +36,6 @@ public class ConditionOrderController {
     @RequestMapping("/monitoring")
     public List<ConditionOrderDTO> monitoring(String customerNo) {
         return conditionOrderQueryFacade.listMonitoringOrders(customerNo);
-
     }
 
     @RequestMapping("/entrusts")

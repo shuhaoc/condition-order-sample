@@ -40,7 +40,7 @@ public class OrderCommandServiceImpl implements OrderCommandService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void remove(Long orderId) {
-        logger.info("Updating order => {}", orderId);
+        logger.info("Removing order => {}", orderId);
         conditionOrderRepository.remove(orderId);
     }
 }

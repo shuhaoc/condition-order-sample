@@ -2,9 +2,11 @@ package me.caosh.condition.interfaces.facade.impl;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.trade.EntrustOrderDTO;
+import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
 import me.caosh.condition.infrastructure.tunnel.impl.ConditionOrderDoRepository;
 import me.caosh.condition.infrastructure.tunnel.impl.EntrustOrderDoRepository;
 import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;
@@ -38,15 +40,20 @@ public class ConditionOrderQueryFacadeImpl implements ConditionOrderQueryFacade 
         return  Lists.transform(conditionOrderDOList, new Function<ConditionOrderDO, ConditionOrderDTO>() {
             @Override
             public ConditionOrderDTO apply(ConditionOrderDO conditionOrderDO) {
-                return AutoAssemblers.getDefault().disassemble(conditionOrderDO, ConditionOrderDTO.class);
+                return assembleDataObjectToDTO(conditionOrderDO);
             }
         });
+    }
+
+    private static ConditionOrderDTO assembleDataObjectToDTO(ConditionOrderDO conditionOrderDO) {
+        ConditionOrder conditionOrder = AutoAssemblers.getDefault().disassemble(conditionOrderDO, ConditionOrderBuilder.class).build();
+        return AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDTO.class);
     }
 
     @Override
     public ConditionOrderDTO getConditionOrder(Long orderId) {
         ConditionOrderDO conditionOrderDO = conditionOrderDoRepository.findOne(orderId);
-        return AutoAssemblers.getDefault().disassemble(conditionOrderDO, ConditionOrderDTO.class);
+        return assembleDataObjectToDTO(conditionOrderDO);
     }
 
     @Override
