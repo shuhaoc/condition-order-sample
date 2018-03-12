@@ -111,6 +111,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
 
     private void executeEntrustCommand(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand) {
         TradeCustomer tradeCustomer = triggerTradingContext.getTradeCustomer();
+        logger.info("Executing entrust command ==> {}", entrustCommand);
         EntrustResult entrustResult = null;
         try {
             EntrustSuccessResult entrustSuccessResult = tradeCustomer.entrust(entrustCommand);

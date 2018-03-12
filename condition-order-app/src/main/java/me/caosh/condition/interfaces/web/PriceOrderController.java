@@ -2,10 +2,10 @@ package me.caosh.condition.interfaces.web;
 
 import com.google.common.base.Optional;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.orders.PriceOrder;
 import me.caosh.condition.application.order.OrderCommandService;
-import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
 import me.caosh.condition.infrastructure.tunnel.impl.ConditionOrderIdGenerator;
 import me.caosh.condition.interfaces.assembler.PriceOrderCommandAssembler;
 import me.caosh.condition.interfaces.command.PriceOrderCreateCommand;
@@ -42,7 +42,6 @@ public class PriceOrderController {
         Long orderId = idGenerator.nextId();
         TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
         PriceOrder priceOrder = PriceOrderCommandAssembler.assemblePriceOrder(orderId, tradeCustomerInfo, command);
-        logger.info("Creating order => {}", priceOrder);
         orderCommandService.save(priceOrder);
         return orderId;
     }
@@ -60,7 +59,6 @@ public class PriceOrderController {
         }
         PriceOrder oldPriceOrder = (PriceOrder) conditionOrder;
         PriceOrder newPriceOlder = PriceOrderCommandAssembler.mergePriceOrder(oldPriceOrder, command);
-        logger.info("Updating order => {}", newPriceOlder);
         orderCommandService.update(newPriceOlder);
         return orderId;
     }

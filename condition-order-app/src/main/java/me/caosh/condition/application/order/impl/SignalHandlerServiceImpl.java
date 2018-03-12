@@ -53,7 +53,8 @@ public class SignalHandlerServiceImpl implements SignalHandlerService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void handleSignalPaylaod(SignalPayload signalPayload) {
+    public void handleSignalPayload(SignalPayload signalPayload) {
+        logger.info("---------------- Handle signal begin ----------------");
         Signal signal = signalPayload.getSignal();
         ConditionOrder conditionOrder = (ConditionOrder) signalPayload.getStrategy();
 
@@ -65,15 +66,18 @@ public class SignalHandlerServiceImpl implements SignalHandlerService {
         TriggerTradingContext triggerTradingContext = createTriggerTradingContext(signalPayload, signal, conditionOrder);
 
         if (signal instanceof BS) {
+            logger.info("{} signal raised => {}", conditionOrder);
             conditionOrder.onTradeSignal(triggerTradingContext);
             conditionOrderRepository.update(conditionOrder);
         } else if (signal instanceof Expire) {
+            logger.info("Order expired => {}", conditionOrder);
             conditionOrder.onExpired();
             conditionOrderRepository.update(conditionOrder);
         } else if (signal instanceof CacheSync) {
+            logger.info("Sync dynamic properties, orderId={}, condition={}", conditionOrder.getRawCondition());
             conditionOrderRepository.updateDynamicProperties(conditionOrder);
-            logger.info("Sync dynamic properties, conditionOrder={}", conditionOrder);
         }
+        logger.info("---------------- Handle signal  end  ----------------");
     }
 
     private TriggerTradingContext createTriggerTradingContext(SignalPayload signalPayload, Signal signal, ConditionOrder conditionOrder) {

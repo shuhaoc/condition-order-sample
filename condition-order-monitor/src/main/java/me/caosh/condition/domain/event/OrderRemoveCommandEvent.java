@@ -7,10 +7,10 @@ import com.google.common.base.MoreObjects;
  *
  * @author caoshuhao@touker.com
  */
-public class OrderDeleteCommandEvent implements OrderCommandEvent {
+public class OrderRemoveCommandEvent implements OrderCommandEvent {
     private final Long orderId;
 
-    public OrderDeleteCommandEvent(Long orderId) {
+    public OrderRemoveCommandEvent(Long orderId) {
         this.orderId = orderId;
     }
 

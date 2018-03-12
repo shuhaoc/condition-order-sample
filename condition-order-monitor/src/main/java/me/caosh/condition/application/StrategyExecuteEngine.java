@@ -3,11 +3,11 @@ package me.caosh.condition.application;
 import com.google.common.eventbus.Subscribe;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
-import me.caosh.condition.domain.event.OrderDeleteCommandEvent;
-import me.caosh.condition.domain.event.OrderUpdateCommandEvent;
-import me.caosh.condition.domain.event.TimerEvent;
-import me.caosh.condition.domain.event.RealTimeMarketPushEvent;
 import me.caosh.condition.domain.container.StrategyContainer;
+import me.caosh.condition.domain.event.OrderRemoveCommandEvent;
+import me.caosh.condition.domain.event.OrderSaveCommandEvent;
+import me.caosh.condition.domain.event.RealTimeMarketPushEvent;
+import me.caosh.condition.domain.event.TimerEvent;
 import me.caosh.condition.infrastructure.eventbus.MonitorEventBus;
 import me.caosh.condition.infrastructure.rabbitmq.SignalPayloadProducer;
 import me.caosh.condition.infrastructure.repository.MonitorRepository;
@@ -42,18 +42,17 @@ public class StrategyExecuteEngine {
         for (ConditionOrder conditionOrder : monitorRepository.getAllOrders()) {
             strategyContainer.add(conditionOrder);
         }
+        logger.info("Loaded {} strategies into container", strategyContainer.size());
     }
 
     @Subscribe
     public void onRealTimeMarketPushEvent(RealTimeMarketPushEvent e) {
-        logger.info("---------------- Start checking ----------------");
-
         Collection<SignalPayload> signalPayloads = strategyContainer.onMarketTicks(e.getMarketMap().values());
         for (SignalPayload signalPayload : signalPayloads) {
             signalPayloadProducer.send(signalPayload);
         }
 
-        logger.info("---------------- Finish checking, count={} ----------------", strategyContainer.size());
+        logger.info("Checked {} strategies on market event", strategyContainer.size());
     }
 
     @Subscribe
@@ -65,15 +64,15 @@ public class StrategyExecuteEngine {
     }
 
     @Subscribe
-    public void onOrderUpdateCommandEvent(OrderUpdateCommandEvent e) {
+    public void onOrderSaveCommandEvent(OrderSaveCommandEvent e) {
         ConditionOrder conditionOrder = e.getConditionOrder();
         monitorRepository.update(conditionOrder);
         strategyContainer.add(conditionOrder);
-        logger.info("Update condition order ==> {}", conditionOrder);
+        logger.info("Save condition order ==> {}", conditionOrder);
     }
 
     @Subscribe
-    public void onOrderDeleteCommandEvent(OrderDeleteCommandEvent e) {
+    public void onOrderRemoveCommandEvent(OrderRemoveCommandEvent e) {
         long orderId = e.getOrderId();
         monitorRepository.remove(orderId);
         strategyContainer.remove(orderId);

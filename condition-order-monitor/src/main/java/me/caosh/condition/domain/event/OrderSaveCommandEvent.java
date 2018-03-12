@@ -7,10 +7,10 @@ import hbec.intellitrade.condorder.domain.ConditionOrder;
  *
  * @author caoshuhao@touker.com
  */
-public class OrderUpdateCommandEvent implements OrderCommandEvent {
+public class OrderSaveCommandEvent implements OrderCommandEvent {
     private final ConditionOrder conditionOrder;
 
-    public OrderUpdateCommandEvent(ConditionOrder conditionOrder) {
+    public OrderSaveCommandEvent(ConditionOrder conditionOrder) {
         this.conditionOrder = conditionOrder;
     }
 

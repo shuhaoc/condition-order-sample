@@ -5,8 +5,8 @@ import hbec.intellitrade.condorder.domain.ConditionOrder;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
-import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
 import me.caosh.condition.domain.dto.order.constants.OrderCommandType;
+import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +70,7 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
 
     private void sendSaveCommand(String exchangeName, String routingKey, ConditionOrder conditionOrder) {
         ConditionOrderDTO conditionOrderDTO = AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDTO.class);
-        ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(OrderCommandType.UPDATE.getValue(), conditionOrderDTO);
+        ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(OrderCommandType.SAVE.getValue(), conditionOrderDTO);
         Message message = messageConverter.toMessage(conditionOrderMonitorDTO, new MessageProperties());
         amqpTemplate.send(exchangeName, routingKey, message);
         logger.info("Send <SAVE> command ==> {}", conditionOrderDTO);
@@ -78,9 +78,9 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
 
     @Override
     public void remove(Long orderId) {
-        ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(OrderCommandType.DELETE.getValue(), orderId);
+        ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(OrderCommandType.REMOVE.getValue(), orderId);
         Message message = messageConverter.toMessage(conditionOrderMonitorDTO, new MessageProperties());
         amqpTemplate.send(exchangeName, routingKey, message);
-        logger.info("Send <DELETE> command ==> {}", orderId);
+        logger.info("Send <REMOVE> command ==> {}", orderId);
     }
 }

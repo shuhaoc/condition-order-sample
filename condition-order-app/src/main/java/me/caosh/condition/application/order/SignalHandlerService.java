@@ -7,5 +7,5 @@ import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
  * @date 2017/8/13
  */
 public interface SignalHandlerService {
-    void handleSignalPaylaod(SignalPayload signalPayload);
+    void handleSignalPayload(SignalPayload signalPayload);
 }
