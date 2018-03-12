@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.condition.delayconfirm;
+package hbec.intellitrade.strategy.domain.condition.delayconfirm;
 
 import hbec.intellitrade.strategy.domain.shared.DynamicProperty;
 import org.joda.time.LocalDate;
@@ -16,7 +16,7 @@ public class DelayConfirmCounterTest {
     @Test
     public void testBasic() throws Exception {
         DelayConfirmCounter counter = new DelayConfirmCounter(3);
-        assertEquals(counter.getConfirmingCount(), 3);
+        assertEquals(counter.getConfirmTimes(), 3);
         assertEquals(counter.getConfirmedCount(), 0);
         assertFalse(counter.isConfirmCompleted());
         assertFalse(counter.isDirty());
@@ -25,7 +25,7 @@ public class DelayConfirmCounterTest {
         counter.checkDateChangs();
         counter.increaseConfirmedCount();
 
-        assertEquals(counter.getConfirmingCount(), 3);
+        assertEquals(counter.getConfirmTimes(), 3);
         assertEquals(counter.getConfirmedCount(), 1);
         assertFalse(counter.isConfirmCompleted());
         assertTrue(counter.isDirty());
@@ -37,7 +37,7 @@ public class DelayConfirmCounterTest {
         counter.increaseConfirmedCount();
         counter.increaseConfirmedCount();
 
-        assertEquals(counter.getConfirmingCount(), 3);
+        assertEquals(counter.getConfirmTimes(), 3);
         assertEquals(counter.getConfirmedCount(), 3);
         assertTrue(counter.isConfirmCompleted());
         System.out.println(counter);

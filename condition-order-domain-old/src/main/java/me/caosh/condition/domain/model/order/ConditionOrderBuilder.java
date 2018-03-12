@@ -7,6 +7,7 @@ import hbec.intellitrade.condorder.domain.TradeCustomerInfoBuilder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanBuilder;
 import hbec.intellitrade.strategy.domain.condition.Condition;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParamBuilder;
 import me.caosh.autoasm.ConvertibleBuilder;
 import org.joda.time.LocalDateTime;
 
@@ -17,12 +18,13 @@ import org.joda.time.LocalDateTime;
 public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder> {
     private Long orderId;
     private TradeCustomerInfoBuilder customer = new TradeCustomerInfoBuilder();
+    private OrderState orderState;
     private SecurityInfoBuilder securityInfo = new SecurityInfoBuilder();
     private StrategyInfoBuilder strategyInfo = new StrategyInfoBuilder();
     private Condition rawCondition;
     private LocalDateTime expireTime;
     private TradePlanBuilder tradePlan = new TradePlanBuilder();
-    private OrderState orderState;
+    private DelayConfirmParamBuilder delayConfirmParam = new DelayConfirmParamBuilder();
 
     public ConditionOrderBuilder setOrderId(Long orderId) {
         this.orderId = orderId;
@@ -35,6 +37,11 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
 
     public ConditionOrderBuilder setCustomer(TradeCustomerInfoBuilder customer) {
         this.customer = customer;
+        return this;
+    }
+
+    public ConditionOrderBuilder setOrderState(OrderState orderState) {
+        this.orderState = orderState;
         return this;
     }
 
@@ -78,8 +85,12 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return this;
     }
 
-    public ConditionOrderBuilder setOrderState(OrderState orderState) {
-        this.orderState = orderState;
+    public DelayConfirmParamBuilder getDelayConfirmParam() {
+        return delayConfirmParam;
+    }
+
+    public ConditionOrderBuilder setDelayConfirmParam(DelayConfirmParamBuilder delayConfirmParam) {
+        this.delayConfirmParam = delayConfirmParam;
         return this;
     }
 
@@ -93,7 +104,8 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
                 strategyInfo.getStrategyType(),
                 rawCondition,
                 expireTime,
-                tradePlan.build());
+                tradePlan.build(),
+                delayConfirmParam.build());
     }
 
     public static class StrategyInfoBuilder {

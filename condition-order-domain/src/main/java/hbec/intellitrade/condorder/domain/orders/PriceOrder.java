@@ -8,7 +8,10 @@ import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
+import hbec.intellitrade.strategy.domain.MarketClosedEventListener;
 import hbec.intellitrade.strategy.domain.condition.Condition;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirmParam;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import org.joda.time.LocalDateTime;
@@ -19,19 +22,28 @@ import org.joda.time.LocalDateTime;
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/1
  */
-public class PriceOrder extends AbstractSimpleMarketConditionOrder {
+public class PriceOrder extends AbstractSimpleMarketConditionOrder implements MarketClosedEventListener {
 
     private final PriceCondition priceCondition;
+    private final DelayConfirmParam delayConfirmParam;
+    private final MarketCondition compositeCondition;
 
     public PriceOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, OrderState orderState, SecurityInfo securityInfo,
                       PriceCondition priceCondition, LocalDateTime expireTime, BasicTradePlan tradePlan) {
+        this(orderId, tradeCustomerInfo, orderState, securityInfo, priceCondition, expireTime, tradePlan, DisabledDelayConfirmParam.INSTANCE);
+    }
+
+    public PriceOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, OrderState orderState, SecurityInfo securityInfo,
+                      PriceCondition priceCondition, LocalDateTime expireTime, BasicTradePlan tradePlan, DelayConfirmParam delayConfirmParam) {
         super(orderId, tradeCustomerInfo, securityInfo, expireTime, tradePlan, orderState);
         this.priceCondition = priceCondition;
+        this.delayConfirmParam = delayConfirmParam;
+        this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(priceCondition, delayConfirmParam);
     }
 
     @Override
     public MarketCondition getCondition() {
-        return priceCondition;
+        return compositeCondition;
     }
 
     @Override
@@ -39,9 +51,18 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder {
         return priceCondition;
     }
 
+    public DelayConfirmParam getDelayConfirmParam() {
+        return delayConfirmParam;
+    }
+
     @Override
     public StrategyInfo getStrategyInfo() {
         return NativeStrategyInfo.PRICE;
+    }
+
+    @Override
+    public void onMarketClosed(LocalDateTime localDateTime) {
+
     }
 
     @Override
@@ -75,7 +96,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder {
                 .add("customer", getCustomer())
                 .add("strategyState", getOrderState())
                 .add("securityInfo", getSecurityInfo())
-                .add("rawCondition", getRawCondition())
+                .add("condition", getCondition())
                 .add("expireTime", getExpireTime())
                 .add("tradePlan", getTradePlan())
                 .toString();

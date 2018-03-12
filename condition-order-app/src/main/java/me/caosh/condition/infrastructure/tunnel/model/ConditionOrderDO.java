@@ -52,6 +52,10 @@ public class ConditionOrderDO {
     private Integer entrustMethod;
     @FieldMapping(mappedProperty = "tradePlan.tradeNumber.number")
     private BigDecimal entrustAmount;
+    @FieldMapping(mappedProperty = "delayConfirmParam.option")
+    private Integer delayConfirmOption;
+    @FieldMapping(mappedProperty = "delayConfirmParam.confirmTimes")
+    private Integer delayConfirmTimes;
     private Timestamp createTime;
     private Timestamp updateTime;
 
@@ -244,6 +248,26 @@ public class ConditionOrderDO {
     }
 
     @Basic
+    @Column(name = "delay_confirm_option")
+    public Integer getDelayConfirmOption() {
+        return delayConfirmOption;
+    }
+
+    public void setDelayConfirmOption(Integer delayConfirmOption) {
+        this.delayConfirmOption = delayConfirmOption;
+    }
+
+    @Basic
+    @Column(name = "delay_confirm_times")
+    public Integer getDelayConfirmTimes() {
+        return delayConfirmTimes;
+    }
+
+    public void setDelayConfirmTimes(Integer delayConfirmTimes) {
+        this.delayConfirmTimes = delayConfirmTimes;
+    }
+
+    @Basic
     @Column(name = "create_time")
     public Timestamp getCreateTime() {
         return createTime;
@@ -261,62 +285,6 @@ public class ConditionOrderDO {
 
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ConditionOrderDO that = (ConditionOrderDO) o;
-
-        if (orderId != null ? !orderId.equals(that.orderId) : that.orderId != null) return false;
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
-        if (customerNo != null ? !customerNo.equals(that.customerNo) : that.customerNo != null) return false;
-        if (deleted != null ? !deleted.equals(that.deleted) : that.deleted != null) return false;
-        if (orderState != null ? !orderState.equals(that.orderState) : that.orderState != null) return false;
-        if (securityType != null ? !securityType.equals(that.securityType) : that.securityType != null) return false;
-        if (securityCode != null ? !securityCode.equals(that.securityCode) : that.securityCode != null) return false;
-        if (securityExchange != null ? !securityExchange.equals(that.securityExchange) : that.securityExchange != null)
-            return false;
-        if (securityName != null ? !securityName.equals(that.securityName) : that.securityName != null) return false;
-        if (strategyType != null ? !strategyType.equals(that.strategyType) : that.strategyType != null) return false;
-        if (conditionPropertiesObj != null ? !conditionPropertiesObj.equals(that.conditionPropertiesObj) : that.conditionPropertiesObj != null)
-            return false;
-        if (dynamicPropertiesObj != null ? !dynamicPropertiesObj.equals(that.dynamicPropertiesObj) : that.dynamicPropertiesObj != null)
-            return false;
-        if (exchangeType != null ? !exchangeType.equals(that.exchangeType) : that.exchangeType != null) return false;
-        if (entrustStrategy != null ? !entrustStrategy.equals(that.entrustStrategy) : that.entrustStrategy != null)
-            return false;
-        if (entrustMethod != null ? !entrustMethod.equals(that.entrustMethod) : that.entrustMethod != null)
-            return false;
-        if (entrustAmount != null ? !entrustAmount.equals(that.entrustAmount) : that.entrustAmount != null)
-            return false;
-        if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
-        return updateTime != null ? updateTime.equals(that.updateTime) : that.updateTime == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = orderId != null ? orderId.hashCode() : 0;
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (customerNo != null ? customerNo.hashCode() : 0);
-        result = 31 * result + (deleted != null ? deleted.hashCode() : 0);
-        result = 31 * result + (orderState != null ? orderState.hashCode() : 0);
-        result = 31 * result + (securityType != null ? securityType.hashCode() : 0);
-        result = 31 * result + (securityCode != null ? securityCode.hashCode() : 0);
-        result = 31 * result + (securityExchange != null ? securityExchange.hashCode() : 0);
-        result = 31 * result + (securityName != null ? securityName.hashCode() : 0);
-        result = 31 * result + (strategyType != null ? strategyType.hashCode() : 0);
-        result = 31 * result + (conditionPropertiesObj != null ? conditionPropertiesObj.hashCode() : 0);
-        result = 31 * result + (dynamicPropertiesObj != null ? dynamicPropertiesObj.hashCode() : 0);
-        result = 31 * result + (exchangeType != null ? exchangeType.hashCode() : 0);
-        result = 31 * result + (entrustStrategy != null ? entrustStrategy.hashCode() : 0);
-        result = 31 * result + (entrustMethod != null ? entrustMethod.hashCode() : 0);
-        result = 31 * result + (entrustAmount != null ? entrustAmount.hashCode() : 0);
-        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
-        result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
-        return result;
     }
 
     @Override

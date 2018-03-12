@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.condition.delayconfirm;
+package hbec.intellitrade.strategy.domain.condition.delayconfirm;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.market.RealTimeMarket;
@@ -14,15 +14,11 @@ import org.slf4j.LoggerFactory;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/2/8
  */
-public class AccumulatedDelayConfirmCondition implements MarketCondition {
+public class AccumulatedDelayConfirmCondition extends AbstractDelayConfirmCondition implements MarketCondition {
     private static final Logger logger = LoggerFactory.getLogger(AccumulatedDelayConfirmCondition.class);
 
-    private final DelayConfirmCounter counter;
-    private final MarketCondition marketCondition;
-
-    public AccumulatedDelayConfirmCondition(int confirmingCount, MarketCondition marketCondition) {
-        this.counter = new DelayConfirmCounter(confirmingCount);
-        this.marketCondition = marketCondition;
+    public AccumulatedDelayConfirmCondition(int confirmTimes, MarketCondition marketCondition) {
+        super(confirmTimes, marketCondition);
     }
 
     @Override
@@ -34,6 +30,7 @@ public class AccumulatedDelayConfirmCondition implements MarketCondition {
 
         counter.increaseConfirmedCount();
         if (counter.isConfirmCompleted()) {
+            // TODO: log with order id
             logger.info("Confirmed count is enough, counter={}", counter);
             return tradeSignal;
         } else {

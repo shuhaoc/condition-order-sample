@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.condition.delayconfirm;
+package hbec.intellitrade.strategy.domain.condition.delayconfirm;
 
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.strategy.domain.shared.DirtyFlag;
@@ -19,7 +19,7 @@ public class DelayConfirmCounter implements DirtyFlag {
     /**
      * 总共确认次数
      */
-    private final int confirmingCount;
+    private final int confirmTimes;
 
     /**
      * 当前确认次数
@@ -33,13 +33,13 @@ public class DelayConfirmCounter implements DirtyFlag {
      */
     private DynamicProperty<LocalDate> lastConfirmedDate = new DynamicProperty<>();
 
-    public DelayConfirmCounter(int confirmingCount) {
-        Preconditions.checkArgument(confirmingCount > 0, "Confirming count should be greater than 0");
-        this.confirmingCount = confirmingCount;
+    public DelayConfirmCounter(int confirmTimes) {
+        Preconditions.checkArgument(confirmTimes > 0, "Confirm times should be greater than 0");
+        this.confirmTimes = confirmTimes;
     }
 
-    public int getConfirmingCount() {
-        return confirmingCount;
+    public int getConfirmTimes() {
+        return confirmTimes;
     }
 
     public int getConfirmedCount() {
@@ -49,7 +49,7 @@ public class DelayConfirmCounter implements DirtyFlag {
     /**
      * 判断日期变更并更新状态
      */
-    public void checkDateChangs() {
+    void checkDateChangs() {
         boolean hasConfirmed = lastConfirmedDate.get() != null;
         boolean todayConfirmed = LocalDate.now().equals(lastConfirmedDate.get());
         if (hasConfirmed && !todayConfirmed) {
@@ -61,7 +61,7 @@ public class DelayConfirmCounter implements DirtyFlag {
     /**
      * 增加确认次数计数
      */
-    public void increaseConfirmedCount() {
+    void increaseConfirmedCount() {
         confirmedCount.set(confirmedCount.get() + 1);
     }
 
@@ -71,7 +71,7 @@ public class DelayConfirmCounter implements DirtyFlag {
      * @return 是否完成确认
      */
     public boolean isConfirmCompleted() {
-        return confirmedCount.get() >= confirmingCount;
+        return confirmedCount.get() >= confirmTimes;
     }
 
     /**
@@ -104,7 +104,7 @@ public class DelayConfirmCounter implements DirtyFlag {
 
         DelayConfirmCounter counter = (DelayConfirmCounter) o;
 
-        if (confirmingCount != counter.confirmingCount) {
+        if (confirmTimes != counter.confirmTimes) {
             return false;
         }
         if (!confirmedCount.equals(counter.confirmedCount)) {
@@ -115,7 +115,7 @@ public class DelayConfirmCounter implements DirtyFlag {
 
     @Override
     public int hashCode() {
-        int result = confirmingCount;
+        int result = confirmTimes;
         result = 31 * result + confirmedCount.hashCode();
         result = 31 * result + lastConfirmedDate.hashCode();
         return result;
@@ -123,6 +123,6 @@ public class DelayConfirmCounter implements DirtyFlag {
 
     @Override
     public String toString() {
-        return confirmedCount.get() + "/" + confirmingCount;
+        return confirmedCount.get() + "/" + confirmTimes;
     }
 }

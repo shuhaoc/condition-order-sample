@@ -12,6 +12,9 @@ import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
 import hbec.intellitrade.condorder.domain.trigger.BasicTriggerTradingContext;
 import hbec.intellitrade.mock.MockMarkets;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.EnabledDelayConfirmParam;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
@@ -118,6 +121,7 @@ public class PriceOrderTest {
                 new BasicTradePlan(exchangeType, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100))
         );
 
+        System.out.println(priceOrder1);
         assertEquals(priceOrder1, priceOrder2);
         assertEquals(priceOrder1.hashCode(), priceOrder2.hashCode());
     }
@@ -140,5 +144,46 @@ public class PriceOrderTest {
         priceOrder.onExpired();
 
         assertEquals(priceOrder.getOrderState(), OrderState.EXPIRED);
+    }
+
+    @Test
+    public void testDelayConfirmParam() throws Exception {
+        TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
+        SecurityInfo pfyh = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
+
+        PriceOrder priceOrder1 = new PriceOrder(123L, tradeCustomerInfo, OrderState.ACTIVE, pfyh,
+                new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
+                LocalDateTime.now().plusDays(1),
+                new BasicTradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100))
+        );
+
+        assertEquals(priceOrder1.getDelayConfirmParam(), DisabledDelayConfirmParam.INSTANCE);
+
+        PriceOrder priceOrder2 = new PriceOrder(123L, tradeCustomerInfo, OrderState.ACTIVE, pfyh,
+                new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
+                LocalDateTime.now().plusDays(1),
+                new BasicTradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
+                new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3));
+
+        assertEquals(priceOrder2.getDelayConfirmParam(), new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3));
+    }
+
+    @Test
+    public void testDelayConfirmCondition() throws Exception {
+        PriceOrder priceOrder = new PriceOrder(123L, new TradeCustomerInfo(303348, "010000061086"),
+                OrderState.ACTIVE,
+                new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH"),
+                new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
+                LocalDateTime.now().plusDays(1),
+                new BasicTradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
+                new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3));
+
+        assertEquals(priceOrder.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("13.00"))), Signals.none());
+        assertEquals(priceOrder.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("13.00"))), Signals.none());
+
+        // false condition
+        assertEquals(priceOrder.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("14.00"))), Signals.none());
+
+        assertEquals(priceOrder.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("13.00"))), Signals.buyOrSell());
     }
 }

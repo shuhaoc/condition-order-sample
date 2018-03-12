@@ -4,20 +4,23 @@ import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.orders.PriceOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
+import hbec.intellitrade.condorder.domain.tradeplan.EntrustMethod;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberByAmount;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.EnabledDelayConfirmParam;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import me.caosh.autoasm.AutoAssemblers;
-import hbec.intellitrade.condorder.domain.tradeplan.EntrustMethod;
+import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
 import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;
+import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -45,9 +48,10 @@ public class ConditionOrderDoAssemblerTest {
                 new TradeCustomerInfo(USER_ID, CUSTOMER_NO),
                 OrderState.ACTIVE, securityInfo,
                 new PriceCondition(CompareOperator.GE, new BigDecimal("10.00")),
-                null,
+                LocalDateTime.parse("2018-03-12T15:00:00"),
                 new BasicTradePlan(ExchangeType.SELL, EntrustStrategy.BUY1,
-                        new TradeNumberByAmount(new BigDecimal("10000.00")))
+                        new TradeNumberByAmount(new BigDecimal("10000.00"))),
+                new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3)
         );
         ConditionOrderDO conditionOrderDO = AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDO.class);
         assertEquals(conditionOrderDO.getOrderId().longValue(), ORDER_ID);
@@ -62,10 +66,13 @@ public class ConditionOrderDoAssemblerTest {
         assertEquals(conditionOrderDO.getStrategyType().intValue(), NativeStrategyInfo.PRICE.getStrategyType());
         assertEquals(conditionOrderDO.getConditionProperties(), "{\"type\":\"PriceConditionDO\",\"compareOperator\":1,\"targetPrice\":10.00}");
         assertNull(conditionOrderDO.getDynamicPropertiesObj());
+        assertEquals(conditionOrderDO.getExpireTime(), LocalDateTime.parse("2018-03-12T15:00:00").toDate());
         assertEquals(conditionOrderDO.getExchangeType(), ExchangeType.SELL.getValue());
         assertEquals(conditionOrderDO.getEntrustStrategy(), EntrustStrategy.BUY1.getValue());
         assertEquals(conditionOrderDO.getEntrustMethod(), EntrustMethod.AMOUNT.getValue());
         assertEquals(conditionOrderDO.getEntrustAmount(), new BigDecimal("10000.00"));
+        assertEquals(conditionOrderDO.getDelayConfirmOption().intValue(), 1);
+        assertEquals(conditionOrderDO.getDelayConfirmTimes().intValue(), 3);
         assertNull(conditionOrderDO.getCreateTime());
         assertNull(conditionOrderDO.getUpdateTime());
 

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  * Created by caosh on 2017/8/20.
  */
 @Service
-public class RealTimeMarketSupplierMock implements RealTimeMarketSupplier {
+public class MockRealTimeMarketSupplier implements RealTimeMarketSupplier {
     @Override
     public RealTimeMarket getCurrentMarket(MarketID marketID) {
         return new RealTimeMarket(marketID, new BigDecimal("10.00"), new BigDecimal("10.00"), Lists.newArrayList(

@@ -6,7 +6,6 @@ import me.caosh.autoasm.FieldMapping;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by caosh on 2017/8/11.
@@ -27,6 +26,7 @@ public class ConditionOrderDTO implements Serializable {
     private ConditionDTO rawCondition;
     private String expireTime;
     private TradePlanDTO tradePlan;
+    private DelayConfirmParamDTO delayConfirmParam;
 
     public Long getOrderId() {
         return orderId;
@@ -100,6 +100,14 @@ public class ConditionOrderDTO implements Serializable {
         this.tradePlan = tradePlan;
     }
 
+    public DelayConfirmParamDTO getDelayConfirmParam() {
+        return delayConfirmParam;
+    }
+
+    public void setDelayConfirmParam(DelayConfirmParamDTO delayConfirmParam) {
+        this.delayConfirmParam = delayConfirmParam;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(ConditionOrderDTO.class).omitNullValues()
@@ -110,7 +118,9 @@ public class ConditionOrderDTO implements Serializable {
                 .add("securityInfo", securityInfo)
                 .add("strategyType", strategyType)
                 .add("rawCondition", rawCondition)
+                .add("expireTime", expireTime)
                 .add("tradePlan", tradePlan)
+                .add("delayConfirmParam", delayConfirmParam)
                 .toString();
     }
 }

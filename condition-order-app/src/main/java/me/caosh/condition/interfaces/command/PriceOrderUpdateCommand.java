@@ -1,18 +1,15 @@
 package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.autoasm.FieldMapping;
+import me.caosh.condition.domain.dto.order.DelayConfirmParamDTO;
 import me.caosh.condition.domain.dto.order.PriceConditionDTO;
 import me.caosh.condition.domain.dto.order.TradePlanDTO;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.DecimalMin;
+import javax.validation.Valid;
 import javax.validation.constraints.Future;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -33,6 +30,9 @@ public class PriceOrderUpdateCommand implements Serializable {
 
     @NotNull
     private TradePlanDTO tradePlan;
+
+    @Valid
+    private DelayConfirmParamDTO delayConfirmParam;
 
     public Long getOrderId() {
         return orderId;
@@ -66,6 +66,14 @@ public class PriceOrderUpdateCommand implements Serializable {
         this.tradePlan = tradePlan;
     }
 
+    public DelayConfirmParamDTO getDelayConfirmParam() {
+        return delayConfirmParam;
+    }
+
+    public void setDelayConfirmParam(DelayConfirmParamDTO delayConfirmParam) {
+        this.delayConfirmParam = delayConfirmParam;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(PriceOrderUpdateCommand.class).omitNullValues()
@@ -73,6 +81,7 @@ public class PriceOrderUpdateCommand implements Serializable {
                 .add("priceCondition", priceCondition)
                 .add("expireTime", expireTime)
                 .add("tradePlan", tradePlan)
+                .add("delayConfirmParam", delayConfirmParam)
                 .toString();
     }
 }

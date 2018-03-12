@@ -17,8 +17,10 @@ CREATE TABLE `condition_order` (
   `entrust_strategy`     INT            NOT NULL,
   `entrust_method`       INT            NOT NULL,
   `entrust_amount`       DECIMAL(13, 2) NOT NULL,
-  `create_time`          TIMESTAMP               DEFAULT current_timestamp(),
-  `update_time`          TIMESTAMP               DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
+  `delay_confirm_option` INT            NOT NULL,
+  `delay_confirm_times`  INT            NOT NULL,
+  `create_time`          TIMESTAMP DEFAULT current_timestamp(),
+  `update_time`          TIMESTAMP DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
   INDEX `index_customer_no` (customer_no)
 );
 
@@ -39,8 +41,8 @@ CREATE TABLE `entrust_order` (
   `entrust_state`     INT           NOT NULL,
   `entrust_message`   VARCHAR(64)   NOT NULL,
   `entrust_code`      INT           NOT NULL,
-  `create_time`       TIMESTAMP              DEFAULT current_timestamp(),
-  `update_time`       TIMESTAMP              DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
+  `create_time`       TIMESTAMP DEFAULT current_timestamp(),
+  `update_time`       TIMESTAMP DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
   INDEX `index_order_id` (order_id),
   INDEX `index_customer_no` (customer_no)
 );
