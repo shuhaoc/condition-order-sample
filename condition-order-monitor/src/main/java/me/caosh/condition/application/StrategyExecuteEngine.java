@@ -5,6 +5,7 @@ import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
 import me.caosh.condition.domain.container.StrategyContainer;
 import me.caosh.condition.domain.container.StrategyContextConfig;
+import me.caosh.condition.domain.event.MarketClosedEvent;
 import me.caosh.condition.domain.event.OrderRemoveCommandEvent;
 import me.caosh.condition.domain.event.OrderSaveCommandEvent;
 import me.caosh.condition.domain.event.RealTimeMarketPushEvent;
@@ -65,6 +66,12 @@ public class StrategyExecuteEngine {
         for (SignalPayload signalPayload : signalPayloads) {
             signalPayloadProducer.send(signalPayload);
         }
+    }
+
+    @Subscribe
+    public void onMarketClosedEvent(MarketClosedEvent e) {
+        logger.info("================== Market Closed ==================");
+        strategyContainer.onMarketClosed(LocalDateTime.now());
     }
 
     @Subscribe

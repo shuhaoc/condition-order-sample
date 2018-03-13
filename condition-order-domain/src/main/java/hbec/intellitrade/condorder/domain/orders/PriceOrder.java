@@ -118,7 +118,10 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
 
     @Override
     public void onMarketClosed(LocalDateTime localDateTime) {
-
+        Optional<DelayConfirmCounter> delayConfirmCounter = getDelayConfirmCounter();
+        if (delayConfirmCounter.isPresent()) {
+            delayConfirmCounter.get().reset();
+        }
     }
 
     @Override

@@ -9,9 +9,11 @@ import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
+import hbec.intellitrade.strategy.domain.MarketClosedEventListener;
 import hbec.intellitrade.strategy.domain.MutableStrategy;
 import hbec.intellitrade.strategy.domain.Strategy;
 import hbec.intellitrade.strategy.domain.container.BucketKey;
+import hbec.intellitrade.strategy.domain.shared.DirtyFlag;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signalpayload.MarketSignalPayload;
@@ -34,7 +36,7 @@ import java.util.Set;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/1/31
  */
-public class StrategyContainer {
+public class StrategyContainer implements MarketClosedEventListener {
     private static final Logger logger = LoggerFactory.getLogger(StrategyContainer.class);
 
     private final SetMultimap<BucketKey, StrategyContext> strategies = MultimapBuilder
@@ -121,24 +123,31 @@ public class StrategyContainer {
                 }
             }
         }
-        for (Map.Entry<BucketKey, StrategyContext> entry : strategies.entries()) {
-            StrategyContext strategyContext = entry.getValue();
-            // 未触发有效交易信号的，判断是否需要延迟同步
-            if (strategyContext.getStrategy() instanceof MutableStrategy) {
-                MutableStrategy mutableStrategy = (MutableStrategy) strategyContext.getStrategy();
-                if (mutableStrategy.isDirty()) {
+        checkApplyDirtyFlag();
+        return signalPayloads;
+    }
+
+    private void checkApplyDirtyFlag() {
+        for (StrategyContext strategyContext : strategies.values()) {
+            if (strategyContext.getStrategy() instanceof DirtyFlag) {
+                // 判断是否需要同步缓存
+                DirtyFlag dirtyFlag = (DirtyFlag) strategyContext.getStrategy();
+                if (dirtyFlag.isDirty()) {
                     strategyWriter.write(strategyContext.getStrategy());
                 }
-                if (mutableStrategy.isPersistentPropertyDirty()) {
-                    strategyContext.markDelaySync();
-                    logger.info("Mark delay sync, strategy={}", strategyContext.getStrategy());
-                    // 清除脏标志，下次动态属性变更时再标记
-                    mutableStrategy.clearDirty();
+                // 判断是否需要延迟同步
+                if (strategyContext.getStrategy() instanceof MutableStrategy) {
+                    MutableStrategy mutableStrategy = (MutableStrategy) strategyContext.getStrategy();
+                    if (mutableStrategy.isPersistentPropertyDirty()) {
+                        strategyContext.markDelaySync();
+                        logger.info("Mark delay sync, strategy={}", strategyContext.getStrategy());
+                        // 清除脏标志，下次动态属性变更时再标记
+                        mutableStrategy.clearDirty();
+                    }
                 }
-                mutableStrategy.clearDirty();
+                dirtyFlag.clearDirty();
             }
         }
-        return signalPayloads;
     }
 
     /**
@@ -187,6 +196,25 @@ public class StrategyContainer {
      */
     public int size() {
         return strategies.size();
+    }
+
+    @Override
+    public void onMarketClosed(LocalDateTime localDateTime) {
+        for (StrategyContext strategyContext : strategies.values()) {
+            Strategy strategy = strategyContext.getStrategy();
+            if (strategy instanceof MarketClosedEventListener) {
+                onMarketClosed((MarketClosedEventListener) strategy, localDateTime);
+            }
+        }
+        checkApplyDirtyFlag();
+    }
+
+    private void onMarketClosed(MarketClosedEventListener marketClosedEventListener, LocalDateTime localDateTime) {
+        try {
+            marketClosedEventListener.onMarketClosed(localDateTime);
+        } catch (Exception e) {
+            logger.error("Handle market closed event error, strategy=" + marketClosedEventListener, e);
+        }
     }
 
     @Override

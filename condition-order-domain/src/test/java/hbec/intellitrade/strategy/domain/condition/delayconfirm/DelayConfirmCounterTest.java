@@ -1,10 +1,6 @@
 package hbec.intellitrade.strategy.domain.condition.delayconfirm;
 
-import hbec.intellitrade.strategy.domain.shared.DynamicProperty;
-import org.joda.time.LocalDate;
 import org.testng.annotations.Test;
-
-import java.lang.reflect.Field;
 
 import static org.testng.Assert.*;
 
@@ -22,7 +18,6 @@ public class DelayConfirmCounterTest {
         assertFalse(counter.isDirty());
         System.out.println(counter);
 
-        counter.checkDateChangs();
         counter.increaseConfirmedCount();
 
         assertEquals(counter.getConfirmTimes(), 3);
@@ -33,7 +28,6 @@ public class DelayConfirmCounterTest {
 
         counter.clearDirty();
 
-        counter.checkDateChangs();
         counter.increaseConfirmedCount();
         counter.increaseConfirmedCount();
 
@@ -50,7 +44,6 @@ public class DelayConfirmCounterTest {
         assertFalse(counter.isConfirmCompleted());
         assertFalse(counter.isDirty());
 
-        counter.checkDateChangs();
         counter.increaseConfirmedCount();
 
         assertEquals(counter.getConfirmedCount(), 1);
@@ -59,7 +52,6 @@ public class DelayConfirmCounterTest {
 
         counter.clearDirty();
 
-        counter.checkDateChangs();
         counter.reset();
 
         assertEquals(counter.getConfirmedCount(), 0);
@@ -68,7 +60,6 @@ public class DelayConfirmCounterTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testAnotherDay() throws Exception {
         DelayConfirmCounter counter = new DelayConfirmCounter(3);
         counter.increaseConfirmedCount();
@@ -77,14 +68,9 @@ public class DelayConfirmCounterTest {
         assertEquals(counter.getConfirmedCount(), 2);
         assertFalse(counter.isConfirmCompleted());
 
-        // 假使过了一天
-        Field lastConfirmedDateField = counter.getClass().getDeclaredField("lastConfirmedDate");
-        lastConfirmedDateField.setAccessible(true);
-        DynamicProperty<LocalDate> lastConfirmedDate = (DynamicProperty<LocalDate>) lastConfirmedDateField.get(counter);
-        lastConfirmedDate.set(LocalDate.now().minusDays(1));
-
-        counter.checkDateChangs();
+        counter.reset();
         counter.increaseConfirmedCount();
+
         assertEquals(counter.getConfirmedCount(), 1);
         assertFalse(counter.isConfirmCompleted());
     }

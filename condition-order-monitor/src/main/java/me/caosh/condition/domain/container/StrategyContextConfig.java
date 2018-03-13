@@ -12,7 +12,7 @@ public class StrategyContextConfig {
     private final int lockTriggerSeconds;
     private final int delaySyncSeconds;
 
-    public static final StrategyContextConfig DEFAULT = new StrategyContextConfig(10, 4);
+    public static final StrategyContextConfig DEFAULT = new StrategyContextConfig(30, 60);
 
     public StrategyContextConfig(int lockTriggerSeconds, int delaySyncSeconds) {
         this.lockTriggerSeconds = lockTriggerSeconds;

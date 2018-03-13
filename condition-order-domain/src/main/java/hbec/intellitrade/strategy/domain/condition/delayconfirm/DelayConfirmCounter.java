@@ -3,7 +3,6 @@ package hbec.intellitrade.strategy.domain.condition.delayconfirm;
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.strategy.domain.shared.DirtyFlag;
 import hbec.intellitrade.strategy.domain.shared.DynamicProperty;
-import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,11 +27,6 @@ public class DelayConfirmCounter implements DirtyFlag {
      */
     private DynamicProperty<Integer> confirmedCount = new DynamicProperty<>(0);
 
-    /**
-     * 上一次条件达成日期，用于实现每日重置
-     */
-    private DynamicProperty<LocalDate> lastConfirmedDate = new DynamicProperty<>();
-
     public DelayConfirmCounter(int confirmTimes) {
         Preconditions.checkArgument(confirmTimes > 0, "Confirm times should be greater than 0");
         this.confirmTimes = confirmTimes;
@@ -54,18 +48,6 @@ public class DelayConfirmCounter implements DirtyFlag {
     }
 
     /**
-     * 判断日期变更并更新状态
-     */
-    void checkDateChangs() {
-        boolean hasConfirmed = lastConfirmedDate.get() != null;
-        boolean todayConfirmed = LocalDate.now().equals(lastConfirmedDate.get());
-        if (hasConfirmed && !todayConfirmed) {
-            reset();
-            logger.info("Delay confirm counter reset due to date changes");
-        }
-    }
-
-    /**
      * 增加确认次数计数
      */
     void increaseConfirmedCount() {
@@ -84,20 +66,18 @@ public class DelayConfirmCounter implements DirtyFlag {
     /**
      * 重置状态
      */
-    void reset() {
+    public void reset() {
         confirmedCount.set(0);
-        lastConfirmedDate.set(null);
     }
 
     @Override
     public boolean isDirty() {
-        return confirmedCount.isDirty() || lastConfirmedDate.isDirty();
+        return confirmedCount.isDirty();
     }
 
     @Override
     public void clearDirty() {
         confirmedCount.clearDirty();
-        lastConfirmedDate.clearDirty();
     }
 
     @Override
@@ -109,22 +89,18 @@ public class DelayConfirmCounter implements DirtyFlag {
             return false;
         }
 
-        DelayConfirmCounter counter = (DelayConfirmCounter) o;
+        DelayConfirmCounter that = (DelayConfirmCounter) o;
 
-        if (confirmTimes != counter.confirmTimes) {
+        if (confirmTimes != that.confirmTimes) {
             return false;
         }
-        if (!confirmedCount.equals(counter.confirmedCount)) {
-            return false;
-        }
-        return lastConfirmedDate.equals(counter.lastConfirmedDate);
+        return confirmedCount.equals(that.confirmedCount);
     }
 
     @Override
     public int hashCode() {
         int result = confirmTimes;
         result = 31 * result + confirmedCount.hashCode();
-        result = 31 * result + lastConfirmedDate.hashCode();
         return result;
     }
 

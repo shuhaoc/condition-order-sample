@@ -5,8 +5,8 @@ import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
+import hbec.intellitrade.strategy.domain.MutableStrategy;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
-import hbec.intellitrade.strategy.domain.shared.DirtyFlag;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
@@ -17,7 +17,7 @@ import org.joda.time.LocalDateTime;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/2/8
  */
-public class TestTurnUpStrategy implements MarketDrivenStrategy, TimeDrivenStrategy, DirtyFlag {
+public class TestTurnUpStrategy implements MarketDrivenStrategy, TimeDrivenStrategy, MutableStrategy {
     private final int strategyId;
     private final MarketID marketID;
     private final TurnUpCondition turnUpCondition;
@@ -56,6 +56,11 @@ public class TestTurnUpStrategy implements MarketDrivenStrategy, TimeDrivenStrat
     @Override
     public void clearDirty() {
         turnUpCondition.clearDirty();
+    }
+
+    @Override
+    public boolean isPersistentPropertyDirty() {
+        return isDirty();
     }
 
     @Override
