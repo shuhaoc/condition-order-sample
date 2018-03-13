@@ -1,11 +1,13 @@
 package hbec.intellitrade.condorder.domain.orders;
 
+import com.google.common.base.Function;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.AbstractSimpleMarketConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.condorder.domain.delayconfirm.count.SingleDelayConfirmCount;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
@@ -43,7 +45,18 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
         super(orderId, tradeCustomerInfo, securityInfo, expireTime, tradePlan, orderState);
         this.priceCondition = priceCondition;
         this.delayConfirmParam = delayConfirmParam;
-        this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(priceCondition, delayConfirmParam);
+        this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(priceCondition, delayConfirmParam, 0);
+    }
+
+    public PriceOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, OrderState orderState, SecurityInfo securityInfo,
+                      PriceCondition priceCondition, LocalDateTime expireTime, BasicTradePlan tradePlan, DelayConfirmParam delayConfirmParam,
+                      SingleDelayConfirmCount singleDelayConfirmCount) {
+        super(orderId, tradeCustomerInfo, securityInfo, expireTime, tradePlan, orderState);
+        this.priceCondition = priceCondition;
+        this.delayConfirmParam = delayConfirmParam;
+        int confirmedCount = singleDelayConfirmCount != null ? singleDelayConfirmCount.getConfirmedCount() : 0;
+        this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(priceCondition, delayConfirmParam,
+                confirmedCount);
     }
 
     @Override
@@ -65,13 +78,13 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
         return NativeStrategyInfo.PRICE;
     }
 
-    public Optional<DelayConfirmCounter> getDelayConfirmCounter() {
-        if (compositeCondition instanceof AbstractDelayConfirmCondition) {
-            DelayConfirmCounter counter = ((AbstractDelayConfirmCondition) compositeCondition).getCounter();
-            return Optional.of(counter);
-        } else {
-            return Optional.absent();
-        }
+    public Optional<SingleDelayConfirmCount> getDelayConfirmCount() {
+        return getDelayConfirmCounter().transform(new Function<DelayConfirmCounter, SingleDelayConfirmCount>() {
+            @Override
+            public SingleDelayConfirmCount apply(DelayConfirmCounter delayConfirmCounter) {
+                return new SingleDelayConfirmCount(delayConfirmCounter.getConfirmedCount());
+            }
+        });
     }
 
     @Override
@@ -85,6 +98,15 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
         Optional<DelayConfirmCounter> delayConfirmCount = getDelayConfirmCounter();
         if (delayConfirmCount.isPresent()) {
             delayConfirmCount.get().clearDirty();
+        }
+    }
+
+    private Optional<DelayConfirmCounter> getDelayConfirmCounter() {
+        if (compositeCondition instanceof AbstractDelayConfirmCondition) {
+            DelayConfirmCounter counter = ((AbstractDelayConfirmCondition) compositeCondition).getCounter();
+            return Optional.of(counter);
+        } else {
+            return Optional.absent();
         }
     }
 

@@ -7,7 +7,7 @@ import me.caosh.autoasm.RuntimeType;
  * @date 2018/3/12
  */
 @RuntimeType({
-        SingleDelayConfirmCounterDTO.class
+        SingleDelayConfirmCountDTO.class
 })
-public interface DelayConfirmCounterDTO {
+public interface DelayConfirmCountDTO {
 }

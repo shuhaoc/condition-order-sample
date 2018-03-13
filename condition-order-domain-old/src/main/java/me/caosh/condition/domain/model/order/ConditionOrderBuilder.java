@@ -4,6 +4,7 @@ import hbec.intellitrade.common.security.SecurityInfoBuilder;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfoBuilder;
+import hbec.intellitrade.condorder.domain.delayconfirm.count.DelayConfirmCount;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanBuilder;
 import hbec.intellitrade.strategy.domain.condition.Condition;
@@ -25,6 +26,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
     private LocalDateTime expireTime;
     private TradePlanBuilder tradePlan = new TradePlanBuilder();
     private DelayConfirmParamBuilder delayConfirmParam = new DelayConfirmParamBuilder();
+    private DelayConfirmCount delayConfirmCount;
 
     public ConditionOrderBuilder setOrderId(Long orderId) {
         this.orderId = orderId;
@@ -94,6 +96,11 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return this;
     }
 
+    public ConditionOrderBuilder setDelayConfirmCount(DelayConfirmCount delayConfirmCount) {
+        this.delayConfirmCount = delayConfirmCount;
+        return this;
+    }
+
     @Override
     public ConditionOrder build() {
         return ConditionOrderFactory.getInstance().create(
@@ -105,7 +112,8 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
                 rawCondition,
                 expireTime,
                 tradePlan.build(),
-                delayConfirmParam.build());
+                delayConfirmParam.build(),
+                delayConfirmCount);
     }
 
     public static class StrategyInfoBuilder {

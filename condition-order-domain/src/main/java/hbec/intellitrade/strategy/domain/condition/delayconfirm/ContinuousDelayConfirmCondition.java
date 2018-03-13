@@ -22,6 +22,10 @@ public class ContinuousDelayConfirmCondition extends AbstractDelayConfirmConditi
         super(confirmTimes, marketCondition);
     }
 
+    public ContinuousDelayConfirmCondition(int confirmTimes, int confirmedCount, MarketCondition marketCondition) {
+        super(confirmTimes, confirmedCount, marketCondition);
+    }
+
     @Override
     public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
         TradeSignal tradeSignal = marketCondition.onMarketTick(realTimeMarket);

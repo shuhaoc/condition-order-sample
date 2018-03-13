@@ -38,6 +38,13 @@ public class DelayConfirmCounter implements DirtyFlag {
         this.confirmTimes = confirmTimes;
     }
 
+    public DelayConfirmCounter(int confirmTimes, int confirmedCount) {
+        Preconditions.checkArgument(confirmedCount >= 0, "Confirmed count should be greater than or equals 0");
+        Preconditions.checkArgument(confirmTimes >= confirmedCount, "Confirm times should be greater than confirmed count");
+        this.confirmTimes = confirmTimes;
+        this.confirmedCount = new DynamicProperty<>(confirmedCount);
+    }
+
     public int getConfirmTimes() {
         return confirmTimes;
     }

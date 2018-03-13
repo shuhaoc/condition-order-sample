@@ -15,6 +15,11 @@ public abstract class AbstractDelayConfirmCondition {
         this.marketCondition = marketCondition;
     }
 
+    AbstractDelayConfirmCondition(int confirmTimes, int confirmedCount, MarketCondition marketCondition) {
+        this.counter = new DelayConfirmCounter(confirmTimes, confirmedCount);
+        this.marketCondition = marketCondition;
+    }
+
     public DelayConfirmCounter getCounter() {
         return counter;
     }

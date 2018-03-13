@@ -4,6 +4,8 @@ import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.condorder.domain.delayconfirm.count.DelayConfirmCount;
+import hbec.intellitrade.condorder.domain.delayconfirm.count.SingleDelayConfirmCount;
 import hbec.intellitrade.condorder.domain.orders.PriceOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
@@ -35,10 +37,11 @@ public class ConditionOrderFactory {
 
     public ConditionOrder create(Long orderId, TradeCustomerInfo tradeCustomerInfo, OrderState orderState,
                                  SecurityInfo securityInfo, StrategyInfo strategyInfo, Condition condition,
-                                 LocalDateTime expireTime, TradePlan tradePlan, DelayConfirmParam delayConfirmParam) {
+                                 LocalDateTime expireTime, TradePlan tradePlan, DelayConfirmParam delayConfirmParam,
+                                 DelayConfirmCount delayConfirmCount) {
         if (strategyInfo == NativeStrategyInfo.PRICE) {
             return new PriceOrder(orderId, tradeCustomerInfo, orderState, securityInfo, (PriceCondition) condition, expireTime,
-                    (BasicTradePlan) tradePlan, delayConfirmParam);
+                    (BasicTradePlan) tradePlan, delayConfirmParam, (SingleDelayConfirmCount) delayConfirmCount);
         } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {
             return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,
                     null, (BasicTradePlan) tradePlan, orderState);

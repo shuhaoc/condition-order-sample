@@ -13,13 +13,13 @@ public enum DelayConfirmConditionFactory {
      */
     INSTANCE;
 
-    public MarketCondition wrapWith(PriceCondition priceCondition, DelayConfirmParam delayConfirmParam) {
+    public MarketCondition wrapWith(PriceCondition priceCondition, DelayConfirmParam delayConfirmParam, int confirmedCount) {
         if (delayConfirmParam == DisabledDelayConfirmParam.INSTANCE) {
             return priceCondition;
         } else if (delayConfirmParam.getOption() == DelayConfirmOption.ACCUMULATE) {
-            return new AccumulatedDelayConfirmCondition(delayConfirmParam.getConfirmTimes(), priceCondition);
+            return new AccumulatedDelayConfirmCondition(delayConfirmParam.getConfirmTimes(), confirmedCount, priceCondition);
         } else if (delayConfirmParam.getOption() == DelayConfirmOption.CONTINUOUS) {
-            return new ContinuousDelayConfirmCondition(delayConfirmParam.getConfirmTimes(), priceCondition);
+            return new ContinuousDelayConfirmCondition(delayConfirmParam.getConfirmTimes(), confirmedCount, priceCondition);
         } else {
             throw new IllegalArgumentException("Illegal delay confirm parameter: " + delayConfirmParam);
         }
