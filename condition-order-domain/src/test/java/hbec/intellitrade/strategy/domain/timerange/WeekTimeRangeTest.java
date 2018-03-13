@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.condition.timerange;
+package hbec.intellitrade.strategy.domain.timerange;
 
 import com.google.common.base.Optional;
 import hbec.intellitrade.strategy.domain.shared.Week;
@@ -27,7 +27,6 @@ public class WeekTimeRangeTest {
                 14, 25, 0)));
         assertFalse(weekTimeRange.isInRange(new LocalDateTime(2018, 1, 26,
                 14, 45, 0)));
-        System.out.println("isInRangeNow: " + weekTimeRange.isInTimeRangeNow());
 
         assertEquals(weekTimeRange.getWeekRange(), Optional.of(new WeekRange(Week.TUE, Week.THU)));
         assertEquals(weekTimeRange.getLocalTimeRange(), Optional.of(new LocalTimeRange(
@@ -69,5 +68,10 @@ public class WeekTimeRangeTest {
                 14, 45, 0)));
         assertFalse(weekTimeRange.isInRange(new LocalDateTime(2018, 1, 24,
                 13, 45, 0)));
+    }
+
+    @Test
+    public void testNone() throws Exception {
+        assertTrue(NoneMonitorTimeRange.INSTANCE.isInRange(LocalDateTime.now()));
     }
 }

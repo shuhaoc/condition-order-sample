@@ -12,6 +12,8 @@ import hbec.intellitrade.condorder.domain.orders.PriceOrder;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.EnabledDelayConfirmParam;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.trade.domain.ExchangeType;
@@ -49,7 +51,8 @@ public class ConditionOrderRepositoryTest extends AbstractTestNGSpringContextTes
                 OrderState.ACTIVE, securityInfo,
                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                 LocalDateTime.parse("2018-03-09T15:00:00"),
-                new BasicTradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100))
+                new BasicTradePlan(ExchangeType.BUY, EntrustStrategy.CURRENT_PRICE, new TradeNumberDirect(100)),
+                new EnabledDelayConfirmParam(DelayConfirmOption.CONTINUOUS, 3)
         );
         conditionOrderRepository.save(priceOrder);
 

@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.condition.timerange;
+package hbec.intellitrade.strategy.domain.timerange;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;

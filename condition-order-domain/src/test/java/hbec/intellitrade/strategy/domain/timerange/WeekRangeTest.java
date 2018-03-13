@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.condition.timerange;
+package hbec.intellitrade.strategy.domain.timerange;
 
 import hbec.intellitrade.strategy.domain.shared.Week;
 import org.joda.time.LocalDate;

@@ -3,6 +3,7 @@ package hbec.intellitrade.condorder.domain;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
+import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -13,7 +14,14 @@ public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketC
 
     public AbstractSimpleMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                                               LocalDateTime expireTime, BasicTradePlan tradePlan, OrderState orderState) {
-        super(orderId, tradeCustomerInfo, securityInfo, expireTime, orderState);
+        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime);
+        this.tradePlan = tradePlan;
+    }
+
+    public AbstractSimpleMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, OrderState orderState,
+                                              SecurityInfo securityInfo, LocalDateTime expireTime, BasicTradePlan tradePlan,
+                                              MonitorTimeRange monitorTimeRange) {
+        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime, monitorTimeRange);
         this.tradePlan = tradePlan;
     }
 

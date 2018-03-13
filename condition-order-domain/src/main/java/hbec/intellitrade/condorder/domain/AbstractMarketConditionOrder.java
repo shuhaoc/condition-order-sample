@@ -9,6 +9,8 @@ import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
+import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
+import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +22,18 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractMarketConditionOrder extends AbstractConditionOrder implements MarketDrivenStrategy, TimeDrivenStrategy {
     private static final Logger logger = LoggerFactory.getLogger(AbstractMarketConditionOrder.class);
 
-    public AbstractMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                                        LocalDateTime expireTime, OrderState orderState) {
+    private final MonitorTimeRange monitorTimeRange;
+
+    public AbstractMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, OrderState orderState,
+                                        SecurityInfo securityInfo, LocalDateTime expireTime) {
         super(orderId, tradeCustomerInfo, securityInfo, expireTime, orderState);
+        this.monitorTimeRange = NoneMonitorTimeRange.INSTANCE;
+    }
+
+    public AbstractMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, OrderState orderState,
+                                        SecurityInfo securityInfo, LocalDateTime expireTime, MonitorTimeRange monitorTimeRange) {
+        super(orderId, tradeCustomerInfo, securityInfo, expireTime, orderState);
+        this.monitorTimeRange = monitorTimeRange;
     }
 
     /**
@@ -42,6 +53,12 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
         if (getOrderState() != OrderState.ACTIVE) {
             return Signals.none();
         }
+
+        // TODO: 是否合适？？？
+        if (!monitorTimeRange.isInRange(realTimeMarket.getMarketTime())) {
+            return Signals.none();
+        }
+
         return getCondition().onMarketTick(realTimeMarket);
     }
 

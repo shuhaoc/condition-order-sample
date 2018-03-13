@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.condition.timerange;
+package hbec.intellitrade.strategy.domain.timerange;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
@@ -38,6 +38,7 @@ public class WeekTimeRange implements MonitorTimeRange {
         return Optional.fromNullable(localTimeRange);
     }
 
+    @Override
     public boolean isInRange(LocalDateTime localDateTime) {
         if (weekRange != null && !weekRange.isDateInRange(localDateTime.toLocalDate())) {
             return false;
@@ -47,11 +48,6 @@ public class WeekTimeRange implements MonitorTimeRange {
         }
         // 默认不作限制
         return true;
-    }
-
-    @Override
-    public boolean isInTimeRangeNow() {
-        return isInRange(LocalDateTime.now());
     }
 
     @Override

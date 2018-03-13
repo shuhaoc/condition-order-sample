@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.strategy.condition.timerange;
+package hbec.intellitrade.strategy.domain.timerange;
 
 import org.joda.time.LocalTime;
 import org.testng.annotations.Test;
