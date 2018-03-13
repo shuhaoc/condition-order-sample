@@ -18,7 +18,8 @@ public enum EntrustStrategy implements ValuedEnum<Integer>, ConvertibleEnum<Inte
     BUY2(8),
     BUY3(9),
     BUY4(10),
-    BUY5(11);
+    BUY5(11),
+    MARKET_PRICE(99);
 
     int value;
 
