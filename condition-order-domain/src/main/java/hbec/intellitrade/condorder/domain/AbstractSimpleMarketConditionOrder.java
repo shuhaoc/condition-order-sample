@@ -4,6 +4,7 @@ import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
+import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -12,14 +13,22 @@ import org.joda.time.LocalDateTime;
 public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketConditionOrder {
     private final BasicTradePlan tradePlan;
 
-    public AbstractSimpleMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                                              LocalDateTime expireTime, BasicTradePlan tradePlan, OrderState orderState) {
-        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime);
+    public AbstractSimpleMarketConditionOrder(Long orderId,
+                                              TradeCustomerInfo tradeCustomerInfo,
+                                              OrderState orderState,
+                                              SecurityInfo securityInfo,
+                                              LocalDateTime expireTime,
+                                              BasicTradePlan tradePlan) {
+        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime, NoneMonitorTimeRange.INSTANCE);
         this.tradePlan = tradePlan;
     }
 
-    public AbstractSimpleMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, OrderState orderState,
-                                              SecurityInfo securityInfo, LocalDateTime expireTime, BasicTradePlan tradePlan,
+    public AbstractSimpleMarketConditionOrder(Long orderId,
+                                              TradeCustomerInfo tradeCustomerInfo,
+                                              OrderState orderState,
+                                              SecurityInfo securityInfo,
+                                              LocalDateTime expireTime,
+                                              BasicTradePlan tradePlan,
                                               MonitorTimeRange monitorTimeRange) {
         super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime, monitorTimeRange);
         this.tradePlan = tradePlan;

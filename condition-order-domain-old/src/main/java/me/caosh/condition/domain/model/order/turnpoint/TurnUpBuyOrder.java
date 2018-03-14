@@ -24,7 +24,7 @@ public class TurnUpBuyOrder extends AbstractSimpleMarketConditionOrder {
 
     public TurnUpBuyOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                           TurnUpCondition turnUpCondition, LocalDateTime expireTime, BasicTradePlan tradePlan, OrderState orderState) {
-        super(orderId, tradeCustomerInfo, securityInfo, expireTime, tradePlan, orderState);
+        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime, tradePlan);
         Preconditions.checkArgument(tradePlan.getExchangeType() == ExchangeType.BUY);
         this.turnUpCondition = turnUpCondition;
     }

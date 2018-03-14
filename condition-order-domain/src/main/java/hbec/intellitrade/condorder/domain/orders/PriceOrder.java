@@ -21,6 +21,8 @@ import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmPara
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirmParam;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
+import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
+import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -81,7 +83,32 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
                       BasicTradePlan tradePlan,
                       DelayConfirmParam delayConfirmParam,
                       SingleDelayConfirmCount singleDelayConfirmCount) {
-        super(orderId, tradeCustomerInfo, securityInfo, expireTime, tradePlan, orderState);
+        super(orderId,
+              tradeCustomerInfo,
+              orderState,
+              securityInfo,
+              expireTime,
+              tradePlan,
+              NoneMonitorTimeRange.INSTANCE);
+        this.priceCondition = priceCondition;
+        this.delayConfirmParam = delayConfirmParam;
+        int confirmedCount = singleDelayConfirmCount != null ? singleDelayConfirmCount.getConfirmedCount() : 0;
+        this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(priceCondition,
+                                                                                 delayConfirmParam,
+                                                                                 confirmedCount);
+    }
+
+    public PriceOrder(Long orderId,
+                      TradeCustomerInfo tradeCustomerInfo,
+                      OrderState orderState,
+                      SecurityInfo securityInfo,
+                      PriceCondition priceCondition,
+                      LocalDateTime expireTime,
+                      BasicTradePlan tradePlan,
+                      DelayConfirmParam delayConfirmParam,
+                      SingleDelayConfirmCount singleDelayConfirmCount,
+                      MonitorTimeRange monitorTimeRange) {
+        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime, tradePlan, monitorTimeRange);
         this.priceCondition = priceCondition;
         this.delayConfirmParam = delayConfirmParam;
         int confirmedCount = singleDelayConfirmCount != null ? singleDelayConfirmCount.getConfirmedCount() : 0;

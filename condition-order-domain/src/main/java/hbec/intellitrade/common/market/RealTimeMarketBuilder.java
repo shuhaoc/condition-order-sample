@@ -1,10 +1,10 @@
 package hbec.intellitrade.common.market;
 
+import com.google.common.base.MoreObjects;
 import me.caosh.autoasm.ConvertibleBuilder;
 import org.joda.time.LocalDateTime;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +16,8 @@ public class RealTimeMarketBuilder implements ConvertibleBuilder<RealTimeMarket>
     private BigDecimal currentPrice;
     private BigDecimal previousPrice;
     private List<BigDecimal> offeredPrices;
-    private Date marketTime;
+    private LocalDateTime marketTime;
+    private LocalDateTime arriveTime;
 
     public MarketIDBuilder getMarketID() {
         return marketID;
@@ -42,13 +43,24 @@ public class RealTimeMarketBuilder implements ConvertibleBuilder<RealTimeMarket>
         return this;
     }
 
-    public RealTimeMarketBuilder setMarketTime(Date marketTime) {
+    public RealTimeMarketBuilder setMarketTime(LocalDateTime marketTime) {
         this.marketTime = marketTime;
+        return this;
+    }
+
+    public RealTimeMarketBuilder setArriveTime(LocalDateTime arriveTime) {
+        this.arriveTime = arriveTime;
         return this;
     }
 
     @Override
     public RealTimeMarket build() {
-        return new RealTimeMarket(marketID.build(), currentPrice, previousPrice, offeredPrices, LocalDateTime.fromDateFields(marketTime));
+        LocalDateTime arriveTime = MoreObjects.firstNonNull(this.arriveTime, this.marketTime);
+        return new RealTimeMarket(marketID.build(),
+                                  currentPrice,
+                                  previousPrice,
+                                  offeredPrices,
+                                  marketTime,
+                                  arriveTime);
     }
 }

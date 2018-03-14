@@ -10,7 +10,6 @@ import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
-import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,12 +22,6 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
     private static final Logger logger = LoggerFactory.getLogger(AbstractMarketConditionOrder.class);
 
     private final MonitorTimeRange monitorTimeRange;
-
-    public AbstractMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, OrderState orderState,
-                                        SecurityInfo securityInfo, LocalDateTime expireTime) {
-        super(orderId, tradeCustomerInfo, securityInfo, expireTime, orderState);
-        this.monitorTimeRange = NoneMonitorTimeRange.INSTANCE;
-    }
 
     public AbstractMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, OrderState orderState,
                                         SecurityInfo securityInfo, LocalDateTime expireTime, MonitorTimeRange monitorTimeRange) {
@@ -48,14 +41,17 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
         return getSecurityInfo().getMarketID();
     }
 
+    public MonitorTimeRange getMonitorTimeRange() {
+        return monitorTimeRange;
+    }
+
     @Override
     public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
         if (getOrderState() != OrderState.ACTIVE) {
             return Signals.none();
         }
 
-        // TODO: 是否合适？？？
-        if (!monitorTimeRange.isInRange(realTimeMarket.getMarketTime())) {
+        if (!monitorTimeRange.isInRange(realTimeMarket.getArriveTime())) {
             return Signals.none();
         }
 
