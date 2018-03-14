@@ -95,7 +95,8 @@ public class PriceOrderBuilder implements ConvertibleBuilder<PriceOrder> {
                 priceCondition,
                 expireTime,
                 (BasicTradePlan) tradePlan.build(),
-                delayConfirmParam.build()
+                delayConfirmParam.build(),
+                null
         );
     }
 }

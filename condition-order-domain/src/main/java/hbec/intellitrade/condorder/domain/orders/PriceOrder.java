@@ -35,37 +35,69 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
     private final DelayConfirmParam delayConfirmParam;
     private final MarketCondition compositeCondition;
 
-    public PriceOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, OrderState orderState, SecurityInfo securityInfo,
-                      PriceCondition priceCondition, LocalDateTime expireTime, BasicTradePlan tradePlan) {
-        this(orderId, tradeCustomerInfo, orderState, securityInfo, priceCondition, expireTime, tradePlan, DisabledDelayConfirmParam.INSTANCE);
+    public PriceOrder(Long orderId,
+                      TradeCustomerInfo tradeCustomerInfo,
+                      OrderState orderState,
+                      SecurityInfo securityInfo,
+                      PriceCondition priceCondition,
+                      LocalDateTime expireTime,
+                      BasicTradePlan tradePlan) {
+        this(orderId,
+             tradeCustomerInfo,
+             orderState,
+             securityInfo,
+             priceCondition,
+             expireTime,
+             tradePlan,
+             DisabledDelayConfirmParam.INSTANCE,
+             null);
     }
 
-    public PriceOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, OrderState orderState, SecurityInfo securityInfo,
-                      PriceCondition priceCondition, LocalDateTime expireTime, BasicTradePlan tradePlan, DelayConfirmParam delayConfirmParam) {
-        super(orderId, tradeCustomerInfo, securityInfo, expireTime, tradePlan, orderState);
-        this.priceCondition = priceCondition;
-        this.delayConfirmParam = delayConfirmParam;
-        this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(priceCondition, delayConfirmParam, 0);
+    public PriceOrder(Long orderId,
+                      TradeCustomerInfo tradeCustomerInfo,
+                      OrderState orderState,
+                      SecurityInfo securityInfo,
+                      PriceCondition priceCondition,
+                      LocalDateTime expireTime,
+                      BasicTradePlan tradePlan,
+                      DelayConfirmParam delayConfirmParam) {
+        this(orderId,
+             tradeCustomerInfo,
+             orderState,
+             securityInfo,
+             priceCondition,
+             expireTime,
+             tradePlan,
+             delayConfirmParam,
+             null);
     }
 
-    public PriceOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, OrderState orderState, SecurityInfo securityInfo,
-                      PriceCondition priceCondition, LocalDateTime expireTime, BasicTradePlan tradePlan, DelayConfirmParam delayConfirmParam,
+    public PriceOrder(Long orderId,
+                      TradeCustomerInfo tradeCustomerInfo,
+                      OrderState orderState,
+                      SecurityInfo securityInfo,
+                      PriceCondition priceCondition,
+                      LocalDateTime expireTime,
+                      BasicTradePlan tradePlan,
+                      DelayConfirmParam delayConfirmParam,
                       SingleDelayConfirmCount singleDelayConfirmCount) {
         super(orderId, tradeCustomerInfo, securityInfo, expireTime, tradePlan, orderState);
         this.priceCondition = priceCondition;
         this.delayConfirmParam = delayConfirmParam;
         int confirmedCount = singleDelayConfirmCount != null ? singleDelayConfirmCount.getConfirmedCount() : 0;
-        this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(priceCondition, delayConfirmParam,
-                confirmedCount);
+        this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(priceCondition,
+                                                                                 delayConfirmParam,
+                                                                                 confirmedCount);
     }
 
     @Override
-    public MarketCondition getCondition() {
+    protected MarketCondition getCondition() {
         return compositeCondition;
     }
 
     @Override
     public Condition getRawCondition() {
+        // TODO: 如何约束不可变性
         return priceCondition;
     }
 
@@ -151,13 +183,13 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(PriceOrder.class).omitNullValues()
-                .add("orderId", getOrderId())
-                .add("customer", getCustomer())
-                .add("strategyState", getOrderState())
-                .add("securityInfo", getSecurityInfo())
-                .add("condition", getCondition())
-                .add("expireTime", getExpireTime())
-                .add("tradePlan", getTradePlan())
-                .toString();
+                          .add("orderId", getOrderId())
+                          .add("customer", getCustomer())
+                          .add("strategyState", getOrderState())
+                          .add("securityInfo", getSecurityInfo())
+                          .add("condition", getCondition())
+                          .add("expireTime", getExpireTime())
+                          .add("tradePlan", getTradePlan())
+                          .toString();
     }
 }

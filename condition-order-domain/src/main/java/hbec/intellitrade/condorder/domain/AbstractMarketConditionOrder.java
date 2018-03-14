@@ -41,7 +41,7 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
      *
      * @return 行情条件
      */
-    public abstract MarketCondition getCondition();
+    protected abstract MarketCondition getCondition();
 
     @Override
     public MarketID getTrackMarketID() {
