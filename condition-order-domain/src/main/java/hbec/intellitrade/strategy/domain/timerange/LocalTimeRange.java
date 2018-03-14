@@ -12,6 +12,7 @@ import org.joda.time.LocalTime;
  * @date 2018/1/27
  */
 public class LocalTimeRange {
+    // TODO: 统一常量
     private static final LocalTime MARKET_OPEN_TIME = new LocalTime(9, 30, 0);
     private static final LocalTime MARKET_CLOSE_TIME = new LocalTime(15, 0, 0);
 

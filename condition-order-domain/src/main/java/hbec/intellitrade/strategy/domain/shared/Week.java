@@ -1,6 +1,7 @@
 package hbec.intellitrade.strategy.domain.shared;
 
 import hbec.intellitrade.common.ValuedEnum;
+import me.caosh.autoasm.ConvertibleEnum;
 
 /**
  * 星期
@@ -8,7 +9,7 @@ import hbec.intellitrade.common.ValuedEnum;
  * @author caoshuhao@touker.com
  * @date 2018/1/27
  */
-public enum Week implements ValuedEnum<Integer> {
+public enum Week implements ValuedEnum<Integer>, ConvertibleEnum<Integer> {
     /**
      * 星期一
      */

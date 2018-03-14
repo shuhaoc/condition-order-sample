@@ -9,6 +9,9 @@ import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanBuilder;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParamBuilder;
+import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
+import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
+import hbec.intellitrade.strategy.domain.timerange.WeekTimeRangeBuilder;
 import me.caosh.autoasm.ConvertibleBuilder;
 import org.joda.time.LocalDateTime;
 
@@ -27,6 +30,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
     private TradePlanBuilder tradePlan = new TradePlanBuilder();
     private DelayConfirmParamBuilder delayConfirmParam = new DelayConfirmParamBuilder();
     private DelayConfirmCount delayConfirmCount;
+    private WeekTimeRangeBuilder monitorTimeRange = new WeekTimeRangeBuilder();
 
     public ConditionOrderBuilder setOrderId(Long orderId) {
         this.orderId = orderId;
@@ -35,11 +39,6 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
 
     public TradeCustomerInfoBuilder getCustomer() {
         return customer;
-    }
-
-    public ConditionOrderBuilder setCustomer(TradeCustomerInfoBuilder customer) {
-        this.customer = customer;
-        return this;
     }
 
     public ConditionOrderBuilder setOrderState(OrderState orderState) {
@@ -51,27 +50,13 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return securityInfo;
     }
 
-    public ConditionOrderBuilder setSecurityInfo(SecurityInfoBuilder securityInfo) {
-        this.securityInfo = securityInfo;
-        return this;
-    }
-
     public StrategyInfoBuilder getStrategyInfo() {
         return strategyInfo;
-    }
-
-    public ConditionOrderBuilder setStrategyInfo(StrategyInfoBuilder strategyInfo) {
-        this.strategyInfo = strategyInfo;
-        return this;
     }
 
     public ConditionOrderBuilder setRawCondition(Condition rawCondition) {
         this.rawCondition = rawCondition;
         return this;
-    }
-
-    public LocalDateTime getExpireTime() {
-        return expireTime;
     }
 
     public void setExpireTime(LocalDateTime expireTime) {
@@ -82,18 +67,8 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return tradePlan;
     }
 
-    public ConditionOrderBuilder setTradePlan(TradePlanBuilder tradePlan) {
-        this.tradePlan = tradePlan;
-        return this;
-    }
-
     public DelayConfirmParamBuilder getDelayConfirmParam() {
         return delayConfirmParam;
-    }
-
-    public ConditionOrderBuilder setDelayConfirmParam(DelayConfirmParamBuilder delayConfirmParam) {
-        this.delayConfirmParam = delayConfirmParam;
-        return this;
     }
 
     public ConditionOrderBuilder setDelayConfirmCount(DelayConfirmCount delayConfirmCount) {
@@ -101,8 +76,14 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return this;
     }
 
+    public WeekTimeRangeBuilder getMonitorTimeRange() {
+        return monitorTimeRange;
+    }
+
     @Override
     public ConditionOrder build() {
+        MonitorTimeRange weekTimeRange = buildMonitorTimeRange();
+
         return ConditionOrderFactory.getInstance().create(
                 orderId,
                 customer.build(),
@@ -113,7 +94,18 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
                 expireTime,
                 tradePlan.build(),
                 delayConfirmParam.build(),
-                delayConfirmCount);
+                delayConfirmCount,
+                weekTimeRange);
+    }
+
+    private MonitorTimeRange buildMonitorTimeRange() {
+        MonitorTimeRange weekTimeRange;
+        if (monitorTimeRange.isValid()) {
+            weekTimeRange = monitorTimeRange.build();
+        } else {
+            weekTimeRange = NoneMonitorTimeRange.INSTANCE;
+        }
+        return weekTimeRange;
     }
 
     public static class StrategyInfoBuilder {

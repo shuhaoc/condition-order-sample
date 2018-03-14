@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by caosh on 2017/8/14.
@@ -43,7 +44,7 @@ public class ConditionOrderDO {
     private ConditionDO conditionPropertiesObj;
     @FieldMapping(mappedProperty = "rawCondition")
     private DynamicPropertiesDO dynamicPropertiesObj;
-    private java.util.Date expireTime;
+    private Date expireTime;
     @FieldMapping(mappedProperty = "tradePlan.exchangeType")
     private Integer exchangeType;
     @FieldMapping(mappedProperty = "tradePlan.entrustStrategy")
@@ -56,6 +57,14 @@ public class ConditionOrderDO {
     private Integer delayConfirmOption;
     @FieldMapping(mappedProperty = "delayConfirmParam.confirmTimes")
     private Integer delayConfirmTimes;
+    @FieldMapping(mappedProperty = "monitorTimeRange.weekRange.beginWeek")
+    private Integer beginWeek;
+    @FieldMapping(mappedProperty = "monitorTimeRange.weekRange.endWeek")
+    private Integer endWeek;
+    @FieldMapping(mappedProperty = "monitorTimeRange.localTimeRange.beginTime")
+    private Date beginTime;
+    @FieldMapping(mappedProperty = "monitorTimeRange.localTimeRange.endTime")
+    private Date endTime;
     private Timestamp createTime;
     private Timestamp updateTime;
 
@@ -199,11 +208,11 @@ public class ConditionOrderDO {
 
     @Basic
     @Column(name = "expire_time")
-    public java.util.Date getExpireTime() {
+    public Date getExpireTime() {
         return expireTime;
     }
 
-    public void setExpireTime(java.util.Date expireTime) {
+    public void setExpireTime(Date expireTime) {
         this.expireTime = expireTime;
     }
 

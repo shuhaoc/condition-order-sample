@@ -15,6 +15,7 @@ import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParam;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
+import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
 import me.caosh.condition.domain.model.condition.TurnUpCondition;
 import me.caosh.condition.domain.model.order.grid.GridCondition;
@@ -35,24 +36,43 @@ public class ConditionOrderFactory {
         return INSTANCE;
     }
 
-    public ConditionOrder create(Long orderId, TradeCustomerInfo tradeCustomerInfo, OrderState orderState,
-                                 SecurityInfo securityInfo, StrategyInfo strategyInfo, Condition condition,
-                                 LocalDateTime expireTime, TradePlan tradePlan, DelayConfirmParam delayConfirmParam,
-                                 DelayConfirmCount delayConfirmCount) {
+    public ConditionOrder create(Long orderId,
+                                 TradeCustomerInfo tradeCustomerInfo,
+                                 OrderState orderState,
+                                 SecurityInfo securityInfo,
+                                 StrategyInfo strategyInfo,
+                                 Condition condition,
+                                 LocalDateTime expireTime,
+                                 TradePlan tradePlan,
+                                 DelayConfirmParam delayConfirmParam,
+                                 DelayConfirmCount delayConfirmCount,
+                                 MonitorTimeRange monitorTimeRange) {
         if (strategyInfo == NativeStrategyInfo.PRICE) {
-            return new PriceOrder(orderId, tradeCustomerInfo, orderState, securityInfo, (PriceCondition) condition, expireTime,
-                    (BasicTradePlan) tradePlan, delayConfirmParam, (SingleDelayConfirmCount) delayConfirmCount);
+            return new PriceOrder(orderId,
+                                  tradeCustomerInfo,
+                                  orderState,
+                                  securityInfo,
+                                  (PriceCondition) condition,
+                                  expireTime,
+                                  (BasicTradePlan) tradePlan,
+                                  delayConfirmParam,
+                                  (SingleDelayConfirmCount) delayConfirmCount,
+                                  monitorTimeRange);
         } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {
             return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,
-                    null, (BasicTradePlan) tradePlan, orderState);
+                                      null, (BasicTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.TIME) {
             return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, (TimeReachedCondition) condition, expireTime,
-                    (BasicTradePlan) tradePlan, orderState);
+                                 (BasicTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.GRID) {
             return new GridTradeOrder(orderId, tradeCustomerInfo, securityInfo, (GridCondition) condition,
-                    null, (DoubleDirectionTradePlan) tradePlan, orderState);
+                                      null, (DoubleDirectionTradePlan) tradePlan, orderState);
         } else if (strategyInfo == NativeStrategyInfo.NEW_STOCK) {
-            return new NewStockOrder(orderId, tradeCustomerInfo, (NewStockPurchaseCondition) condition, expireTime, orderState);
+            return new NewStockOrder(orderId,
+                                     tradeCustomerInfo,
+                                     (NewStockPurchaseCondition) condition,
+                                     expireTime,
+                                     orderState);
         }
         throw new IllegalArgumentException("strategyInfo=" + strategyInfo);
     }
