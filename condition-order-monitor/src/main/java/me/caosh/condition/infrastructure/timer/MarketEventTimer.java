@@ -36,19 +36,26 @@ public class MarketEventTimer {
         Scheduler scheduler = schedulerFactory.getScheduler();
 
         LocalTime marketClosedTime = getMarketClosedTime();
-        TimeOfDay timeOfDayMarketClosed = new TimeOfDay(
-                marketClosedTime.getHourOfDay(), marketClosedTime.getMinuteOfHour(), marketClosedTime.getSecondOfMinute());
+        LocalTime marketClosedTimeEnd = getMarketClosedTime().plusMinutes(1);
+        TimeOfDay timeOfDayMarketClosed = transformToTimeOfDay(marketClosedTime);
+        TimeOfDay timeOfDayMarketClosedEnd = transformToTimeOfDay(marketClosedTimeEnd);
         JobDetail jobDetail = JobBuilder.newJob(MarketClosedEventJob.class)
-                .withIdentity("marketClosed", "engine")
-                .build();
+                                        .withIdentity("marketClosed", "engine")
+                                        .build();
         Trigger trigger = TriggerBuilder.newTrigger()
-                .withIdentity("marketClosed", "engine")
-                .withSchedule(DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule()
-                        .onEveryDay()
-                        .startingDailyAt(timeOfDayMarketClosed)
-                        .withRepeatCount(0))
-                .build();
+                                        .withIdentity("marketClosed", "engine")
+                                        .withSchedule(DailyTimeIntervalScheduleBuilder
+                                                              .dailyTimeIntervalSchedule()
+                                                              .onMondayThroughFriday()
+                                                              .startingDailyAt(timeOfDayMarketClosed)
+                                                              .endingDailyAt(timeOfDayMarketClosedEnd)
+                                                              .withRepeatCount(0))
+                                        .build();
         scheduler.scheduleJob(jobDetail, trigger);
         scheduler.start();
+    }
+
+    private static TimeOfDay transformToTimeOfDay(LocalTime localTime) {
+        return new TimeOfDay(localTime.getHourOfDay(), localTime.getMinuteOfHour(), localTime.getSecondOfMinute());
     }
 }

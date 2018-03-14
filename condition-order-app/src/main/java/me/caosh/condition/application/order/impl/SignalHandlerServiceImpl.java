@@ -64,9 +64,10 @@ public class SignalHandlerServiceImpl implements SignalHandlerService {
         }
 
         TriggerTradingContext triggerTradingContext = createTriggerTradingContext(signalPayload, signal, conditionOrder);
+        logger.info("Trigger context => {}", triggerTradingContext);
 
         if (signal instanceof BS) {
-            logger.info("{} signal raised => {}", conditionOrder);
+            logger.info("{} signal raised => {}", signal, conditionOrder);
             conditionOrder.onTradeSignal(triggerTradingContext);
             conditionOrderRepository.update(conditionOrder);
         } else if (signal instanceof Expire) {

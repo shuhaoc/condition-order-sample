@@ -95,12 +95,11 @@ public class BasicTriggerTradingContext implements TriggerTradingContext {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(BasicTriggerTradingContext.class).omitNullValues()
-                .add("signal", signal)
-                .add("conditionOrder", conditionOrder)
-                .add("tradeCustomer", tradeCustomer)
-                .add("realTimeMarketService", realTimeMarketSupplier)
-                .add("triggerMarket", triggerMarket)
-                .add("tradingMarket", tradingMarket)
-                .toString();
+                          .add("signal", signal)
+                          .add("conditionOrder", conditionOrder)
+                          .add("tradeCustomer", tradeCustomer)
+                          .add("triggerMarket", triggerMarket)
+                          .add("tradingMarket", tradingMarket)
+                          .toString();
     }
 }
