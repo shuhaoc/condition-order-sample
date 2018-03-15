@@ -19,10 +19,6 @@ public class LocalTimeRangeBuilder implements ConvertibleBuilder<LocalTimeRange>
         this.endTime = endTime;
     }
 
-    public boolean isValid() {
-        return beginTime != null || endTime != null;
-    }
-
     @Override
     public LocalTimeRange build() {
         return new LocalTimeRange(beginTime, endTime);

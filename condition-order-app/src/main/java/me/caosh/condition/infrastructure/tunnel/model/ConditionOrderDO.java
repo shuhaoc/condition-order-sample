@@ -2,6 +2,7 @@ package me.caosh.condition.infrastructure.tunnel.model;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.autoasm.FieldMapping;
+import org.joda.time.LocalTime;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -57,14 +58,16 @@ public class ConditionOrderDO {
     private Integer delayConfirmOption;
     @FieldMapping(mappedProperty = "delayConfirmParam.confirmTimes")
     private Integer delayConfirmTimes;
+    @FieldMapping(mappedProperty = "monitorTimeRange.option")
+    private Integer monitorTimeRangeOption;
     @FieldMapping(mappedProperty = "monitorTimeRange.weekRange.beginWeek")
-    private Integer beginWeek;
+    private Integer beginWeek = 1;
     @FieldMapping(mappedProperty = "monitorTimeRange.weekRange.endWeek")
-    private Integer endWeek;
+    private Integer endWeek = 5;
     @FieldMapping(mappedProperty = "monitorTimeRange.localTimeRange.beginTime")
-    private Date beginTime;
+    private Date beginTime = LocalTime.MIDNIGHT.toDateTimeToday().toDate();
     @FieldMapping(mappedProperty = "monitorTimeRange.localTimeRange.endTime")
-    private Date endTime;
+    private Date endTime = LocalTime.MIDNIGHT.toDateTimeToday().toDate();
     private Timestamp createTime;
     private Timestamp updateTime;
 
@@ -193,7 +196,8 @@ public class ConditionOrderDO {
     }
 
     public void setConditionProperties(String conditionProperties) {
-        this.conditionPropertiesObj = ConditionOrderDOGSONUtils.getGSON().fromJson(conditionProperties, ConditionDO.class);
+        this.conditionPropertiesObj = ConditionOrderDOGSONUtils.getGSON()
+                                                               .fromJson(conditionProperties, ConditionDO.class);
     }
 
     @Basic
@@ -203,7 +207,8 @@ public class ConditionOrderDO {
     }
 
     public void setDynamicProperties(String dynamicProperties) {
-        this.dynamicPropertiesObj = ConditionOrderDOGSONUtils.getGSON().fromJson(dynamicProperties, DynamicPropertiesDO.class);
+        this.dynamicPropertiesObj = ConditionOrderDOGSONUtils.getGSON()
+                                                             .fromJson(dynamicProperties, DynamicPropertiesDO.class);
     }
 
     @Basic
@@ -277,6 +282,56 @@ public class ConditionOrderDO {
     }
 
     @Basic
+    @Column(name = "monitor_time_range_option")
+    public Integer getMonitorTimeRangeOption() {
+        return monitorTimeRangeOption;
+    }
+
+    public void setMonitorTimeRangeOption(Integer monitorTimeRangeOption) {
+        this.monitorTimeRangeOption = monitorTimeRangeOption;
+    }
+
+    @Basic
+    @Column(name = "begin_week")
+    public Integer getBeginWeek() {
+        return beginWeek;
+    }
+
+    public void setBeginWeek(Integer beginWeek) {
+        this.beginWeek = beginWeek;
+    }
+
+    @Basic
+    @Column(name = "end_week")
+    public Integer getEndWeek() {
+        return endWeek;
+    }
+
+    public void setEndWeek(Integer endWeek) {
+        this.endWeek = endWeek;
+    }
+
+    @Basic
+    @Column(name = "begin_time")
+    public Date getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    @Basic
+    @Column(name = "end_time")
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    @Basic
     @Column(name = "create_time")
     public Timestamp getCreateTime() {
         return createTime;
@@ -299,24 +354,24 @@ public class ConditionOrderDO {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(ConditionOrderDO.class).omitNullValues()
-                .add("orderId", orderId)
-                .add("userId", userId)
-                .add("customerNo", customerNo)
-                .add("deleted", deleted)
-                .add("orderState", orderState)
-                .add("securityType", securityType)
-                .add("securityCode", securityCode)
-                .add("securityExchange", securityExchange)
-                .add("securityName", securityName)
-                .add("strategyType", strategyType)
-                .add("conditionPropertiesObj", conditionPropertiesObj)
-                .add("dynamicPropertiesObj", dynamicPropertiesObj)
-                .add("exchangeType", exchangeType)
-                .add("entrustStrategy", entrustStrategy)
-                .add("entrustMethod", entrustMethod)
-                .add("entrustAmount", entrustAmount)
-                .add("createTime", createTime)
-                .add("updateTime", updateTime)
-                .toString();
+                          .add("orderId", orderId)
+                          .add("userId", userId)
+                          .add("customerNo", customerNo)
+                          .add("deleted", deleted)
+                          .add("orderState", orderState)
+                          .add("securityType", securityType)
+                          .add("securityCode", securityCode)
+                          .add("securityExchange", securityExchange)
+                          .add("securityName", securityName)
+                          .add("strategyType", strategyType)
+                          .add("conditionPropertiesObj", conditionPropertiesObj)
+                          .add("dynamicPropertiesObj", dynamicPropertiesObj)
+                          .add("exchangeType", exchangeType)
+                          .add("entrustStrategy", entrustStrategy)
+                          .add("entrustMethod", entrustMethod)
+                          .add("entrustAmount", entrustAmount)
+                          .add("createTime", createTime)
+                          .add("updateTime", updateTime)
+                          .toString();
     }
 }

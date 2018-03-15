@@ -9,9 +9,7 @@ import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanBuilder;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParamBuilder;
-import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
-import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
-import hbec.intellitrade.strategy.domain.timerange.WeekTimeRangeBuilder;
+import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRangeBuilder;
 import me.caosh.autoasm.ConvertibleBuilder;
 import org.joda.time.LocalDateTime;
 
@@ -30,7 +28,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
     private TradePlanBuilder tradePlan = new TradePlanBuilder();
     private DelayConfirmParamBuilder delayConfirmParam = new DelayConfirmParamBuilder();
     private DelayConfirmCount delayConfirmCount;
-    private WeekTimeRangeBuilder monitorTimeRange = new WeekTimeRangeBuilder();
+    private MonitorTimeRangeBuilder monitorTimeRange = new MonitorTimeRangeBuilder();
 
     public ConditionOrderBuilder setOrderId(Long orderId) {
         this.orderId = orderId;
@@ -39,6 +37,10 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
 
     public TradeCustomerInfoBuilder getCustomer() {
         return customer;
+    }
+
+    public void setCustomer(TradeCustomerInfoBuilder customer) {
+        this.customer = customer;
     }
 
     public ConditionOrderBuilder setOrderState(OrderState orderState) {
@@ -50,8 +52,16 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return securityInfo;
     }
 
+    public void setSecurityInfo(SecurityInfoBuilder securityInfo) {
+        this.securityInfo = securityInfo;
+    }
+
     public StrategyInfoBuilder getStrategyInfo() {
         return strategyInfo;
+    }
+
+    public void setStrategyInfo(StrategyInfoBuilder strategyInfo) {
+        this.strategyInfo = strategyInfo;
     }
 
     public ConditionOrderBuilder setRawCondition(Condition rawCondition) {
@@ -67,8 +77,16 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return tradePlan;
     }
 
+    public void setTradePlan(TradePlanBuilder tradePlan) {
+        this.tradePlan = tradePlan;
+    }
+
     public DelayConfirmParamBuilder getDelayConfirmParam() {
         return delayConfirmParam;
+    }
+
+    public void setDelayConfirmParam(DelayConfirmParamBuilder delayConfirmParam) {
+        this.delayConfirmParam = delayConfirmParam;
     }
 
     public ConditionOrderBuilder setDelayConfirmCount(DelayConfirmCount delayConfirmCount) {
@@ -76,14 +94,16 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return this;
     }
 
-    public WeekTimeRangeBuilder getMonitorTimeRange() {
+    public MonitorTimeRangeBuilder getMonitorTimeRange() {
         return monitorTimeRange;
+    }
+
+    public void setMonitorTimeRange(MonitorTimeRangeBuilder monitorTimeRange) {
+        this.monitorTimeRange = monitorTimeRange;
     }
 
     @Override
     public ConditionOrder build() {
-        MonitorTimeRange weekTimeRange = buildMonitorTimeRange();
-
         return ConditionOrderFactory.getInstance().create(
                 orderId,
                 customer.build(),
@@ -95,17 +115,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
                 tradePlan.build(),
                 delayConfirmParam.build(),
                 delayConfirmCount,
-                weekTimeRange);
-    }
-
-    private MonitorTimeRange buildMonitorTimeRange() {
-        MonitorTimeRange weekTimeRange;
-        if (monitorTimeRange.isValid()) {
-            weekTimeRange = monitorTimeRange.build();
-        } else {
-            weekTimeRange = NoneMonitorTimeRange.INSTANCE;
-        }
-        return weekTimeRange;
+                monitorTimeRange.build());
     }
 
     public static class StrategyInfoBuilder {

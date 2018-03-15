@@ -25,14 +25,6 @@ public class LocalTimeRangeTest {
         assertEquals(timeRange.toString(), "LocalTimeRange[10:00:00.000, 11:00:00.000]");
     }
 
-    @Test
-    public void testDefaultValue() throws Exception {
-        LocalTimeRange defaultTimeRange = new LocalTimeRange(null, null);
-        LocalTimeRange timeRange = new LocalTimeRange(new LocalTime(9, 30, 0),
-                new LocalTime(15, 0, 0));
-        assertEquals(defaultTimeRange, timeRange);
-    }
-
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testIllegal() throws Exception {
         new LocalTimeRange(new LocalTime(10, 0, 0),

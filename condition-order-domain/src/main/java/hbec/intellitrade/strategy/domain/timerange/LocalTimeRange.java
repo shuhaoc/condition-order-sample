@@ -1,6 +1,6 @@
 package hbec.intellitrade.strategy.domain.timerange;
 
-import com.google.common.base.MoreObjects;
+import com.google.common.base.Preconditions;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.shared.Range;
 import org.joda.time.LocalTime;
@@ -25,9 +25,15 @@ public class LocalTimeRange {
      * @param endTime   结束时间，空视为0点前1毫秒
      */
     public LocalTimeRange(LocalTime beginTime, LocalTime endTime) {
-        LocalTime beginTime1 = MoreObjects.firstNonNull(beginTime, MARKET_OPEN_TIME);
-        LocalTime endTime1 = MoreObjects.firstNonNull(endTime, MARKET_CLOSE_TIME);
-        this.timeRange = new Range<>(beginTime1, endTime1, CompareOperator.GE, CompareOperator.LE);
+        Preconditions.checkNotNull(beginTime, "beginTime cannot be null");
+        Preconditions.checkNotNull(endTime, "endTime cannot be null");
+        Preconditions.checkArgument(beginTime.compareTo(MARKET_OPEN_TIME) >= 0,
+                                    "Begin time should be later than or equals market open time");
+        Preconditions.checkArgument(endTime.compareTo(beginTime) >= 0,
+                                    "End time should be later than or equals begin time");
+        Preconditions.checkArgument(endTime.compareTo(MARKET_CLOSE_TIME) <= 0,
+                                    "End time should be earlier than or equals market close time");
+        this.timeRange = new Range<>(beginTime, endTime, CompareOperator.GE, CompareOperator.LE);
     }
 
     public LocalTime getBeginTime() {

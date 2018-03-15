@@ -28,6 +28,7 @@ public class ConditionOrderDTO implements Serializable {
     private TradePlanDTO tradePlan;
     private DelayConfirmParamDTO delayConfirmParam;
     private DelayConfirmCountDTO delayConfirmCount;
+    private MonitorTimeRangeDTO monitorTimeRange;
 
     public Long getOrderId() {
         return orderId;
@@ -117,20 +118,29 @@ public class ConditionOrderDTO implements Serializable {
         this.delayConfirmCount = delayConfirmCount;
     }
 
+    public MonitorTimeRangeDTO getMonitorTimeRange() {
+        return monitorTimeRange;
+    }
+
+    public void setMonitorTimeRange(MonitorTimeRangeDTO monitorTimeRange) {
+        this.monitorTimeRange = monitorTimeRange;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(ConditionOrderDTO.class).omitNullValues()
-                .add("orderId", orderId)
-                .add("customer", customer)
-                .add("deleted", deleted)
-                .add("orderState", orderState)
-                .add("securityInfo", securityInfo)
-                .add("strategyType", strategyType)
-                .add("rawCondition", rawCondition)
-                .add("expireTime", expireTime)
-                .add("tradePlan", tradePlan)
-                .add("delayConfirmParam", delayConfirmParam)
-                .add("delayConfirmCount", delayConfirmCount)
-                .toString();
+                          .add("orderId", orderId)
+                          .add("customer", customer)
+                          .add("deleted", deleted)
+                          .add("orderState", orderState)
+                          .add("securityInfo", securityInfo)
+                          .add("strategyType", strategyType)
+                          .add("rawCondition", rawCondition)
+                          .add("expireTime", expireTime)
+                          .add("tradePlan", tradePlan)
+                          .add("delayConfirmParam", delayConfirmParam)
+                          .add("delayConfirmCount", delayConfirmCount)
+                          .add("monitorTimeRange", monitorTimeRange)
+                          .toString();
     }
 }

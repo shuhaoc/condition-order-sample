@@ -15,18 +15,25 @@ import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberByAmount;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.EnabledDelayConfirmParam;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
+import hbec.intellitrade.strategy.domain.shared.Week;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
+import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
+import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRangeOption;
+import hbec.intellitrade.strategy.domain.timerange.WeekRange;
+import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
 import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;
 import org.joda.time.LocalDateTime;
-import org.junit.Test;
+import org.joda.time.LocalTime;
+import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
+
 
 /**
  * @author caoshuhao@touker.com
@@ -42,7 +49,10 @@ public class ConditionOrderDoAssemblerTest {
 
     @Test
     public void testPriceConditionOrder() throws Exception {
-        SecurityInfo securityInfo = new SecurityInfo(SecurityType.STOCK, SECURITY_CODE, SecurityExchange.SH, SECURITY_NAME);
+        SecurityInfo securityInfo = new SecurityInfo(SecurityType.STOCK,
+                                                     SECURITY_CODE,
+                                                     SecurityExchange.SH,
+                                                     SECURITY_NAME);
         ConditionOrder conditionOrder = new PriceOrder(
                 ORDER_ID,
                 new TradeCustomerInfo(USER_ID, CUSTOMER_NO),
@@ -50,10 +60,14 @@ public class ConditionOrderDoAssemblerTest {
                 new PriceCondition(CompareOperator.GE, new BigDecimal("10.00")),
                 LocalDateTime.parse("2018-03-12T15:00:00"),
                 new BasicTradePlan(ExchangeType.SELL, EntrustStrategy.BUY1,
-                        new TradeNumberByAmount(new BigDecimal("10000.00"))),
-                new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3)
+                                   new TradeNumberByAmount(new BigDecimal("10000.00"))),
+                new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3),
+                null,
+                new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
+                                  new LocalTimeRange(LocalTime.parse("10:00:00"), LocalTime.parse("10:30:00")))
         );
-        ConditionOrderDO conditionOrderDO = AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDO.class);
+        ConditionOrderDO conditionOrderDO = AutoAssemblers.getDefault()
+                                                          .assemble(conditionOrder, ConditionOrderDO.class);
         assertEquals(conditionOrderDO.getOrderId().longValue(), ORDER_ID);
         assertEquals(conditionOrderDO.getUserId().intValue(), USER_ID);
         assertEquals(conditionOrderDO.getCustomerNo(), CUSTOMER_NO);
@@ -64,20 +78,27 @@ public class ConditionOrderDoAssemblerTest {
         assertEquals(conditionOrderDO.getSecurityExchange(), SecurityExchange.SH.name());
         assertEquals(conditionOrderDO.getSecurityName(), SECURITY_NAME);
         assertEquals(conditionOrderDO.getStrategyType().intValue(), NativeStrategyInfo.PRICE.getStrategyType());
-        assertEquals(conditionOrderDO.getConditionProperties(), "{\"type\":\"PriceConditionDO\",\"compareOperator\":1,\"targetPrice\":10.00}");
+        assertEquals(conditionOrderDO.getConditionProperties(),
+                     "{\"type\":\"PriceConditionDO\",\"compareOperator\":1,\"targetPrice\":10.00}");
         assertNull(conditionOrderDO.getDynamicPropertiesObj());
         assertEquals(conditionOrderDO.getExpireTime(), LocalDateTime.parse("2018-03-12T15:00:00").toDate());
         assertEquals(conditionOrderDO.getExchangeType(), ExchangeType.SELL.getValue());
         assertEquals(conditionOrderDO.getEntrustStrategy(), EntrustStrategy.BUY1.getValue());
         assertEquals(conditionOrderDO.getEntrustMethod(), EntrustMethod.AMOUNT.getValue());
         assertEquals(conditionOrderDO.getEntrustAmount(), new BigDecimal("10000.00"));
-        assertEquals(conditionOrderDO.getDelayConfirmOption().intValue(), 1);
+        assertEquals(conditionOrderDO.getDelayConfirmOption(), DelayConfirmOption.ACCUMULATE.getValue());
         assertEquals(conditionOrderDO.getDelayConfirmTimes().intValue(), 3);
+        assertEquals(conditionOrderDO.getMonitorTimeRangeOption(), MonitorTimeRangeOption.ENABLED.getValue());
+        assertEquals(conditionOrderDO.getBeginWeek(), Week.TUE.getValue());
+        assertEquals(conditionOrderDO.getEndWeek(), Week.THU.getValue());
+        assertEquals(conditionOrderDO.getBeginTime(), LocalTime.parse("10:00:00").toDateTimeToday().toDate());
+        assertEquals(conditionOrderDO.getEndTime(), LocalTime.parse("10:30:00").toDateTimeToday().toDate());
         assertNull(conditionOrderDO.getCreateTime());
         assertNull(conditionOrderDO.getUpdateTime());
 
-        ConditionOrder conditionOrder1 = AutoAssemblers.getDefault().disassemble(conditionOrderDO, ConditionOrderBuilder.class)
-                .build();
+        ConditionOrder conditionOrder1 = AutoAssemblers.getDefault()
+                                                       .disassemble(conditionOrderDO, ConditionOrderBuilder.class)
+                                                       .build();
         assertEquals(conditionOrder1, conditionOrder);
     }
 }

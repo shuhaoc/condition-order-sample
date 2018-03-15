@@ -19,10 +19,6 @@ public class WeekRangeBuilder implements ConvertibleBuilder<WeekRange> {
         this.endWeek = endWeek;
     }
 
-    public boolean isValid() {
-        return beginWeek != null || endWeek != null;
-    }
-
     @Override
     public WeekRange build() {
         return new WeekRange(beginWeek, endWeek);

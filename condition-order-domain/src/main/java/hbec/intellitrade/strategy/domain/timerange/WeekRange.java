@@ -1,7 +1,7 @@
 package hbec.intellitrade.strategy.domain.timerange;
 
 import com.google.common.base.Function;
-import com.google.common.base.MoreObjects;
+import com.google.common.base.Preconditions;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.shared.Range;
 import hbec.intellitrade.strategy.domain.shared.Ranges;
@@ -24,9 +24,11 @@ public class WeekRange {
      * @param endWeek   结束星期，空视为周五
      */
     public WeekRange(Week beginWeek, Week endWeek) {
-        Week beginWeekNotNull = MoreObjects.firstNonNull(beginWeek, Week.MON);
-        Week endWeekNotNull = MoreObjects.firstNonNull(endWeek, Week.FRI);
-        this.weekRange = new Range<>(beginWeekNotNull, endWeekNotNull, CompareOperator.GE, CompareOperator.LE);
+        Preconditions.checkNotNull(beginWeek, "beginWeek cannot be null");
+        Preconditions.checkNotNull(endWeek, "endWeek cannot be null");
+        Preconditions.checkArgument(endWeek.compareTo(beginWeek) >= 0,
+                                    "End week should be later than or equals begin week");
+        this.weekRange = new Range<>(beginWeek, endWeek, CompareOperator.GE, CompareOperator.LE);
     }
 
     public Week getBeginWeek() {

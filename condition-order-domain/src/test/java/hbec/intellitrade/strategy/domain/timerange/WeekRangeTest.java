@@ -26,13 +26,6 @@ public class WeekRangeTest {
         assertEquals(weekRange.toString(), "LocalTimeRange[TUE, THU]");
     }
 
-    @Test
-    public void testDefaultValue() throws Exception {
-        WeekRange defaultWeekRange = new WeekRange(null, null);
-        WeekRange weekRange = new WeekRange(Week.MON, Week.FRI);
-        assertEquals(defaultWeekRange, weekRange);
-    }
-
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testIllegal() throws Exception {
         new WeekRange(Week.FRI, Week.MON);

@@ -18,4 +18,13 @@ public enum NoneMonitorTimeRange implements MonitorTimeRange {
     public boolean isInRange(LocalDateTime localDateTime) {
         return true;
     }
+
+    /**
+     * 获取对应的监控时段选项，用于POJO装载
+     *
+     * @return 监控时段选项
+     */
+    public MonitorTimeRangeOption getOption() {
+        return MonitorTimeRangeOption.DISABLED;
+    }
 }

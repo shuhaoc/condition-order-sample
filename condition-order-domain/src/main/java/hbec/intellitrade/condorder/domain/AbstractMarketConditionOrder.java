@@ -65,4 +65,28 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
         }
         return Signals.none();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+
+        AbstractMarketConditionOrder that = (AbstractMarketConditionOrder) o;
+
+        return monitorTimeRange.equals(that.monitorTimeRange);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + monitorTimeRange.hashCode();
+        return result;
+    }
 }

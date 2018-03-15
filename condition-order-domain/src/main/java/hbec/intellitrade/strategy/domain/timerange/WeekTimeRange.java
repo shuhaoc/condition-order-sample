@@ -1,7 +1,6 @@
 package hbec.intellitrade.strategy.domain.timerange;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import org.joda.time.LocalDateTime;
 
@@ -24,18 +23,27 @@ public class WeekTimeRange implements MonitorTimeRange {
      * @param localTimeRange 时间范围，可为空
      */
     public WeekTimeRange(WeekRange weekRange, LocalTimeRange localTimeRange) {
-        Preconditions.checkArgument(weekRange != null || localTimeRange != null,
-                "Week range and time range are both null");
+        Preconditions.checkArgument(weekRange != null && localTimeRange != null,
+                                    "Week range and time range are both null");
         this.weekRange = weekRange;
         this.localTimeRange = localTimeRange;
     }
 
-    public Optional<WeekRange> getWeekRange() {
-        return Optional.fromNullable(weekRange);
+    public WeekRange getWeekRange() {
+        return weekRange;
     }
 
-    public Optional<LocalTimeRange> getLocalTimeRange() {
-        return Optional.fromNullable(localTimeRange);
+    public LocalTimeRange getLocalTimeRange() {
+        return localTimeRange;
+    }
+
+    /**
+     * 获取对应的监控时段选项，用于POJO装载
+     *
+     * @return 监控时段选项
+     */
+    public MonitorTimeRangeOption getOption() {
+        return MonitorTimeRangeOption.ENABLED;
     }
 
     @Override

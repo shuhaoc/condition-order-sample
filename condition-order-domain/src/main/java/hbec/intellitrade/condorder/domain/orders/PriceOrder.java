@@ -197,13 +197,17 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
 
         PriceOrder that = (PriceOrder) o;
 
-        return priceCondition.equals(that.priceCondition);
+        if (!priceCondition.equals(that.priceCondition)) {
+            return false;
+        }
+        return delayConfirmParam.equals(that.delayConfirmParam);
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + priceCondition.hashCode();
+        result = 31 * result + delayConfirmParam.hashCode();
         return result;
     }
 
@@ -212,11 +216,12 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
         return MoreObjects.toStringHelper(PriceOrder.class).omitNullValues()
                           .add("orderId", getOrderId())
                           .add("customer", getCustomer())
-                          .add("strategyState", getOrderState())
+                          .add("orderState", getOrderState())
                           .add("securityInfo", getSecurityInfo())
                           .add("condition", getCondition())
                           .add("expireTime", getExpireTime())
                           .add("tradePlan", getTradePlan())
+                          .add("monitorTimeRange", getMonitorTimeRange())
                           .toString();
     }
 }

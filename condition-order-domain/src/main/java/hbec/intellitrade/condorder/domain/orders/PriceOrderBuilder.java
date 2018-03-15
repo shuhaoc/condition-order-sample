@@ -7,6 +7,7 @@ import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanBuilder;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParamBuilder;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
+import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRangeBuilder;
 import me.caosh.autoasm.ConvertibleBuilder;
 import org.joda.time.LocalDateTime;
 
@@ -23,6 +24,7 @@ public class PriceOrderBuilder implements ConvertibleBuilder<PriceOrder> {
     private TradePlanBuilder tradePlan = new TradePlanBuilder();
     private OrderState orderState;
     private DelayConfirmParamBuilder delayConfirmParam = new DelayConfirmParamBuilder();
+    private MonitorTimeRangeBuilder monitorTimeRange = new MonitorTimeRangeBuilder();
 
     public PriceOrderBuilder setOrderId(Long orderId) {
         this.orderId = orderId;
@@ -86,17 +88,27 @@ public class PriceOrderBuilder implements ConvertibleBuilder<PriceOrder> {
         return this;
     }
 
+    public MonitorTimeRangeBuilder getMonitorTimeRange() {
+        return monitorTimeRange;
+    }
+
+    public void setMonitorTimeRange(MonitorTimeRangeBuilder monitorTimeRange) {
+        this.monitorTimeRange = monitorTimeRange;
+    }
+
     @Override
     public PriceOrder build() {
         return new PriceOrder(
                 orderId,
                 tradeCustomerInfo,
-                orderState, securityInfo.build(),
+                orderState,
+                securityInfo.build(),
                 priceCondition,
                 expireTime,
                 (BasicTradePlan) tradePlan.build(),
                 delayConfirmParam.build(),
-                null
+                null,
+                monitorTimeRange.build()
         );
     }
 }
