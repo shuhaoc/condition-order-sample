@@ -2,6 +2,7 @@ package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.dto.order.DelayConfirmParamDTO;
+import me.caosh.condition.domain.dto.order.MonitorTimeRangeDTO;
 import me.caosh.condition.domain.dto.order.PriceConditionDTO;
 import me.caosh.condition.domain.dto.order.TradePlanDTO;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,6 +34,9 @@ public class PriceOrderUpdateCommand implements Serializable {
 
     @Valid
     private DelayConfirmParamDTO delayConfirmParam;
+
+    @Valid
+    private MonitorTimeRangeDTO monitorTimeRange;
 
     public Long getOrderId() {
         return orderId;
@@ -74,14 +78,23 @@ public class PriceOrderUpdateCommand implements Serializable {
         this.delayConfirmParam = delayConfirmParam;
     }
 
+    public MonitorTimeRangeDTO getMonitorTimeRange() {
+        return monitorTimeRange;
+    }
+
+    public void setMonitorTimeRange(MonitorTimeRangeDTO monitorTimeRange) {
+        this.monitorTimeRange = monitorTimeRange;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(PriceOrderUpdateCommand.class).omitNullValues()
-                .add("orderId", orderId)
-                .add("priceCondition", priceCondition)
-                .add("expireTime", expireTime)
-                .add("tradePlan", tradePlan)
-                .add("delayConfirmParam", delayConfirmParam)
-                .toString();
+                          .add("orderId", orderId)
+                          .add("priceCondition", priceCondition)
+                          .add("expireTime", expireTime)
+                          .add("tradePlan", tradePlan)
+                          .add("delayConfirmParam", delayConfirmParam)
+                          .add("monitorTimeRange", monitorTimeRange)
+                          .toString();
     }
 }
