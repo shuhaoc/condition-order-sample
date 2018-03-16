@@ -1,12 +1,9 @@
 package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
+import me.caosh.autoasm.FieldMapping;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
-import me.caosh.condition.domain.dto.order.DelayConfirmParamDTO;
-import me.caosh.condition.domain.dto.order.DeviationCtrlParamDTO;
-import me.caosh.condition.domain.dto.order.MonitorTimeRangeDTO;
-import me.caosh.condition.domain.dto.order.PriceConditionDTO;
-import me.caosh.condition.domain.dto.order.TradePlanDTO;
+import me.caosh.condition.domain.dto.order.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.Valid;
@@ -26,6 +23,7 @@ public class PriceOrderCreateCommand implements Serializable {
     private SecurityInfoDTO securityInfo;
 
     @NotNull
+    @FieldMapping(mappedProperty = "rawCondition")
     private PriceConditionDTO priceCondition;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

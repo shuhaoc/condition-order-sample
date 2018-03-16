@@ -41,8 +41,9 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return customer;
     }
 
-    public void setCustomer(TradeCustomerInfoBuilder customer) {
+    public ConditionOrderBuilder setCustomer(TradeCustomerInfoBuilder customer) {
         this.customer = customer;
+        return this;
     }
 
     public ConditionOrderBuilder setOrderState(OrderState orderState) {
@@ -54,16 +55,18 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return securityInfo;
     }
 
-    public void setSecurityInfo(SecurityInfoBuilder securityInfo) {
+    public ConditionOrderBuilder setSecurityInfo(SecurityInfoBuilder securityInfo) {
         this.securityInfo = securityInfo;
+        return this;
     }
 
     public StrategyInfoBuilder getStrategyInfo() {
         return strategyInfo;
     }
 
-    public void setStrategyInfo(StrategyInfoBuilder strategyInfo) {
+    public ConditionOrderBuilder setStrategyInfo(StrategyInfoBuilder strategyInfo) {
         this.strategyInfo = strategyInfo;
+        return this;
     }
 
     public ConditionOrderBuilder setRawCondition(Condition rawCondition) {

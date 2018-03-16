@@ -10,21 +10,12 @@ import hbec.intellitrade.condorder.domain.orders.PriceOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
-import hbec.intellitrade.condorder.domain.tradeplan.DoubleDirectionTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParam;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
-import me.caosh.condition.domain.model.condition.TimeReachedCondition;
-import me.caosh.condition.domain.model.condition.TurnUpCondition;
-import me.caosh.condition.domain.model.order.grid.GridCondition;
-import me.caosh.condition.domain.model.order.grid.GridTradeOrder;
-import me.caosh.condition.domain.model.order.newstock.NewStockOrder;
-import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
-import me.caosh.condition.domain.model.order.time.TimeOrder;
-import me.caosh.condition.domain.model.order.turnpoint.TurnUpBuyOrder;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -61,21 +52,21 @@ public class ConditionOrderFactory {
                                   (SingleDelayConfirmCount) delayConfirmCount,
                                   monitorTimeRange,
                                   deviationCtrlParam);
-        } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {
-            return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,
-                                      null, (BasicTradePlan) tradePlan, orderState);
-        } else if (strategyInfo == NativeStrategyInfo.TIME) {
-            return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, (TimeReachedCondition) condition, expireTime,
-                                 (BasicTradePlan) tradePlan, orderState);
-        } else if (strategyInfo == NativeStrategyInfo.GRID) {
-            return new GridTradeOrder(orderId, tradeCustomerInfo, securityInfo, (GridCondition) condition,
-                                      null, (DoubleDirectionTradePlan) tradePlan, orderState);
-        } else if (strategyInfo == NativeStrategyInfo.NEW_STOCK) {
-            return new NewStockOrder(orderId,
-                                     tradeCustomerInfo,
-                                     (NewStockPurchaseCondition) condition,
-                                     expireTime,
-                                     orderState);
+//        } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {
+//            return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,
+//                                      null, (BasicTradePlan) tradePlan, orderState);
+//        } else if (strategyInfo == NativeStrategyInfo.TIME) {
+//            return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, (TimeReachedCondition) condition, expireTime,
+//                                 (BasicTradePlan) tradePlan, orderState);
+//        } else if (strategyInfo == NativeStrategyInfo.GRID) {
+//            return new GridTradeOrder(orderId, tradeCustomerInfo, securityInfo, (GridCondition) condition,
+//                                      null, (DoubleDirectionTradePlan) tradePlan, orderState);
+//        } else if (strategyInfo == NativeStrategyInfo.NEW_STOCK) {
+//            return new NewStockOrder(orderId,
+//                                     tradeCustomerInfo,
+//                                     (NewStockPurchaseCondition) condition,
+//                                     expireTime,
+//                                     orderState);
         }
         throw new IllegalArgumentException("strategyInfo=" + strategyInfo);
     }
