@@ -45,7 +45,7 @@ public class WeekTimeRangeTest {
 
     @Test
     public void testNone() throws Exception {
-        assertTrue(NoneMonitorTimeRange.INSTANCE.isInRange(LocalDateTime.now()));
-        assertEquals(NoneMonitorTimeRange.INSTANCE.getOption(), MonitorTimeRangeOption.DISABLED);
+        assertTrue(NoneMonitorTimeRange.NONE.isInRange(LocalDateTime.now()));
+        assertEquals(NoneMonitorTimeRange.NONE.getOption(), MonitorTimeRangeOption.DISABLED);
     }
 }

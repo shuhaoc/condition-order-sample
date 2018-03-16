@@ -26,7 +26,7 @@ public class MonitorTimeRangeBuilder implements ConvertibleBuilder<MonitorTimeRa
     @Override
     public MonitorTimeRange build() {
         if (option == MonitorTimeRangeOption.DISABLED) {
-            return NoneMonitorTimeRange.INSTANCE;
+            return NoneMonitorTimeRange.NONE;
         }
         return new WeekTimeRange(weeRange.build(), localTimeRange.build());
     }

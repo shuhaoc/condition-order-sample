@@ -19,7 +19,7 @@ public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketC
                                               SecurityInfo securityInfo,
                                               LocalDateTime expireTime,
                                               BasicTradePlan tradePlan) {
-        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime, NoneMonitorTimeRange.INSTANCE);
+        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime, NoneMonitorTimeRange.NONE);
         this.tradePlan = tradePlan;
     }
 

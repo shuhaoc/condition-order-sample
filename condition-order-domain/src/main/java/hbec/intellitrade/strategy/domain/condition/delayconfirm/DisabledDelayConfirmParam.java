@@ -8,7 +8,7 @@ public enum DisabledDelayConfirmParam implements DelayConfirmParam {
     /**
      * 单例
      */
-    INSTANCE;
+    DISABLED;
 
     @Override
     public DelayConfirmOption getOption() {

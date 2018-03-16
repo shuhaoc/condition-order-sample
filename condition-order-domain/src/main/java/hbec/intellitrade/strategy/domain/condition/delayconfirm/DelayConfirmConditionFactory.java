@@ -1,7 +1,6 @@
 package hbec.intellitrade.strategy.domain.condition.delayconfirm;
 
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
-import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 
 /**
  * @author caosh/caoshuhao@touker.com
@@ -13,13 +12,19 @@ public enum DelayConfirmConditionFactory {
      */
     INSTANCE;
 
-    public MarketCondition wrapWith(PriceCondition priceCondition, DelayConfirmParam delayConfirmParam, int confirmedCount) {
-        if (delayConfirmParam == DisabledDelayConfirmParam.INSTANCE) {
-            return priceCondition;
+    public MarketCondition wrapWith(MarketCondition marketCondition,
+                                    DelayConfirmParam delayConfirmParam,
+                                    int confirmedCount) {
+        if (delayConfirmParam == DisabledDelayConfirmParam.DISABLED) {
+            return marketCondition;
         } else if (delayConfirmParam.getOption() == DelayConfirmOption.ACCUMULATE) {
-            return new AccumulatedDelayConfirmCondition(delayConfirmParam.getConfirmTimes(), confirmedCount, priceCondition);
+            return new AccumulatedDelayConfirmCondition(delayConfirmParam.getConfirmTimes(),
+                                                        confirmedCount,
+                                                        marketCondition);
         } else if (delayConfirmParam.getOption() == DelayConfirmOption.CONTINUOUS) {
-            return new ContinuousDelayConfirmCondition(delayConfirmParam.getConfirmTimes(), confirmedCount, priceCondition);
+            return new ContinuousDelayConfirmCondition(delayConfirmParam.getConfirmTimes(),
+                                                       confirmedCount,
+                                                       marketCondition);
         } else {
             throw new IllegalArgumentException("Illegal delay confirm parameter: " + delayConfirmParam);
         }

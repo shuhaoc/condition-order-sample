@@ -19,7 +19,11 @@ import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmCond
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmCounter;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParam;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlConditionFactory;
+import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
+import hbec.intellitrade.strategy.domain.condition.market.PredictableMarketCondition;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
@@ -36,6 +40,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
     private final PriceCondition priceCondition;
     private final DelayConfirmParam delayConfirmParam;
     private final MarketCondition compositeCondition;
+    private final DeviationCtrlParam deviationCtrlParam;
 
     public PriceOrder(Long orderId,
                       TradeCustomerInfo tradeCustomerInfo,
@@ -51,51 +56,10 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
              priceCondition,
              expireTime,
              tradePlan,
-             DisabledDelayConfirmParam.INSTANCE,
-             null);
-    }
-
-    public PriceOrder(Long orderId,
-                      TradeCustomerInfo tradeCustomerInfo,
-                      OrderState orderState,
-                      SecurityInfo securityInfo,
-                      PriceCondition priceCondition,
-                      LocalDateTime expireTime,
-                      BasicTradePlan tradePlan,
-                      DelayConfirmParam delayConfirmParam) {
-        this(orderId,
-             tradeCustomerInfo,
-             orderState,
-             securityInfo,
-             priceCondition,
-             expireTime,
-             tradePlan,
-             delayConfirmParam,
-             null);
-    }
-
-    public PriceOrder(Long orderId,
-                      TradeCustomerInfo tradeCustomerInfo,
-                      OrderState orderState,
-                      SecurityInfo securityInfo,
-                      PriceCondition priceCondition,
-                      LocalDateTime expireTime,
-                      BasicTradePlan tradePlan,
-                      DelayConfirmParam delayConfirmParam,
-                      SingleDelayConfirmCount singleDelayConfirmCount) {
-        super(orderId,
-              tradeCustomerInfo,
-              orderState,
-              securityInfo,
-              expireTime,
-              tradePlan,
-              NoneMonitorTimeRange.INSTANCE);
-        this.priceCondition = priceCondition;
-        this.delayConfirmParam = delayConfirmParam;
-        int confirmedCount = singleDelayConfirmCount != null ? singleDelayConfirmCount.getConfirmedCount() : 0;
-        this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(priceCondition,
-                                                                                 delayConfirmParam,
-                                                                                 confirmedCount);
+             DisabledDelayConfirmParam.DISABLED,
+             null,
+             NoneMonitorTimeRange.NONE,
+             DisabledDeviationCtrlParam.DISABLED);
     }
 
     public PriceOrder(Long orderId,
@@ -107,12 +71,19 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
                       BasicTradePlan tradePlan,
                       DelayConfirmParam delayConfirmParam,
                       SingleDelayConfirmCount singleDelayConfirmCount,
-                      MonitorTimeRange monitorTimeRange) {
+                      MonitorTimeRange monitorTimeRange,
+                      DeviationCtrlParam deviationCtrlParam) {
         super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime, tradePlan, monitorTimeRange);
         this.priceCondition = priceCondition;
         this.delayConfirmParam = delayConfirmParam;
+        this.deviationCtrlParam = deviationCtrlParam;
+
+        PredictableMarketCondition deviationCtrlWrappedCondition = DeviationCtrlConditionFactory.INSTANCE.wrap(
+                priceCondition,
+                deviationCtrlParam);
+
         int confirmedCount = singleDelayConfirmCount != null ? singleDelayConfirmCount.getConfirmedCount() : 0;
-        this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(priceCondition,
+        this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(deviationCtrlWrappedCondition,
                                                                                  delayConfirmParam,
                                                                                  confirmedCount);
     }
@@ -130,6 +101,10 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
 
     public DelayConfirmParam getDelayConfirmParam() {
         return delayConfirmParam;
+    }
+
+    public DeviationCtrlParam getDeviationCtrlParam() {
+        return deviationCtrlParam;
     }
 
     @Override
@@ -197,17 +172,13 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
 
         PriceOrder that = (PriceOrder) o;
 
-        if (!priceCondition.equals(that.priceCondition)) {
-            return false;
-        }
-        return delayConfirmParam.equals(that.delayConfirmParam);
+        return compositeCondition.equals(that.compositeCondition);
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + priceCondition.hashCode();
-        result = 31 * result + delayConfirmParam.hashCode();
+        result = 31 * result + compositeCondition.hashCode();
         return result;
     }
 

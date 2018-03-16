@@ -14,6 +14,7 @@ import hbec.intellitrade.condorder.domain.tradeplan.DoubleDirectionTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
@@ -46,7 +47,8 @@ public class ConditionOrderFactory {
                                  TradePlan tradePlan,
                                  DelayConfirmParam delayConfirmParam,
                                  DelayConfirmCount delayConfirmCount,
-                                 MonitorTimeRange monitorTimeRange) {
+                                 MonitorTimeRange monitorTimeRange,
+                                 DeviationCtrlParam deviationCtrlParam) {
         if (strategyInfo == NativeStrategyInfo.PRICE) {
             return new PriceOrder(orderId,
                                   tradeCustomerInfo,
@@ -57,7 +59,8 @@ public class ConditionOrderFactory {
                                   (BasicTradePlan) tradePlan,
                                   delayConfirmParam,
                                   (SingleDelayConfirmCount) delayConfirmCount,
-                                  monitorTimeRange);
+                                  monitorTimeRange,
+                                  deviationCtrlParam);
         } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {
             return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,
                                       null, (BasicTradePlan) tradePlan, orderState);

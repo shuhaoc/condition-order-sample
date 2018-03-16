@@ -2,6 +2,7 @@ package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.dto.order.DelayConfirmParamDTO;
+import me.caosh.condition.domain.dto.order.DeviationCtrlParamDTO;
 import me.caosh.condition.domain.dto.order.MonitorTimeRangeDTO;
 import me.caosh.condition.domain.dto.order.PriceConditionDTO;
 import me.caosh.condition.domain.dto.order.TradePlanDTO;
@@ -37,6 +38,9 @@ public class PriceOrderUpdateCommand implements Serializable {
 
     @Valid
     private MonitorTimeRangeDTO monitorTimeRange;
+
+    @Valid
+    private DeviationCtrlParamDTO deviationCtrlParam;
 
     public Long getOrderId() {
         return orderId;
@@ -86,6 +90,14 @@ public class PriceOrderUpdateCommand implements Serializable {
         this.monitorTimeRange = monitorTimeRange;
     }
 
+    public DeviationCtrlParamDTO getDeviationCtrlParam() {
+        return deviationCtrlParam;
+    }
+
+    public void setDeviationCtrlParam(DeviationCtrlParamDTO deviationCtrlParam) {
+        this.deviationCtrlParam = deviationCtrlParam;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(PriceOrderUpdateCommand.class).omitNullValues()
@@ -95,6 +107,7 @@ public class PriceOrderUpdateCommand implements Serializable {
                           .add("tradePlan", tradePlan)
                           .add("delayConfirmParam", delayConfirmParam)
                           .add("monitorTimeRange", monitorTimeRange)
+                          .add("deviationCtrlParam", deviationCtrlParam)
                           .toString();
     }
 }

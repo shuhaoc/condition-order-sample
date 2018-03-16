@@ -6,6 +6,7 @@ import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanBuilder;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParamBuilder;
+import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParamBuilder;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRangeBuilder;
 import me.caosh.autoasm.ConvertibleBuilder;
@@ -25,6 +26,7 @@ public class PriceOrderBuilder implements ConvertibleBuilder<PriceOrder> {
     private OrderState orderState;
     private DelayConfirmParamBuilder delayConfirmParam = new DelayConfirmParamBuilder();
     private MonitorTimeRangeBuilder monitorTimeRange = new MonitorTimeRangeBuilder();
+    private DeviationCtrlParamBuilder deviationCtrlParam = new DeviationCtrlParamBuilder();
 
     public PriceOrderBuilder setOrderId(Long orderId) {
         this.orderId = orderId;
@@ -96,6 +98,14 @@ public class PriceOrderBuilder implements ConvertibleBuilder<PriceOrder> {
         this.monitorTimeRange = monitorTimeRange;
     }
 
+    public DeviationCtrlParamBuilder getDeviationCtrlParam() {
+        return deviationCtrlParam;
+    }
+
+    public void setDeviationCtrlParam(DeviationCtrlParamBuilder deviationCtrlParam) {
+        this.deviationCtrlParam = deviationCtrlParam;
+    }
+
     @Override
     public PriceOrder build() {
         return new PriceOrder(
@@ -108,7 +118,8 @@ public class PriceOrderBuilder implements ConvertibleBuilder<PriceOrder> {
                 (BasicTradePlan) tradePlan.build(),
                 delayConfirmParam.build(),
                 null,
-                monitorTimeRange.build()
+                monitorTimeRange.build(),
+                deviationCtrlParam.build()
         );
     }
 }

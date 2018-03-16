@@ -11,6 +11,7 @@ import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.EnabledDelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.EnabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.shared.Week;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
@@ -52,7 +53,8 @@ public class ConditionOrderDtoAssemblerTest {
                                                null,
                                                new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                                                  new LocalTimeRange(LocalTime.parse("10:00:00"),
-                                                                                    LocalTime.parse("14:00:00"))));
+                                                                                    LocalTime.parse("14:00:00"))),
+                                               new EnabledDeviationCtrlParam(new BigDecimal("1.00")));
 
         ConditionOrderDTO assemble = AutoAssemblers.getDefault().assemble(priceOrder, ConditionOrderDTO.class);
 
@@ -106,6 +108,11 @@ public class ConditionOrderDtoAssemblerTest {
         monitorTimeRange.setBeginTime("10:00:00");
         monitorTimeRange.setEndTime("14:00:00");
         conditionOrderDTO.setMonitorTimeRange(monitorTimeRange);
+
+        DeviationCtrlParamDTO deviationCtrlParam = new DeviationCtrlParamDTO();
+        deviationCtrlParam.setOption(1);
+        deviationCtrlParam.setLimitPercent(new BigDecimal("1.00"));
+        conditionOrderDTO.setDeviationCtrlParam(deviationCtrlParam);
 
         assertEquals(assemble.toString(), conditionOrderDTO.toString());
 

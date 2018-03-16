@@ -28,7 +28,7 @@ public class GridTradeOrder extends AbstractMarketConditionOrder {
 
     public GridTradeOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                           GridCondition gridCondition, LocalDateTime expireTime, DoubleDirectionTradePlan tradePlan, OrderState orderState) {
-        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime, NoneMonitorTimeRange.INSTANCE);
+        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime, NoneMonitorTimeRange.NONE);
         this.gridCondition = gridCondition;
         this.tradePlan = tradePlan;
     }

@@ -14,6 +14,8 @@ import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberByAmount;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.EnabledDelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlOption;
+import hbec.intellitrade.strategy.domain.condition.deviation.EnabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.shared.Week;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
@@ -64,7 +66,8 @@ public class ConditionOrderDoAssemblerTest {
                 new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3),
                 null,
                 new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
-                                  new LocalTimeRange(LocalTime.parse("10:00:00"), LocalTime.parse("10:30:00")))
+                                  new LocalTimeRange(LocalTime.parse("10:00:00"), LocalTime.parse("10:30:00"))),
+                new EnabledDeviationCtrlParam(new BigDecimal("1"))
         );
         ConditionOrderDO conditionOrderDO = AutoAssemblers.getDefault()
                                                           .assemble(conditionOrder, ConditionOrderDO.class);
@@ -93,6 +96,8 @@ public class ConditionOrderDoAssemblerTest {
         assertEquals(conditionOrderDO.getEndWeek(), Week.THU.getValue());
         assertEquals(conditionOrderDO.getBeginTime(), LocalTime.parse("10:00:00").toDateTimeToday().toDate());
         assertEquals(conditionOrderDO.getEndTime(), LocalTime.parse("10:30:00").toDateTimeToday().toDate());
+        assertEquals(conditionOrderDO.getDeviationCtrlOption(), DeviationCtrlOption.ENABLED.getValue());
+        assertEquals(conditionOrderDO.getDeviationLimitPercent(), new BigDecimal("1"));
         assertNull(conditionOrderDO.getCreateTime());
         assertNull(conditionOrderDO.getUpdateTime());
 

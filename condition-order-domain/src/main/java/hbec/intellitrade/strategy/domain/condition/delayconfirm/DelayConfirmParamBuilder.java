@@ -26,7 +26,7 @@ public class DelayConfirmParamBuilder implements ConvertibleBuilder<DelayConfirm
         Preconditions.checkNotNull(option, "option cannot be null");
 
         if (option == DelayConfirmOption.DISABLED) {
-            return DisabledDelayConfirmParam.INSTANCE;
+            return DisabledDelayConfirmParam.DISABLED;
         } else {
             return new EnabledDelayConfirmParam(option, confirmTimes);
         }

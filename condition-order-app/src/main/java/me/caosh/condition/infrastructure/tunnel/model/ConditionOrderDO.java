@@ -55,11 +55,11 @@ public class ConditionOrderDO {
     @FieldMapping(mappedProperty = "tradePlan.tradeNumber.number")
     private BigDecimal entrustAmount;
     @FieldMapping(mappedProperty = "delayConfirmParam.option")
-    private Integer delayConfirmOption;
+    private Integer delayConfirmOption = 0;
     @FieldMapping(mappedProperty = "delayConfirmParam.confirmTimes")
-    private Integer delayConfirmTimes;
+    private Integer delayConfirmTimes = 0;
     @FieldMapping(mappedProperty = "monitorTimeRange.option")
-    private Integer monitorTimeRangeOption;
+    private Integer monitorTimeRangeOption = 0;
     @FieldMapping(mappedProperty = "monitorTimeRange.weekRange.beginWeek")
     private Integer beginWeek = 1;
     @FieldMapping(mappedProperty = "monitorTimeRange.weekRange.endWeek")
@@ -68,6 +68,10 @@ public class ConditionOrderDO {
     private Date beginTime = LocalTime.MIDNIGHT.toDateTimeToday().toDate();
     @FieldMapping(mappedProperty = "monitorTimeRange.localTimeRange.endTime")
     private Date endTime = LocalTime.MIDNIGHT.toDateTimeToday().toDate();
+    @FieldMapping(mappedProperty = "deviationCtrlParam.option")
+    private Integer deviationCtrlOption = 0;
+    @FieldMapping(mappedProperty = "deviationCtrlParam.limitPercent")
+    private BigDecimal deviationLimitPercent = BigDecimal.ZERO;
     private Timestamp createTime;
     private Timestamp updateTime;
 
@@ -332,6 +336,26 @@ public class ConditionOrderDO {
     }
 
     @Basic
+    @Column(name = "deviation_ctrl_option")
+    public Integer getDeviationCtrlOption() {
+        return deviationCtrlOption;
+    }
+
+    public void setDeviationCtrlOption(Integer deviationCtrlOption) {
+        this.deviationCtrlOption = deviationCtrlOption;
+    }
+
+    @Basic
+    @Column(name = "deviation_limit_percent")
+    public BigDecimal getDeviationLimitPercent() {
+        return deviationLimitPercent;
+    }
+
+    public void setDeviationLimitPercent(BigDecimal deviationLimitPercent) {
+        this.deviationLimitPercent = deviationLimitPercent;
+    }
+
+    @Basic
     @Column(name = "create_time")
     public Timestamp getCreateTime() {
         return createTime;
@@ -366,12 +390,24 @@ public class ConditionOrderDO {
                           .add("strategyType", strategyType)
                           .add("conditionPropertiesObj", conditionPropertiesObj)
                           .add("dynamicPropertiesObj", dynamicPropertiesObj)
+                          .add("expireTime", expireTime)
                           .add("exchangeType", exchangeType)
                           .add("entrustStrategy", entrustStrategy)
                           .add("entrustMethod", entrustMethod)
                           .add("entrustAmount", entrustAmount)
+                          .add("delayConfirmOption", delayConfirmOption)
+                          .add("delayConfirmTimes", delayConfirmTimes)
+                          .add("monitorTimeRangeOption", monitorTimeRangeOption)
+                          .add("beginWeek", beginWeek)
+                          .add("endWeek", endWeek)
+                          .add("beginTime", beginTime)
+                          .add("endTime", endTime)
+                          .add("deviationCtrlOption", deviationCtrlOption)
+                          .add("deviationLimitPercent", deviationLimitPercent)
                           .add("createTime", createTime)
                           .add("updateTime", updateTime)
+                          .add("conditionProperties", getConditionProperties())
+                          .add("dynamicProperties", getDynamicProperties())
                           .toString();
     }
 }

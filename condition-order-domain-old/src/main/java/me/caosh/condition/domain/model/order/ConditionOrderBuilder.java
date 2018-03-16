@@ -9,6 +9,7 @@ import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanBuilder;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParamBuilder;
+import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParamBuilder;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRangeBuilder;
 import me.caosh.autoasm.ConvertibleBuilder;
 import org.joda.time.LocalDateTime;
@@ -29,6 +30,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
     private DelayConfirmParamBuilder delayConfirmParam = new DelayConfirmParamBuilder();
     private DelayConfirmCount delayConfirmCount;
     private MonitorTimeRangeBuilder monitorTimeRange = new MonitorTimeRangeBuilder();
+    private DeviationCtrlParamBuilder deviationCtrlParam = new DeviationCtrlParamBuilder();
 
     public ConditionOrderBuilder setOrderId(Long orderId) {
         this.orderId = orderId;
@@ -102,6 +104,14 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         this.monitorTimeRange = monitorTimeRange;
     }
 
+    public DeviationCtrlParamBuilder getDeviationCtrlParam() {
+        return deviationCtrlParam;
+    }
+
+    public void setDeviationCtrlParam(DeviationCtrlParamBuilder deviationCtrlParam) {
+        this.deviationCtrlParam = deviationCtrlParam;
+    }
+
     @Override
     public ConditionOrder build() {
         return ConditionOrderFactory.getInstance().create(
@@ -115,7 +125,8 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
                 tradePlan.build(),
                 delayConfirmParam.build(),
                 delayConfirmCount,
-                monitorTimeRange.build());
+                monitorTimeRange.build(),
+                deviationCtrlParam.build());
     }
 
     public static class StrategyInfoBuilder {

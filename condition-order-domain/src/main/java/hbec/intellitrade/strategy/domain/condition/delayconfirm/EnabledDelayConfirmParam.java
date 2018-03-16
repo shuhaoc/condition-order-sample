@@ -13,6 +13,7 @@ public class EnabledDelayConfirmParam implements DelayConfirmParam {
 
     public EnabledDelayConfirmParam(DelayConfirmOption option, int confirmTimes) {
         Preconditions.checkArgument(option != DelayConfirmOption.DISABLED, "option cannot be DISABLED");
+        Preconditions.checkArgument(confirmTimes > 1, "confirmTimes should be greater than 1");
         this.option = option;
         this.confirmTimes = confirmTimes;
     }

@@ -12,7 +12,7 @@ public enum NoneMonitorTimeRange implements MonitorTimeRange {
     /**
      * 单例
      */
-    INSTANCE;
+    NONE;
 
     @Override
     public boolean isInRange(LocalDateTime localDateTime) {

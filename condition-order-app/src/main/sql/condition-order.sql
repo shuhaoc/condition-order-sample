@@ -24,7 +24,9 @@ CREATE TABLE `condition_order` (
   `end_week`                  INT            NOT NULL,
   `begin_time`                TIME           NOT NULL,
   `end_time`                  TIME           NOT NULL,
-  `create_time`               TIMESTAMP DEFAULT current_timestamp(),
+  `deviation_ctrl_option`     INT            NOT NULL,
+  `deviation_limit_percent`   DECIMAL(5, 2)  NOT NULL,
+  `create_time`               TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
   `update_time`               TIMESTAMP DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
   INDEX `index_customer_no` (customer_no)
 );

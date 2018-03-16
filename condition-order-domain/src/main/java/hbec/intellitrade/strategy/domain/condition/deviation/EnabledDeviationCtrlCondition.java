@@ -1,5 +1,6 @@
-package me.caosh.condition.domain.model.strategy.condition.deviation;
+package hbec.intellitrade.strategy.domain.condition.deviation;
 
+import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.strategy.domain.condition.market.PredictableMarketCondition;
 import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
@@ -17,15 +18,16 @@ import java.math.BigDecimal;
  */
 public class EnabledDeviationCtrlCondition implements DeviationCtrlCondition, PredictableMarketCondition {
     private final PredictableMarketCondition predictableMarketCondition;
-    private final BigDecimal deviationLimitPercent;
+    private final BigDecimal limitPercent;
 
-    public EnabledDeviationCtrlCondition(PredictableMarketCondition predictableMarketCondition, BigDecimal deviationLimitPercent) {
+    public EnabledDeviationCtrlCondition(PredictableMarketCondition predictableMarketCondition,
+                                         BigDecimal limitPercent) {
         this.predictableMarketCondition = predictableMarketCondition;
-        this.deviationLimitPercent = deviationLimitPercent;
+        this.limitPercent = limitPercent;
     }
 
-    public BigDecimal getDeviationLimitPercent() {
-        return deviationLimitPercent;
+    public BigDecimal getLimitPercent() {
+        return limitPercent;
     }
 
     @Override
@@ -61,9 +63,41 @@ public class EnabledDeviationCtrlCondition implements DeviationCtrlCondition, Pr
         // 偏差控制允许的区间
         // TODO: 是否可以不使用区间，直接使用>=或<=
         Range<BigDecimal> deviationLimitedRange = BigDecimalRanges.openCenterWithPercent(
-                targetPrice, deviationLimitPercent);
+                targetPrice, limitPercent);
 
         boolean inRange = deviationLimitedRange.isInRange(realTimeMarket.getCurrentPrice());
         return !inRange;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        EnabledDeviationCtrlCondition that = (EnabledDeviationCtrlCondition) o;
+
+        if (!predictableMarketCondition.equals(that.predictableMarketCondition)) {
+            return false;
+        }
+        return limitPercent.equals(that.limitPercent);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = predictableMarketCondition.hashCode();
+        result = 31 * result + limitPercent.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(EnabledDeviationCtrlCondition.class).omitNullValues()
+                          .add("limitPercent", limitPercent)
+                          .add("predictableMarketCondition", predictableMarketCondition)
+                          .toString();
     }
 }

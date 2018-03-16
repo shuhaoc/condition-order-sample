@@ -11,6 +11,7 @@ import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.EnabledDelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.EnabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.shared.Week;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
@@ -20,6 +21,7 @@ import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
 import me.caosh.condition.domain.dto.order.DelayConfirmParamDTO;
+import me.caosh.condition.domain.dto.order.DeviationCtrlParamDTO;
 import me.caosh.condition.domain.dto.order.MonitorTimeRangeDTO;
 import me.caosh.condition.domain.dto.order.PriceConditionDTO;
 import me.caosh.condition.domain.dto.order.TradePlanDTO;
@@ -74,6 +76,11 @@ public class PriceOrderCommandAssemblerTest {
         monitorTimeRange.setEndTime("14:00:00");
         createCommand.setMonitorTimeRange(monitorTimeRange);
 
+        DeviationCtrlParamDTO deviationCtrlParam = new DeviationCtrlParamDTO();
+        deviationCtrlParam.setOption(1);
+        deviationCtrlParam.setLimitPercent(new BigDecimal(1));
+        createCommand.setDeviationCtrlParam(deviationCtrlParam);
+
         TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
         PriceOrder priceOrder = PriceOrderCommandAssembler.assemblePriceOrder(123L, tradeCustomerInfo, createCommand);
 
@@ -93,7 +100,8 @@ public class PriceOrderCommandAssemblerTest {
                                              null,
                                              new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                                                new LocalTimeRange(LocalTime.parse("10:00:00"),
-                                                                                  LocalTime.parse("14:00:00"))));
+                                                                                  LocalTime.parse("14:00:00"))),
+                                             new EnabledDeviationCtrlParam(new BigDecimal("1")));
         assertEquals(priceOrder, expected);
     }
 }
