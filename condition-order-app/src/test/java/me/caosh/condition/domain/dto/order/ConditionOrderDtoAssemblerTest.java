@@ -103,8 +103,8 @@ public class ConditionOrderDtoAssemblerTest {
         monitorTimeRange.setOption(1);
         monitorTimeRange.setBeginWeek(2);
         monitorTimeRange.setEndWeek(4);
-        monitorTimeRange.setBeginTime(LocalTime.parse("10:00:00").toDateTimeToday().toDate());
-        monitorTimeRange.setEndTime(LocalTime.parse("14:00:00").toDateTimeToday().toDate());
+        monitorTimeRange.setBeginTime("10:00:00");
+        monitorTimeRange.setEndTime("14:00:00");
         conditionOrderDTO.setMonitorTimeRange(monitorTimeRange);
 
         assertEquals(assemble.toString(), conditionOrderDTO.toString());

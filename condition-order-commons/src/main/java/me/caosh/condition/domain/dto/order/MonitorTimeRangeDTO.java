@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author caosh/caoshuhao@touker.com
@@ -27,10 +26,10 @@ public class MonitorTimeRangeDTO implements Serializable {
     private Integer endWeek;
     @DateTimeFormat(pattern = "HH:mm:ss")
     @FieldMapping(mappedProperty = "localTimeRange.beginTime")
-    private Date beginTime;
+    private String beginTime;
     @DateTimeFormat(pattern = "HH:mm:ss")
     @FieldMapping(mappedProperty = "localTimeRange.endTime")
-    private Date endTime;
+    private String endTime;
 
     public Integer getOption() {
         return option;
@@ -56,19 +55,19 @@ public class MonitorTimeRangeDTO implements Serializable {
         this.endWeek = endWeek;
     }
 
-    public Date getBeginTime() {
+    public String getBeginTime() {
         return beginTime;
     }
 
-    public void setBeginTime(Date beginTime) {
+    public void setBeginTime(String beginTime) {
         this.beginTime = beginTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 

@@ -26,10 +26,11 @@ import me.caosh.condition.domain.dto.order.TradePlanDTO;
 import me.caosh.condition.interfaces.command.PriceOrderCreateCommand;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * @author caosh/caoshuhao@touker.com
@@ -69,8 +70,8 @@ public class PriceOrderCommandAssemblerTest {
         monitorTimeRange.setOption(1);
         monitorTimeRange.setBeginWeek(2);
         monitorTimeRange.setEndWeek(4);
-        monitorTimeRange.setBeginTime(LocalTime.parse("10:00:00").toDateTimeToday().toDate());
-        monitorTimeRange.setEndTime(LocalTime.parse("14:00:00").toDateTimeToday().toDate());
+        monitorTimeRange.setBeginTime("10:00:00");
+        monitorTimeRange.setEndTime("14:00:00");
         createCommand.setMonitorTimeRange(monitorTimeRange);
 
         TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
@@ -93,6 +94,6 @@ public class PriceOrderCommandAssemblerTest {
                                              new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                                                new LocalTimeRange(LocalTime.parse("10:00:00"),
                                                                                   LocalTime.parse("14:00:00"))));
-        Assert.assertEquals(priceOrder, expected);
+        assertEquals(priceOrder, expected);
     }
 }
