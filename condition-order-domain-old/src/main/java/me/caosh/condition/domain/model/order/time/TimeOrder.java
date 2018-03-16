@@ -39,7 +39,6 @@ public class TimeOrder extends AbstractConditionOrder implements TimeDrivenStrat
         return timeReachedCondition;
     }
 
-    @Override
     public Condition getRawCondition() {
         return timeReachedCondition;
     }
@@ -57,7 +56,6 @@ public class TimeOrder extends AbstractConditionOrder implements TimeDrivenStrat
         return timeReachedCondition.onTimeTick(localDateTime);
     }
 
-    @Override
     public StrategyInfo getStrategyInfo() {
         return NativeStrategyInfo.TURN_UP;
     }

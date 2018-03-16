@@ -4,6 +4,7 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.SingleEntrustTradePlan;
+import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.condorder.domain.trigger.TradingMarketSupplier;
 import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
@@ -139,6 +140,8 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
             }
         }
     }
+
+    protected abstract TradePlan getTradePlan();
 
     /**
      * 交易信号处理行为

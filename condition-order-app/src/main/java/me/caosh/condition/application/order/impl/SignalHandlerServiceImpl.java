@@ -75,7 +75,7 @@ public class SignalHandlerServiceImpl implements SignalHandlerService {
             conditionOrder.onExpired();
             conditionOrderRepository.update(conditionOrder);
         } else if (signal instanceof CacheSync) {
-            logger.info("Sync dynamic properties, orderId={}, condition={}", conditionOrder.getRawCondition());
+            logger.info("Sync dynamic properties, conditionOrder=", conditionOrder);
             conditionOrderRepository.updateDynamicProperties(conditionOrder);
         }
         logger.info("---------------- Handle signal  end  ----------------");

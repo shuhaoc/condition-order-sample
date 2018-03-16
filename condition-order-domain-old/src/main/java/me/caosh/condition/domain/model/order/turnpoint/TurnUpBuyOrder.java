@@ -38,12 +38,10 @@ public class TurnUpBuyOrder extends AbstractSimpleMarketConditionOrder {
         return turnUpCondition;
     }
 
-    @Override
     public Condition getRawCondition() {
         return turnUpCondition;
     }
 
-    @Override
     public StrategyInfo getStrategyInfo() {
         return NativeStrategyInfo.TURN_UP;
     }

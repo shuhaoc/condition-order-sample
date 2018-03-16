@@ -93,7 +93,6 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
         return compositeCondition;
     }
 
-    @Override
     public Condition getRawCondition() {
         // TODO: 如何约束不可变性
         return priceCondition;
@@ -107,7 +106,6 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
         return deviationCtrlParam;
     }
 
-    @Override
     public StrategyInfo getStrategyInfo() {
         return NativeStrategyInfo.PRICE;
     }

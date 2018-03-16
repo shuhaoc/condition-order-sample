@@ -1,11 +1,8 @@
 package hbec.intellitrade.condorder.domain;
 
 import hbec.intellitrade.common.security.SecurityInfo;
-import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
-import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.Strategy;
-import hbec.intellitrade.strategy.domain.condition.Condition;
 
 /**
  * 条件单实体
@@ -21,12 +18,6 @@ public interface ConditionOrder extends Strategy {
     TradeCustomerInfo getCustomer();
 
     SecurityInfo getSecurityInfo();
-
-    StrategyInfo getStrategyInfo();
-
-    Condition getRawCondition();
-
-    TradePlan getTradePlan();
 
     OrderState getOrderState();
 
