@@ -39,6 +39,17 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
     private final MarketCondition compositeCondition;
     private final DeviationCtrlParam deviationCtrlParam;
 
+    /**
+     * 构造价格条件单（基本参数）
+     *
+     * @param orderId           条件单ID
+     * @param tradeCustomerInfo 客户标识信息
+     * @param orderState        条件单状态
+     * @param securityInfo      交易证券信息
+     * @param priceCondition    价格条件
+     * @param expireTime        过期时间，可为空
+     * @param tradePlan         交易计划
+     */
     public PriceOrder(Long orderId,
                       TradeCustomerInfo tradeCustomerInfo,
                       OrderState orderState,
@@ -60,6 +71,22 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
              DisabledDeviationCtrlParam.DISABLED);
     }
 
+    /**
+     * 构造价格条件单（全参数）
+     *
+     * @param orderId                 条件单ID
+     * @param tradeCustomerInfo       客户标识信息
+     * @param orderState              条件单状态
+     * @param securityInfo            交易证券信息
+     * @param trackedIndexInfo        跟踪指数信息，可为空
+     * @param priceCondition          价格条件
+     * @param expireTime              过期时间，可为空
+     * @param tradePlan               交易计划
+     * @param delayConfirmParam       延迟确认参数
+     * @param singleDelayConfirmCount 当前延迟确认次数
+     * @param monitorTimeRange        监控时段
+     * @param deviationCtrlParam      偏差控制参数
+     */
     public PriceOrder(Long orderId,
                       TradeCustomerInfo tradeCustomerInfo,
                       OrderState orderState,
