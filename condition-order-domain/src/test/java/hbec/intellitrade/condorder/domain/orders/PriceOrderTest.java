@@ -46,7 +46,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 
 import static org.mockito.Mockito.*;
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.*;
 
 /**
  * Created by caosh on 2017/8/31.
@@ -136,8 +136,7 @@ public class PriceOrderTest {
         EntrustSuccessResult result = new EntrustSuccessResult("OK",
                                                                123,
                                                                realTimeMarket.getCurrentPrice());
-        when(tradeCustomer.entrust(Matchers.<EntrustCommand>any()))
-                .thenReturn(result);
+        when(tradeCustomer.entrust(Matchers.<EntrustCommand>any())).thenReturn(result);
 
         priceOrder.onTradeSignal(triggerTradingContext);
 
@@ -235,6 +234,11 @@ public class PriceOrderTest {
                                                DisabledDeviationCtrlParam.DISABLED);
 
         assertEquals(priceOrder.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("13.00"))), Signals.none());
+        assertTrue(priceOrder.isDirty());
+        assertFalse(priceOrder.isPersistentPropertyDirty());
+        priceOrder.clearDirty();
+        assertFalse(priceOrder.isDirty());
+
         assertEquals(priceOrder.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("13.00"))), Signals.none());
 
         // false condition
@@ -242,6 +246,7 @@ public class PriceOrderTest {
 
         assertEquals(priceOrder.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("13.00"))),
                      Signals.buyOrSell());
+        priceOrder.onMarketClosed(LocalDateTime.now());
     }
 
     @Test

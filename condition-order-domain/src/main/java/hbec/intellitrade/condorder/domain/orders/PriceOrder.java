@@ -7,6 +7,7 @@ import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.AbstractSimpleMarketConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.condorder.domain.delayconfirm.DelayConfirmCounterExtractor;
 import hbec.intellitrade.condorder.domain.delayconfirm.count.SingleDelayConfirmCount;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
@@ -16,7 +17,10 @@ import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.strategy.domain.MarketClosedEventListener;
 import hbec.intellitrade.strategy.domain.MutableStrategy;
 import hbec.intellitrade.strategy.domain.condition.Condition;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.*;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmConditionFactory;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmCounter;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirmParam;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlConditionFactory;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrlParam;
@@ -37,6 +41,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
 
     private final PriceCondition priceCondition;
     private final MarketCondition compositeCondition;
+    private final DelayConfirmCounterExtractor delayConfirmCounterExtractor;
 
     /**
      * 构造价格条件单（基本参数）
@@ -116,9 +121,11 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
                 deviationCtrlParam);
 
         int confirmedCount = singleDelayConfirmCount != null ? singleDelayConfirmCount.getConfirmedCount() : 0;
-        this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(deviationCtrlWrappedCondition,
-                                                                                 delayConfirmParam,
-                                                                                 confirmedCount);
+        this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(
+                deviationCtrlWrappedCondition,
+                delayConfirmParam,
+                confirmedCount);
+        this.delayConfirmCounterExtractor = new DelayConfirmCounterExtractor(compositeCondition);
     }
 
     @Override
@@ -136,36 +143,30 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
         return NativeStrategyInfo.PRICE;
     }
 
+    /**
+     * 获取当前延迟确认次数，未开启延迟确认时返回{@link Optional#absent()}
+     *
+     * @return 当前延迟确认次数
+     */
     public Optional<SingleDelayConfirmCount> getDelayConfirmCount() {
-        return getDelayConfirmCounter().transform(new Function<DelayConfirmCounter, SingleDelayConfirmCount>() {
-            @Override
-            public SingleDelayConfirmCount apply(DelayConfirmCounter delayConfirmCounter) {
-                return new SingleDelayConfirmCount(delayConfirmCounter.getConfirmedCount());
-            }
-        });
+        return delayConfirmCounterExtractor
+                .getCounter()
+                .transform(new Function<DelayConfirmCounter, SingleDelayConfirmCount>() {
+                    @Override
+                    public SingleDelayConfirmCount apply(DelayConfirmCounter delayConfirmCounter) {
+                        return new SingleDelayConfirmCount(delayConfirmCounter.getConfirmedCount());
+                    }
+                });
     }
 
     @Override
     public boolean isDirty() {
-        Optional<DelayConfirmCounter> delayConfirmCount = getDelayConfirmCounter();
-        return delayConfirmCount.isPresent() && delayConfirmCount.get().isDirty();
+        return delayConfirmCounterExtractor.isDirty();
     }
 
     @Override
     public void clearDirty() {
-        Optional<DelayConfirmCounter> delayConfirmCount = getDelayConfirmCounter();
-        if (delayConfirmCount.isPresent()) {
-            delayConfirmCount.get().clearDirty();
-        }
-    }
-
-    private Optional<DelayConfirmCounter> getDelayConfirmCounter() {
-        if (compositeCondition instanceof AbstractDelayConfirmCondition) {
-            DelayConfirmCounter counter = ((AbstractDelayConfirmCondition) compositeCondition).getCounter();
-            return Optional.of(counter);
-        } else {
-            return Optional.absent();
-        }
+        delayConfirmCounterExtractor.clearDirtyIfNeed();
     }
 
     @Override
@@ -176,10 +177,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
 
     @Override
     public void onMarketClosed(LocalDateTime localDateTime) {
-        Optional<DelayConfirmCounter> delayConfirmCounter = getDelayConfirmCounter();
-        if (delayConfirmCounter.isPresent()) {
-            delayConfirmCounter.get().reset();
-        }
+        delayConfirmCounterExtractor.resetCounterIfNeed();
     }
 
     @Override
