@@ -38,6 +38,7 @@ public class GridTradeOrder extends AbstractMarketConditionOrder {
         return getGridCondition();
     }
 
+    @Override
     public Condition getRawCondition() {
         return gridCondition;
     }
@@ -46,6 +47,7 @@ public class GridTradeOrder extends AbstractMarketConditionOrder {
         return gridCondition;
     }
 
+    @Override
     public StrategyInfo getStrategyInfo() {
         return NativeStrategyInfo.GRID;
     }

@@ -4,16 +4,10 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.SingleEntrustTradePlan;
-import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.condorder.domain.trigger.TradingMarketSupplier;
 import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
-import hbec.intellitrade.trade.domain.EntrustCommand;
-import hbec.intellitrade.trade.domain.EntrustFailResult;
-import hbec.intellitrade.trade.domain.EntrustOrderInfo;
-import hbec.intellitrade.trade.domain.EntrustResult;
-import hbec.intellitrade.trade.domain.EntrustSuccessResult;
-import hbec.intellitrade.trade.domain.TradeCustomer;
+import hbec.intellitrade.trade.domain.*;
 import hbec.intellitrade.trade.domain.exception.InsufficientCapitalException;
 import hbec.intellitrade.trade.domain.exception.InsufficientPositionException;
 import hbec.intellitrade.trade.domain.exception.TradeException;
@@ -140,8 +134,6 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
             }
         }
     }
-
-    protected abstract TradePlan getTradePlan();
 
     /**
      * 交易信号处理行为
