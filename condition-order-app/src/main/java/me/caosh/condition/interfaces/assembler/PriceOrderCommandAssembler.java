@@ -4,10 +4,10 @@ import hbec.intellitrade.common.security.SecurityInfoBuilder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfoBuilder;
+import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilder;
 import hbec.intellitrade.condorder.domain.orders.PriceOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import me.caosh.autoasm.AutoAssemblers;
-import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
 import me.caosh.condition.interfaces.command.PriceOrderCreateCommand;
 import me.caosh.condition.interfaces.command.PriceOrderUpdateCommand;
 

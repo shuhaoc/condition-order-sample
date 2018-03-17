@@ -1,7 +1,7 @@
 package me.caosh.condition.infrastructure.repository.serializer;
 
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
+import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilder;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.util.ConditionOrderDTOGSONUtils;

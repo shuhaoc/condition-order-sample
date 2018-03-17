@@ -1,6 +1,4 @@
-package me.caosh.condition.domain.service;
-
-import me.caosh.condition.domain.model.newstock.NewStock;
+package hbec.intellitrade.common.security.newstock;
 
 import java.util.List;
 

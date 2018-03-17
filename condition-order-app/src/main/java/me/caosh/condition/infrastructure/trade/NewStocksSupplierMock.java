@@ -2,8 +2,8 @@ package me.caosh.condition.infrastructure.trade;
 
 import com.google.common.collect.ImmutableList;
 import hbec.intellitrade.common.security.SecurityExchange;
-import me.caosh.condition.domain.model.newstock.NewStock;
-import me.caosh.condition.domain.service.NewStocksSupplier;
+import hbec.intellitrade.common.security.newstock.NewStock;
+import hbec.intellitrade.common.security.newstock.NewStocksSupplier;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

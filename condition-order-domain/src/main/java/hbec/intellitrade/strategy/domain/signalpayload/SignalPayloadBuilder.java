@@ -1,10 +1,8 @@
-package me.caosh.condition.domain.model.strategy.signalpayload;
+package hbec.intellitrade.strategy.domain.signalpayload;
 
 import hbec.intellitrade.common.market.RealTimeMarketBuilder;
-import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
+import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilder;
 import hbec.intellitrade.strategy.domain.signal.Signal;
-import hbec.intellitrade.strategy.domain.signalpayload.MarketSignalPayload;
-import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
 import me.caosh.autoasm.ConvertibleBuilder;
 
 /**

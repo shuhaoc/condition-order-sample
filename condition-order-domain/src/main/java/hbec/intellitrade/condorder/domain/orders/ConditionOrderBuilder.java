@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.order;
+package hbec.intellitrade.condorder.domain.orders;
 
 import hbec.intellitrade.common.security.SecurityInfoBuilder;
 import hbec.intellitrade.condorder.domain.ConditionOrder;

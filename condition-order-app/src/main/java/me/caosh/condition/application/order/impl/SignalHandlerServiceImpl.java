@@ -2,6 +2,7 @@ package me.caosh.condition.application.order.impl;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.market.RealTimeMarketSupplier;
+import hbec.intellitrade.common.security.newstock.NewStocksSupplier;
 import hbec.intellitrade.condorder.domain.*;
 import hbec.intellitrade.condorder.domain.trigger.BasicTriggerTradingContext;
 import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
@@ -17,7 +18,6 @@ import hbec.intellitrade.trade.domain.EntrustOrderWriter;
 import hbec.intellitrade.trade.domain.TradeCustomer;
 import me.caosh.condition.application.order.SignalHandlerService;
 import me.caosh.condition.application.trade.factory.TradeCustomerFactory;
-import me.caosh.condition.domain.service.NewStocksSupplier;
 import me.caosh.condition.infrastructure.tunnel.impl.EntrustOrderIdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

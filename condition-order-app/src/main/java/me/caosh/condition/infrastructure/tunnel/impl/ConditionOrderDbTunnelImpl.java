@@ -4,7 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
+import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilder;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.infrastructure.tunnel.ConditionOrderDbTunnel;
 import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;

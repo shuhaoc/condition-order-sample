@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.newstock;
+package hbec.intellitrade.common.security.newstock;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.security.SecurityExchange;
