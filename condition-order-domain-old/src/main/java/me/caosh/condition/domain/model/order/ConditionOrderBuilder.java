@@ -1,14 +1,12 @@
 package me.caosh.condition.domain.model.order;
 
-import hbec.intellitrade.common.market.index.IndexInfo;
-import hbec.intellitrade.common.market.index.IndexInfoBuilder;
 import hbec.intellitrade.common.security.SecurityInfoBuilder;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfoBuilder;
 import hbec.intellitrade.condorder.domain.delayconfirm.count.DelayConfirmCount;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
-import hbec.intellitrade.condorder.domain.trackindex.TrackIndexOption;
+import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfoBuilder;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanBuilder;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParamBuilder;
@@ -26,8 +24,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
     private TradeCustomerInfoBuilder customer = new TradeCustomerInfoBuilder();
     private OrderState orderState;
     private SecurityInfoBuilder securityInfo = new SecurityInfoBuilder();
-    private TrackIndexOption trackIndexOption = TrackIndexOption.DISABLED;
-    private IndexInfoBuilder trackedIndexInfo = new IndexInfoBuilder();
+    private TrackedIndexInfoBuilder trackedIndex = new TrackedIndexInfoBuilder();
     private StrategyInfoBuilder strategyInfo = new StrategyInfoBuilder();
     private Condition rawCondition;
     private LocalDateTime expireTime;
@@ -65,16 +62,12 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return this;
     }
 
-    public void setTrackIndexOption(TrackIndexOption trackIndexOption) {
-        this.trackIndexOption = trackIndexOption;
+    public TrackedIndexInfoBuilder getTrackedIndex() {
+        return trackedIndex;
     }
 
-    public IndexInfoBuilder getTrackedIndexInfo() {
-        return trackedIndexInfo;
-    }
-
-    public void setTrackedIndexInfo(IndexInfoBuilder trackedIndexInfo) {
-        this.trackedIndexInfo = trackedIndexInfo;
+    public void setTrackedIndex(TrackedIndexInfoBuilder trackedIndex) {
+        this.trackedIndex = trackedIndex;
     }
 
     public StrategyInfoBuilder getStrategyInfo() {
@@ -134,14 +127,12 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
 
     @Override
     public ConditionOrder build() {
-        IndexInfo trackedIndexInfo = trackIndexOption == TrackIndexOption.ENABLED ? getTrackedIndexInfo().build() : null;
-
         return ConditionOrderFactory.getInstance().create(
                 orderId,
                 customer.build(),
                 orderState,
                 securityInfo.build(),
-                trackedIndexInfo,
+                trackedIndex.build(),
                 strategyInfo.getStrategyType(),
                 rawCondition,
                 expireTime,

@@ -1,7 +1,6 @@
 package me.caosh.condition.infrastructure.repository.impl;
 
 import com.google.common.base.Optional;
-import hbec.intellitrade.common.market.index.IndexInfo;
 import hbec.intellitrade.common.market.index.IndexSource;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
@@ -11,6 +10,7 @@ import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.orders.PriceOrder;
+import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
@@ -63,7 +63,7 @@ public class ConditionOrderRepositoryTest extends AbstractTestNGSpringContextTes
                                                new BasicTradePlan(ExchangeType.BUY,
                                                                   EntrustStrategy.CURRENT_PRICE,
                                                                   new TradeNumberDirect(100)),
-                                               new IndexInfo(IndexSource.SZ, "399001", "深证成指"),
+                                               new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"),
                                                new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                                                  new LocalTimeRange(LocalTime.parse("10:00:00"),
                                                                                     LocalTime.parse("14:00:00"))),

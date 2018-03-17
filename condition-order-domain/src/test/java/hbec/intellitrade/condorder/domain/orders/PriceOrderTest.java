@@ -4,7 +4,6 @@ import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.MarketType;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.market.RealTimeMarketSupplier;
-import hbec.intellitrade.common.market.index.IndexInfo;
 import hbec.intellitrade.common.market.index.IndexSource;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
@@ -13,6 +12,7 @@ import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.delayconfirm.count.SingleDelayConfirmCount;
 import hbec.intellitrade.condorder.domain.trackindex.TrackIndexOption;
+import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
@@ -118,7 +118,7 @@ public class PriceOrderTest {
                                                                   EntrustStrategy.CURRENT_PRICE,
                                                                   new TradeNumberDirect(100))
         );
-        assertNull(priceOrder.getTrackedIndexInfo());
+        assertNull(priceOrder.getTrackedIndex());
 
         assertEquals(priceOrder.onTimeTick(LocalDateTime.now()), Signals.none());
 
@@ -353,14 +353,14 @@ public class PriceOrderTest {
                                                new BasicTradePlan(ExchangeType.BUY,
                                                                   EntrustStrategy.CURRENT_PRICE,
                                                                   new TradeNumberDirect(100)),
-                                               new IndexInfo(IndexSource.SZ, "399001", "深证成指"),
+                                               new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"),
                                                NoneMonitorTimeRange.NONE,
                                                new EnabledDelayConfirmParam(DelayConfirmOption.CONTINUOUS, 2),
                                                null,
                                                new EnabledDeviationCtrlParam(new BigDecimal("1")));
 
         assertEquals(priceOrder.getTrackIndexOption(), TrackIndexOption.ENABLED);
-        assertEquals(priceOrder.getTrackedIndexInfo(), new IndexInfo(IndexSource.SZ, "399001", "深证成指"));
+        assertEquals(priceOrder.getTrackedIndex(), new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"));
 
         assertEquals(priceOrder.getTrackMarketID(), new MarketID(MarketType.INDEX, "399001"));
     }

@@ -3,7 +3,6 @@ package hbec.intellitrade.condorder.domain.orders;
 import com.google.common.base.Function;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
-import hbec.intellitrade.common.market.index.IndexInfo;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.AbstractSimpleMarketConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
@@ -11,6 +10,7 @@ import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.delayconfirm.count.SingleDelayConfirmCount;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
+import hbec.intellitrade.condorder.domain.trackindex.TrackedIndex;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.strategy.domain.MarketClosedEventListener;
 import hbec.intellitrade.strategy.domain.MutableStrategy;
@@ -71,7 +71,8 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
 
     /**
      * 构造价格条件单（全参数）
-     *  @param orderId                 条件单ID
+     *
+     * @param orderId                 条件单ID
      * @param tradeCustomerInfo       客户标识信息
      * @param orderState              条件单状态
      * @param securityInfo            交易证券信息
@@ -91,7 +92,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
                       PriceCondition priceCondition,
                       LocalDateTime expireTime,
                       BasicTradePlan tradePlan,
-                      IndexInfo trackedIndexInfo,
+                      TrackedIndex trackedIndexInfo,
                       MonitorTimeRange monitorTimeRange,
                       DelayConfirmParam delayConfirmParam,
                       SingleDelayConfirmCount singleDelayConfirmCount,
@@ -212,7 +213,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
                           .add("customer", getCustomer())
                           .add("orderState", getOrderState())
                           .add("securityInfo", getSecurityInfo())
-                          .add("trackedIndexInfo", getTrackedIndexInfo())
+                          .add("trackedIndexInfo", getTrackedIndex())
                           .add("condition", getCondition())
                           .add("expireTime", getExpireTime())
                           .add("tradePlan", getTradePlan())

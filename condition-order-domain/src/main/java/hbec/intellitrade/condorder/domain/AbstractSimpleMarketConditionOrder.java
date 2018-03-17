@@ -1,7 +1,7 @@
 package hbec.intellitrade.condorder.domain;
 
-import hbec.intellitrade.common.market.index.IndexInfo;
 import hbec.intellitrade.common.security.SecurityInfo;
+import hbec.intellitrade.condorder.domain.trackindex.TrackedIndex;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParam;
@@ -22,7 +22,7 @@ public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketC
                                               TradeCustomerInfo tradeCustomerInfo,
                                               OrderState orderState,
                                               SecurityInfo securityInfo,
-                                              IndexInfo trackedIndexInfo,
+                                              TrackedIndex trackedIndexInfo,
                                               LocalDateTime expireTime,
                                               MonitorTimeRange monitorTimeRange,
                                               DelayConfirmParam delayConfirmParam,

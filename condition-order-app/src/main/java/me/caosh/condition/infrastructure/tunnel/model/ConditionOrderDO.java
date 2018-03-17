@@ -34,12 +34,13 @@ public class ConditionOrderDO {
     private String securityExchange;
     @FieldMapping(mappedProperty = "securityInfo.name")
     private String securityName;
+    @FieldMapping(mappedProperty = "trackedIndex.option")
     private Integer trackIndexOption = 0;
-    @FieldMapping(mappedProperty = "trackedIndexInfo.code")
+    @FieldMapping(mappedProperty = "trackedIndex.code")
     private String trackedIndexCode;
-    @FieldMapping(mappedProperty = "trackedIndexInfo.source")
+    @FieldMapping(mappedProperty = "trackedIndex.source")
     private String trackedIndexSource;
-    @FieldMapping(mappedProperty = "trackedIndexInfo.name")
+    @FieldMapping(mappedProperty = "trackedIndex.name")
     private String trackedIndexName;
     @FieldMapping(mappedProperty = "strategyInfo.strategyType")
     private Integer strategyType;

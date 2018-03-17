@@ -1,6 +1,5 @@
 package me.caosh.condition.domain.dto.order;
 
-import hbec.intellitrade.common.market.index.IndexInfo;
 import hbec.intellitrade.common.market.index.IndexSource;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
@@ -8,6 +7,7 @@ import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.orders.PriceOrder;
+import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
@@ -22,8 +22,8 @@ import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import me.caosh.autoasm.AutoAssemblers;
-import me.caosh.condition.domain.dto.market.IndexInfoDTO;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
+import me.caosh.condition.domain.dto.market.TrackedIndexDTO;
 import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
@@ -52,7 +52,7 @@ public class ConditionOrderDtoAssemblerTest {
                                                new BasicTradePlan(ExchangeType.BUY,
                                                                   EntrustStrategy.CURRENT_PRICE,
                                                                   new TradeNumberDirect(1000)),
-                                               new IndexInfo(IndexSource.SZ, "399001", "深证成指"),
+                                               new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"),
                                                new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                                                  new LocalTimeRange(LocalTime.parse("10:00:00"),
                                                                                     LocalTime.parse("14:00:00"))),
@@ -80,12 +80,12 @@ public class ConditionOrderDtoAssemblerTest {
         securityInfo.setExchange("SH");
         conditionOrderDTO.setSecurityInfo(securityInfo);
 
-        conditionOrderDTO.setTrackIndexOption(1);
-        IndexInfoDTO trackedIndexInfo = new IndexInfoDTO();
+        TrackedIndexDTO trackedIndexInfo = new TrackedIndexDTO();
+        trackedIndexInfo.setOption(1);
         trackedIndexInfo.setSource("SZ");
         trackedIndexInfo.setCode("399001");
         trackedIndexInfo.setName("深证成指");
-        conditionOrderDTO.setTrackedIndexInfo(trackedIndexInfo);
+        conditionOrderDTO.setTrackedIndex(trackedIndexInfo);
 
         conditionOrderDTO.setStrategyType(1);
 

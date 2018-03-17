@@ -1,6 +1,5 @@
 package me.caosh.condition.interfaces.assembler;
 
-import hbec.intellitrade.common.market.index.IndexInfo;
 import hbec.intellitrade.common.market.index.IndexSource;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
@@ -8,6 +7,7 @@ import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.orders.PriceOrder;
+import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
@@ -21,8 +21,8 @@ import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
 import hbec.intellitrade.trade.domain.ExchangeType;
-import me.caosh.condition.domain.dto.market.IndexInfoDTO;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
+import me.caosh.condition.domain.dto.market.TrackedIndexDTO;
 import me.caosh.condition.domain.dto.order.*;
 import me.caosh.condition.interfaces.command.PriceOrderCreateCommand;
 import org.joda.time.LocalDateTime;
@@ -48,11 +48,12 @@ public class PriceOrderCommandAssemblerTest {
         securityInfo.setExchange("SH");
         createCommand.setSecurityInfo(securityInfo);
 
-        IndexInfoDTO trackedIndexInfo = new IndexInfoDTO();
+        TrackedIndexDTO trackedIndexInfo = new TrackedIndexDTO();
+        trackedIndexInfo.setOption(1);
         trackedIndexInfo.setSource("SZ");
         trackedIndexInfo.setCode("399001");
         trackedIndexInfo.setName("深证成指");
-        createCommand.setTrackedIndexInfo(trackedIndexInfo);
+        createCommand.setTrackedIndex(trackedIndexInfo);
 
         PriceConditionDTO priceCondition = new PriceConditionDTO();
         priceCondition.setCompareOperator(1);
@@ -101,7 +102,7 @@ public class PriceOrderCommandAssemblerTest {
                                              new BasicTradePlan(ExchangeType.BUY,
                                                                 EntrustStrategy.CURRENT_PRICE,
                                                                 new TradeNumberDirect(1000)),
-                                             new IndexInfo(IndexSource.SZ, "399001", "深证成指"),
+                                             new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"),
                                              new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                                                new LocalTimeRange(LocalTime.parse("10:00:00"),
                                                                                   LocalTime.parse("14:00:00"))),

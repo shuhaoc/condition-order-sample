@@ -1,7 +1,7 @@
 package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.dto.market.IndexInfoDTO;
+import me.caosh.condition.domain.dto.market.TrackedIndexDTO;
 import me.caosh.condition.domain.dto.order.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -21,7 +21,7 @@ public class PriceOrderUpdateCommand implements Serializable {
     private Long orderId;
 
     @Valid
-    private IndexInfoDTO trackedIndexInfo;
+    private TrackedIndexDTO trackedIndexInfo;
 
     @NotNull
     private PriceConditionDTO priceCondition;
@@ -50,11 +50,11 @@ public class PriceOrderUpdateCommand implements Serializable {
         this.orderId = orderId;
     }
 
-    public IndexInfoDTO getTrackedIndexInfo() {
+    public TrackedIndexDTO getTrackedIndexInfo() {
         return trackedIndexInfo;
     }
 
-    public void setTrackedIndexInfo(IndexInfoDTO trackedIndexInfo) {
+    public void setTrackedIndexInfo(TrackedIndexDTO trackedIndexInfo) {
         this.trackedIndexInfo = trackedIndexInfo;
     }
 

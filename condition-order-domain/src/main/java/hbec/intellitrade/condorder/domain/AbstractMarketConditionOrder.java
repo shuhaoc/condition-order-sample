@@ -2,9 +2,10 @@ package hbec.intellitrade.condorder.domain;
 
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
-import hbec.intellitrade.common.market.index.IndexInfo;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.trackindex.TrackIndexOption;
+import hbec.intellitrade.condorder.domain.trackindex.TrackedIndex;
+import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParam;
@@ -27,7 +28,7 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
     /**
      * 跟踪的指数信息，仅当跟踪指数开启时非空
      */
-    private final IndexInfo trackedIndexInfo;
+    private final TrackedIndex trackedIndex;
 
     /**
      * 监控时段，非空，未开启为{@link NoneMonitorTimeRange}
@@ -49,14 +50,14 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
                                         OrderState orderState,
                                         SecurityInfo securityInfo,
                                         LocalDateTime expireTime,
-                                        IndexInfo trackedIndexInfo,
+                                        TrackedIndex trackedIndex,
                                         MonitorTimeRange monitorTimeRange,
                                         DelayConfirmParam delayConfirmParam,
                                         DeviationCtrlParam deviationCtrlParam) {
         super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime);
-        this.trackedIndexInfo = trackedIndexInfo;
-        this.delayConfirmParam = delayConfirmParam;
+        this.trackedIndex = trackedIndex;
         this.monitorTimeRange = monitorTimeRange;
+        this.delayConfirmParam = delayConfirmParam;
         this.deviationCtrlParam = deviationCtrlParam;
     }
 
@@ -70,8 +71,8 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
     @Override
     public MarketID getTrackMarketID() {
         // 跟踪指数开启时，返回指数的行情ID
-        if (trackedIndexInfo != null) {
-            return trackedIndexInfo.getMarketID();
+        if (trackedIndex instanceof TrackedIndexInfo) {
+            return ((TrackedIndexInfo) trackedIndex).getMarketID();
         }
         // 否则跟踪交易的证券标的
         return getSecurityInfo().getMarketID();
@@ -83,19 +84,16 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
      * @return 跟踪指数选项
      */
     public TrackIndexOption getTrackIndexOption() {
-        if (trackedIndexInfo != null) {
-            return TrackIndexOption.ENABLED;
-        }
-        return TrackIndexOption.DISABLED;
+        return trackedIndex.getOption();
     }
 
     /**
      * 获取跟踪的指数信息
      *
-     * @return 跟踪的指数信息，可能为空
+     * @return 跟踪的指数信息
      */
-    public IndexInfo getTrackedIndexInfo() {
-        return trackedIndexInfo;
+    public TrackedIndex getTrackedIndex() {
+        return trackedIndex;
     }
 
     public DelayConfirmParam getDelayConfirmParam() {
@@ -145,7 +143,9 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
 
         AbstractMarketConditionOrder that = (AbstractMarketConditionOrder) o;
 
-        if (trackedIndexInfo != null ? !trackedIndexInfo.equals(that.trackedIndexInfo) : that.trackedIndexInfo != null) {
+        if (trackedIndex != null
+                ? !trackedIndex.equals(that.trackedIndex)
+                : that.trackedIndex != null) {
             return false;
         }
         return monitorTimeRange.equals(that.monitorTimeRange);
@@ -154,7 +154,7 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (trackedIndexInfo != null ? trackedIndexInfo.hashCode() : 0);
+        result = 31 * result + (trackedIndex != null ? trackedIndex.hashCode() : 0);
         result = 31 * result + monitorTimeRange.hashCode();
         return result;
     }

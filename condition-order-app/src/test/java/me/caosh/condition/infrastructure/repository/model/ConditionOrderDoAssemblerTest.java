@@ -1,6 +1,5 @@
 package me.caosh.condition.infrastructure.repository.model;
 
-import hbec.intellitrade.common.market.index.IndexInfo;
 import hbec.intellitrade.common.market.index.IndexSource;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
@@ -11,6 +10,7 @@ import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.orders.PriceOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.trackindex.TrackIndexOption;
+import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustMethod;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
@@ -63,7 +63,7 @@ public class ConditionOrderDoAssemblerTest {
                 LocalDateTime.parse("2018-03-12T15:00:00"),
                 new BasicTradePlan(ExchangeType.SELL, EntrustStrategy.BUY1,
                                    new TradeNumberByAmount(new BigDecimal("10000.00"))),
-                new IndexInfo(IndexSource.SZ, "399001", "深证成指"),
+                new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"),
                 new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                   new LocalTimeRange(LocalTime.parse("10:00:00"), LocalTime.parse("10:30:00"))),
                 new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3),

@@ -1,6 +1,5 @@
 package me.caosh.condition.domain.model.order;
 
-import hbec.intellitrade.common.market.index.IndexInfo;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
@@ -10,6 +9,7 @@ import hbec.intellitrade.condorder.domain.delayconfirm.count.SingleDelayConfirmC
 import hbec.intellitrade.condorder.domain.orders.PriceOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
+import hbec.intellitrade.condorder.domain.trackindex.TrackedIndex;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.strategy.domain.condition.Condition;
@@ -33,7 +33,7 @@ public class ConditionOrderFactory {
                                  TradeCustomerInfo tradeCustomerInfo,
                                  OrderState orderState,
                                  SecurityInfo securityInfo,
-                                 IndexInfo trackedIndexInfo,
+                                 TrackedIndex trackedIndex,
                                  StrategyInfo strategyInfo,
                                  Condition condition,
                                  LocalDateTime expireTime,
@@ -47,8 +47,12 @@ public class ConditionOrderFactory {
                                   tradeCustomerInfo,
                                   orderState,
                                   securityInfo,
-                                  (PriceCondition) condition, expireTime, (BasicTradePlan) tradePlan, trackedIndexInfo,
-                                  monitorTimeRange, delayConfirmParam,
+                                  (PriceCondition) condition,
+                                  expireTime,
+                                  (BasicTradePlan) tradePlan,
+                                  trackedIndex,
+                                  monitorTimeRange,
+                                  delayConfirmParam,
                                   (SingleDelayConfirmCount) delayConfirmCount,
                                   deviationCtrlParam);
 //        } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {

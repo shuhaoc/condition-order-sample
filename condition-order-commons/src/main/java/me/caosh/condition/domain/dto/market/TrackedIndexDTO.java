@@ -4,7 +4,9 @@ import com.google.common.base.MoreObjects;
 import me.caosh.autoasm.Convertible;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -12,9 +14,12 @@ import java.io.Serializable;
  * @date 2018/3/17
  */
 @Convertible
-public class IndexInfoDTO implements Serializable {
+public class TrackedIndexDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @NotNull
+    @Range(min = 0, max = 1)
+    private Integer option;
     @NotBlank
     @Length(min = 2, max = 4)
     private String source;
@@ -24,6 +29,14 @@ public class IndexInfoDTO implements Serializable {
     @NotBlank
     @Length(min = 1, max = 128)
     private String name;
+
+    public Integer getOption() {
+        return option;
+    }
+
+    public void setOption(Integer option) {
+        this.option = option;
+    }
 
     public String getSource() {
         return source;
@@ -51,7 +64,8 @@ public class IndexInfoDTO implements Serializable {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(IndexInfoDTO.class).omitNullValues()
+        return MoreObjects.toStringHelper(TrackedIndexDTO.class).omitNullValues()
+                          .add("option", option)
                           .add("source", source)
                           .add("code", code)
                           .add("name", name)
