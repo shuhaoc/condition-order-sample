@@ -5,6 +5,7 @@ import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.market.RealTimeMarketSupplier;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.condorder.domain.ExplicitTradingSecurityOrder;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.trade.domain.EntrustOrderInfo;
 import hbec.intellitrade.trade.domain.EntrustOrderWriter;
@@ -22,14 +23,16 @@ public class BasicTriggerTradingContext implements TriggerTradingContext {
     private static final Logger logger = LoggerFactory.getLogger(BasicTriggerTradingContext.class);
 
     private final Signal signal;
-    private final ConditionOrder conditionOrder;
+    private final ExplicitTradingSecurityOrder conditionOrder;
     private final TradeCustomer tradeCustomer;
     private final RealTimeMarketSupplier realTimeMarketSupplier;
     private final EntrustOrderWriter entrustOrderWriter;
     private RealTimeMarket triggerMarket;
     private RealTimeMarket tradingMarket;
 
-    public BasicTriggerTradingContext(Signal signal, ConditionOrder conditionOrder, TradeCustomer tradeCustomer,
+    public BasicTriggerTradingContext(Signal signal,
+                                      ExplicitTradingSecurityOrder conditionOrder,
+                                      TradeCustomer tradeCustomer,
                                       RealTimeMarketSupplier realTimeMarketSupplier, EntrustOrderWriter entrustOrderWriter,
                                       RealTimeMarket triggerMarket) {
         this.signal = signal;
@@ -42,7 +45,7 @@ public class BasicTriggerTradingContext implements TriggerTradingContext {
         tryInitTradingMarket(conditionOrder, triggerMarket);
     }
 
-    private void tryInitTradingMarket(ConditionOrder conditionOrder, RealTimeMarket triggerMarket) {
+    private void tryInitTradingMarket(ExplicitTradingSecurityOrder conditionOrder, RealTimeMarket triggerMarket) {
         if (triggerMarket == null) {
             return;
         }

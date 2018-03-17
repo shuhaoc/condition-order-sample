@@ -24,7 +24,7 @@ import org.joda.time.LocalDateTime;
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/20
  */
-public abstract class AbstractMarketConditionOrder extends AbstractConditionOrder implements MarketDrivenStrategy, TimeDrivenStrategy {
+public abstract class AbstractMarketConditionOrder extends AbstractExplicitTradingSecurityOrder implements MarketDrivenStrategy, TimeDrivenStrategy {
     /**
      * 跟踪的指数信息，仅当跟踪指数开启时非空
      */

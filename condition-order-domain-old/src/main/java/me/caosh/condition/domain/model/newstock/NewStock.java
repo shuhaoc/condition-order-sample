@@ -17,7 +17,11 @@ public class NewStock {
     private final BigDecimal issuePrice;
     private final int purchaseUpperLimit;
 
-    public NewStock(String purchaseCode, String purchaseName, SecurityExchange securityExchange, BigDecimal issuePrice, int purchaseUpperLimit) {
+    public NewStock(String purchaseCode,
+                    String purchaseName,
+                    SecurityExchange securityExchange,
+                    BigDecimal issuePrice,
+                    int purchaseUpperLimit) {
         this.purchaseCode = purchaseCode;
         this.purchaseName = purchaseName;
         this.securityExchange = securityExchange;
@@ -48,12 +52,12 @@ public class NewStock {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(NewStock.class).omitNullValues()
-                .addValue(NewStock.class.getSuperclass() != Object.class ? super.toString() : null)
-                .add("purchaseCode", purchaseCode)
-                .add("purchaseName", purchaseName)
-                .add("securityExchange", securityExchange)
-                .add("issuePrice", issuePrice)
-                .add("purchaseUpperLimit", purchaseUpperLimit)
-                .toString();
+                          .addValue(NewStock.class.getSuperclass() != Object.class ? super.toString() : null)
+                          .add("purchaseCode", purchaseCode)
+                          .add("purchaseName", purchaseName)
+                          .add("securityExchange", securityExchange)
+                          .add("issuePrice", issuePrice)
+                          .add("purchaseUpperLimit", purchaseUpperLimit)
+                          .toString();
     }
 }

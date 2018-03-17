@@ -54,6 +54,33 @@ public class NewStockOrder extends AbstractConditionOrder implements TimeDrivenS
         return newStockPurchaseCondition;
     }
 
+//    public SecurityInfoHolder getSecurityInfo() {
+//        return SecurityInfoHolder.INSTANCE;
+//    }
+
+    public enum SecurityInfoHolder {
+        /**
+         * 单例
+         */
+        INSTANCE;
+
+        public SecurityType getType() {
+            return SecurityType.STOCK;
+        }
+
+        public String getCode() {
+            return "000000";
+        }
+
+        public String getExchange() {
+            return "NS";
+        }
+
+        public String getName() {
+            return "新股申购";
+        }
+    }
+
     public Condition getCondition() {
         return getNewStockPurchaseCondition();
     }
@@ -93,7 +120,7 @@ public class NewStockOrder extends AbstractConditionOrder implements TimeDrivenS
 
     private EntrustCommand createPurchaseCommand(NewStock newStock) {
         SecurityInfo securityInfo = new SecurityInfo(SecurityType.STOCK, newStock.getPurchaseCode(),
-                newStock.getSecurityExchange(), newStock.getPurchaseName());
+                                                     newStock.getSecurityExchange(), newStock.getPurchaseName());
         return new EntrustCommand(securityInfo, ExchangeType.QUOTA_PURCHASE,
                 newStock.getIssuePrice(), newStock.getPurchaseUpperLimit(), OrderType.LIMITED);
     }

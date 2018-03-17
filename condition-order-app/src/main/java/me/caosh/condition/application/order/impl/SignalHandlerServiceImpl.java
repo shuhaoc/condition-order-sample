@@ -2,10 +2,7 @@ package me.caosh.condition.application.order.impl;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.market.RealTimeMarketSupplier;
-import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
-import hbec.intellitrade.condorder.domain.EntrustOrderRepository;
-import hbec.intellitrade.condorder.domain.OrderState;
+import hbec.intellitrade.condorder.domain.*;
 import hbec.intellitrade.condorder.domain.trigger.BasicTriggerTradingContext;
 import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.signal.BS;
@@ -42,7 +39,12 @@ public class SignalHandlerServiceImpl implements SignalHandlerService {
     private final RealTimeMarketSupplier realTimeMarketSupplier;
     private final NewStocksSupplier newStocksSupplier;
 
-    public SignalHandlerServiceImpl(TradeCustomerFactory tradeCustomerFactory, ConditionOrderRepository conditionOrderRepository, EntrustOrderIdGenerator entrustOrderIdGenerator, EntrustOrderRepository entrustOrderRepository, RealTimeMarketSupplier realTimeMarketSupplier, NewStocksSupplier newStocksSupplier) {
+    public SignalHandlerServiceImpl(TradeCustomerFactory tradeCustomerFactory,
+                                    ConditionOrderRepository conditionOrderRepository,
+                                    EntrustOrderIdGenerator entrustOrderIdGenerator,
+                                    EntrustOrderRepository entrustOrderRepository,
+                                    RealTimeMarketSupplier realTimeMarketSupplier,
+                                    NewStocksSupplier newStocksSupplier) {
         this.tradeCustomerFactory = tradeCustomerFactory;
         this.conditionOrderRepository = conditionOrderRepository;
         this.entrustOrderIdGenerator = entrustOrderIdGenerator;
@@ -82,23 +84,32 @@ public class SignalHandlerServiceImpl implements SignalHandlerService {
         logger.info("---------------- Handle signal  end  ----------------");
     }
 
-    private TriggerTradingContext createTriggerTradingContext(SignalPayload signalPayload, Signal signal, ConditionOrder conditionOrder) {
+    private TriggerTradingContext createTriggerTradingContext(SignalPayload signalPayload,
+                                                              Signal signal,
+                                                              ConditionOrder conditionOrder) {
         RealTimeMarket realTimeMarket = null;
         if (signalPayload instanceof MarketSignalPayload) {
             realTimeMarket = ((MarketSignalPayload) signalPayload).getRealTimeMarket();
         }
 
         TradeCustomer tradeCustomer = tradeCustomerFactory.createTradeCustomer(conditionOrder.getCustomer());
-        return new BasicTriggerTradingContext(signal, conditionOrder, tradeCustomer,
-                realTimeMarketSupplier, new EntrustOrderWriterImpl(), realTimeMarket);
+        return new BasicTriggerTradingContext(signal,
+                                              (ExplicitTradingSecurityOrder) conditionOrder,
+                                              tradeCustomer,
+                                              realTimeMarketSupplier,
+                                              new EntrustOrderWriterImpl(),
+                                              realTimeMarket);
     }
 
     private class EntrustOrderWriterImpl implements EntrustOrderWriter {
         @Override
         public void save(EntrustOrderInfo entrustOrderInfo) {
             long entrustId = entrustOrderIdGenerator.nextId();
-            EntrustOrder entrustOrder = new EntrustOrder(entrustId, entrustOrderInfo.getOrderId(), entrustOrderInfo.getTradeCustomerInfo(),
-                    entrustOrderInfo.getEntrustCommand(), entrustOrderInfo.getEntrustResult());
+            EntrustOrder entrustOrder = new EntrustOrder(entrustId,
+                                                         entrustOrderInfo.getOrderId(),
+                                                         entrustOrderInfo.getTradeCustomerInfo(),
+                                                         entrustOrderInfo.getEntrustCommand(),
+                                                         entrustOrderInfo.getEntrustResult());
             entrustOrderRepository.save(entrustOrder);
         }
     }

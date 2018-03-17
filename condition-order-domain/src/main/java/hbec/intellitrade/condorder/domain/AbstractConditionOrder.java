@@ -24,7 +24,7 @@ import java.util.List;
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/2
  */
-public abstract class AbstractConditionOrder implements ConditionOrder {
+public abstract class AbstractConditionOrder implements ExplicitTradingSecurityOrder {
     private static final Logger logger = LoggerFactory.getLogger(AbstractConditionOrder.class);
 
     private final Long orderId;
@@ -46,7 +46,7 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     }
 
     @Override
-    public Long getOrderId() {
+    public long getOrderId() {
         return orderId;
     }
 
