@@ -4,7 +4,6 @@ import com.google.common.base.MoreObjects;
 import org.joda.time.LocalDateTime;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -65,7 +64,7 @@ public class RealTimeMarket {
     }
 
     public List<BigDecimal> getOfferedPrices() {
-        return Collections.unmodifiableList(offeredPrices);
+        return offeredPrices;
     }
 
     public LocalDateTime getMarketTime() {

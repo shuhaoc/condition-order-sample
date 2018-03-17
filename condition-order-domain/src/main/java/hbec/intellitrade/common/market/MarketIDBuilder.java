@@ -1,13 +1,12 @@
 package hbec.intellitrade.common.market;
 
-import hbec.intellitrade.common.security.SecurityType;
 import me.caosh.autoasm.ConvertibleBuilder;
 
 public class MarketIDBuilder implements ConvertibleBuilder<MarketID> {
-    private SecurityType type;
+    private MarketType type;
     private String code;
 
-    public MarketIDBuilder setType(SecurityType type) {
+    public MarketIDBuilder setType(MarketType type) {
         this.type = type;
         return this;
     }
