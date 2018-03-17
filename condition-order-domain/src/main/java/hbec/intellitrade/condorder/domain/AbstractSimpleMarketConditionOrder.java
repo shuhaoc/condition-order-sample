@@ -1,5 +1,6 @@
 package hbec.intellitrade.condorder.domain;
 
+import hbec.intellitrade.common.market.index.IndexInfo;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
@@ -31,6 +32,18 @@ public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketC
                                               BasicTradePlan tradePlan,
                                               MonitorTimeRange monitorTimeRange) {
         super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime, monitorTimeRange);
+        this.tradePlan = tradePlan;
+    }
+
+    public AbstractSimpleMarketConditionOrder(Long orderId,
+                                              TradeCustomerInfo tradeCustomerInfo,
+                                              OrderState orderState,
+                                              SecurityInfo securityInfo,
+                                              IndexInfo trackedIndexInfo,
+                                              LocalDateTime expireTime,
+                                              BasicTradePlan tradePlan,
+                                              MonitorTimeRange monitorTimeRange) {
+        super(orderId, tradeCustomerInfo, orderState, securityInfo, trackedIndexInfo, expireTime, monitorTimeRange);
         this.tradePlan = tradePlan;
     }
 

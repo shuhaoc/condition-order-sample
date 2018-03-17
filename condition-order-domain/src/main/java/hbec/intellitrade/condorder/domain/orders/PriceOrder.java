@@ -3,6 +3,7 @@ package hbec.intellitrade.condorder.domain.orders;
 import com.google.common.base.Function;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
+import hbec.intellitrade.common.market.index.IndexInfo;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.AbstractSimpleMarketConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
@@ -14,11 +15,7 @@ import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.strategy.domain.MarketClosedEventListener;
 import hbec.intellitrade.strategy.domain.MutableStrategy;
 import hbec.intellitrade.strategy.domain.condition.Condition;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.AbstractDelayConfirmCondition;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmConditionFactory;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmCounter;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParam;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.*;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlConditionFactory;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrlParam;
@@ -73,7 +70,40 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
                       SingleDelayConfirmCount singleDelayConfirmCount,
                       MonitorTimeRange monitorTimeRange,
                       DeviationCtrlParam deviationCtrlParam) {
-        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime, tradePlan, monitorTimeRange);
+        this(orderId,
+             tradeCustomerInfo,
+             orderState,
+             securityInfo,
+             null,
+             priceCondition,
+             expireTime,
+             tradePlan,
+             delayConfirmParam,
+             singleDelayConfirmCount,
+             monitorTimeRange,
+             deviationCtrlParam);
+    }
+
+    public PriceOrder(Long orderId,
+                      TradeCustomerInfo tradeCustomerInfo,
+                      OrderState orderState,
+                      SecurityInfo securityInfo,
+                      IndexInfo trackedIndexInfo,
+                      PriceCondition priceCondition,
+                      LocalDateTime expireTime,
+                      BasicTradePlan tradePlan,
+                      DelayConfirmParam delayConfirmParam,
+                      SingleDelayConfirmCount singleDelayConfirmCount,
+                      MonitorTimeRange monitorTimeRange,
+                      DeviationCtrlParam deviationCtrlParam) {
+        super(orderId,
+              tradeCustomerInfo,
+              orderState,
+              securityInfo,
+              trackedIndexInfo,
+              expireTime,
+              tradePlan,
+              monitorTimeRange);
         this.priceCondition = priceCondition;
         this.delayConfirmParam = delayConfirmParam;
         this.deviationCtrlParam = deviationCtrlParam;

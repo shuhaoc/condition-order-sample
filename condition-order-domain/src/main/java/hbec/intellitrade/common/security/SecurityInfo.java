@@ -51,6 +51,7 @@ public class SecurityInfo {
 
     @Override
     public boolean equals(Object o) {
+        // 由于证券名称可能会变，比如XD，但不影响证券等于比较，因此这里没有比较name
         if (this == o) {
             return true;
         }
@@ -67,7 +68,6 @@ public class SecurityInfo {
             return false;
         }
         return exchange == that.exchange;
-        // 由于证券名称可能会变，比如XD，但不影响证券等于比较，因此这里没有比较name
     }
 
     @Override
@@ -80,6 +80,6 @@ public class SecurityInfo {
 
     @Override
     public String toString() {
-        return type.name() + "(" + code + "." + exchange.name() + "," + name + ")";
+        return type.name() + "(" + code + "." + exchange + "," + name + ")";
     }
 }

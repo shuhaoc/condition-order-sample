@@ -1,7 +1,9 @@
 package hbec.intellitrade.condorder.domain;
 
+import com.google.common.base.Optional;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
+import hbec.intellitrade.common.market.index.IndexInfo;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
@@ -21,11 +23,36 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractMarketConditionOrder extends AbstractConditionOrder implements MarketDrivenStrategy, TimeDrivenStrategy {
     private static final Logger logger = LoggerFactory.getLogger(AbstractMarketConditionOrder.class);
 
+    /**
+     * 跟踪的指数信息，仅当跟踪指数开启时非空
+     */
+    private final IndexInfo trackedIndexInfo;
+
+    /**
+     * 监控时段，非空，未开启为{@link hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange}
+     */
     private final MonitorTimeRange monitorTimeRange;
 
-    public AbstractMarketConditionOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, OrderState orderState,
-                                        SecurityInfo securityInfo, LocalDateTime expireTime, MonitorTimeRange monitorTimeRange) {
+    public AbstractMarketConditionOrder(Long orderId,
+                                        TradeCustomerInfo tradeCustomerInfo,
+                                        OrderState orderState,
+                                        SecurityInfo securityInfo,
+                                        LocalDateTime expireTime,
+                                        MonitorTimeRange monitorTimeRange) {
         super(orderId, tradeCustomerInfo, securityInfo, expireTime, orderState);
+        this.trackedIndexInfo = null;
+        this.monitorTimeRange = monitorTimeRange;
+    }
+
+    public AbstractMarketConditionOrder(Long orderId,
+                                        TradeCustomerInfo tradeCustomerInfo,
+                                        OrderState orderState,
+                                        SecurityInfo securityInfo,
+                                        IndexInfo trackedIndexInfo,
+                                        LocalDateTime expireTime,
+                                        MonitorTimeRange monitorTimeRange) {
+        super(orderId, tradeCustomerInfo, securityInfo, expireTime, orderState);
+        this.trackedIndexInfo = trackedIndexInfo;
         this.monitorTimeRange = monitorTimeRange;
     }
 
@@ -38,7 +65,16 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
 
     @Override
     public MarketID getTrackMarketID() {
+        // 跟踪指数开启时，返回指数的行情ID
+        if (trackedIndexInfo != null) {
+            return trackedIndexInfo.getMarketID();
+        }
+        // 否则跟踪交易的证券标的
         return getSecurityInfo().getMarketID();
+    }
+
+    public Optional<IndexInfo> getTrackedIndexInfo() {
+        return Optional.fromNullable(trackedIndexInfo);
     }
 
     public MonitorTimeRange getMonitorTimeRange() {
