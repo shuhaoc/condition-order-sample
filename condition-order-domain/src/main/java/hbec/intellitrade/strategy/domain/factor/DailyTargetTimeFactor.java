@@ -14,10 +14,11 @@ import org.joda.time.LocalTime;
  */
 public class DailyTargetTimeFactor implements TimeFactor {
     private final LocalTime targetTime;
-    private LocalDate lastTriggerDate;
+    private final LocalDate lastTriggerDate;
 
     public DailyTargetTimeFactor(LocalTime targetTime) {
         this.targetTime = targetTime;
+        this.lastTriggerDate = null;
     }
 
     public DailyTargetTimeFactor(LocalTime targetTime, LocalDate lastTriggerDate) {
