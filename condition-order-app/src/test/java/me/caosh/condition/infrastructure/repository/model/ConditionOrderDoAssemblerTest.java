@@ -59,15 +59,15 @@ public class ConditionOrderDoAssemblerTest {
                 new TradeCustomerInfo(USER_ID, CUSTOMER_NO),
                 OrderState.ACTIVE,
                 new SecurityInfo(SecurityType.STOCK, SECURITY_CODE, SecurityExchange.SH, SECURITY_NAME),
-                new IndexInfo(IndexSource.SZ, "399001", "深证成指"),
                 new PriceCondition(CompareOperator.GE, new BigDecimal("9999.00")),
                 LocalDateTime.parse("2018-03-12T15:00:00"),
                 new BasicTradePlan(ExchangeType.SELL, EntrustStrategy.BUY1,
                                    new TradeNumberByAmount(new BigDecimal("10000.00"))),
-                new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3),
-                null,
+                new IndexInfo(IndexSource.SZ, "399001", "深证成指"),
                 new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                   new LocalTimeRange(LocalTime.parse("10:00:00"), LocalTime.parse("10:30:00"))),
+                new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3),
+                null,
                 new EnabledDeviationCtrlParam(new BigDecimal("1"))
         );
         ConditionOrderDO conditionOrderDO = AutoAssemblers.getDefault()

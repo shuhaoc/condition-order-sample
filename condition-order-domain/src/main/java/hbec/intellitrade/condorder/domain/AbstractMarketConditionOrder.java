@@ -7,53 +7,57 @@ import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.trackindex.TrackIndexOption;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
+import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/20
  */
 public abstract class AbstractMarketConditionOrder extends AbstractConditionOrder implements MarketDrivenStrategy, TimeDrivenStrategy {
-    private static final Logger logger = LoggerFactory.getLogger(AbstractMarketConditionOrder.class);
-
     /**
      * 跟踪的指数信息，仅当跟踪指数开启时非空
      */
     private final IndexInfo trackedIndexInfo;
 
     /**
-     * 监控时段，非空，未开启为{@link hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange}
+     * 监控时段，非空，未开启为{@link NoneMonitorTimeRange}
      */
     private final MonitorTimeRange monitorTimeRange;
 
-    public AbstractMarketConditionOrder(Long orderId,
-                                        TradeCustomerInfo tradeCustomerInfo,
-                                        OrderState orderState,
-                                        SecurityInfo securityInfo,
-                                        LocalDateTime expireTime,
-                                        MonitorTimeRange monitorTimeRange) {
-        super(orderId, tradeCustomerInfo, securityInfo, expireTime, orderState);
-        this.trackedIndexInfo = null;
-        this.monitorTimeRange = monitorTimeRange;
-    }
+    /**
+     * 偏差控制参数，非空，未开启为{@link DisabledDelayConfirmParam}
+     */
+    private final DelayConfirmParam delayConfirmParam;
+
+    /**
+     * 偏差控制参数，非空，未开启为{@link DisabledDeviationCtrlParam}
+     */
+    private final DeviationCtrlParam deviationCtrlParam;
 
     public AbstractMarketConditionOrder(Long orderId,
                                         TradeCustomerInfo tradeCustomerInfo,
                                         OrderState orderState,
                                         SecurityInfo securityInfo,
-                                        IndexInfo trackedIndexInfo,
                                         LocalDateTime expireTime,
-                                        MonitorTimeRange monitorTimeRange) {
-        super(orderId, tradeCustomerInfo, securityInfo, expireTime, orderState);
+                                        IndexInfo trackedIndexInfo,
+                                        MonitorTimeRange monitorTimeRange,
+                                        DelayConfirmParam delayConfirmParam,
+                                        DeviationCtrlParam deviationCtrlParam) {
+        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime);
         this.trackedIndexInfo = trackedIndexInfo;
+        this.delayConfirmParam = delayConfirmParam;
         this.monitorTimeRange = monitorTimeRange;
+        this.deviationCtrlParam = deviationCtrlParam;
     }
 
     /**
@@ -94,8 +98,16 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
         return trackedIndexInfo;
     }
 
+    public DelayConfirmParam getDelayConfirmParam() {
+        return delayConfirmParam;
+    }
+
     public MonitorTimeRange getMonitorTimeRange() {
         return monitorTimeRange;
+    }
+
+    public DeviationCtrlParam getDeviationCtrlParam() {
+        return deviationCtrlParam;
     }
 
     @Override

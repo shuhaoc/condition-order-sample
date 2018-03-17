@@ -4,12 +4,16 @@ import hbec.intellitrade.common.market.index.IndexInfo;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
-import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;
 
 /**
- * Created by caosh on 2017/8/20.
+ * 简单行情条件单，指交易计划为{@link BasicTradePlan}的一次性触发的条件单
+ *
+ * @author caosh/caoshuhao@touker.com
+ * @date 2017/8/20
  */
 public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketConditionOrder {
     private final BasicTradePlan tradePlan;
@@ -18,32 +22,21 @@ public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketC
                                               TradeCustomerInfo tradeCustomerInfo,
                                               OrderState orderState,
                                               SecurityInfo securityInfo,
-                                              LocalDateTime expireTime,
-                                              BasicTradePlan tradePlan) {
-        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime, NoneMonitorTimeRange.NONE);
-        this.tradePlan = tradePlan;
-    }
-
-    public AbstractSimpleMarketConditionOrder(Long orderId,
-                                              TradeCustomerInfo tradeCustomerInfo,
-                                              OrderState orderState,
-                                              SecurityInfo securityInfo,
-                                              LocalDateTime expireTime,
-                                              BasicTradePlan tradePlan,
-                                              MonitorTimeRange monitorTimeRange) {
-        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime, monitorTimeRange);
-        this.tradePlan = tradePlan;
-    }
-
-    public AbstractSimpleMarketConditionOrder(Long orderId,
-                                              TradeCustomerInfo tradeCustomerInfo,
-                                              OrderState orderState,
-                                              SecurityInfo securityInfo,
                                               IndexInfo trackedIndexInfo,
                                               LocalDateTime expireTime,
-                                              BasicTradePlan tradePlan,
-                                              MonitorTimeRange monitorTimeRange) {
-        super(orderId, tradeCustomerInfo, orderState, securityInfo, trackedIndexInfo, expireTime, monitorTimeRange);
+                                              MonitorTimeRange monitorTimeRange,
+                                              DelayConfirmParam delayConfirmParam,
+                                              DeviationCtrlParam deviationCtrlParam,
+                                              BasicTradePlan tradePlan) {
+        super(orderId,
+              tradeCustomerInfo,
+              orderState,
+              securityInfo,
+              expireTime,
+              trackedIndexInfo,
+              monitorTimeRange,
+              delayConfirmParam,
+              deviationCtrlParam);
         this.tradePlan = tradePlan;
     }
 

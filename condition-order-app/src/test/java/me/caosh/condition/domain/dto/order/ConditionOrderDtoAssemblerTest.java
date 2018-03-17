@@ -47,17 +47,17 @@ public class ConditionOrderDtoAssemblerTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "浦发银行"),
-                                               new IndexInfo(IndexSource.SZ, "399001", "深证成指"),
                                                new PriceCondition(CompareOperator.GE, new BigDecimal("9999.00")),
                                                LocalDateTime.parse("2018-03-15T15:00:00"),
                                                new BasicTradePlan(ExchangeType.BUY,
                                                                   EntrustStrategy.CURRENT_PRICE,
                                                                   new TradeNumberDirect(1000)),
-                                               new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3),
-                                               null,
+                                               new IndexInfo(IndexSource.SZ, "399001", "深证成指"),
                                                new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                                                  new LocalTimeRange(LocalTime.parse("10:00:00"),
                                                                                     LocalTime.parse("14:00:00"))),
+                                               new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3),
+                                               null,
                                                new EnabledDeviationCtrlParam(new BigDecimal("1.00")));
 
         ConditionOrderDTO assemble = AutoAssemblers.getDefault().assemble(priceOrder, ConditionOrderDTO.class);

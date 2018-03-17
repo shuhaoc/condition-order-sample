@@ -11,6 +11,8 @@ import hbec.intellitrade.condorder.domain.tradeplan.DoubleDirectionTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.condition.Condition;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;
@@ -26,9 +28,22 @@ public class GridTradeOrder extends AbstractMarketConditionOrder {
     private final GridCondition gridCondition;
     private final DoubleDirectionTradePlan tradePlan;
 
-    public GridTradeOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                          GridCondition gridCondition, LocalDateTime expireTime, DoubleDirectionTradePlan tradePlan, OrderState orderState) {
-        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime, NoneMonitorTimeRange.NONE);
+    public GridTradeOrder(Long orderId,
+                          TradeCustomerInfo tradeCustomerInfo,
+                          SecurityInfo securityInfo,
+                          GridCondition gridCondition,
+                          LocalDateTime expireTime,
+                          DoubleDirectionTradePlan tradePlan,
+                          OrderState orderState) {
+        super(orderId,
+              tradeCustomerInfo,
+              orderState,
+              securityInfo,
+              expireTime,
+              null,
+              NoneMonitorTimeRange.NONE,
+              DisabledDelayConfirmParam.DISABLED,
+              DisabledDeviationCtrlParam.DISABLED);
         this.gridCondition = gridCondition;
         this.tradePlan = tradePlan;
     }

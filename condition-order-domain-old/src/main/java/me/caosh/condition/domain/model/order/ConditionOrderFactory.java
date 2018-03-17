@@ -47,13 +47,9 @@ public class ConditionOrderFactory {
                                   tradeCustomerInfo,
                                   orderState,
                                   securityInfo,
-                                  trackedIndexInfo,
-                                  (PriceCondition) condition,
-                                  expireTime,
-                                  (BasicTradePlan) tradePlan,
-                                  delayConfirmParam,
+                                  (PriceCondition) condition, expireTime, (BasicTradePlan) tradePlan, trackedIndexInfo,
+                                  monitorTimeRange, delayConfirmParam,
                                   (SingleDelayConfirmCount) delayConfirmCount,
-                                  monitorTimeRange,
                                   deviationCtrlParam);
 //        } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {
 //            return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,

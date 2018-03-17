@@ -46,7 +46,7 @@ public class NewStockOrder extends AbstractConditionOrder implements TimeDrivenS
                          NewStockPurchaseCondition newStockPurchaseCondition,
                          LocalDateTime expireTime,
                          OrderState orderState) {
-        super(orderId, tradeCustomerInfo, SecurityInfoConstants.NEW_STOCK_PURCHASE, expireTime, orderState);
+        super(orderId, tradeCustomerInfo, orderState, SecurityInfoConstants.NEW_STOCK_PURCHASE, expireTime);
         this.newStockPurchaseCondition = newStockPurchaseCondition;
     }
 

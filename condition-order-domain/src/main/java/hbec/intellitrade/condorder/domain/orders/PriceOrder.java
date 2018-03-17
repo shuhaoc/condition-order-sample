@@ -35,9 +35,7 @@ import org.joda.time.LocalDateTime;
 public class PriceOrder extends AbstractSimpleMarketConditionOrder implements MutableStrategy, MarketClosedEventListener {
 
     private final PriceCondition priceCondition;
-    private final DelayConfirmParam delayConfirmParam;
     private final MarketCondition compositeCondition;
-    private final DeviationCtrlParam deviationCtrlParam;
 
     /**
      * 构造价格条件单（基本参数）
@@ -61,43 +59,42 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
              tradeCustomerInfo,
              orderState,
              securityInfo,
-             null,
              priceCondition,
              expireTime,
              tradePlan,
-             DisabledDelayConfirmParam.DISABLED,
              null,
              NoneMonitorTimeRange.NONE,
+             DisabledDelayConfirmParam.DISABLED,
+             null,
              DisabledDeviationCtrlParam.DISABLED);
     }
 
     /**
      * 构造价格条件单（全参数）
-     *
-     * @param orderId                 条件单ID
+     *  @param orderId                 条件单ID
      * @param tradeCustomerInfo       客户标识信息
      * @param orderState              条件单状态
      * @param securityInfo            交易证券信息
-     * @param trackedIndexInfo        跟踪指数信息，可为空
      * @param priceCondition          价格条件
      * @param expireTime              过期时间，可为空
      * @param tradePlan               交易计划
+     * @param trackedIndexInfo        跟踪指数信息，可为空
+     * @param monitorTimeRange        监控时段
      * @param delayConfirmParam       延迟确认参数
      * @param singleDelayConfirmCount 当前延迟确认次数
-     * @param monitorTimeRange        监控时段
      * @param deviationCtrlParam      偏差控制参数
      */
     public PriceOrder(Long orderId,
                       TradeCustomerInfo tradeCustomerInfo,
                       OrderState orderState,
                       SecurityInfo securityInfo,
-                      IndexInfo trackedIndexInfo,
                       PriceCondition priceCondition,
                       LocalDateTime expireTime,
                       BasicTradePlan tradePlan,
+                      IndexInfo trackedIndexInfo,
+                      MonitorTimeRange monitorTimeRange,
                       DelayConfirmParam delayConfirmParam,
                       SingleDelayConfirmCount singleDelayConfirmCount,
-                      MonitorTimeRange monitorTimeRange,
                       DeviationCtrlParam deviationCtrlParam) {
         super(orderId,
               tradeCustomerInfo,
@@ -105,11 +102,12 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
               securityInfo,
               trackedIndexInfo,
               expireTime,
-              tradePlan,
-              monitorTimeRange);
+              monitorTimeRange,
+              delayConfirmParam,
+              deviationCtrlParam,
+              tradePlan
+        );
         this.priceCondition = priceCondition;
-        this.delayConfirmParam = delayConfirmParam;
-        this.deviationCtrlParam = deviationCtrlParam;
 
         PredictableMarketCondition deviationCtrlWrappedCondition = DeviationCtrlConditionFactory.INSTANCE.wrap(
                 priceCondition,
@@ -130,14 +128,6 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
     public Condition getRawCondition() {
         // TODO: 如何约束不可变性
         return priceCondition;
-    }
-
-    public DelayConfirmParam getDelayConfirmParam() {
-        return delayConfirmParam;
-    }
-
-    public DeviationCtrlParam getDeviationCtrlParam() {
-        return deviationCtrlParam;
     }
 
     @Override

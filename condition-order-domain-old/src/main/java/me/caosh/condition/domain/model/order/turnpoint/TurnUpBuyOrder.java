@@ -10,7 +10,10 @@ import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.strategy.domain.condition.Condition;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
+import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import me.caosh.condition.domain.model.condition.TurnUpCondition;
 import org.joda.time.LocalDateTime;
@@ -22,9 +25,23 @@ public class TurnUpBuyOrder extends AbstractSimpleMarketConditionOrder {
 
     private final TurnUpCondition turnUpCondition;
 
-    public TurnUpBuyOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
-                          TurnUpCondition turnUpCondition, LocalDateTime expireTime, BasicTradePlan tradePlan, OrderState orderState) {
-        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime, tradePlan);
+    public TurnUpBuyOrder(Long orderId,
+                          TradeCustomerInfo tradeCustomerInfo,
+                          SecurityInfo securityInfo,
+                          TurnUpCondition turnUpCondition,
+                          LocalDateTime expireTime,
+                          BasicTradePlan tradePlan,
+                          OrderState orderState) {
+        super(orderId,
+              tradeCustomerInfo,
+              orderState,
+              securityInfo,
+              null,
+              expireTime,
+              NoneMonitorTimeRange.NONE,
+              DisabledDelayConfirmParam.DISABLED,
+              DisabledDeviationCtrlParam.DISABLED,
+              tradePlan);
         Preconditions.checkArgument(tradePlan.getExchangeType() == ExchangeType.BUY);
         this.turnUpCondition = turnUpCondition;
     }
@@ -51,8 +68,8 @@ public class TurnUpBuyOrder extends AbstractSimpleMarketConditionOrder {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .addValue(super.toString())
-                .add("turnUpCondition", turnUpCondition)
-                .toString();
+                          .addValue(super.toString())
+                          .add("turnUpCondition", turnUpCondition)
+                          .toString();
     }
 }

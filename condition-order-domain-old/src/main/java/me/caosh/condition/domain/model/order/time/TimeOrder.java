@@ -30,7 +30,7 @@ public class TimeOrder extends AbstractConditionOrder implements TimeDrivenStrat
     public TimeOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                      TimeReachedCondition timeCondition, LocalDateTime expireTime,
                      BasicTradePlan tradePlan, OrderState orderState) {
-        super(orderId, tradeCustomerInfo, securityInfo, expireTime, orderState);
+        super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime);
         this.timeReachedCondition = timeCondition;
         this.tradePlan = tradePlan;
     }
