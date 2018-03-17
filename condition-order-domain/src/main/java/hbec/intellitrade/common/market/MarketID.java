@@ -6,24 +6,30 @@ import hbec.intellitrade.strategy.domain.container.BucketKey;
 /**
  * 行情ID，由类别和证券代码组成，支持指数
  * <p>
+ *
  * @author caosh/caoshuhao@touker.com
  * @date 2018/2/1
  */
 public class MarketID implements BucketKey {
-    private final SecurityType type;
+    private final MarketType type;
     private final String code;
 
-    public SecurityType getType() {
+    public MarketID(MarketType type, String code) {
+        this.type = type;
+        this.code = code;
+    }
+
+    public MarketID(SecurityType type, String code) {
+        this.type = MarketTypes.fromSecurityType(type);
+        this.code = code;
+    }
+
+    public MarketType getType() {
         return type;
     }
 
     public String getCode() {
         return code;
-    }
-
-    public MarketID(SecurityType type, String code) {
-        this.type = type;
-        this.code = code;
     }
 
     @Override
