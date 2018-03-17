@@ -144,7 +144,7 @@ public class NewStockOrder extends AbstractConditionOrder implements TimeDrivenS
         newStockPurchaseCondition.increasePurchasedCount();
     }
 
-    @Override
+    //    @Override
     public void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext) {
         newStockPurchaseCondition.setTriggeredToday();
     }
