@@ -20,6 +20,10 @@ public interface ConditionOrder extends Strategy {
 
     TradeCustomerInfo getCustomer();
 
+    OrderState getOrderState();
+
+    boolean isMonitoringState();
+
     SecurityInfo getSecurityInfo();
 
     StrategyInfo getStrategyInfo();
@@ -27,10 +31,6 @@ public interface ConditionOrder extends Strategy {
     Condition getRawCondition();
 
     TradePlan getTradePlan();
-
-    OrderState getOrderState();
-
-    boolean isMonitoringState();
 
     void onTradeSignal(TriggerTradingContext triggerTradingContext);
 

@@ -97,7 +97,8 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     public void onTradeSignal(TriggerTradingContext triggerTradingContext) {
         Preconditions.checkArgument(orderState == OrderState.ACTIVE, "Order state should be ACTIVE");
 
-        List<EntrustCommand> entrustCommands = createEntrustCommands((TradeSignal) triggerTradingContext.getSignal(), triggerTradingContext);
+        List<EntrustCommand> entrustCommands = createEntrustCommands((TradeSignal) triggerTradingContext.getSignal(),
+                                                                     triggerTradingContext);
         for (EntrustCommand entrustCommand : entrustCommands) {
             executeEntrustCommand(triggerTradingContext, entrustCommand);
         }
