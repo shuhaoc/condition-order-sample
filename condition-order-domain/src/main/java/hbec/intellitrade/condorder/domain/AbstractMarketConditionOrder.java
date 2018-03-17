@@ -1,10 +1,10 @@
 package hbec.intellitrade.condorder.domain;
 
-import com.google.common.base.Optional;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.market.index.IndexInfo;
 import hbec.intellitrade.common.security.SecurityInfo;
+import hbec.intellitrade.condorder.domain.trackindex.TrackIndexOption;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
@@ -73,8 +73,25 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
         return getSecurityInfo().getMarketID();
     }
 
-    public Optional<IndexInfo> getTrackedIndexInfo() {
-        return Optional.fromNullable(trackedIndexInfo);
+    /**
+     * 获取跟踪指数选项
+     *
+     * @return 跟踪指数选项
+     */
+    public TrackIndexOption getTrackIndexOption() {
+        if (trackedIndexInfo != null) {
+            return TrackIndexOption.ENABLED;
+        }
+        return TrackIndexOption.DISABLED;
+    }
+
+    /**
+     * 获取跟踪的指数信息
+     *
+     * @return 跟踪的指数信息，可能为空
+     */
+    public IndexInfo getTrackedIndexInfo() {
+        return trackedIndexInfo;
     }
 
     public MonitorTimeRange getMonitorTimeRange() {
@@ -116,12 +133,16 @@ public abstract class AbstractMarketConditionOrder extends AbstractConditionOrde
 
         AbstractMarketConditionOrder that = (AbstractMarketConditionOrder) o;
 
+        if (trackedIndexInfo != null ? !trackedIndexInfo.equals(that.trackedIndexInfo) : that.trackedIndexInfo != null) {
+            return false;
+        }
         return monitorTimeRange.equals(that.monitorTimeRange);
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
+        result = 31 * result + (trackedIndexInfo != null ? trackedIndexInfo.hashCode() : 0);
         result = 31 * result + monitorTimeRange.hashCode();
         return result;
     }

@@ -50,6 +50,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
              tradeCustomerInfo,
              orderState,
              securityInfo,
+             null,
              priceCondition,
              expireTime,
              tradePlan,
@@ -57,31 +58,6 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
              null,
              NoneMonitorTimeRange.NONE,
              DisabledDeviationCtrlParam.DISABLED);
-    }
-
-    public PriceOrder(Long orderId,
-                      TradeCustomerInfo tradeCustomerInfo,
-                      OrderState orderState,
-                      SecurityInfo securityInfo,
-                      PriceCondition priceCondition,
-                      LocalDateTime expireTime,
-                      BasicTradePlan tradePlan,
-                      DelayConfirmParam delayConfirmParam,
-                      SingleDelayConfirmCount singleDelayConfirmCount,
-                      MonitorTimeRange monitorTimeRange,
-                      DeviationCtrlParam deviationCtrlParam) {
-        this(orderId,
-             tradeCustomerInfo,
-             orderState,
-             securityInfo,
-             null,
-             priceCondition,
-             expireTime,
-             tradePlan,
-             delayConfirmParam,
-             singleDelayConfirmCount,
-             monitorTimeRange,
-             deviationCtrlParam);
     }
 
     public PriceOrder(Long orderId,
@@ -217,6 +193,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
                           .add("customer", getCustomer())
                           .add("orderState", getOrderState())
                           .add("securityInfo", getSecurityInfo())
+                          .add("trackedIndexInfo", getTrackedIndexInfo())
                           .add("condition", getCondition())
                           .add("expireTime", getExpireTime())
                           .add("tradePlan", getTradePlan())

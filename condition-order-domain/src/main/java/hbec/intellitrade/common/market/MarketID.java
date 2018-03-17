@@ -1,5 +1,6 @@
 package hbec.intellitrade.common.market;
 
+import com.google.common.base.Preconditions;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.strategy.domain.container.BucketKey;
 
@@ -15,13 +16,14 @@ public class MarketID implements BucketKey {
     private final String code;
 
     public MarketID(MarketType type, String code) {
+        Preconditions.checkNotNull(type, "type cannot be null");
+        Preconditions.checkNotNull(code, "code cannot be null");
         this.type = type;
         this.code = code;
     }
 
     public MarketID(SecurityType type, String code) {
-        this.type = MarketTypes.fromSecurityType(type);
-        this.code = code;
+        this(MarketTypes.fromSecurityType(type), code);
     }
 
     public MarketType getType() {

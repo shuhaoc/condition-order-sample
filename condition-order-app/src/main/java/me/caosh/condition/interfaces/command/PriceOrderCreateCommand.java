@@ -2,8 +2,10 @@ package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.autoasm.FieldMapping;
+import me.caosh.condition.domain.dto.market.IndexInfoDTO;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
 import me.caosh.condition.domain.dto.order.*;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.Valid;
@@ -21,6 +23,13 @@ public class PriceOrderCreateCommand implements Serializable {
 
     @NotNull
     private SecurityInfoDTO securityInfo;
+
+    @NotNull
+    @Range(min = 0, max = 1)
+    private Integer trackIndexOption;
+
+    @Valid
+    private IndexInfoDTO trackedIndexInfo;
 
     @NotNull
     @FieldMapping(mappedProperty = "rawCondition")
@@ -48,6 +57,22 @@ public class PriceOrderCreateCommand implements Serializable {
 
     public void setSecurityInfo(SecurityInfoDTO securityInfo) {
         this.securityInfo = securityInfo;
+    }
+
+    public Integer getTrackIndexOption() {
+        return trackIndexOption;
+    }
+
+    public void setTrackIndexOption(Integer trackIndexOption) {
+        this.trackIndexOption = trackIndexOption;
+    }
+
+    public IndexInfoDTO getTrackedIndexInfo() {
+        return trackedIndexInfo;
+    }
+
+    public void setTrackedIndexInfo(IndexInfoDTO trackedIndexInfo) {
+        this.trackedIndexInfo = trackedIndexInfo;
     }
 
     public PriceConditionDTO getPriceCondition() {
@@ -102,6 +127,8 @@ public class PriceOrderCreateCommand implements Serializable {
     public String toString() {
         return MoreObjects.toStringHelper(PriceOrderCreateCommand.class).omitNullValues()
                           .add("securityInfo", securityInfo)
+                          .add("trackIndexOption", trackIndexOption)
+                          .add("trackedIndexInfo", trackedIndexInfo)
                           .add("priceCondition", priceCondition)
                           .add("expireTime", expireTime)
                           .add("tradePlan", tradePlan)

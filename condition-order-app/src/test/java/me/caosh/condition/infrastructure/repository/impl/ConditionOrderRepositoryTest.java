@@ -1,6 +1,8 @@
 package me.caosh.condition.infrastructure.repository.impl;
 
 import com.google.common.base.Optional;
+import hbec.intellitrade.common.market.index.IndexInfo;
+import hbec.intellitrade.common.market.index.IndexSource;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
@@ -54,7 +56,9 @@ public class ConditionOrderRepositoryTest extends AbstractTestNGSpringContextTes
         TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
         SecurityInfo securityInfo = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
         PriceOrder priceOrder = new PriceOrder(conditionOrderIdGenerator.nextId(), tradeCustomerInfo,
-                                               OrderState.ACTIVE, securityInfo,
+                                               OrderState.ACTIVE,
+                                               securityInfo,
+                                               new IndexInfo(IndexSource.SZ, "399001", "深证成指"),
                                                new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                                                LocalDateTime.parse("2018-03-09T15:00:00"),
                                                new BasicTradePlan(ExchangeType.BUY,

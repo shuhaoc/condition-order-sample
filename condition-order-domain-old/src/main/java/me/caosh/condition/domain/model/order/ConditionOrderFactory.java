@@ -1,5 +1,6 @@
 package me.caosh.condition.domain.model.order;
 
+import hbec.intellitrade.common.market.index.IndexInfo;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
@@ -32,6 +33,7 @@ public class ConditionOrderFactory {
                                  TradeCustomerInfo tradeCustomerInfo,
                                  OrderState orderState,
                                  SecurityInfo securityInfo,
+                                 IndexInfo trackedIndexInfo,
                                  StrategyInfo strategyInfo,
                                  Condition condition,
                                  LocalDateTime expireTime,
@@ -45,6 +47,7 @@ public class ConditionOrderFactory {
                                   tradeCustomerInfo,
                                   orderState,
                                   securityInfo,
+                                  trackedIndexInfo,
                                   (PriceCondition) condition,
                                   expireTime,
                                   (BasicTradePlan) tradePlan,

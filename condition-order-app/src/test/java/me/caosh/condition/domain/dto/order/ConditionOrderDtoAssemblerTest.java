@@ -1,5 +1,7 @@
 package me.caosh.condition.domain.dto.order;
 
+import hbec.intellitrade.common.market.index.IndexInfo;
+import hbec.intellitrade.common.market.index.IndexSource;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
@@ -20,6 +22,7 @@ import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import me.caosh.autoasm.AutoAssemblers;
+import me.caosh.condition.domain.dto.market.IndexInfoDTO;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
 import me.caosh.condition.domain.model.order.ConditionOrderBuilder;
 import org.joda.time.LocalDateTime;
@@ -44,7 +47,8 @@ public class ConditionOrderDtoAssemblerTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "浦发银行"),
-                                               new PriceCondition(CompareOperator.GE, new BigDecimal("13.00")),
+                                               new IndexInfo(IndexSource.SZ, "399001", "深证成指"),
+                                               new PriceCondition(CompareOperator.GE, new BigDecimal("9999.00")),
                                                LocalDateTime.parse("2018-03-15T15:00:00"),
                                                new BasicTradePlan(ExchangeType.BUY,
                                                                   EntrustStrategy.CURRENT_PRICE,
@@ -76,11 +80,18 @@ public class ConditionOrderDtoAssemblerTest {
         securityInfo.setExchange("SH");
         conditionOrderDTO.setSecurityInfo(securityInfo);
 
+        conditionOrderDTO.setTrackIndexOption(1);
+        IndexInfoDTO trackedIndexInfo = new IndexInfoDTO();
+        trackedIndexInfo.setSource("SZ");
+        trackedIndexInfo.setCode("399001");
+        trackedIndexInfo.setName("深证成指");
+        conditionOrderDTO.setTrackedIndexInfo(trackedIndexInfo);
+
         conditionOrderDTO.setStrategyType(1);
 
         PriceConditionDTO priceCondition = new PriceConditionDTO();
         priceCondition.setCompareOperator(1);
-        priceCondition.setTargetPrice(new BigDecimal("13.00"));
+        priceCondition.setTargetPrice(new BigDecimal("9999.00"));
         conditionOrderDTO.setRawCondition(priceCondition);
 
         conditionOrderDTO.setExpireTime("2018-03-15 15:00:00");

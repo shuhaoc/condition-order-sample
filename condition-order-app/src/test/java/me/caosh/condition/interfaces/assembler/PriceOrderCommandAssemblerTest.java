@@ -1,5 +1,7 @@
 package me.caosh.condition.interfaces.assembler;
 
+import hbec.intellitrade.common.market.index.IndexInfo;
+import hbec.intellitrade.common.market.index.IndexSource;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
@@ -19,12 +21,9 @@ import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
 import hbec.intellitrade.trade.domain.ExchangeType;
+import me.caosh.condition.domain.dto.market.IndexInfoDTO;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
-import me.caosh.condition.domain.dto.order.DelayConfirmParamDTO;
-import me.caosh.condition.domain.dto.order.DeviationCtrlParamDTO;
-import me.caosh.condition.domain.dto.order.MonitorTimeRangeDTO;
-import me.caosh.condition.domain.dto.order.PriceConditionDTO;
-import me.caosh.condition.domain.dto.order.TradePlanDTO;
+import me.caosh.condition.domain.dto.order.*;
 import me.caosh.condition.interfaces.command.PriceOrderCreateCommand;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
@@ -48,6 +47,12 @@ public class PriceOrderCommandAssemblerTest {
         securityInfo.setName("浦发银行");
         securityInfo.setExchange("SH");
         createCommand.setSecurityInfo(securityInfo);
+
+        IndexInfoDTO trackedIndexInfo = new IndexInfoDTO();
+        trackedIndexInfo.setSource("SZ");
+        trackedIndexInfo.setCode("399001");
+        trackedIndexInfo.setName("深证成指");
+        createCommand.setTrackedIndexInfo(trackedIndexInfo);
 
         PriceConditionDTO priceCondition = new PriceConditionDTO();
         priceCondition.setCompareOperator(1);
@@ -91,6 +96,7 @@ public class PriceOrderCommandAssemblerTest {
                                                               "600000",
                                                               SecurityExchange.SH,
                                                               "浦发银行"),
+                                             new IndexInfo(IndexSource.SZ, "399001", "深证成指"),
                                              new PriceCondition(CompareOperator.GE, new BigDecimal("13.00")),
                                              LocalDateTime.parse("2018-03-15T15:00:00"),
                                              new BasicTradePlan(ExchangeType.BUY,

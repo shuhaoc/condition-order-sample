@@ -1,13 +1,18 @@
 package hbec.intellitrade.condorder.domain.orders;
 
+import hbec.intellitrade.common.market.MarketID;
+import hbec.intellitrade.common.market.MarketType;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.market.RealTimeMarketSupplier;
+import hbec.intellitrade.common.market.index.IndexInfo;
+import hbec.intellitrade.common.market.index.IndexSource;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.delayconfirm.count.SingleDelayConfirmCount;
+import hbec.intellitrade.condorder.domain.trackindex.TrackIndexOption;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
@@ -26,13 +31,7 @@ import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
-import hbec.intellitrade.trade.domain.EntrustCommand;
-import hbec.intellitrade.trade.domain.EntrustOrderInfo;
-import hbec.intellitrade.trade.domain.EntrustOrderWriter;
-import hbec.intellitrade.trade.domain.EntrustSuccessResult;
-import hbec.intellitrade.trade.domain.ExchangeType;
-import hbec.intellitrade.trade.domain.OrderType;
-import hbec.intellitrade.trade.domain.TradeCustomer;
+import hbec.intellitrade.trade.domain.*;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.mockito.Matchers;
@@ -48,6 +47,7 @@ import java.util.Arrays;
 
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
 
 /**
  * Created by caosh on 2017/8/31.
@@ -118,6 +118,7 @@ public class PriceOrderTest {
                                                                   EntrustStrategy.CURRENT_PRICE,
                                                                   new TradeNumberDirect(100))
         );
+        assertNull(priceOrder.getTrackedIndexInfo());
 
         assertEquals(priceOrder.onTimeTick(LocalDateTime.now()), Signals.none());
 
@@ -184,7 +185,10 @@ public class PriceOrderTest {
         TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
         SecurityInfo pfyh = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
 
-        PriceOrder priceOrder1 = new PriceOrder(123L, tradeCustomerInfo, OrderState.ACTIVE, pfyh,
+        PriceOrder priceOrder1 = new PriceOrder(123L,
+                                                tradeCustomerInfo,
+                                                OrderState.ACTIVE,
+                                                pfyh,
                                                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                                                 LocalDateTime.now().plusDays(1),
                                                 new BasicTradePlan(ExchangeType.BUY,
@@ -194,7 +198,10 @@ public class PriceOrderTest {
 
         assertEquals(priceOrder1.getDelayConfirmParam(), DisabledDelayConfirmParam.DISABLED);
 
-        PriceOrder priceOrder2 = new PriceOrder(123L, tradeCustomerInfo, OrderState.ACTIVE, pfyh,
+        PriceOrder priceOrder2 = new PriceOrder(123L, tradeCustomerInfo,
+                                                OrderState.ACTIVE,
+                                                pfyh,
+                                                null,
                                                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                                                 LocalDateTime.now().plusDays(1),
                                                 new BasicTradePlan(ExchangeType.BUY,
@@ -217,6 +224,7 @@ public class PriceOrderTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "PFYH"),
+                                               null,
                                                new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                                                LocalDateTime.now().plusDays(1),
                                                new BasicTradePlan(ExchangeType.BUY,
@@ -245,6 +253,7 @@ public class PriceOrderTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "PFYH"),
+                                               null,
                                                new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                                                LocalDateTime.now().plusDays(1),
                                                new BasicTradePlan(ExchangeType.BUY,
@@ -276,6 +285,7 @@ public class PriceOrderTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "PFYH"),
+                                               null,
                                                new PriceCondition(CompareOperator.LE, new BigDecimal("10.00")),
                                                LocalDateTime.now().plusDays(1),
                                                new BasicTradePlan(ExchangeType.BUY,
@@ -303,6 +313,7 @@ public class PriceOrderTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "PFYH"),
+                                               null,
                                                new PriceCondition(CompareOperator.LE, new BigDecimal("10.00")),
                                                LocalDateTime.now().plusDays(1),
                                                new BasicTradePlan(ExchangeType.BUY,
@@ -326,5 +337,31 @@ public class PriceOrderTest {
                      Signals.none());
         assertEquals(priceOrder.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("9.90"))),
                      Signals.buyOrSell().withDeviationExceeded());
+    }
+
+    @Test
+    public void testTrackIndex() throws Exception {
+        PriceOrder priceOrder = new PriceOrder(123L,
+                                               new TradeCustomerInfo(303348, "010000061086"),
+                                               OrderState.ACTIVE,
+                                               new SecurityInfo(SecurityType.STOCK,
+                                                                "600000",
+                                                                SecurityExchange.SH,
+                                                                "PFYH"),
+                                               new IndexInfo(IndexSource.SZ, "399001", "深证成指"),
+                                               new PriceCondition(CompareOperator.LE, new BigDecimal("10.00")),
+                                               LocalDateTime.now().plusDays(1),
+                                               new BasicTradePlan(ExchangeType.BUY,
+                                                                  EntrustStrategy.CURRENT_PRICE,
+                                                                  new TradeNumberDirect(100)),
+                                               new EnabledDelayConfirmParam(DelayConfirmOption.CONTINUOUS, 2),
+                                               null,
+                                               NoneMonitorTimeRange.NONE,
+                                               new EnabledDeviationCtrlParam(new BigDecimal("1")));
+
+        assertEquals(priceOrder.getTrackIndexOption(), TrackIndexOption.ENABLED);
+        assertEquals(priceOrder.getTrackedIndexInfo(), new IndexInfo(IndexSource.SZ, "399001", "深证成指"));
+
+        assertEquals(priceOrder.getTrackMarketID(), new MarketID(MarketType.INDEX, "399001"));
     }
 }

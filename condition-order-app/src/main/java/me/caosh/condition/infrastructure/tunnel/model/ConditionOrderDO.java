@@ -4,12 +4,7 @@ import com.google.common.base.MoreObjects;
 import me.caosh.autoasm.FieldMapping;
 import org.joda.time.LocalTime;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -39,6 +34,13 @@ public class ConditionOrderDO {
     private String securityExchange;
     @FieldMapping(mappedProperty = "securityInfo.name")
     private String securityName;
+    private Integer trackIndexOption = 0;
+    @FieldMapping(mappedProperty = "trackedIndexInfo.code")
+    private String trackedIndexCode;
+    @FieldMapping(mappedProperty = "trackedIndexInfo.source")
+    private String trackedIndexSource;
+    @FieldMapping(mappedProperty = "trackedIndexInfo.name")
+    private String trackedIndexName;
     @FieldMapping(mappedProperty = "strategyInfo.strategyType")
     private Integer strategyType;
     @FieldMapping(mappedProperty = "rawCondition")
@@ -163,6 +165,46 @@ public class ConditionOrderDO {
 
     public void setSecurityName(String securityName) {
         this.securityName = securityName;
+    }
+
+    @Basic
+    @Column(name = "track_index_option")
+    public Integer getTrackIndexOption() {
+        return trackIndexOption;
+    }
+
+    public void setTrackIndexOption(Integer trackIndexOption) {
+        this.trackIndexOption = trackIndexOption;
+    }
+
+    @Basic
+    @Column(name = "tracked_index_code")
+    public String getTrackedIndexCode() {
+        return trackedIndexCode;
+    }
+
+    public void setTrackedIndexCode(String trackedIndexCode) {
+        this.trackedIndexCode = trackedIndexCode;
+    }
+
+    @Basic
+    @Column(name = "tracked_index_source")
+    public String getTrackedIndexSource() {
+        return trackedIndexSource;
+    }
+
+    public void setTrackedIndexSource(String trackedIndexSource) {
+        this.trackedIndexSource = trackedIndexSource;
+    }
+
+    @Basic
+    @Column(name = "tracked_index_name")
+    public String getTrackedIndexName() {
+        return trackedIndexName;
+    }
+
+    public void setTrackedIndexName(String trackedIndexName) {
+        this.trackedIndexName = trackedIndexName;
     }
 
     @Basic
@@ -387,6 +429,10 @@ public class ConditionOrderDO {
                           .add("securityCode", securityCode)
                           .add("securityExchange", securityExchange)
                           .add("securityName", securityName)
+                          .add("trackIndexOption", trackIndexOption)
+                          .add("trackedIndexCode", trackedIndexCode)
+                          .add("trackedIndexSource", trackedIndexSource)
+                          .add("trackedIndexName", trackedIndexName)
                           .add("strategyType", strategyType)
                           .add("conditionPropertiesObj", conditionPropertiesObj)
                           .add("dynamicPropertiesObj", dynamicPropertiesObj)

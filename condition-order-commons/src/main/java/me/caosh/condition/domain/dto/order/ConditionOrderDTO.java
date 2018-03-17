@@ -3,6 +3,7 @@ package me.caosh.condition.domain.dto.order;
 import com.google.common.base.MoreObjects;
 import me.caosh.autoasm.Convertible;
 import me.caosh.autoasm.FieldMapping;
+import me.caosh.condition.domain.dto.market.IndexInfoDTO;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
 
 import java.io.Serializable;
@@ -21,6 +22,8 @@ public class ConditionOrderDTO implements Serializable {
     private Boolean deleted = false;
     private Integer orderState;
     private SecurityInfoDTO securityInfo;
+    private Integer trackIndexOption;
+    private IndexInfoDTO trackedIndexInfo;
     @FieldMapping(mappedProperty = "strategyInfo.strategyType")
     private Integer strategyType;
     private ConditionDTO rawCondition;
@@ -69,6 +72,22 @@ public class ConditionOrderDTO implements Serializable {
 
     public void setSecurityInfo(SecurityInfoDTO securityInfo) {
         this.securityInfo = securityInfo;
+    }
+
+    public Integer getTrackIndexOption() {
+        return trackIndexOption;
+    }
+
+    public void setTrackIndexOption(Integer trackIndexOption) {
+        this.trackIndexOption = trackIndexOption;
+    }
+
+    public IndexInfoDTO getTrackedIndexInfo() {
+        return trackedIndexInfo;
+    }
+
+    public void setTrackedIndexInfo(IndexInfoDTO trackedIndexInfo) {
+        this.trackedIndexInfo = trackedIndexInfo;
     }
 
     public Integer getStrategyType() {
@@ -143,6 +162,8 @@ public class ConditionOrderDTO implements Serializable {
                           .add("deleted", deleted)
                           .add("orderState", orderState)
                           .add("securityInfo", securityInfo)
+                          .add("trackIndexOption", trackIndexOption)
+                          .add("trackedIndexInfo", trackedIndexInfo)
                           .add("strategyType", strategyType)
                           .add("rawCondition", rawCondition)
                           .add("expireTime", expireTime)

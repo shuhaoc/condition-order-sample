@@ -1,11 +1,8 @@
 package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.condition.domain.dto.order.DelayConfirmParamDTO;
-import me.caosh.condition.domain.dto.order.DeviationCtrlParamDTO;
-import me.caosh.condition.domain.dto.order.MonitorTimeRangeDTO;
-import me.caosh.condition.domain.dto.order.PriceConditionDTO;
-import me.caosh.condition.domain.dto.order.TradePlanDTO;
+import me.caosh.condition.domain.dto.market.IndexInfoDTO;
+import me.caosh.condition.domain.dto.order.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.Valid;
@@ -22,6 +19,9 @@ public class PriceOrderUpdateCommand implements Serializable {
 
     @NotNull
     private Long orderId;
+
+    @Valid
+    private IndexInfoDTO trackedIndexInfo;
 
     @NotNull
     private PriceConditionDTO priceCondition;
@@ -48,6 +48,14 @@ public class PriceOrderUpdateCommand implements Serializable {
 
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
+    }
+
+    public IndexInfoDTO getTrackedIndexInfo() {
+        return trackedIndexInfo;
+    }
+
+    public void setTrackedIndexInfo(IndexInfoDTO trackedIndexInfo) {
+        this.trackedIndexInfo = trackedIndexInfo;
     }
 
     public PriceConditionDTO getPriceCondition() {
@@ -102,6 +110,7 @@ public class PriceOrderUpdateCommand implements Serializable {
     public String toString() {
         return MoreObjects.toStringHelper(PriceOrderUpdateCommand.class).omitNullValues()
                           .add("orderId", orderId)
+                          .add("trackedIndexInfo", trackedIndexInfo)
                           .add("priceCondition", priceCondition)
                           .add("expireTime", expireTime)
                           .add("tradePlan", tradePlan)
