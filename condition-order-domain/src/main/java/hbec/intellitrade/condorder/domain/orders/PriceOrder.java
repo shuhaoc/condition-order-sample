@@ -66,7 +66,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
              NoneTrackedIndex.NONE,
              NoneMonitorTimeRange.NONE,
              DisabledDelayConfirmParam.DISABLED,
-             SingleDelayConfirmCount.ZERO,
+             null,
              DisabledDeviationCtrlParam.DISABLED);
     }
 
@@ -83,7 +83,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
      * @param trackedIndexInfo        跟踪指数信息
      * @param monitorTimeRange        监控时段
      * @param delayConfirmParam       延迟确认参数
-     * @param singleDelayConfirmCount 当前延迟确认次数
+     * @param singleDelayConfirmCount 当前延迟确认次数，可为空
      * @param deviationCtrlParam      偏差控制参数
      */
     public PriceOrder(Long orderId,
@@ -115,9 +115,10 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
                 priceCondition,
                 deviationCtrlParam);
 
+        int confirmedCount = singleDelayConfirmCount != null ? singleDelayConfirmCount.getConfirmedCount() : 0;
         this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(deviationCtrlWrappedCondition,
                                                                                  delayConfirmParam,
-                                                                                 singleDelayConfirmCount.getConfirmedCount());
+                                                                                 confirmedCount);
     }
 
     @Override
@@ -127,7 +128,6 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
 
     @Override
     public Condition getRawCondition() {
-        // TODO: 如何约束不可变性
         return priceCondition;
     }
 
