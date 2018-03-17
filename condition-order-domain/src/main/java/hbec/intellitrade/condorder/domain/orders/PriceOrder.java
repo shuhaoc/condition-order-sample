@@ -33,14 +33,32 @@ import org.joda.time.LocalDateTime;
 
 /**
  * 价格条件单
+ * <p>
+ * 一次性条件单，触发条件为到价触发，使用单向交易计划
+ * <p>
+ * 支持的特性：
+ * <ol>
+ * <li>跟踪指数</li>
+ * <li>监控时段</li>
+ * <li>延迟确认</li>
+ * <li>偏差控制</li>
+ * </ol>
  *
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/1
  */
 public class PriceOrder extends AbstractSimpleMarketConditionOrder implements MutableStrategy, MarketClosedEventListener {
-
+    /**
+     * 原始的价格条件
+     */
     private final PriceCondition priceCondition;
+    /**
+     * 组合条件，组合了延迟确认、偏差控制和价格条件等条件
+     */
     private final MarketCondition compositeCondition;
+    /**
+     * 延迟确认计数器包装器，用于为实现{@link MutableStrategy}和{@link MarketClosedEventListener}提供便利
+     */
     private final DelayConfirmCounterExtractor delayConfirmCounterExtractor;
 
     /**
@@ -145,6 +163,8 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
 
     /**
      * 获取当前延迟确认次数，未开启延迟确认时返回{@link Optional#absent()}
+     * <p>
+     * 构建DTO时调用
      *
      * @return 当前延迟确认次数
      */
@@ -177,11 +197,13 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
 
     @Override
     public void onMarketClosed(LocalDateTime localDateTime) {
+        // 盘后清除延迟确认次数
         delayConfirmCounterExtractor.resetCounterIfNeed();
     }
 
     @Override
     public boolean equals(Object o) {
+        // 仅比较组合条件即可，组合条件组合了所有条件
         if (this == o) {
             return true;
         }
