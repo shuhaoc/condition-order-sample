@@ -22,7 +22,6 @@ import hbec.intellitrade.trade.domain.EntrustCommand;
 import hbec.intellitrade.trade.domain.EntrustSuccessResult;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import hbec.intellitrade.trade.domain.OrderType;
-import me.caosh.condition.domain.model.market.SecurityInfoConstants;
 import me.caosh.condition.domain.model.newstock.NewStock;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
@@ -46,7 +45,7 @@ public class NewStockOrder extends AbstractConditionOrder implements TimeDrivenS
                          NewStockPurchaseCondition newStockPurchaseCondition,
                          LocalDateTime expireTime,
                          OrderState orderState) {
-        super(orderId, tradeCustomerInfo, orderState, SecurityInfoConstants.NEW_STOCK_PURCHASE, expireTime);
+        super(orderId, tradeCustomerInfo, orderState, expireTime);
         this.newStockPurchaseCondition = newStockPurchaseCondition;
     }
 
@@ -54,9 +53,14 @@ public class NewStockOrder extends AbstractConditionOrder implements TimeDrivenS
         return newStockPurchaseCondition;
     }
 
-//    public SecurityInfoHolder getSecurityInfo() {
-//        return SecurityInfoHolder.INSTANCE;
-//    }
+    /**
+     * 自动打新条件单没有明确的证券信息，此属性用于数据库字段填充
+     *
+     * @return 证券信息占位符
+     */
+    public SecurityInfoHolder getSecurityInfo() {
+        return SecurityInfoHolder.INSTANCE;
+    }
 
     public enum SecurityInfoHolder {
         /**
@@ -126,11 +130,16 @@ public class NewStockOrder extends AbstractConditionOrder implements TimeDrivenS
     }
 
     @Override
+    public void onTradeSignal(TriggerTradingContext triggerTradingContext) {
+
+    }
+
+    //    @Override
     public List<EntrustCommand> createEntrustCommands(TradeSignal tradeSignal, TradingMarketSupplier tradingMarketSupplier) {
         return Collections.emptyList();
     }
 
-    @Override
+    //    @Override
     public void afterEntrustSuccess(TriggerTradingContext triggerTradingContext, EntrustCommand entrustCommand, EntrustSuccessResult entrustSuccessResult) {
         newStockPurchaseCondition.increasePurchasedCount();
     }

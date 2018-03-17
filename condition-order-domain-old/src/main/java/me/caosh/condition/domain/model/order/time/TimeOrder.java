@@ -2,7 +2,7 @@ package me.caosh.condition.domain.model.order.time;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.security.SecurityInfo;
-import hbec.intellitrade.condorder.domain.AbstractConditionOrder;
+import hbec.intellitrade.condorder.domain.AbstractExplicitTradingSecurityOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by caosh on 2017/8/20.
  */
-public class TimeOrder extends AbstractConditionOrder implements TimeDrivenStrategy {
+public class TimeOrder extends AbstractExplicitTradingSecurityOrder implements TimeDrivenStrategy {
     private static final Logger logger = LoggerFactory.getLogger(TimeOrder.class);
 
     private final TimeReachedCondition timeReachedCondition;

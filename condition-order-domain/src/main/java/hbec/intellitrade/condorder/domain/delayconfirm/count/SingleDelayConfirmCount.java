@@ -9,6 +9,8 @@ import com.google.common.base.MoreObjects;
  * @date 2018/3/12
  */
 public class SingleDelayConfirmCount implements DelayConfirmCount {
+    public static SingleDelayConfirmCount ZERO = new SingleDelayConfirmCount(0);
+
     private final int confirmedCount;
 
     public SingleDelayConfirmCount(int confirmedCount) {

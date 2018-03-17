@@ -10,6 +10,7 @@ import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.delayconfirm.count.SingleDelayConfirmCount;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
+import hbec.intellitrade.condorder.domain.trackindex.NoneTrackedIndex;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndex;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.strategy.domain.MarketClosedEventListener;
@@ -62,10 +63,10 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
              priceCondition,
              expireTime,
              tradePlan,
-             null,
+             NoneTrackedIndex.NONE,
              NoneMonitorTimeRange.NONE,
              DisabledDelayConfirmParam.DISABLED,
-             null,
+             SingleDelayConfirmCount.ZERO,
              DisabledDeviationCtrlParam.DISABLED);
     }
 
@@ -79,7 +80,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
      * @param priceCondition          价格条件
      * @param expireTime              过期时间，可为空
      * @param tradePlan               交易计划
-     * @param trackedIndexInfo        跟踪指数信息，可为空
+     * @param trackedIndexInfo        跟踪指数信息
      * @param monitorTimeRange        监控时段
      * @param delayConfirmParam       延迟确认参数
      * @param singleDelayConfirmCount 当前延迟确认次数
@@ -114,10 +115,9 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
                 priceCondition,
                 deviationCtrlParam);
 
-        int confirmedCount = singleDelayConfirmCount != null ? singleDelayConfirmCount.getConfirmedCount() : 0;
         this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(deviationCtrlWrappedCondition,
                                                                                  delayConfirmParam,
-                                                                                 confirmedCount);
+                                                                                 singleDelayConfirmCount.getConfirmedCount());
     }
 
     @Override
