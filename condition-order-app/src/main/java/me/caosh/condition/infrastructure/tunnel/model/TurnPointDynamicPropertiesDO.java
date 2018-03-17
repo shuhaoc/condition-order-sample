@@ -1,25 +1,20 @@
 package me.caosh.condition.infrastructure.tunnel.model;
 
 import com.google.common.base.MoreObjects;
+import hbec.intellitrade.strategy.domain.strategies.condition.TurnPointCondition;
 import me.caosh.autoasm.MappedClass;
-import me.caosh.condition.domain.model.condition.TurnUpCondition;
 
 import java.math.BigDecimal;
 
 /**
  * Created by caosh on 2017/8/19.
  */
-@MappedClass(TurnUpCondition.class)
-public class TurnUpDynamicPropertiesDO implements DynamicPropertiesDO {
+@MappedClass(TurnPointCondition.class)
+public class TurnPointDynamicPropertiesDO implements DynamicPropertiesDO {
     private Boolean broken;
     private BigDecimal lowestPrice;
 
-    public TurnUpDynamicPropertiesDO() {
-    }
-
-    public TurnUpDynamicPropertiesDO(Boolean broken, BigDecimal lowestPrice) {
-        this.broken = broken;
-        this.lowestPrice = lowestPrice;
+    public TurnPointDynamicPropertiesDO() {
     }
 
     public Boolean getBroken() {

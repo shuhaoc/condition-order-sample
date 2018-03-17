@@ -54,7 +54,7 @@ public class ConditionOrderFactory {
                                   delayConfirmParam,
                                   (SingleDelayConfirmCount) delayConfirmCount,
                                   deviationCtrlParam);
-//        } else if (strategyInfo == NativeStrategyInfo.TURN_UP) {
+//        } else if (strategyInfo == NativeStrategyInfo.TURN_POINT) {
 //            return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,
 //                                      null, (BasicTradePlan) tradePlan, orderState);
 //        } else if (strategyInfo == NativeStrategyInfo.TIME) {

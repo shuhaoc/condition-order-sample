@@ -7,7 +7,7 @@ import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
 import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
-import me.caosh.condition.domain.model.condition.TurnUpCondition;
+import hbec.intellitrade.strategy.domain.strategies.condition.TurnPointCondition;
 import me.caosh.condition.mock.MockMarkets;
 import org.joda.time.LocalDateTime;
 import org.testng.annotations.Test;
@@ -79,7 +79,8 @@ public class StrategyContainerMoreTest {
         StrategyContainer container = new StrategyContainer(new StrategyContextConfig(1, 1),
                 NopStrategyWriter.INSTANCE);
         TestTurnUpStrategy testTurnUpStrategy = new TestTurnUpStrategy(1, MARKET_ID,
-                new TurnUpCondition(new BigDecimal("10.00"), new BigDecimal("1.00")));
+                                                                       new TurnPointCondition(new BigDecimal("10.00"),
+                                                                                              new BigDecimal("1.00")));
         container.add(testTurnUpStrategy);
 
         RealTimeMarket realTimeMarket1 = MockMarkets.withCurrentPrice(new BigDecimal("9.00"));

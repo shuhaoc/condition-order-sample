@@ -1,32 +1,24 @@
-package me.caosh.condition.domain.model.condition;
+package hbec.intellitrade.strategy.domain.strategies.condition;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.strategy.domain.condition.AbstractBasicMarketCondition;
 import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
-import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
-import hbec.intellitrade.strategy.domain.factor.CompareOperator;
-import hbec.intellitrade.strategy.domain.factor.InflexionFactor;
-import hbec.intellitrade.strategy.domain.factor.PercentBinaryTargetPriceFactor;
-import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import hbec.intellitrade.strategy.domain.factor.*;
 
 import java.math.BigDecimal;
 
 /**
- * 拐点买入条件
+ * 拐点条件
  *
  * @author caosh/caoshuhao@touker.com
  * @date 2018/1/30
  */
-public class TurnUpCondition extends AbstractBasicMarketCondition implements DynamicCondition {
-    private static final Logger logger = LoggerFactory.getLogger(TurnUpCondition.class);
-
+public class TurnPointCondition extends AbstractBasicMarketCondition implements DynamicCondition {
     private InflexionFactor inflexionFactor;
 
-    public TurnUpCondition(BigDecimal breakPrice, BigDecimal turnUpPercent) {
+    public TurnPointCondition(BigDecimal breakPrice, BigDecimal turnUpPercent) {
         Preconditions.checkArgument(turnUpPercent.compareTo(BigDecimal.ZERO) > 0,
                 "Turn up percent should be greater than 0");
         this.inflexionFactor = new InflexionFactor(
@@ -34,7 +26,7 @@ public class TurnUpCondition extends AbstractBasicMarketCondition implements Dyn
                 new PercentBinaryTargetPriceFactor(CompareOperator.GE, turnUpPercent));
     }
 
-    public TurnUpCondition(BigDecimal breakPrice, BigDecimal turnUpPercent, Boolean broken, BigDecimal lowestPrice) {
+    public TurnPointCondition(BigDecimal breakPrice, BigDecimal turnUpPercent, Boolean broken, BigDecimal lowestPrice) {
         this.inflexionFactor = new InflexionFactor(
                 new BasicTargetPriceFactor(CompareOperator.LE, breakPrice),
                 new PercentBinaryTargetPriceFactor(CompareOperator.GE, turnUpPercent),
@@ -54,7 +46,7 @@ public class TurnUpCondition extends AbstractBasicMarketCondition implements Dyn
         return inflexionFactor.isBroken();
     }
 
-    public Optional<BigDecimal> getLowestPrice() {
+    public Optional<BigDecimal> getExtremePrice() {
         return inflexionFactor.getExtremePrice();
     }
 
@@ -76,18 +68,18 @@ public class TurnUpCondition extends AbstractBasicMarketCondition implements Dyn
     @Override
     public boolean isNeedSwap(DynamicCondition origin) {
         BigDecimal newBreakPrice = inflexionFactor.getBreakPriceFactor().getTargetPrice();
-        BigDecimal oldBreakPrice = ((TurnUpCondition) origin).inflexionFactor.getBreakPriceFactor().getTargetPrice();
+        BigDecimal oldBreakPrice = ((TurnPointCondition) origin).inflexionFactor.getBreakPriceFactor().getTargetPrice();
         return newBreakPrice.compareTo(oldBreakPrice) == 0;
     }
 
     @Override
     public void swap(DynamicCondition origin) {
-        TurnUpCondition that = (TurnUpCondition) origin;
+        TurnPointCondition that = (TurnPointCondition) origin;
         this.inflexionFactor = new InflexionFactor(
                 inflexionFactor.getBreakPriceFactor(),
                 inflexionFactor.getTurnBackBinaryPriceFactor(),
                 that.isBroken(),
-                that.getLowestPrice().orNull());
+                that.getExtremePrice().orNull());
     }
 
     @Override
@@ -99,7 +91,7 @@ public class TurnUpCondition extends AbstractBasicMarketCondition implements Dyn
             return false;
         }
 
-        TurnUpCondition that = (TurnUpCondition) o;
+        TurnPointCondition that = (TurnPointCondition) o;
 
         return inflexionFactor.equals(that.inflexionFactor);
     }
@@ -111,8 +103,8 @@ public class TurnUpCondition extends AbstractBasicMarketCondition implements Dyn
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(TurnUpCondition.class).omitNullValues()
-                .addValue(inflexionFactor)
-                .toString();
+        return MoreObjects.toStringHelper(TurnPointCondition.class).omitNullValues()
+                          .addValue(inflexionFactor)
+                          .toString();
     }
 }

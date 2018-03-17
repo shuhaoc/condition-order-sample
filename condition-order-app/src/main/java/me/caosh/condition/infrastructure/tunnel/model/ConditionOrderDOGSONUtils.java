@@ -25,9 +25,9 @@ public class ConditionOrderDOGSONUtils {
                         .registerSubtype(GridConditionDO.class)
                         .registerSubtype(NewStockPurchaseConditionDO.class))
                 .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(DynamicPropertiesDO.class)
-                        .registerSubtype(TurnUpDynamicPropertiesDO.class)
-                        .registerSubtype(GridDynamicPropertiesDO.class)
-                        .registerSubtype(NewStockPurchaseDynamicPropertiesDO.class))
+                                                                     .registerSubtype(TurnPointDynamicPropertiesDO.class)
+                                                                     .registerSubtype(GridDynamicPropertiesDO.class)
+                                                                     .registerSubtype(NewStockPurchaseDynamicPropertiesDO.class))
                 .create();
     }
 

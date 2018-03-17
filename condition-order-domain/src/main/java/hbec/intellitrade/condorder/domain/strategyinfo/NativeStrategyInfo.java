@@ -8,10 +8,29 @@ import me.caosh.autoasm.ConvertibleEnum;
  * @date 2017/8/1
  */
 public enum NativeStrategyInfo implements StrategyInfo, ValuedEnum<Integer>, ConvertibleEnum<Integer> {
+    /**
+     * 价格条件单
+     */
     PRICE(1),
+
+    /**
+     * 时间条件单
+     */
     TIME(5),
-    TURN_UP(7),
+
+    /**
+     * 拐点买入、回落卖出条件单
+     */
+    TURN_POINT(7),
+
+    /**
+     * 网格交易条件单
+     */
     GRID(9),
+
+    /**
+     * 定期打新条件单
+     */
     NEW_STOCK(10);
 
     private final int strategyType;

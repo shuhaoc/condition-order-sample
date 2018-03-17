@@ -59,7 +59,7 @@ public class TimeOrder extends AbstractExplicitTradingSecurityOrder implements T
 
     @Override
     public StrategyInfo getStrategyInfo() {
-        return NativeStrategyInfo.TURN_UP;
+        return NativeStrategyInfo.TURN_POINT;
     }
 
     @Override

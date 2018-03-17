@@ -6,7 +6,7 @@ import me.caosh.autoasm.RuntimeType;
  * Created by caosh on 2017/8/19.
  */
 @RuntimeType({
-        TurnUpDynamicPropertiesDO.class,
+        TurnPointDynamicPropertiesDO.class,
         GridDynamicPropertiesDO.class,
         NewStockPurchaseDynamicPropertiesDO.class
 })

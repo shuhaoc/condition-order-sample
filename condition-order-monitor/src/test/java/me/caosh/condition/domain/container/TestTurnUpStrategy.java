@@ -10,7 +10,7 @@ import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
-import me.caosh.condition.domain.model.condition.TurnUpCondition;
+import hbec.intellitrade.strategy.domain.strategies.condition.TurnPointCondition;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -20,13 +20,13 @@ import org.joda.time.LocalDateTime;
 public class TestTurnUpStrategy implements MarketDrivenStrategy, TimeDrivenStrategy, MutableStrategy {
     private final int strategyId;
     private final MarketID marketID;
-    private final TurnUpCondition turnUpCondition;
+    private final TurnPointCondition turnPointCondition;
     private OrderState orderState = OrderState.ACTIVE;
 
-    public TestTurnUpStrategy(int strategyId, MarketID marketID, TurnUpCondition turnUpCondition) {
+    public TestTurnUpStrategy(int strategyId, MarketID marketID, TurnPointCondition turnPointCondition) {
         this.strategyId = strategyId;
         this.marketID = marketID;
-        this.turnUpCondition = turnUpCondition;
+        this.turnPointCondition = turnPointCondition;
     }
 
     public long getStrategyId() {
@@ -40,7 +40,7 @@ public class TestTurnUpStrategy implements MarketDrivenStrategy, TimeDrivenStrat
 
     @Override
     public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
-        return turnUpCondition.onMarketTick(realTimeMarket);
+        return turnPointCondition.onMarketTick(realTimeMarket);
     }
 
     @Override
@@ -50,12 +50,12 @@ public class TestTurnUpStrategy implements MarketDrivenStrategy, TimeDrivenStrat
 
     @Override
     public boolean isDirty() {
-        return turnUpCondition.isDirty();
+        return turnPointCondition.isDirty();
     }
 
     @Override
     public void clearDirty() {
-        turnUpCondition.clearDirty();
+        turnPointCondition.clearDirty();
     }
 
     @Override
@@ -72,24 +72,24 @@ public class TestTurnUpStrategy implements MarketDrivenStrategy, TimeDrivenStrat
 
         if (strategyId != that.strategyId) return false;
         if (!marketID.equals(that.marketID)) return false;
-        return turnUpCondition.equals(that.turnUpCondition);
+        return turnPointCondition.equals(that.turnPointCondition);
     }
 
     @Override
     public int hashCode() {
         int result = strategyId;
         result = 31 * result + marketID.hashCode();
-        result = 31 * result + turnUpCondition.hashCode();
+        result = 31 * result + turnPointCondition.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(TestTurnUpStrategy.class).omitNullValues()
-                .add("strategyId", strategyId)
-                .add("marketID", marketID)
-                .add("turnUpCondition", turnUpCondition)
-                .add("strategyState", orderState)
-                .toString();
+                          .add("strategyId", strategyId)
+                          .add("marketID", marketID)
+                          .add("turnPointCondition", turnPointCondition)
+                          .add("strategyState", orderState)
+                          .toString();
     }
 }

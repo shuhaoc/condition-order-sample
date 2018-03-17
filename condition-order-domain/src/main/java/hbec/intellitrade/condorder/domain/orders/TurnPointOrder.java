@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.order.turnpoint;
+package hbec.intellitrade.condorder.domain.orders;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
@@ -13,25 +13,24 @@ import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirmParam;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
+import hbec.intellitrade.strategy.domain.strategies.condition.TurnPointCondition;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import hbec.intellitrade.trade.domain.ExchangeType;
-import me.caosh.condition.domain.model.condition.TurnUpCondition;
 import org.joda.time.LocalDateTime;
 
 /**
  * Created by caosh on 2017/8/19.
  */
-public class TurnUpBuyOrder extends AbstractSimpleMarketConditionOrder {
+public class TurnPointOrder extends AbstractSimpleMarketConditionOrder {
+    private final TurnPointCondition turnPointCondition;
 
-    private final TurnUpCondition turnUpCondition;
-
-    public TurnUpBuyOrder(Long orderId,
+    public TurnPointOrder(Long orderId,
                           TradeCustomerInfo tradeCustomerInfo,
+                          OrderState orderState,
                           SecurityInfo securityInfo,
-                          TurnUpCondition turnUpCondition,
+                          TurnPointCondition turnPointCondition,
                           LocalDateTime expireTime,
-                          BasicTradePlan tradePlan,
-                          OrderState orderState) {
+                          BasicTradePlan tradePlan) {
         super(orderId,
               tradeCustomerInfo,
               orderState,
@@ -43,33 +42,33 @@ public class TurnUpBuyOrder extends AbstractSimpleMarketConditionOrder {
               DisabledDeviationCtrlParam.DISABLED,
               tradePlan);
         Preconditions.checkArgument(tradePlan.getExchangeType() == ExchangeType.BUY);
-        this.turnUpCondition = turnUpCondition;
+        this.turnPointCondition = turnPointCondition;
     }
 
-    public TurnUpCondition getTurnUpCondition() {
-        return turnUpCondition;
+    public TurnPointCondition getTurnPointCondition() {
+        return turnPointCondition;
     }
 
     @Override
     public MarketCondition getCondition() {
-        return turnUpCondition;
+        return turnPointCondition;
     }
 
     @Override
     public Condition getRawCondition() {
-        return turnUpCondition;
+        return turnPointCondition;
     }
 
     @Override
     public StrategyInfo getStrategyInfo() {
-        return NativeStrategyInfo.TURN_UP;
+        return NativeStrategyInfo.TURN_POINT;
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                           .addValue(super.toString())
-                          .add("turnUpCondition", turnUpCondition)
+                          .add("turnPointCondition", turnPointCondition)
                           .toString();
     }
 }
