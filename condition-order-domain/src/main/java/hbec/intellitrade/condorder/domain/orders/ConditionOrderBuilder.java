@@ -5,8 +5,13 @@ import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfoBuilder;
 import hbec.intellitrade.condorder.domain.delayconfirm.count.DelayConfirmCount;
+import hbec.intellitrade.condorder.domain.delayconfirm.count.SingleDelayConfirmCount;
+import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
+import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
+import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfoBuilder;
+import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanBuilder;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParamBuilder;
@@ -127,20 +132,37 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
 
     @Override
     public ConditionOrder build() {
-        return ConditionOrderFactory.getInstance().create(
-                orderId,
-                customer.build(),
-                orderState,
-                securityInfo.build(),
-                trackedIndex.build(),
-                strategyInfo.getStrategyType(),
-                rawCondition,
-                expireTime,
-                tradePlan.build(),
-                delayConfirmParam.build(),
-                delayConfirmCount,
-                monitorTimeRange.build(),
-                deviationCtrlParam.build());
+        StrategyInfo strategyInfo = this.strategyInfo.getStrategyType();
+        if (strategyInfo == NativeStrategyInfo.PRICE) {
+            return new PriceOrder(orderId,
+                                  customer.build(),
+                                  orderState,
+                                  securityInfo.build(),
+                                  (PriceCondition) rawCondition,
+                                  expireTime,
+                                  (BasicTradePlan) tradePlan.build(),
+                                  trackedIndex.build(),
+                                  monitorTimeRange.build(),
+                                  delayConfirmParam.build(),
+                                  (SingleDelayConfirmCount) delayConfirmCount,
+                                  deviationCtrlParam.build());
+//        } else if (strategyInfo == NativeStrategyInfo.TURN_POINT) {
+//            return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,
+//                                      null, (BasicTradePlan) tradePlan, orderState);
+//        } else if (strategyInfo == NativeStrategyInfo.TIME) {
+//            return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, (TimeReachedCondition) condition, expireTime,
+//                                 (BasicTradePlan) tradePlan, orderState);
+//        } else if (strategyInfo == NativeStrategyInfo.GRID) {
+//            return new GridTradeOrder(orderId, tradeCustomerInfo, securityInfo, (GridCondition) condition,
+//                                      null, (DoubleDirectionTradePlan) tradePlan, orderState);
+//        } else if (strategyInfo == NativeStrategyInfo.NEW_STOCK) {
+//            return new NewStockOrder(orderId,
+//                                     tradeCustomerInfo,
+//                                     (NewStockPurchaseCondition) condition,
+//                                     expireTime,
+//                                     orderState);
+        }
+        throw new IllegalArgumentException("strategyInfo=" + strategyInfo);
     }
 
     public static class StrategyInfoBuilder {
