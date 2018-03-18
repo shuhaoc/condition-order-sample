@@ -4,7 +4,7 @@ package hbec.intellitrade.strategy.domain.condition.delayconfirm;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/3/12
  */
-public enum DisabledDelayConfirmParam implements DelayConfirmParam {
+public enum DisabledDelayConfirm implements DelayConfirm {
     /**
      * 单例
      */
@@ -13,10 +13,5 @@ public enum DisabledDelayConfirmParam implements DelayConfirmParam {
     @Override
     public DelayConfirmOption getOption() {
         return DelayConfirmOption.DISABLED;
-    }
-
-    @Override
-    public int getConfirmTimes() {
-        return 0;
     }
 }

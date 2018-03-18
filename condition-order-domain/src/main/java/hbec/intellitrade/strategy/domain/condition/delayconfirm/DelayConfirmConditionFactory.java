@@ -13,20 +13,23 @@ public enum DelayConfirmConditionFactory {
     INSTANCE;
 
     public MarketCondition wrapWith(MarketCondition marketCondition,
-                                    DelayConfirmParam delayConfirmParam,
+                                    DelayConfirm delayConfirm,
                                     int confirmedCount) {
-        if (delayConfirmParam == DisabledDelayConfirmParam.DISABLED) {
+        if (delayConfirm == DisabledDelayConfirm.DISABLED) {
             return marketCondition;
-        } else if (delayConfirmParam.getOption() == DelayConfirmOption.ACCUMULATE) {
-            return new AccumulatedDelayConfirmCondition(delayConfirmParam.getConfirmTimes(),
+        }
+
+        DelayConfirmInfo delayConfirmInfo = (DelayConfirmInfo) delayConfirm;
+        if (delayConfirm.getOption() == DelayConfirmOption.ACCUMULATE) {
+            return new AccumulatedDelayConfirmCondition(delayConfirmInfo.getConfirmTimes(),
                                                         confirmedCount,
                                                         marketCondition);
-        } else if (delayConfirmParam.getOption() == DelayConfirmOption.CONTINUOUS) {
-            return new ContinuousDelayConfirmCondition(delayConfirmParam.getConfirmTimes(),
+        } else if (delayConfirm.getOption() == DelayConfirmOption.CONTINUOUS) {
+            return new ContinuousDelayConfirmCondition(delayConfirmInfo.getConfirmTimes(),
                                                        confirmedCount,
                                                        marketCondition);
         } else {
-            throw new IllegalArgumentException("Illegal delay confirm parameter: " + delayConfirmParam);
+            throw new IllegalArgumentException("Illegal delay confirm parameter: " + delayConfirm);
         }
     }
 }

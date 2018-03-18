@@ -38,7 +38,7 @@ public class PriceOrderCreateCommand implements Serializable {
     private TradePlanDTO tradePlan;
 
     @Valid
-    private DelayConfirmParamDTO delayConfirmParam;
+    private DelayConfirmDTO delayConfirm;
 
     @Valid
     private MonitorTimeRangeDTO monitorTimeRange;
@@ -86,12 +86,12 @@ public class PriceOrderCreateCommand implements Serializable {
         this.tradePlan = tradePlan;
     }
 
-    public DelayConfirmParamDTO getDelayConfirmParam() {
-        return delayConfirmParam;
+    public DelayConfirmDTO getDelayConfirm() {
+        return delayConfirm;
     }
 
-    public void setDelayConfirmParam(DelayConfirmParamDTO delayConfirmParam) {
-        this.delayConfirmParam = delayConfirmParam;
+    public void setDelayConfirm(DelayConfirmDTO delayConfirm) {
+        this.delayConfirm = delayConfirm;
     }
 
     public MonitorTimeRangeDTO getMonitorTimeRange() {
@@ -118,7 +118,7 @@ public class PriceOrderCreateCommand implements Serializable {
                           .add("priceCondition", priceCondition)
                           .add("expireTime", expireTime)
                           .add("tradePlan", tradePlan)
-                          .add("delayConfirmParam", delayConfirmParam)
+                          .add("delayConfirm", delayConfirm)
                           .add("monitorTimeRange", monitorTimeRange)
                           .add("deviationCtrlParam", deviationCtrlParam)
                           .toString();

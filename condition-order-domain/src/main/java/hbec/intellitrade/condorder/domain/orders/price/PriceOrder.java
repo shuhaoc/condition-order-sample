@@ -17,10 +17,10 @@ import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.strategy.domain.MarketClosedEventListener;
 import hbec.intellitrade.strategy.domain.MutableStrategy;
 import hbec.intellitrade.strategy.domain.condition.Condition;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmConditionFactory;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmCounter;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParam;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlConditionFactory;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrlParam;
@@ -87,7 +87,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
              tradePlan,
              NoneTrackedIndex.NONE,
              NoneMonitorTimeRange.NONE,
-             DisabledDelayConfirmParam.DISABLED,
+             DisabledDelayConfirm.DISABLED,
              null,
              DisabledDeviationCtrlParam.DISABLED);
     }
@@ -104,7 +104,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
      * @param tradePlan               交易计划
      * @param trackedIndexInfo        跟踪指数信息
      * @param monitorTimeRange        监控时段
-     * @param delayConfirmParam       延迟确认参数
+     * @param delayConfirm       延迟确认参数
      * @param singleDelayConfirmCount 当前延迟确认次数，可为空
      * @param deviationCtrlParam      偏差控制参数
      */
@@ -117,7 +117,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
                       BasicTradePlan tradePlan,
                       TrackedIndex trackedIndexInfo,
                       MonitorTimeRange monitorTimeRange,
-                      DelayConfirmParam delayConfirmParam,
+                      DelayConfirm delayConfirm,
                       SingleDelayConfirmCount singleDelayConfirmCount,
                       DeviationCtrlParam deviationCtrlParam) {
         super(orderId,
@@ -127,7 +127,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
               trackedIndexInfo,
               expireTime,
               monitorTimeRange,
-              delayConfirmParam,
+              delayConfirm,
               deviationCtrlParam,
               tradePlan
         );
@@ -140,7 +140,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
         int confirmedCount = singleDelayConfirmCount != null ? singleDelayConfirmCount.getConfirmedCount() : 0;
         this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(
                 deviationCtrlWrappedCondition,
-                delayConfirmParam,
+                delayConfirm,
                 confirmedCount);
         this.delayConfirmCounterExtractor = new DelayConfirmCounterExtractor(compositeCondition);
     }

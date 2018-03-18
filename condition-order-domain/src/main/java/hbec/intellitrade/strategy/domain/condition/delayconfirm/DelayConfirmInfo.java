@@ -7,11 +7,16 @@ import com.google.common.base.Preconditions;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/3/8
  */
-public class EnabledDelayConfirmParam implements DelayConfirmParam {
+public class DelayConfirmInfo implements DelayConfirm {
     private final DelayConfirmOption option;
+    /**
+     * 延迟确认（目标）次数
+     *
+     * @return 延迟确认（目标）次数
+     */
     private final int confirmTimes;
 
-    public EnabledDelayConfirmParam(DelayConfirmOption option, int confirmTimes) {
+    public DelayConfirmInfo(DelayConfirmOption option, int confirmTimes) {
         Preconditions.checkArgument(option != DelayConfirmOption.DISABLED, "option cannot be DISABLED");
         Preconditions.checkArgument(confirmTimes > 1, "confirmTimes should be greater than 1");
         this.option = option;
@@ -23,7 +28,6 @@ public class EnabledDelayConfirmParam implements DelayConfirmParam {
         return option;
     }
 
-    @Override
     public int getConfirmTimes() {
         return confirmTimes;
     }
@@ -37,7 +41,7 @@ public class EnabledDelayConfirmParam implements DelayConfirmParam {
             return false;
         }
 
-        EnabledDelayConfirmParam that = (EnabledDelayConfirmParam) o;
+        DelayConfirmInfo that = (DelayConfirmInfo) o;
 
         if (confirmTimes != that.confirmTimes) {
             return false;
@@ -54,9 +58,9 @@ public class EnabledDelayConfirmParam implements DelayConfirmParam {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(EnabledDelayConfirmParam.class).omitNullValues()
-                .add("option", option)
-                .add("confirmTimes", confirmTimes)
-                .toString();
+        return MoreObjects.toStringHelper(DelayConfirmInfo.class).omitNullValues()
+                          .add("option", option)
+                          .add("confirmTimes", confirmTimes)
+                          .toString();
     }
 }

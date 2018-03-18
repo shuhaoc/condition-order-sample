@@ -57,9 +57,9 @@ public class ConditionOrderDO {
     private Integer entrustMethod;
     @FieldMapping(mappedProperty = "tradePlan.tradeNumber.number")
     private BigDecimal entrustAmount;
-    @FieldMapping(mappedProperty = "delayConfirmParam.option")
+    @FieldMapping(mappedProperty = "delayConfirm.option")
     private Integer delayConfirmOption = 0;
-    @FieldMapping(mappedProperty = "delayConfirmParam.confirmTimes")
+    @FieldMapping(mappedProperty = "delayConfirm.confirmTimes")
     private Integer delayConfirmTimes = 0;
     @FieldMapping(mappedProperty = "monitorTimeRange.option")
     private Integer monitorTimeRangeOption = 0;

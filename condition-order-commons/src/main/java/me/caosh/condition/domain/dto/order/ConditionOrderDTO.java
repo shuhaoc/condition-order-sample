@@ -28,7 +28,7 @@ public class ConditionOrderDTO implements Serializable {
     private ConditionDTO rawCondition;
     private String expireTime;
     private TradePlanDTO tradePlan;
-    private DelayConfirmParamDTO delayConfirmParam;
+    private DelayConfirmDTO delayConfirm;
     private DelayConfirmCountDTO delayConfirmCount;
     private MonitorTimeRangeDTO monitorTimeRange;
     private DeviationCtrlParamDTO deviationCtrlParam;
@@ -113,12 +113,12 @@ public class ConditionOrderDTO implements Serializable {
         this.tradePlan = tradePlan;
     }
 
-    public DelayConfirmParamDTO getDelayConfirmParam() {
-        return delayConfirmParam;
+    public DelayConfirmDTO getDelayConfirm() {
+        return delayConfirm;
     }
 
-    public void setDelayConfirmParam(DelayConfirmParamDTO delayConfirmParam) {
-        this.delayConfirmParam = delayConfirmParam;
+    public void setDelayConfirm(DelayConfirmDTO delayConfirm) {
+        this.delayConfirm = delayConfirm;
     }
 
     public DelayConfirmCountDTO getDelayConfirmCount() {
@@ -158,7 +158,7 @@ public class ConditionOrderDTO implements Serializable {
                           .add("rawCondition", rawCondition)
                           .add("expireTime", expireTime)
                           .add("tradePlan", tradePlan)
-                          .add("delayConfirmParam", delayConfirmParam)
+                          .add("delayConfirm", delayConfirm)
                           .add("delayConfirmCount", delayConfirmCount)
                           .add("monitorTimeRange", monitorTimeRange)
                           .add("deviationCtrlParam", deviationCtrlParam)

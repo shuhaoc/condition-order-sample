@@ -8,8 +8,8 @@ import hbec.intellitrade.condorder.domain.trackindex.TrackedIndex;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParam;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirm;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
@@ -36,9 +36,9 @@ public abstract class AbstractMarketConditionOrder extends AbstractExplicitTradi
     private final MonitorTimeRange monitorTimeRange;
 
     /**
-     * 偏差控制参数，非空，未开启为{@link DisabledDelayConfirmParam}
+     * 偏差控制参数，非空，未开启为{@link DisabledDelayConfirm}
      */
-    private final DelayConfirmParam delayConfirmParam;
+    private final DelayConfirm delayConfirm;
 
     /**
      * 偏差控制参数，非空，未开启为{@link DisabledDeviationCtrlParam}
@@ -52,12 +52,12 @@ public abstract class AbstractMarketConditionOrder extends AbstractExplicitTradi
                                         LocalDateTime expireTime,
                                         TrackedIndex trackedIndex,
                                         MonitorTimeRange monitorTimeRange,
-                                        DelayConfirmParam delayConfirmParam,
+                                        DelayConfirm delayConfirm,
                                         DeviationCtrlParam deviationCtrlParam) {
         super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime);
         this.trackedIndex = trackedIndex;
         this.monitorTimeRange = monitorTimeRange;
-        this.delayConfirmParam = delayConfirmParam;
+        this.delayConfirm = delayConfirm;
         this.deviationCtrlParam = deviationCtrlParam;
     }
 
@@ -96,8 +96,8 @@ public abstract class AbstractMarketConditionOrder extends AbstractExplicitTradi
         return trackedIndex;
     }
 
-    public DelayConfirmParam getDelayConfirmParam() {
-        return delayConfirmParam;
+    public DelayConfirm getDelayConfirm() {
+        return delayConfirm;
     }
 
     public MonitorTimeRange getMonitorTimeRange() {

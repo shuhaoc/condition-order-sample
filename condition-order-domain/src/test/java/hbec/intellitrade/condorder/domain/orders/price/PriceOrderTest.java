@@ -18,9 +18,9 @@ import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
 import hbec.intellitrade.condorder.domain.trigger.BasicTriggerTradingContext;
 import hbec.intellitrade.mock.MockMarkets;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmInfo;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirmParam;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.EnabledDelayConfirmParam;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.condition.deviation.EnabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
@@ -193,7 +193,7 @@ public class PriceOrderTest {
                                                                    new TradeNumberDirect(100))
         );
 
-        assertEquals(priceOrder1.getDelayConfirmParam(), DisabledDelayConfirmParam.DISABLED);
+        assertEquals(priceOrder1.getDelayConfirm(), DisabledDelayConfirm.DISABLED);
 
         PriceOrder priceOrder2 = new PriceOrder(123L, tradeCustomerInfo,
                                                 OrderState.ACTIVE,
@@ -205,12 +205,12 @@ public class PriceOrderTest {
                                                                    new TradeNumberDirect(100)),
                                                 NoneTrackedIndex.NONE,
                                                 NoneMonitorTimeRange.NONE,
-                                                new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3),
+                                                new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
                                                 null,
                                                 DisabledDeviationCtrlParam.DISABLED);
 
-        assertEquals(priceOrder2.getDelayConfirmParam(),
-                     new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3));
+        assertEquals(priceOrder2.getDelayConfirm(),
+                     new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3));
     }
 
     @Test
@@ -228,7 +228,7 @@ public class PriceOrderTest {
                                                                   new TradeNumberDirect(100)),
                                                NoneTrackedIndex.NONE,
                                                NoneMonitorTimeRange.NONE,
-                                               new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3),
+                                               new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
                                                null,
                                                DisabledDeviationCtrlParam.DISABLED);
 
@@ -265,7 +265,7 @@ public class PriceOrderTest {
                                                new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                                                  new LocalTimeRange(LocalTime.parse("10:00:00"),
                                                                                     LocalTime.parse("11:00:00"))),
-                                               DisabledDelayConfirmParam.DISABLED,
+                                               DisabledDelayConfirm.DISABLED,
                                                null,
                                                DisabledDeviationCtrlParam.DISABLED);
 
@@ -295,7 +295,7 @@ public class PriceOrderTest {
                                                                   new TradeNumberDirect(100)),
                                                NoneTrackedIndex.NONE,
                                                NoneMonitorTimeRange.NONE,
-                                               DisabledDelayConfirmParam.DISABLED,
+                                               DisabledDelayConfirm.DISABLED,
                                                null,
                                                new EnabledDeviationCtrlParam(new BigDecimal("1")));
 
@@ -323,7 +323,7 @@ public class PriceOrderTest {
                                                                   new TradeNumberDirect(100)),
                                                NoneTrackedIndex.NONE,
                                                NoneMonitorTimeRange.NONE,
-                                               new EnabledDelayConfirmParam(DelayConfirmOption.CONTINUOUS, 2),
+                                               new DelayConfirmInfo(DelayConfirmOption.CONTINUOUS, 2),
                                                null,
                                                new EnabledDeviationCtrlParam(new BigDecimal("1")));
 
@@ -358,7 +358,7 @@ public class PriceOrderTest {
                                                                   new TradeNumberDirect(100)),
                                                new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"),
                                                NoneMonitorTimeRange.NONE,
-                                               new EnabledDelayConfirmParam(DelayConfirmOption.CONTINUOUS, 2),
+                                               new DelayConfirmInfo(DelayConfirmOption.CONTINUOUS, 2),
                                                null,
                                                new EnabledDeviationCtrlParam(new BigDecimal("1")));
 

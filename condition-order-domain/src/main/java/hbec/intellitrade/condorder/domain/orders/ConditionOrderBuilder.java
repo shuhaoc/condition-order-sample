@@ -14,7 +14,7 @@ import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfoBuilder;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanBuilder;
 import hbec.intellitrade.strategy.domain.condition.Condition;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParamBuilder;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmBuilder;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParamBuilder;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRangeBuilder;
 import me.caosh.autoasm.ConvertibleBuilder;
@@ -34,7 +34,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
     private Condition rawCondition;
     private LocalDateTime expireTime;
     private TradePlanBuilder tradePlan = new TradePlanBuilder();
-    private DelayConfirmParamBuilder delayConfirmParam = new DelayConfirmParamBuilder();
+    private DelayConfirmBuilder delayConfirm = new DelayConfirmBuilder();
     private DelayConfirmCount delayConfirmCount;
     private MonitorTimeRangeBuilder monitorTimeRange = new MonitorTimeRangeBuilder();
     private DeviationCtrlParamBuilder deviationCtrlParam = new DeviationCtrlParamBuilder();
@@ -101,12 +101,12 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         this.tradePlan = tradePlan;
     }
 
-    public DelayConfirmParamBuilder getDelayConfirmParam() {
-        return delayConfirmParam;
+    public DelayConfirmBuilder getDelayConfirm() {
+        return delayConfirm;
     }
 
-    public void setDelayConfirmParam(DelayConfirmParamBuilder delayConfirmParam) {
-        this.delayConfirmParam = delayConfirmParam;
+    public void setDelayConfirm(DelayConfirmBuilder delayConfirm) {
+        this.delayConfirm = delayConfirm;
     }
 
     public ConditionOrderBuilder setDelayConfirmCount(DelayConfirmCount delayConfirmCount) {
@@ -143,7 +143,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
                                   (BasicTradePlan) tradePlan.build(),
                                   trackedIndex.build(),
                                   monitorTimeRange.build(),
-                                  delayConfirmParam.build(),
+                                  delayConfirm.build(),
                                   (SingleDelayConfirmCount) delayConfirmCount,
                                   deviationCtrlParam.build());
 //        } else if (strategyInfo == NativeStrategyInfo.TURN_POINT) {

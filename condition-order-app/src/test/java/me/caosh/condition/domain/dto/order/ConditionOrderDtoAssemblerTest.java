@@ -13,8 +13,8 @@ import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmInfo;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.EnabledDelayConfirmParam;
 import hbec.intellitrade.strategy.domain.condition.deviation.EnabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.shared.Week;
@@ -56,7 +56,7 @@ public class ConditionOrderDtoAssemblerTest {
                                                new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                                                  new LocalTimeRange(LocalTime.parse("10:00:00"),
                                                                                     LocalTime.parse("14:00:00"))),
-                                               new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3),
+                                               new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
                                                null,
                                                new EnabledDeviationCtrlParam(new BigDecimal("1.00")));
 
@@ -103,10 +103,10 @@ public class ConditionOrderDtoAssemblerTest {
         tradePlan.setNumber(BigDecimal.valueOf(1000));
         conditionOrderDTO.setTradePlan(tradePlan);
 
-        DelayConfirmParamDTO delayConfirmParam = new DelayConfirmParamDTO();
+        DelayConfirmDTO delayConfirmParam = new DelayConfirmDTO();
         delayConfirmParam.setOption(1);
         delayConfirmParam.setConfirmTimes(3);
-        conditionOrderDTO.setDelayConfirmParam(delayConfirmParam);
+        conditionOrderDTO.setDelayConfirm(delayConfirmParam);
 
         SingleDelayConfirmCountDTO delayConfirmCount = new SingleDelayConfirmCountDTO();
         delayConfirmCount.setConfirmedCount(0);

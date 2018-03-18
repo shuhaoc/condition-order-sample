@@ -17,8 +17,8 @@ import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustMethod;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberByAmount;
+import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmInfo;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.EnabledDelayConfirmParam;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlOption;
 import hbec.intellitrade.strategy.domain.condition.deviation.EnabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
@@ -66,7 +66,7 @@ public class ConditionOrderDoAssemblerTest {
                 new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"),
                 new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                   new LocalTimeRange(LocalTime.parse("10:00:00"), LocalTime.parse("10:30:00"))),
-                new EnabledDelayConfirmParam(DelayConfirmOption.ACCUMULATE, 3),
+                new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
                 null,
                 new EnabledDeviationCtrlParam(new BigDecimal("1"))
         );

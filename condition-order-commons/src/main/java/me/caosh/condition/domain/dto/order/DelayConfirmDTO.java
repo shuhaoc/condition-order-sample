@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @date 2018/3/12
  */
 @Convertible
-public class DelayConfirmParamDTO implements Serializable {
+public class DelayConfirmDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Range(min = 0, max = 2)
@@ -38,9 +38,9 @@ public class DelayConfirmParamDTO implements Serializable {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(DelayConfirmParamDTO.class).omitNullValues()
-                .add("option", option)
-                .add("confirmTimes", confirmTimes)
-                .toString();
+        return MoreObjects.toStringHelper(DelayConfirmDTO.class).omitNullValues()
+                          .add("option", option)
+                          .add("confirmTimes", confirmTimes)
+                          .toString();
     }
 }
