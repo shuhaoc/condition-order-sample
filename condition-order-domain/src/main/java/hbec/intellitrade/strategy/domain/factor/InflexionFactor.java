@@ -48,20 +48,17 @@ public class InflexionFactor implements TargetPriceFactor, DirtyFlag {
     public InflexionFactor(TargetPriceFactor breakPriceFactor,
                            BinaryTargetPriceFactor turnBackBinaryPriceFactor,
                            boolean useGuaranteedPrice) {
-        this.breakPriceFactor = breakPriceFactor;
-        this.turnBackBinaryPriceFactor = turnBackBinaryPriceFactor;
-        this.useGuaranteedPrice = useGuaranteedPrice;
-        this.broken = new DynamicProperty<>(false);
-        this.extremePrice = new DynamicProperty<>();
+        this(breakPriceFactor, turnBackBinaryPriceFactor, useGuaranteedPrice, false, null);
     }
 
     public InflexionFactor(TargetPriceFactor breakPriceFactor,
                            BinaryTargetPriceFactor turnBackBinaryPriceFactor,
+                           boolean useGuaranteedPrice,
                            boolean broken,
                            BigDecimal extremePrice) {
         this.breakPriceFactor = breakPriceFactor;
         this.turnBackBinaryPriceFactor = turnBackBinaryPriceFactor;
-        this.useGuaranteedPrice = false;
+        this.useGuaranteedPrice = useGuaranteedPrice;
         this.broken = new DynamicProperty<>(broken);
         this.extremePrice = new DynamicProperty<>(extremePrice);
     }

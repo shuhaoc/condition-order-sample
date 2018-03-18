@@ -17,16 +17,18 @@ import java.math.BigDecimal;
  */
 public class TurnPointCondition extends AbstractBasicMarketCondition implements DynamicCondition {
     private InflexionFactor inflexionFactor;
+    private final BigDecimal baselinePrice;
 
     public TurnPointCondition(CompareOperator compareOperator,
                               BigDecimal breakPrice,
                               BigDecimal turnBackPercent) {
-        this(compareOperator, breakPrice, turnBackPercent, false, null);
+        this(compareOperator, breakPrice, turnBackPercent, null, false, null);
     }
 
     public TurnPointCondition(CompareOperator compareOperator,
                               BigDecimal breakPrice,
                               BigDecimal turnBackPercent,
+                              BigDecimal baselinePrice,
                               boolean broken,
                               BigDecimal extremePrice) {
         if (compareOperator == CompareOperator.LE) {
@@ -41,8 +43,9 @@ public class TurnPointCondition extends AbstractBasicMarketCondition implements 
         this.inflexionFactor = new InflexionFactor(
                 new BasicTargetPriceFactor(CompareOperator.LE, breakPrice),
                 new PercentBinaryTargetPriceFactor(CompareOperator.GE, turnBackPercent),
-                broken,
+                false, broken,
                 extremePrice);
+        this.baselinePrice = baselinePrice;
     }
 
     public BigDecimal getBreakPrice() {
@@ -51,6 +54,10 @@ public class TurnPointCondition extends AbstractBasicMarketCondition implements 
 
     public BigDecimal getTurnUpPercent() {
         return ((PercentBinaryTargetPriceFactor) inflexionFactor.getTurnBackBinaryPriceFactor()).getPercent();
+    }
+
+    public Optional<BigDecimal> getBaselinePrice() {
+        return Optional.fromNullable(baselinePrice);
     }
 
     public boolean isBroken() {
@@ -89,6 +96,7 @@ public class TurnPointCondition extends AbstractBasicMarketCondition implements 
         this.inflexionFactor = new InflexionFactor(
                 inflexionFactor.getBreakPriceFactor(),
                 inflexionFactor.getTurnBackBinaryPriceFactor(),
+                false,
                 that.isBroken(),
                 that.getExtremePrice().orNull());
     }

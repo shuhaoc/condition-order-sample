@@ -53,7 +53,7 @@ public class TurnPointConditionTest {
                 CompareOperator.LE,
                 new BigDecimal("10.000"),
                 new BigDecimal("2.00"),
-                false,
+                null, false,
                 null);
         Assert.assertEquals(turnPointCondition2, turnPointCondition2Expected);
 
@@ -79,7 +79,7 @@ public class TurnPointConditionTest {
                             new TurnPointCondition(CompareOperator.LE,
                                                    new BigDecimal("10.000"),
                                                    new BigDecimal("2.00"),
-                                                   true,
+                                                   null, true,
                                                    new BigDecimal("9.99")));
 
         TurnPointCondition turnPointCondition3 = new TurnPointCondition(CompareOperator.LE, new BigDecimal("10.05"),
