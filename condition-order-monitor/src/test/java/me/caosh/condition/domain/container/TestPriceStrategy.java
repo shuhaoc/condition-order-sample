@@ -4,12 +4,12 @@ import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.condorder.domain.OrderState;
+import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
-import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import org.joda.time.LocalDateTime;
 
 /**

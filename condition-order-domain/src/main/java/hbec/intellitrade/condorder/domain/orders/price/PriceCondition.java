@@ -1,4 +1,4 @@
-package hbec.intellitrade.strategy.domain.strategies.condition;
+package hbec.intellitrade.condorder.domain.orders.price;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.strategy.domain.condition.AbstractBasicMarketCondition;

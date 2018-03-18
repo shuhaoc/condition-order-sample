@@ -1,8 +1,8 @@
 package me.caosh.condition.domain.dto.order;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
-import hbec.intellitrade.strategy.domain.strategies.condition.PriceConditionBuilder;
+import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
+import hbec.intellitrade.condorder.domain.orders.price.PriceConditionBuilder;
 import me.caosh.autoasm.MappedClass;
 import org.hibernate.validator.constraints.Range;
 

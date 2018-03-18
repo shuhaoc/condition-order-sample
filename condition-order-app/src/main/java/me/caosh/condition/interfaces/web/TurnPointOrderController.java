@@ -5,7 +5,7 @@ import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
-import hbec.intellitrade.condorder.domain.orders.TurnPointOrder;
+import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointOrder;
 import me.caosh.condition.application.order.OrderCommandService;
 import me.caosh.condition.infrastructure.tunnel.impl.ConditionOrderIdGenerator;
 import me.caosh.condition.interfaces.assembler.TurnPointOrderCommandAssembler;

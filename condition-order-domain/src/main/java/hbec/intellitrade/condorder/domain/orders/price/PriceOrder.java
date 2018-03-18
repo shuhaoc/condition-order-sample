@@ -1,4 +1,4 @@
-package hbec.intellitrade.condorder.domain.orders;
+package hbec.intellitrade.condorder.domain.orders.price;
 
 import com.google.common.base.Function;
 import com.google.common.base.MoreObjects;
@@ -26,7 +26,6 @@ import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.condition.market.PredictableMarketCondition;
-import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;

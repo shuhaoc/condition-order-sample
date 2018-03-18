@@ -1,7 +1,6 @@
-package hbec.intellitrade.strategy.domain.strategies.condition;
+package hbec.intellitrade.condorder.domain.orders.price;
 
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
-import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;

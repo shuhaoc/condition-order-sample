@@ -8,7 +8,8 @@ import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilder;
-import hbec.intellitrade.condorder.domain.orders.PriceOrder;
+import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
+import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.trackindex.TrackIndexOption;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
@@ -22,7 +23,6 @@ import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlOption
 import hbec.intellitrade.strategy.domain.condition.deviation.EnabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.shared.Week;
-import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRangeOption;
 import hbec.intellitrade.strategy.domain.timerange.WeekRange;

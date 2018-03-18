@@ -1,7 +1,7 @@
 package me.caosh.condition.infrastructure.tunnel.model;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.strategy.domain.strategies.condition.TurnPointCondition;
+import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointCondition;
 import me.caosh.autoasm.MappedClass;
 
 import java.math.BigDecimal;

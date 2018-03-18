@@ -6,6 +6,8 @@ import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.delayconfirm.count.DelayConfirmCount;
 import hbec.intellitrade.condorder.domain.delayconfirm.count.SingleDelayConfirmCount;
+import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
+import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndex;
@@ -14,7 +16,6 @@ import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmParam;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParam;
-import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
 import org.joda.time.LocalDateTime;
 

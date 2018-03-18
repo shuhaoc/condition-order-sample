@@ -1,4 +1,4 @@
-package hbec.intellitrade.strategy.domain.strategies.condition;
+package hbec.intellitrade.condorder.domain.orders.turnpoint;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;

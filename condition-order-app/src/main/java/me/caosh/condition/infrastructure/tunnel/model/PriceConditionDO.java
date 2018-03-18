@@ -1,9 +1,9 @@
 package me.caosh.condition.infrastructure.tunnel.model;
 
 import com.google.common.base.MoreObjects;
+import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
+import hbec.intellitrade.condorder.domain.orders.price.PriceConditionBuilder;
 import me.caosh.autoasm.MappedClass;
-import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
-import hbec.intellitrade.strategy.domain.strategies.condition.PriceConditionBuilder;
 
 import java.math.BigDecimal;
 

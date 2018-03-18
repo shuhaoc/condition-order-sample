@@ -51,7 +51,7 @@ public interface ConditionOrder extends Strategy {
     StrategyInfo getStrategyInfo();
 
     /**
-     * 获取原始触发条件，即不包含高级选项因子的条件
+     * 获取原始触发条件，即不包含装饰性因子（比如延迟确认、偏差控制）的条件
      *
      * @return 原始条件
      */

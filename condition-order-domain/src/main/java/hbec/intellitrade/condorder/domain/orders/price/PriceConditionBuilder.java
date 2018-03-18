@@ -1,4 +1,4 @@
-package hbec.intellitrade.strategy.domain.strategies.condition;
+package hbec.intellitrade.condorder.domain.orders.price;
 
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import me.caosh.autoasm.ConvertibleBuilder;

@@ -1,4 +1,4 @@
-package hbec.intellitrade.condorder.domain.orders;
+package hbec.intellitrade.condorder.domain.orders.turnpoint;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.security.SecurityInfo;
@@ -12,7 +12,6 @@ import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirmParam;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
-import hbec.intellitrade.strategy.domain.strategies.condition.TurnPointCondition;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;
 

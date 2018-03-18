@@ -1,4 +1,4 @@
-package hbec.intellitrade.condorder.domain.orders;
+package hbec.intellitrade.condorder.domain.orders.price;
 
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.MarketType;
@@ -26,7 +26,6 @@ import hbec.intellitrade.strategy.domain.condition.deviation.EnabledDeviationCtr
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.shared.Week;
 import hbec.intellitrade.strategy.domain.signal.Signals;
-import hbec.intellitrade.strategy.domain.strategies.condition.PriceCondition;
 import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekRange;
