@@ -9,12 +9,15 @@ import java.math.BigDecimal;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/3/16
  */
-public class EnabledDeviationCtrlParam implements DeviationCtrlParam {
+public class DeviationCtrlInfo implements DeviationCtrl {
     private final BigDecimal limitPercent;
 
-    public EnabledDeviationCtrlParam(BigDecimal limitPercent) {
+    public DeviationCtrlInfo(BigDecimal limitPercent) {
         Preconditions.checkArgument(limitPercent.compareTo(BigDecimal.ZERO) > 0,
-                                    "limitPercent should be greater than 0");
+                                    "limitPercent should be greater than 0%");
+        Preconditions.checkArgument(limitPercent.compareTo(BigDecimal.valueOf(100)) < 0,
+                                    "limitPercent should be less than 100%");
+        
         this.limitPercent = limitPercent;
     }
 
@@ -36,7 +39,7 @@ public class EnabledDeviationCtrlParam implements DeviationCtrlParam {
             return false;
         }
 
-        EnabledDeviationCtrlParam that = (EnabledDeviationCtrlParam) o;
+        DeviationCtrlInfo that = (DeviationCtrlInfo) o;
 
         return limitPercent.equals(that.limitPercent);
     }
@@ -48,7 +51,7 @@ public class EnabledDeviationCtrlParam implements DeviationCtrlParam {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(EnabledDeviationCtrlParam.class).omitNullValues()
+        return MoreObjects.toStringHelper(DeviationCtrlInfo.class).omitNullValues()
                           .add("limitPercent", limitPercent)
                           .add("option", getOption())
                           .toString();

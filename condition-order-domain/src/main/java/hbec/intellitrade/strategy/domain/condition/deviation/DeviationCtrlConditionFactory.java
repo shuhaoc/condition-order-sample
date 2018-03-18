@@ -13,11 +13,11 @@ public enum DeviationCtrlConditionFactory {
     INSTANCE;
 
     public PredictableMarketCondition wrap(PredictableMarketCondition marketCondition,
-                                           DeviationCtrlParam deviationCtrlParam) {
-        if (deviationCtrlParam.getOption() == DeviationCtrlOption.DISABLED) {
+                                           DeviationCtrl deviationCtrl) {
+        if (deviationCtrl.getOption() == DeviationCtrlOption.DISABLED) {
             return marketCondition;
         } else {
-            EnabledDeviationCtrlParam param = (EnabledDeviationCtrlParam) deviationCtrlParam;
+            DeviationCtrlInfo param = (DeviationCtrlInfo) deviationCtrl;
             return new EnabledDeviationCtrlCondition(marketCondition, param.getLimitPercent());
         }
     }

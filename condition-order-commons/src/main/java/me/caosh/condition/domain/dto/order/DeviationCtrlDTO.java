@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  * @date 2018/3/16
  */
 @Convertible
-public class DeviationCtrlParamDTO implements Serializable {
+public class DeviationCtrlDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Range(min = 0, max = 1)
@@ -41,7 +41,7 @@ public class DeviationCtrlParamDTO implements Serializable {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(DeviationCtrlParamDTO.class).omitNullValues()
+        return MoreObjects.toStringHelper(DeviationCtrlDTO.class).omitNullValues()
                           .add("option", option)
                           .add("limitPercent", limitPercent)
                           .toString();

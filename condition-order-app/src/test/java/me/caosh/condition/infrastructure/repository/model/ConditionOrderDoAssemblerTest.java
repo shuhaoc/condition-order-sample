@@ -19,8 +19,8 @@ import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberByAmount;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmInfo;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
+import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlInfo;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlOption;
-import hbec.intellitrade.strategy.domain.condition.deviation.EnabledDeviationCtrlParam;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.shared.Week;
 import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
@@ -68,7 +68,7 @@ public class ConditionOrderDoAssemblerTest {
                                   new LocalTimeRange(LocalTime.parse("10:00:00"), LocalTime.parse("10:30:00"))),
                 new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
                 null,
-                new EnabledDeviationCtrlParam(new BigDecimal("1"))
+                new DeviationCtrlInfo(new BigDecimal("1"))
         );
         ConditionOrderDO conditionOrderDO = AutoAssemblers.getDefault()
                                                           .assemble(conditionOrder, ConditionOrderDO.class);

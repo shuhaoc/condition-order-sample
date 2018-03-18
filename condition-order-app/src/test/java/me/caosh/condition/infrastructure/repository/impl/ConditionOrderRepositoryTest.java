@@ -17,7 +17,7 @@ import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmInfo;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
-import hbec.intellitrade.strategy.domain.condition.deviation.EnabledDeviationCtrlParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlInfo;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.shared.Week;
 import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
@@ -69,7 +69,7 @@ public class ConditionOrderRepositoryTest extends AbstractTestNGSpringContextTes
                                                                                     LocalTime.parse("14:00:00"))),
                                                new DelayConfirmInfo(DelayConfirmOption.CONTINUOUS, 3),
                                                null,
-                                               new EnabledDeviationCtrlParam(new BigDecimal("1.00"))
+                                               new DeviationCtrlInfo(new BigDecimal("1.00"))
         );
         conditionOrderRepository.save(priceOrder);
 

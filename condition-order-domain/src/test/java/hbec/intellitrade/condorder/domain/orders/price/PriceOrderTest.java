@@ -21,8 +21,8 @@ import hbec.intellitrade.mock.MockMarkets;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmInfo;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
-import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrlParam;
-import hbec.intellitrade.strategy.domain.condition.deviation.EnabledDeviationCtrlParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlInfo;
+import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrl;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.shared.Week;
 import hbec.intellitrade.strategy.domain.signal.Signals;
@@ -207,7 +207,7 @@ public class PriceOrderTest {
                                                 NoneMonitorTimeRange.NONE,
                                                 new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
                                                 null,
-                                                DisabledDeviationCtrlParam.DISABLED);
+                                                DisabledDeviationCtrl.DISABLED);
 
         assertEquals(priceOrder2.getDelayConfirm(),
                      new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3));
@@ -230,7 +230,7 @@ public class PriceOrderTest {
                                                NoneMonitorTimeRange.NONE,
                                                new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
                                                null,
-                                               DisabledDeviationCtrlParam.DISABLED);
+                                               DisabledDeviationCtrl.DISABLED);
 
         assertEquals(priceOrder.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("13.00"))), Signals.none());
         assertTrue(priceOrder.isDirty());
@@ -267,7 +267,7 @@ public class PriceOrderTest {
                                                                                     LocalTime.parse("11:00:00"))),
                                                DisabledDelayConfirm.DISABLED,
                                                null,
-                                               DisabledDeviationCtrlParam.DISABLED);
+                                               DisabledDeviationCtrl.DISABLED);
 
         RealTimeMarket realTimeMarket1 = MockMarkets.builderWithCurrentPrice(new BigDecimal("12.99"))
                                                     .setArriveTime(LocalDateTime.parse("2018-03-12T09:30:00"))
@@ -297,7 +297,7 @@ public class PriceOrderTest {
                                                NoneMonitorTimeRange.NONE,
                                                DisabledDelayConfirm.DISABLED,
                                                null,
-                                               new EnabledDeviationCtrlParam(new BigDecimal("1")));
+                                               new DeviationCtrlInfo(new BigDecimal("1")));
 
         System.out.println(priceOrder);
 
@@ -325,7 +325,7 @@ public class PriceOrderTest {
                                                NoneMonitorTimeRange.NONE,
                                                new DelayConfirmInfo(DelayConfirmOption.CONTINUOUS, 2),
                                                null,
-                                               new EnabledDeviationCtrlParam(new BigDecimal("1")));
+                                               new DeviationCtrlInfo(new BigDecimal("1")));
 
         System.out.println(priceOrder);
 
@@ -360,7 +360,7 @@ public class PriceOrderTest {
                                                NoneMonitorTimeRange.NONE,
                                                new DelayConfirmInfo(DelayConfirmOption.CONTINUOUS, 2),
                                                null,
-                                               new EnabledDeviationCtrlParam(new BigDecimal("1")));
+                                               new DeviationCtrlInfo(new BigDecimal("1")));
 
         assertEquals(priceOrder.getTrackIndexOption(), TrackIndexOption.ENABLED);
         assertEquals(priceOrder.getTrackedIndex(), new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"));

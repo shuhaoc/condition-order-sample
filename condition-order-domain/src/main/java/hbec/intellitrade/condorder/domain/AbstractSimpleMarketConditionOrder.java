@@ -5,7 +5,7 @@ import hbec.intellitrade.condorder.domain.trackindex.TrackedIndex;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirm;
-import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrl;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
 import org.joda.time.LocalDateTime;
 
@@ -26,7 +26,7 @@ public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketC
                                               LocalDateTime expireTime,
                                               MonitorTimeRange monitorTimeRange,
                                               DelayConfirm delayConfirm,
-                                              DeviationCtrlParam deviationCtrlParam,
+                                              DeviationCtrl deviationCtrl,
                                               BasicTradePlan tradePlan) {
         super(orderId,
               tradeCustomerInfo,
@@ -36,7 +36,7 @@ public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketC
               trackedIndexInfo,
               monitorTimeRange,
               delayConfirm,
-              deviationCtrlParam);
+              deviationCtrl);
         this.tradePlan = tradePlan;
     }
 

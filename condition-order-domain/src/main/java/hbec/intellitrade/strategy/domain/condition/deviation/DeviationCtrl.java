@@ -4,7 +4,7 @@ package hbec.intellitrade.strategy.domain.condition.deviation;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/3/16
  */
-public interface DeviationCtrlParam {
+public interface DeviationCtrl {
     /**
      * 获取偏差控制选项
      *

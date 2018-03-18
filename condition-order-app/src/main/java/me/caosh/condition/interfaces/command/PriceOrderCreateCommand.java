@@ -44,7 +44,7 @@ public class PriceOrderCreateCommand implements Serializable {
     private MonitorTimeRangeDTO monitorTimeRange;
 
     @Valid
-    private DeviationCtrlParamDTO deviationCtrlParam;
+    private DeviationCtrlDTO deviationCtrl;
 
     public SecurityInfoDTO getSecurityInfo() {
         return securityInfo;
@@ -102,12 +102,12 @@ public class PriceOrderCreateCommand implements Serializable {
         this.monitorTimeRange = monitorTimeRange;
     }
 
-    public DeviationCtrlParamDTO getDeviationCtrlParam() {
-        return deviationCtrlParam;
+    public DeviationCtrlDTO getDeviationCtrl() {
+        return deviationCtrl;
     }
 
-    public void setDeviationCtrlParam(DeviationCtrlParamDTO deviationCtrlParam) {
-        this.deviationCtrlParam = deviationCtrlParam;
+    public void setDeviationCtrl(DeviationCtrlDTO deviationCtrl) {
+        this.deviationCtrl = deviationCtrl;
     }
 
     @Override
@@ -120,7 +120,7 @@ public class PriceOrderCreateCommand implements Serializable {
                           .add("tradePlan", tradePlan)
                           .add("delayConfirm", delayConfirm)
                           .add("monitorTimeRange", monitorTimeRange)
-                          .add("deviationCtrlParam", deviationCtrlParam)
+                          .add("deviationCtrl", deviationCtrl)
                           .toString();
     }
 }

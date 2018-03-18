@@ -12,7 +12,7 @@ import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
-import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrlParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;
@@ -43,7 +43,7 @@ public class GridTradeOrder extends AbstractMarketConditionOrder {
               null,
               NoneMonitorTimeRange.NONE,
               DisabledDelayConfirm.DISABLED,
-              DisabledDeviationCtrlParam.DISABLED);
+              DisabledDeviationCtrl.DISABLED);
         this.gridCondition = gridCondition;
         this.tradePlan = tradePlan;
     }

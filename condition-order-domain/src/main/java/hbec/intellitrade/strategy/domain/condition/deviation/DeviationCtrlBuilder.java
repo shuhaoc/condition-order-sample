@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/3/16
  */
-public class DeviationCtrlParamBuilder implements ConvertibleBuilder<DeviationCtrlParam> {
+public class DeviationCtrlBuilder implements ConvertibleBuilder<DeviationCtrl> {
     private DeviationCtrlOption option = DeviationCtrlOption.DISABLED;
     private BigDecimal limitPercent;
 
@@ -22,12 +22,12 @@ public class DeviationCtrlParamBuilder implements ConvertibleBuilder<DeviationCt
     }
 
     @Override
-    public DeviationCtrlParam build() {
+    public DeviationCtrl build() {
         if (option == DeviationCtrlOption.DISABLED) {
-            return DisabledDeviationCtrlParam.DISABLED;
+            return DisabledDeviationCtrl.DISABLED;
         }
 
         Preconditions.checkNotNull(limitPercent, "limitPercent cannot be null");
-        return new EnabledDeviationCtrlParam(limitPercent);
+        return new DeviationCtrlInfo(limitPercent);
     }
 }

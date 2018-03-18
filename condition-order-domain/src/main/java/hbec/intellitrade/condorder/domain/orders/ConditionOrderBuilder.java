@@ -15,7 +15,7 @@ import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanBuilder;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmBuilder;
-import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParamBuilder;
+import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlBuilder;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRangeBuilder;
 import me.caosh.autoasm.ConvertibleBuilder;
 import org.joda.time.LocalDateTime;
@@ -37,7 +37,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
     private DelayConfirmBuilder delayConfirm = new DelayConfirmBuilder();
     private DelayConfirmCount delayConfirmCount;
     private MonitorTimeRangeBuilder monitorTimeRange = new MonitorTimeRangeBuilder();
-    private DeviationCtrlParamBuilder deviationCtrlParam = new DeviationCtrlParamBuilder();
+    private DeviationCtrlBuilder deviationCtrl = new DeviationCtrlBuilder();
 
     public ConditionOrderBuilder setOrderId(Long orderId) {
         this.orderId = orderId;
@@ -122,12 +122,12 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         this.monitorTimeRange = monitorTimeRange;
     }
 
-    public DeviationCtrlParamBuilder getDeviationCtrlParam() {
-        return deviationCtrlParam;
+    public DeviationCtrlBuilder getDeviationCtrl() {
+        return deviationCtrl;
     }
 
-    public void setDeviationCtrlParam(DeviationCtrlParamBuilder deviationCtrlParam) {
-        this.deviationCtrlParam = deviationCtrlParam;
+    public void setDeviationCtrl(DeviationCtrlBuilder deviationCtrl) {
+        this.deviationCtrl = deviationCtrl;
     }
 
     @Override
@@ -145,7 +145,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
                                   monitorTimeRange.build(),
                                   delayConfirm.build(),
                                   (SingleDelayConfirmCount) delayConfirmCount,
-                                  deviationCtrlParam.build());
+                                  deviationCtrl.build());
 //        } else if (strategyInfo == NativeStrategyInfo.TURN_POINT) {
 //            return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,
 //                                      null, (BasicTradePlan) tradePlan, orderState);

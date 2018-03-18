@@ -31,7 +31,7 @@ public class ConditionOrderDTO implements Serializable {
     private DelayConfirmDTO delayConfirm;
     private DelayConfirmCountDTO delayConfirmCount;
     private MonitorTimeRangeDTO monitorTimeRange;
-    private DeviationCtrlParamDTO deviationCtrlParam;
+    private DeviationCtrlDTO deviationCtrl;
 
     public Long getOrderId() {
         return orderId;
@@ -137,12 +137,12 @@ public class ConditionOrderDTO implements Serializable {
         this.monitorTimeRange = monitorTimeRange;
     }
 
-    public DeviationCtrlParamDTO getDeviationCtrlParam() {
-        return deviationCtrlParam;
+    public DeviationCtrlDTO getDeviationCtrl() {
+        return deviationCtrl;
     }
 
-    public void setDeviationCtrlParam(DeviationCtrlParamDTO deviationCtrlParam) {
-        this.deviationCtrlParam = deviationCtrlParam;
+    public void setDeviationCtrl(DeviationCtrlDTO deviationCtrl) {
+        this.deviationCtrl = deviationCtrl;
     }
 
     @Override
@@ -161,7 +161,7 @@ public class ConditionOrderDTO implements Serializable {
                           .add("delayConfirm", delayConfirm)
                           .add("delayConfirmCount", delayConfirmCount)
                           .add("monitorTimeRange", monitorTimeRange)
-                          .add("deviationCtrlParam", deviationCtrlParam)
+                          .add("deviationCtrl", deviationCtrl)
                           .toString();
     }
 }

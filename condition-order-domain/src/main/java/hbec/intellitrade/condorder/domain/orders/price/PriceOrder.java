@@ -21,9 +21,9 @@ import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmConditionFactory;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmCounter;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
+import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlConditionFactory;
-import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParam;
-import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrlParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.condition.market.PredictableMarketCondition;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
@@ -89,7 +89,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
              NoneMonitorTimeRange.NONE,
              DisabledDelayConfirm.DISABLED,
              null,
-             DisabledDeviationCtrlParam.DISABLED);
+             DisabledDeviationCtrl.DISABLED);
     }
 
     /**
@@ -106,7 +106,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
      * @param monitorTimeRange        监控时段
      * @param delayConfirm       延迟确认参数
      * @param singleDelayConfirmCount 当前延迟确认次数，可为空
-     * @param deviationCtrlParam      偏差控制参数
+     * @param deviationCtrl      偏差控制参数
      */
     public PriceOrder(Long orderId,
                       TradeCustomerInfo tradeCustomerInfo,
@@ -119,7 +119,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
                       MonitorTimeRange monitorTimeRange,
                       DelayConfirm delayConfirm,
                       SingleDelayConfirmCount singleDelayConfirmCount,
-                      DeviationCtrlParam deviationCtrlParam) {
+                      DeviationCtrl deviationCtrl) {
         super(orderId,
               tradeCustomerInfo,
               orderState,
@@ -128,14 +128,14 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
               expireTime,
               monitorTimeRange,
               delayConfirm,
-              deviationCtrlParam,
+              deviationCtrl,
               tradePlan
         );
         this.priceCondition = priceCondition;
 
         PredictableMarketCondition deviationCtrlWrappedCondition = DeviationCtrlConditionFactory.INSTANCE.wrap(
                 priceCondition,
-                deviationCtrlParam);
+                deviationCtrl);
 
         int confirmedCount = singleDelayConfirmCount != null ? singleDelayConfirmCount.getConfirmedCount() : 0;
         this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(

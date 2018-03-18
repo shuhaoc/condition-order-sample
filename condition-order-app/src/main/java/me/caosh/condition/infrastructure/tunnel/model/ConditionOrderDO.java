@@ -71,9 +71,9 @@ public class ConditionOrderDO {
     private Date beginTime = LocalTime.MIDNIGHT.toDateTimeToday().toDate();
     @FieldMapping(mappedProperty = "monitorTimeRange.localTimeRange.endTime")
     private Date endTime = LocalTime.MIDNIGHT.toDateTimeToday().toDate();
-    @FieldMapping(mappedProperty = "deviationCtrlParam.option")
+    @FieldMapping(mappedProperty = "deviationCtrl.option")
     private Integer deviationCtrlOption = 0;
-    @FieldMapping(mappedProperty = "deviationCtrlParam.limitPercent")
+    @FieldMapping(mappedProperty = "deviationCtrl.limitPercent")
     private BigDecimal deviationLimitPercent = BigDecimal.ZERO;
     private Timestamp createTime;
     private Timestamp updateTime;

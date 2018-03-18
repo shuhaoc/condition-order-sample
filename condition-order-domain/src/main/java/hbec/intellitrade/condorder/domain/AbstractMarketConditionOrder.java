@@ -10,8 +10,8 @@ import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
-import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlParam;
-import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrlParam;
+import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrl;
+import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
@@ -41,9 +41,9 @@ public abstract class AbstractMarketConditionOrder extends AbstractExplicitTradi
     private final DelayConfirm delayConfirm;
 
     /**
-     * 偏差控制参数，非空，未开启为{@link DisabledDeviationCtrlParam}
+     * 偏差控制参数，非空，未开启为{@link DisabledDeviationCtrl}
      */
-    private final DeviationCtrlParam deviationCtrlParam;
+    private final DeviationCtrl deviationCtrl;
 
     public AbstractMarketConditionOrder(Long orderId,
                                         TradeCustomerInfo tradeCustomerInfo,
@@ -53,12 +53,12 @@ public abstract class AbstractMarketConditionOrder extends AbstractExplicitTradi
                                         TrackedIndex trackedIndex,
                                         MonitorTimeRange monitorTimeRange,
                                         DelayConfirm delayConfirm,
-                                        DeviationCtrlParam deviationCtrlParam) {
+                                        DeviationCtrl deviationCtrl) {
         super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime);
         this.trackedIndex = trackedIndex;
         this.monitorTimeRange = monitorTimeRange;
         this.delayConfirm = delayConfirm;
-        this.deviationCtrlParam = deviationCtrlParam;
+        this.deviationCtrl = deviationCtrl;
     }
 
     /**
@@ -104,8 +104,8 @@ public abstract class AbstractMarketConditionOrder extends AbstractExplicitTradi
         return monitorTimeRange;
     }
 
-    public DeviationCtrlParam getDeviationCtrlParam() {
-        return deviationCtrlParam;
+    public DeviationCtrl getDeviationCtrl() {
+        return deviationCtrl;
     }
 
     @Override
