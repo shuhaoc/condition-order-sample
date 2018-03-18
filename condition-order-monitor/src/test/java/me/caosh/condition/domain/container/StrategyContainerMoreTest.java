@@ -79,7 +79,8 @@ public class StrategyContainerMoreTest {
         StrategyContainer container = new StrategyContainer(new StrategyContextConfig(1, 1),
                 NopStrategyWriter.INSTANCE);
         TestTurnUpStrategy testTurnUpStrategy = new TestTurnUpStrategy(1, MARKET_ID,
-                                                                       new TurnPointCondition(new BigDecimal("10.00"),
+                                                                       new TurnPointCondition(CompareOperator.LE,
+                                                                                              new BigDecimal("10.00"),
                                                                                               new BigDecimal("1.00")));
         container.add(testTurnUpStrategy);
 

@@ -1,6 +1,7 @@
 package hbec.intellitrade.strategy.domain.strategies.condition;
 
 import com.google.common.base.Optional;
+import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -15,8 +16,10 @@ import static org.testng.Assert.assertTrue;
  */
 public class TurnPointConditionTest {
     @Test
-    public void test() throws Exception {
-        TurnPointCondition turnPointCondition = new TurnPointCondition(BigDecimal.valueOf(11), BigDecimal.valueOf(1));
+    public void testTurnUp() throws Exception {
+        TurnPointCondition turnPointCondition = new TurnPointCondition(CompareOperator.LE,
+                                                                       BigDecimal.valueOf(11),
+                                                                       BigDecimal.valueOf(1));
         assertFalse(turnPointCondition.getTargetPriceFactor().apply(new BigDecimal("10.01")));
         assertTrue(turnPointCondition.isDirty());
         turnPointCondition.clearDirty();
@@ -40,16 +43,18 @@ public class TurnPointConditionTest {
 
     @Test
     public void testSwapNonBroken() throws Exception {
-        TurnPointCondition turnPointCondition1 = new TurnPointCondition(new BigDecimal("10.00"),
+        TurnPointCondition turnPointCondition1 = new TurnPointCondition(CompareOperator.LE, new BigDecimal("10.00"),
                                                                         new BigDecimal("1.00"));
 
-        TurnPointCondition turnPointCondition2 = new TurnPointCondition(new BigDecimal("10.000"),
+        TurnPointCondition turnPointCondition2 = new TurnPointCondition(CompareOperator.LE, new BigDecimal("10.000"),
                                                                         new BigDecimal("2.00"));
         assertTrue(turnPointCondition2.isNeedSwap(turnPointCondition1));
-        TurnPointCondition turnPointCondition2Expected = new TurnPointCondition(new BigDecimal("10.000"),
-                                                                                new BigDecimal("2.00"),
-                                                                                false,
-                                                                                null);
+        TurnPointCondition turnPointCondition2Expected = new TurnPointCondition(
+                CompareOperator.LE,
+                new BigDecimal("10.000"),
+                new BigDecimal("2.00"),
+                false,
+                null);
         Assert.assertEquals(turnPointCondition2, turnPointCondition2Expected);
 
         Assert.assertEquals(turnPointCondition2.getBreakPrice(), new BigDecimal("10.000"));
@@ -62,19 +67,22 @@ public class TurnPointConditionTest {
 
     @Test
     public void testSwapBroken() throws Exception {
-        TurnPointCondition turnPointCondition1 = new TurnPointCondition(new BigDecimal("10.00"),
+        TurnPointCondition turnPointCondition1 = new TurnPointCondition(CompareOperator.LE, new BigDecimal("10.00"),
                                                                         new BigDecimal("1.00"));
         turnPointCondition1.getTargetPriceFactor().apply(new BigDecimal("9.99"));
 
-        TurnPointCondition turnPointCondition2 = new TurnPointCondition(new BigDecimal("10.000"),
+        TurnPointCondition turnPointCondition2 = new TurnPointCondition(CompareOperator.LE, new BigDecimal("10.000"),
                                                                         new BigDecimal("2.00"));
         assertTrue(turnPointCondition2.isNeedSwap(turnPointCondition1));
         turnPointCondition2.swap(turnPointCondition1);
         Assert.assertEquals(turnPointCondition2,
-                            new TurnPointCondition(new BigDecimal("10.000"), new BigDecimal("2.00"),
-                                                   true, new BigDecimal("9.99")));
+                            new TurnPointCondition(CompareOperator.LE,
+                                                   new BigDecimal("10.000"),
+                                                   new BigDecimal("2.00"),
+                                                   true,
+                                                   new BigDecimal("9.99")));
 
-        TurnPointCondition turnPointCondition3 = new TurnPointCondition(new BigDecimal("10.05"),
+        TurnPointCondition turnPointCondition3 = new TurnPointCondition(CompareOperator.LE, new BigDecimal("10.05"),
                                                                         new BigDecimal("1.00"));
         assertFalse(turnPointCondition3.isNeedSwap(turnPointCondition1));
     }

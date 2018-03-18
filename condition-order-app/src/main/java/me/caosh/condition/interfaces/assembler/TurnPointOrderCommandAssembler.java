@@ -11,6 +11,7 @@ import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumber;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberFactory;
+import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.strategies.condition.TurnPointCondition;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import me.caosh.condition.interfaces.command.TurnUpBuyOrderCreateCommand;
@@ -28,7 +29,7 @@ public class TurnPointOrderCommandAssembler {
         SecurityExchange securityExchange = SecurityExchange.valueOf(command.getSecurityExchange());
         SecurityInfo securityInfo = new SecurityInfo(securityType, command.getSecurityCode(), securityExchange,
                 command.getSecurityName());
-        TurnPointCondition turnPointCondition = new TurnPointCondition(command.getBreakPrice(),
+        TurnPointCondition turnPointCondition = new TurnPointCondition(CompareOperator.LE, command.getBreakPrice(),
                                                                        command.getTurnUpPercent());
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
@@ -40,7 +41,7 @@ public class TurnPointOrderCommandAssembler {
 
     public static TurnPointOrder merge(TurnPointOrder oldOrder, TurnUpBuyOrderUpdateCommand command) {
         OrderState orderState = OrderState.ACTIVE;
-        TurnPointCondition turnPointCondition = new TurnPointCondition(command.getBreakPrice(),
+        TurnPointCondition turnPointCondition = new TurnPointCondition(CompareOperator.LE, command.getBreakPrice(),
                                                                        command.getTurnUpPercent());
         if (turnPointCondition.isNeedSwap(oldOrder.getTurnPointCondition())) {
             turnPointCondition.swap(oldOrder.getTurnPointCondition());

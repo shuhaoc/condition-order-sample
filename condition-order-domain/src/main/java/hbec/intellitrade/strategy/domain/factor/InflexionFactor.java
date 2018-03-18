@@ -3,6 +3,7 @@ package hbec.intellitrade.strategy.domain.factor;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import hbec.intellitrade.strategy.domain.factor.logic.OrTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.shared.DirtyFlag;
 import hbec.intellitrade.strategy.domain.shared.DynamicProperty;
 
@@ -30,6 +31,11 @@ public class InflexionFactor implements TargetPriceFactor, DirtyFlag {
     private final BinaryTargetPriceFactor turnBackBinaryPriceFactor;
 
     /**
+     * 保底价（即突破价）触发，即折返至突破价是否满足条件
+     */
+    private final boolean useGuaranteedPrice;
+
+    /**
      * 突破状态
      */
     private final DynamicProperty<Boolean> broken;
@@ -39,9 +45,12 @@ public class InflexionFactor implements TargetPriceFactor, DirtyFlag {
      */
     private final DynamicProperty<BigDecimal> extremePrice;
 
-    public InflexionFactor(TargetPriceFactor breakPriceFactor, BinaryTargetPriceFactor turnBackBinaryPriceFactor) {
+    public InflexionFactor(TargetPriceFactor breakPriceFactor,
+                           BinaryTargetPriceFactor turnBackBinaryPriceFactor,
+                           boolean useGuaranteedPrice) {
         this.breakPriceFactor = breakPriceFactor;
         this.turnBackBinaryPriceFactor = turnBackBinaryPriceFactor;
+        this.useGuaranteedPrice = useGuaranteedPrice;
         this.broken = new DynamicProperty<>(false);
         this.extremePrice = new DynamicProperty<>();
     }
@@ -52,6 +61,7 @@ public class InflexionFactor implements TargetPriceFactor, DirtyFlag {
                            BigDecimal extremePrice) {
         this.breakPriceFactor = breakPriceFactor;
         this.turnBackBinaryPriceFactor = turnBackBinaryPriceFactor;
+        this.useGuaranteedPrice = false;
         this.broken = new DynamicProperty<>(broken);
         this.extremePrice = new DynamicProperty<>(extremePrice);
     }
@@ -77,7 +87,7 @@ public class InflexionFactor implements TargetPriceFactor, DirtyFlag {
                 return false;
             } else {
                 // 拐点达成条件
-                PriceFactor priceFactor = getTurnBackTargetPriceFactor();
+                Factor<BigDecimal> priceFactor = getTurnBackTargetPriceFactor();
                 return priceFactor.apply(price);
             }
         }
@@ -96,7 +106,21 @@ public class InflexionFactor implements TargetPriceFactor, DirtyFlag {
     }
 
     private TargetPriceFactor getTurnBackTargetPriceFactor() {
-        return new BinaryWrapperTargetPriceFactor(turnBackBinaryPriceFactor, extremePrice.get());
+        // 原定折返目标价
+        BinaryWrapperTargetPriceFactor originTurnBackFactor = new BinaryWrapperTargetPriceFactor(
+                turnBackBinaryPriceFactor,
+                extremePrice.get());
+
+        if (!useGuaranteedPrice) {
+            return originTurnBackFactor;
+        }
+
+        // 保底价因子
+        TargetPriceFactor guranteedPriceFactor = new BasicTargetPriceFactor(
+                CompareOperators.reverse(breakPriceFactor.getCompareOperator()),
+                breakPriceFactor.getTargetPrice());
+        // 折返至突破价或原定折返目标价都满足条件
+        return new OrTargetPriceFactor(originTurnBackFactor, guranteedPriceFactor);
     }
 
     /**
@@ -125,7 +149,7 @@ public class InflexionFactor implements TargetPriceFactor, DirtyFlag {
     @Override
     public BigDecimal getTargetPrice() {
         Preconditions.checkArgument(broken.get() && extremePrice.get() != null,
-                "Target price is not available until broken");
+                                    "Target price is not available until broken");
         TargetPriceFactor priceFactor = getTurnBackTargetPriceFactor();
         return priceFactor.getTargetPrice();
     }
@@ -152,6 +176,9 @@ public class InflexionFactor implements TargetPriceFactor, DirtyFlag {
 
         InflexionFactor that = (InflexionFactor) o;
 
+        if (useGuaranteedPrice != that.useGuaranteedPrice) {
+            return false;
+        }
         if (!breakPriceFactor.equals(that.breakPriceFactor)) {
             return false;
         }
@@ -168,6 +195,7 @@ public class InflexionFactor implements TargetPriceFactor, DirtyFlag {
     public int hashCode() {
         int result = breakPriceFactor.hashCode();
         result = 31 * result + turnBackBinaryPriceFactor.hashCode();
+        result = 31 * result + (useGuaranteedPrice ? 1 : 0);
         result = 31 * result + broken.hashCode();
         result = 31 * result + extremePrice.hashCode();
         return result;
@@ -176,11 +204,11 @@ public class InflexionFactor implements TargetPriceFactor, DirtyFlag {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(InflexionFactor.class).omitNullValues()
-                .addValue(breakPriceFactor)
-                .addValue(turnBackBinaryPriceFactor)
-                .addValue(broken.get() ? getTurnBackTargetPriceFactor() : null)
-                .addValue(broken)
-                .addValue(extremePrice)
-                .toString();
+                          .add("breakPriceFactor", breakPriceFactor)
+                          .add("turnBackBinaryPriceFactor", turnBackBinaryPriceFactor)
+                          .add("useGuaranteedPrice", useGuaranteedPrice)
+                          .add("broken", broken)
+                          .add("extremePrice", extremePrice)
+                          .toString();
     }
 }

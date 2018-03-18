@@ -18,20 +18,31 @@ import java.math.BigDecimal;
 public class TurnPointCondition extends AbstractBasicMarketCondition implements DynamicCondition {
     private InflexionFactor inflexionFactor;
 
-    public TurnPointCondition(BigDecimal breakPrice, BigDecimal turnUpPercent) {
-        Preconditions.checkArgument(turnUpPercent.compareTo(BigDecimal.ZERO) > 0,
-                "Turn up percent should be greater than 0");
-        this.inflexionFactor = new InflexionFactor(
-                new BasicTargetPriceFactor(CompareOperator.LE, breakPrice),
-                new PercentBinaryTargetPriceFactor(CompareOperator.GE, turnUpPercent));
+    public TurnPointCondition(CompareOperator compareOperator,
+                              BigDecimal breakPrice,
+                              BigDecimal turnBackPercent) {
+        this(compareOperator, breakPrice, turnBackPercent, false, null);
     }
 
-    public TurnPointCondition(BigDecimal breakPrice, BigDecimal turnUpPercent, Boolean broken, BigDecimal lowestPrice) {
+    public TurnPointCondition(CompareOperator compareOperator,
+                              BigDecimal breakPrice,
+                              BigDecimal turnBackPercent,
+                              boolean broken,
+                              BigDecimal extremePrice) {
+        if (compareOperator == CompareOperator.LE) {
+            Preconditions.checkArgument(turnBackPercent.compareTo(BigDecimal.ZERO) > 0,
+                                        "Turn up percent should be greater than 0");
+        }
+        if (compareOperator == CompareOperator.GE) {
+            Preconditions.checkArgument(turnBackPercent.compareTo(BigDecimal.ZERO) < 0,
+                                        "Turn down percent should be less than 0");
+        }
+
         this.inflexionFactor = new InflexionFactor(
                 new BasicTargetPriceFactor(CompareOperator.LE, breakPrice),
-                new PercentBinaryTargetPriceFactor(CompareOperator.GE, turnUpPercent),
+                new PercentBinaryTargetPriceFactor(CompareOperator.GE, turnBackPercent),
                 broken,
-                lowestPrice);
+                extremePrice);
     }
 
     public BigDecimal getBreakPrice() {

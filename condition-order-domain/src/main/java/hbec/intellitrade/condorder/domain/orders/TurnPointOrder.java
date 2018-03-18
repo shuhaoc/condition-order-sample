@@ -1,7 +1,6 @@
 package hbec.intellitrade.condorder.domain.orders;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Preconditions;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.AbstractSimpleMarketConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
@@ -15,11 +14,13 @@ import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCt
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.strategies.condition.TurnPointCondition;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
-import hbec.intellitrade.trade.domain.ExchangeType;
 import org.joda.time.LocalDateTime;
 
 /**
- * Created by caosh on 2017/8/19.
+ * 拐点条件单（拐点买入、回落卖出）
+ *
+ * @author caosh/caoshuhao@touker.com
+ * @date 2017/8/19
  */
 public class TurnPointOrder extends AbstractSimpleMarketConditionOrder {
     private final TurnPointCondition turnPointCondition;
@@ -41,7 +42,6 @@ public class TurnPointOrder extends AbstractSimpleMarketConditionOrder {
               DisabledDelayConfirmParam.DISABLED,
               DisabledDeviationCtrlParam.DISABLED,
               tradePlan);
-        Preconditions.checkArgument(tradePlan.getExchangeType() == ExchangeType.BUY);
         this.turnPointCondition = turnPointCondition;
     }
 
