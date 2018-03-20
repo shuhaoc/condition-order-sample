@@ -61,14 +61,13 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
     private final DelayConfirmCounterExtractor delayConfirmCounterExtractor;
 
     /**
-     * 构造价格条件单（基本参数）
+     * 构造价格条件单（最少参数）
      *
      * @param orderId           条件单ID
      * @param tradeCustomerInfo 客户标识信息
      * @param orderState        条件单状态
      * @param securityInfo      交易证券信息
      * @param priceCondition    价格条件
-     * @param expireTime        过期时间，可为空
      * @param tradePlan         交易计划
      */
     public PriceOrder(Long orderId,
@@ -76,14 +75,13 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
                       OrderState orderState,
                       SecurityInfo securityInfo,
                       PriceCondition priceCondition,
-                      LocalDateTime expireTime,
                       BasicTradePlan tradePlan) {
         this(orderId,
              tradeCustomerInfo,
              orderState,
              securityInfo,
              priceCondition,
-             expireTime,
+             null,
              tradePlan,
              NoneTrackedIndex.NONE,
              NoneMonitorTimeRange.NONE,
@@ -104,9 +102,9 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
      * @param tradePlan               交易计划
      * @param trackedIndexInfo        跟踪指数信息
      * @param monitorTimeRange        监控时段
-     * @param delayConfirm       延迟确认参数
+     * @param delayConfirm            延迟确认参数
      * @param singleDelayConfirmCount 当前延迟确认次数，可为空
-     * @param deviationCtrl      偏差控制参数
+     * @param deviationCtrl           偏差控制参数
      */
     public PriceOrder(Long orderId,
                       TradeCustomerInfo tradeCustomerInfo,

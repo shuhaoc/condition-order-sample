@@ -30,7 +30,13 @@ import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
-import hbec.intellitrade.trade.domain.*;
+import hbec.intellitrade.trade.domain.EntrustCommand;
+import hbec.intellitrade.trade.domain.EntrustOrderInfo;
+import hbec.intellitrade.trade.domain.EntrustOrderWriter;
+import hbec.intellitrade.trade.domain.EntrustSuccessResult;
+import hbec.intellitrade.trade.domain.ExchangeType;
+import hbec.intellitrade.trade.domain.OrderType;
+import hbec.intellitrade.trade.domain.TradeCustomer;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.mockito.Matchers;
@@ -81,17 +87,15 @@ public class PriceOrderTest {
         SecurityInfo pfyh = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
         ExchangeType exchangeType = ExchangeType.BUY;
 
-        LocalDateTime expireTime = LocalDateTime.now().plusDays(1);
+        LocalDateTime expireTime = null;
         PriceOrder priceOrder1 = new PriceOrder(123L, tradeCustomerInfo, OrderState.ACTIVE, pfyh,
                                                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
-                                                expireTime,
                                                 new BasicTradePlan(exchangeType,
                                                                    EntrustStrategy.CURRENT_PRICE,
                                                                    new TradeNumberDirect(100))
         );
         PriceOrder priceOrder2 = new PriceOrder(123L, tradeCustomerInfo, OrderState.ACTIVE, pfyh,
                                                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
-                                                expireTime,
                                                 new BasicTradePlan(exchangeType,
                                                                    EntrustStrategy.CURRENT_PRICE,
                                                                    new TradeNumberDirect(100))
@@ -111,7 +115,6 @@ public class PriceOrderTest {
                                                tradeCustomerInfo,
                                                OrderState.ACTIVE, pfyh,
                                                new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
-                                               null,
                                                new BasicTradePlan(exchangeType,
                                                                   EntrustStrategy.CURRENT_PRICE,
                                                                   new TradeNumberDirect(100))
@@ -166,7 +169,12 @@ public class PriceOrderTest {
                                                LocalDateTime.parse("2018-03-06T10:00:00"),
                                                new BasicTradePlan(exchangeType,
                                                                   EntrustStrategy.CURRENT_PRICE,
-                                                                  new TradeNumberDirect(100))
+                                                                  new TradeNumberDirect(100)),
+                                               NoneTrackedIndex.NONE,
+                                               NoneMonitorTimeRange.NONE,
+                                               DisabledDelayConfirm.DISABLED,
+                                               null,
+                                               DisabledDeviationCtrl.DISABLED
         );
 
         assertEquals(priceOrder.onTimeTick(LocalDateTime.parse("2018-03-06T09:59:59")), Signals.none());
@@ -187,7 +195,6 @@ public class PriceOrderTest {
                                                 OrderState.ACTIVE,
                                                 pfyh,
                                                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
-                                                LocalDateTime.now().plusDays(1),
                                                 new BasicTradePlan(ExchangeType.BUY,
                                                                    EntrustStrategy.CURRENT_PRICE,
                                                                    new TradeNumberDirect(100))
