@@ -2,6 +2,7 @@ package me.caosh.condition.infrastructure.tunnel.model;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.autoasm.FieldMapping;
+import me.caosh.autoasm.SkippedField;
 import org.joda.time.LocalTime;
 
 import javax.persistence.Basic;
@@ -51,7 +52,7 @@ public class ConditionOrderDO {
     private Integer strategyType;
     @FieldMapping(mappedProperty = "condition")
     private ConditionDO conditionPropertiesObj;
-    @FieldMapping(mappedProperty = "condition")
+    @SkippedField
     private DynamicPropertiesDO dynamicPropertiesObj;
     private Date expireTime;
     @FieldMapping(mappedProperty = "tradePlan.exchangeType")

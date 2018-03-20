@@ -21,6 +21,9 @@ import java.math.BigDecimal;
  */
 public class TurnPointCondition extends AbstractBasicMarketCondition implements DynamicCondition {
     private final InflexionFactor inflexionFactor;
+    /**
+     * 底线价，可以为空
+     */
     private final BigDecimal baselinePrice;
 
     public TurnPointCondition(CompareOperator compareOperator,
@@ -86,24 +89,6 @@ public class TurnPointCondition extends AbstractBasicMarketCondition implements 
     public void clearDirty() {
         inflexionFactor.clearDirty();
     }
-
-//    @Override
-//    public boolean isNeedSwap(DynamicCondition origin) {
-//        BigDecimal newBreakPrice = inflexionFactor.getBreakPriceFactor().getTargetPrice();
-//        BigDecimal oldBreakPrice = ((TurnPointCondition) origin).inflexionFactor.getBreakPriceFactor().getTargetPrice();
-//        return newBreakPrice.compareTo(oldBreakPrice) == 0;
-//    }
-//
-//    @Override
-//    public void swap(DynamicCondition origin) {
-//        TurnPointCondition that = (TurnPointCondition) origin;
-//        this.inflexionFactor = new InflexionFactor(
-//                inflexionFactor.getBreakPriceFactor(),
-//                inflexionFactor.getTurnBackBinaryPriceFactor(),
-//                false,
-//                that.isBroken(),
-//                that.getExtremePrice().orNull());
-//    }
 
     @Override
     public boolean equals(Object o) {
