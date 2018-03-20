@@ -120,6 +120,31 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
                                                      deviationCtrl);
     }
 
+    public PriceOrder(Long orderId,
+                      TradeCustomerInfo tradeCustomerInfo,
+                      OrderState orderState,
+                      SecurityInfo securityInfo,
+                      DecoratedPriceCondition condition,
+                      LocalDateTime expireTime,
+                      BasicTradePlan tradePlan,
+                      TrackedIndex trackedIndexInfo,
+                      MonitorTimeRange monitorTimeRange,
+                      DelayConfirm delayConfirm,
+                      SingleDelayConfirmCount singleDelayConfirmCount,
+                      DeviationCtrl deviationCtrl) {
+        super(orderId,
+              tradeCustomerInfo,
+              orderState,
+              securityInfo,
+              trackedIndexInfo,
+              expireTime,
+              monitorTimeRange,
+              delayConfirm,
+              deviationCtrl,
+              tradePlan);
+        this.condition = condition;
+    }
+
     @Override
     public MarketCondition getCondition() {
         return condition;

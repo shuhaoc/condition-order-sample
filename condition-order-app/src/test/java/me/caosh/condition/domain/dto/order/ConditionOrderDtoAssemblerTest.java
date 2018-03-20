@@ -4,9 +4,10 @@ import hbec.intellitrade.common.market.index.IndexSource;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
-import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilder;
+import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilderFactory;
 import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
 import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
@@ -23,6 +24,7 @@ import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import me.caosh.autoasm.AutoAssemblers;
+import me.caosh.autoasm.ConvertibleBuilder;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
 import me.caosh.condition.domain.dto.market.TrackedIndexDTO;
 import org.joda.time.LocalDateTime;
@@ -127,8 +129,10 @@ public class ConditionOrderDtoAssemblerTest {
 
         assertEquals(assemble.toString(), conditionOrderDTO.toString());
 
+        ConvertibleBuilder<? extends ConditionOrder> builder = ConditionOrderBuilderFactory.INSTANCE.create(
+                conditionOrderDTO.getStrategyType());
         PriceOrder disassemble = (PriceOrder) AutoAssemblers.getDefault()
-                                                            .disassemble(conditionOrderDTO, ConditionOrderBuilder.class)
+                                                            .disassemble(conditionOrderDTO, builder)
                                                             .build();
         assertEquals(disassemble, priceOrder);
     }

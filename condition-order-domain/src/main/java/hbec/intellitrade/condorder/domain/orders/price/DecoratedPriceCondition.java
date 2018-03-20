@@ -21,17 +21,17 @@ import java.math.BigDecimal;
  * @date 2018/3/20
  */
 public class DecoratedPriceCondition implements MarketCondition, DynamicCondition {
-    private final PriceCondition priceCondition;
+    private final PriceCondition rawPriceCondition;
     private final MarketCondition decoratedCondition;
 
-    public DecoratedPriceCondition(PriceCondition priceCondition,
+    public DecoratedPriceCondition(PriceCondition rawPriceCondition,
                                    DelayConfirm delayConfirm,
                                    SingleDelayConfirmCount singleDelayConfirmCount,
                                    DeviationCtrl deviationCtrl) {
-        this.priceCondition = priceCondition;
+        this.rawPriceCondition = rawPriceCondition;
 
         PredictableMarketCondition deviationCtrlWrappedCondition = DeviationCtrlConditionFactory.INSTANCE.wrap(
-                priceCondition,
+                rawPriceCondition,
                 deviationCtrl);
 
         int confirmedCount = singleDelayConfirmCount != null ? singleDelayConfirmCount.getConfirmedCount() : 0;
@@ -43,11 +43,11 @@ public class DecoratedPriceCondition implements MarketCondition, DynamicConditio
     }
 
     public CompareOperator getCompareOperator() {
-        return priceCondition.getCompareOperator();
+        return rawPriceCondition.getCompareOperator();
     }
 
     public BigDecimal getTargetPrice() {
-        return priceCondition.getTargetPrice();
+        return rawPriceCondition.getTargetPrice();
     }
 
     @Override

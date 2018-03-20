@@ -4,9 +4,8 @@ import hbec.intellitrade.common.security.SecurityInfoBuilder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfoBuilder;
-import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilder;
 import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
-import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
+import hbec.intellitrade.condorder.domain.orders.price.PriceOrderBuilder;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.interfaces.command.PriceOrderCreateCommand;
 import me.caosh.condition.interfaces.command.PriceOrderUpdateCommand;
@@ -22,16 +21,14 @@ public class PriceOrderCommandAssembler {
                                                                      .disassemble(tradeCustomerInfo,
                                                                                   TradeCustomerInfoBuilder.class);
 
-        return (PriceOrder) AutoAssemblers.getDefault()
-                                          .useBuilder(new ConditionOrderBuilder())
-                                          .disassemble(command)
-                                          .getConvertibleBuilder()
-                                          .setOrderId(orderId)
-                                          .setCustomer(customerInfoBuilder)
-                                          .setOrderState(OrderState.ACTIVE)
-                                          .setStrategyInfo(new ConditionOrderBuilder.StrategyInfoBuilder()
-                                                                   .setStrategyType(NativeStrategyInfo.PRICE))
-                                          .build();
+        return AutoAssemblers.getDefault()
+                             .useBuilder(new PriceOrderBuilder())
+                             .disassemble(command)
+                             .getConvertibleBuilder()
+                             .setOrderId(orderId)
+                             .setCustomer(customerInfoBuilder)
+                             .setOrderState(OrderState.ACTIVE)
+                             .build();
     }
 
     public static PriceOrder mergePriceOrder(PriceOrder oldPriceOrder, PriceOrderUpdateCommand command) {
@@ -42,16 +39,14 @@ public class PriceOrderCommandAssembler {
                                                                 .disassemble(oldPriceOrder.getSecurityInfo(),
                                                                              SecurityInfoBuilder.class);
 
-        return (PriceOrder) AutoAssemblers.getDefault().useBuilder(new ConditionOrderBuilder())
-                                          .disassemble(command)
-                                          .getConvertibleBuilder()
-                                          .setOrderId(oldPriceOrder.getOrderId())
-                                          .setCustomer(customerInfoBuilder)
-                                          .setSecurityInfo(securityInfoBuilder)
-                                          .setOrderState(OrderState.ACTIVE)
-                                          .setStrategyInfo(new ConditionOrderBuilder.StrategyInfoBuilder()
-                                                                   .setStrategyType(NativeStrategyInfo.PRICE))
-                                          .build();
+        return AutoAssemblers.getDefault().useBuilder(new PriceOrderBuilder())
+                             .disassemble(command)
+                             .getConvertibleBuilder()
+                             .setOrderId(oldPriceOrder.getOrderId())
+                             .setCustomer(customerInfoBuilder)
+                             .setSecurityInfo(securityInfoBuilder)
+                             .setOrderState(OrderState.ACTIVE)
+                             .build();
     }
 
     private PriceOrderCommandAssembler() {

@@ -6,7 +6,8 @@ import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfoBuilder;
 import hbec.intellitrade.condorder.domain.delayconfirm.count.DelayConfirmCount;
 import hbec.intellitrade.condorder.domain.delayconfirm.count.SingleDelayConfirmCount;
-import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
+import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceCondition;
+import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceConditionBuilder;
 import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
@@ -31,12 +32,12 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
     private SecurityInfoBuilder securityInfo = new SecurityInfoBuilder();
     private TrackedIndexInfoBuilder trackedIndex = new TrackedIndexInfoBuilder();
     private StrategyInfoBuilder strategyInfo = new StrategyInfoBuilder();
-    private Condition condition;
+    private ConvertibleBuilder<? extends Condition> condition;
     private LocalDateTime expireTime;
     private TradePlanBuilder tradePlan = new TradePlanBuilder();
+    private MonitorTimeRangeBuilder monitorTimeRange = new MonitorTimeRangeBuilder();
     private DelayConfirmBuilder delayConfirm = new DelayConfirmBuilder();
     private DelayConfirmCount delayConfirmCount;
-    private MonitorTimeRangeBuilder monitorTimeRange = new MonitorTimeRangeBuilder();
     private DeviationCtrlBuilder deviationCtrl = new DeviationCtrlBuilder();
 
     public ConditionOrderBuilder setOrderId(Long orderId) {
@@ -84,9 +85,8 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return this;
     }
 
-    public ConditionOrderBuilder setCondition(Condition condition) {
+    public void setCondition(ConvertibleBuilder<? extends Condition> condition) {
         this.condition = condition;
-        return this;
     }
 
     public void setExpireTime(LocalDateTime expireTime) {
@@ -134,11 +134,16 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
     public ConditionOrder build() {
         StrategyInfo strategyInfo = this.strategyInfo.getStrategyType();
         if (strategyInfo == NativeStrategyInfo.PRICE) {
+            DecoratedPriceCondition decoratedPriceCondition = ((DecoratedPriceConditionBuilder) condition)
+                    .setDelayConfirm(delayConfirm)
+                    .setDelayConfirmCount(delayConfirmCount)
+                    .setDeviationCtrl(deviationCtrl)
+                    .build();
             return new PriceOrder(orderId,
                                   customer.build(),
                                   orderState,
                                   securityInfo.build(),
-                                  (PriceCondition) condition,
+                                  decoratedPriceCondition,
                                   expireTime,
                                   (BasicTradePlan) tradePlan.build(),
                                   trackedIndex.build(),
