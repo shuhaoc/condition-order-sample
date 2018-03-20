@@ -3,7 +3,11 @@ package me.caosh.condition.application.order.impl;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.market.RealTimeMarketSupplier;
 import hbec.intellitrade.common.security.newstock.NewStocksSupplier;
-import hbec.intellitrade.condorder.domain.*;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
+import hbec.intellitrade.condorder.domain.EntrustOrderRepository;
+import hbec.intellitrade.condorder.domain.ExplicitTradingSecurityOrder;
+import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.trigger.BasicTriggerTradingContext;
 import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.signal.BS;
@@ -78,7 +82,7 @@ public class SignalHandlerServiceImpl implements SignalHandlerService {
             conditionOrder.onExpired();
             conditionOrderRepository.update(conditionOrder);
         } else if (signal instanceof CacheSync) {
-            logger.info("Sync dynamic properties, orderId={}, condition={}", conditionOrder.getRawCondition());
+            logger.info("Sync dynamic properties, orderId={}, condition={}", conditionOrder.getCondition());
             conditionOrderRepository.updateDynamicProperties(conditionOrder);
         }
         logger.info("---------------- Handle signal  end  ----------------");

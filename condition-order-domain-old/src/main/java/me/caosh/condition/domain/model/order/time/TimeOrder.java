@@ -35,12 +35,8 @@ public class TimeOrder extends AbstractExplicitTradingSecurityOrder implements T
         this.tradePlan = tradePlan;
     }
 
-    public Condition getCondition() {
-        return timeReachedCondition;
-    }
-
     @Override
-    public Condition getRawCondition() {
+    public Condition getCondition() {
         return timeReachedCondition;
     }
 

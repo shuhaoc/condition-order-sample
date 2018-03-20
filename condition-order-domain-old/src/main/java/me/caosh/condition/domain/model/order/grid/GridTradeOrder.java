@@ -10,7 +10,6 @@ import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.DoubleDirectionTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
-import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
@@ -51,11 +50,6 @@ public class GridTradeOrder extends AbstractMarketConditionOrder {
     @Override
     public MarketCondition getCondition() {
         return getGridCondition();
-    }
-
-    @Override
-    public Condition getRawCondition() {
-        return gridCondition;
     }
 
     public GridCondition getGridCondition() {

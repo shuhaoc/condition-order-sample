@@ -85,13 +85,9 @@ public class NewStockOrder extends AbstractConditionOrder implements TimeDrivenS
         }
     }
 
+    @Override
     public Condition getCondition() {
         return getNewStockPurchaseCondition();
-    }
-
-    @Override
-    public Condition getRawCondition() {
-        return newStockPurchaseCondition;
     }
 
     @Override

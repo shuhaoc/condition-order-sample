@@ -43,9 +43,9 @@ public class TurnPointOrderCommandAssembler {
         OrderState orderState = OrderState.ACTIVE;
         TurnPointCondition turnPointCondition = new TurnPointCondition(CompareOperator.LE, command.getBreakPrice(),
                                                                        command.getTurnUpPercent());
-        if (turnPointCondition.isNeedSwap(oldOrder.getTurnPointCondition())) {
-            turnPointCondition.swap(oldOrder.getTurnPointCondition());
-        }
+//        if (turnPointCondition.isNeedSwap(oldOrder.getTurnPointCondition())) {
+//            turnPointCondition.swap(oldOrder.getTurnPointCondition());
+//        }
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());

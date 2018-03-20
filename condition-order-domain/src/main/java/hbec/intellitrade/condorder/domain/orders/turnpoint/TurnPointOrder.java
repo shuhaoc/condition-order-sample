@@ -8,7 +8,6 @@ import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
-import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
@@ -50,11 +49,6 @@ public class TurnPointOrder extends AbstractSimpleMarketConditionOrder {
 
     @Override
     public MarketCondition getCondition() {
-        return turnPointCondition;
-    }
-
-    @Override
-    public Condition getRawCondition() {
         return turnPointCondition;
     }
 

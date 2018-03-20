@@ -4,7 +4,12 @@ import com.google.common.base.MoreObjects;
 import me.caosh.autoasm.FieldMapping;
 import org.joda.time.LocalTime;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -44,9 +49,9 @@ public class ConditionOrderDO {
     private String trackedIndexName;
     @FieldMapping(mappedProperty = "strategyInfo.strategyType")
     private Integer strategyType;
-    @FieldMapping(mappedProperty = "rawCondition")
+    @FieldMapping(mappedProperty = "condition")
     private ConditionDO conditionPropertiesObj;
-    @FieldMapping(mappedProperty = "rawCondition")
+    @FieldMapping(mappedProperty = "condition")
     private DynamicPropertiesDO dynamicPropertiesObj;
     private Date expireTime;
     @FieldMapping(mappedProperty = "tradePlan.exchangeType")

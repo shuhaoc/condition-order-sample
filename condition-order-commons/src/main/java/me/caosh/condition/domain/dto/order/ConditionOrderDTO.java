@@ -25,7 +25,7 @@ public class ConditionOrderDTO implements Serializable {
     private TrackedIndexDTO trackedIndex;
     @FieldMapping(mappedProperty = "strategyInfo.strategyType")
     private Integer strategyType;
-    private ConditionDTO rawCondition;
+    private ConditionDTO condition;
     private String expireTime;
     private TradePlanDTO tradePlan;
     private DelayConfirmDTO delayConfirm;
@@ -89,12 +89,12 @@ public class ConditionOrderDTO implements Serializable {
         this.strategyType = strategyType;
     }
 
-    public ConditionDTO getRawCondition() {
-        return rawCondition;
+    public ConditionDTO getCondition() {
+        return condition;
     }
 
-    public void setRawCondition(ConditionDTO rawCondition) {
-        this.rawCondition = rawCondition;
+    public void setCondition(ConditionDTO condition) {
+        this.condition = condition;
     }
 
     public String getExpireTime() {
@@ -155,7 +155,7 @@ public class ConditionOrderDTO implements Serializable {
                           .add("securityInfo", securityInfo)
                           .add("trackedIndex", trackedIndex)
                           .add("strategyType", strategyType)
-                          .add("rawCondition", rawCondition)
+                          .add("condition", condition)
                           .add("expireTime", expireTime)
                           .add("tradePlan", tradePlan)
                           .add("delayConfirm", delayConfirm)

@@ -6,7 +6,7 @@ import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/3/12
  */
-public abstract class AbstractDelayConfirmCondition {
+public abstract class AbstractDelayConfirmCondition implements DelayConfirmCondition {
     final DelayConfirmCounter counter;
     final MarketCondition marketCondition;
 
@@ -24,11 +24,27 @@ public abstract class AbstractDelayConfirmCondition {
         return counter;
     }
 
+    @Override
     public int getConfirmedCount() {
         return counter.getConfirmedCount();
     }
 
     public MarketCondition getMarketCondition() {
         return marketCondition;
+    }
+
+    @Override
+    public boolean isDirty() {
+        return counter.isDirty();
+    }
+
+    @Override
+    public void clearDirty() {
+        counter.clearDirty();
+    }
+
+    @Override
+    public void resetCounter() {
+        counter.reset();
     }
 }

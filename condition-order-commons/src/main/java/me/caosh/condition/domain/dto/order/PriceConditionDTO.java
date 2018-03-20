@@ -1,7 +1,7 @@
 package me.caosh.condition.domain.dto.order;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
+import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceCondition;
 import hbec.intellitrade.condorder.domain.orders.price.PriceConditionBuilder;
 import me.caosh.autoasm.MappedClass;
 import org.hibernate.validator.constraints.Range;
@@ -15,7 +15,7 @@ import java.math.BigDecimal;
  *
  * @author caoshuhao@touker.com
  */
-@MappedClass(value = PriceCondition.class, builderClass = PriceConditionBuilder.class)
+@MappedClass(value = DecoratedPriceCondition.class, builderClass = PriceConditionBuilder.class)
 public class PriceConditionDTO implements ConditionDTO {
     private static final long serialVersionUID = 1L;
 

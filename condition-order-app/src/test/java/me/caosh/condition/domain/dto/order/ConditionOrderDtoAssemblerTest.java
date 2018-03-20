@@ -92,7 +92,7 @@ public class ConditionOrderDtoAssemblerTest {
         PriceConditionDTO priceCondition = new PriceConditionDTO();
         priceCondition.setCompareOperator(1);
         priceCondition.setTargetPrice(new BigDecimal("9999.00"));
-        conditionOrderDTO.setRawCondition(priceCondition);
+        conditionOrderDTO.setCondition(priceCondition);
 
         conditionOrderDTO.setExpireTime("2018-03-15 15:00:00");
 

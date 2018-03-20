@@ -31,7 +31,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
     private SecurityInfoBuilder securityInfo = new SecurityInfoBuilder();
     private TrackedIndexInfoBuilder trackedIndex = new TrackedIndexInfoBuilder();
     private StrategyInfoBuilder strategyInfo = new StrategyInfoBuilder();
-    private Condition rawCondition;
+    private Condition condition;
     private LocalDateTime expireTime;
     private TradePlanBuilder tradePlan = new TradePlanBuilder();
     private DelayConfirmBuilder delayConfirm = new DelayConfirmBuilder();
@@ -84,8 +84,8 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return this;
     }
 
-    public ConditionOrderBuilder setRawCondition(Condition rawCondition) {
-        this.rawCondition = rawCondition;
+    public ConditionOrderBuilder setCondition(Condition condition) {
+        this.condition = condition;
         return this;
     }
 
@@ -138,7 +138,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
                                   customer.build(),
                                   orderState,
                                   securityInfo.build(),
-                                  (PriceCondition) rawCondition,
+                                  (PriceCondition) condition,
                                   expireTime,
                                   (BasicTradePlan) tradePlan.build(),
                                   trackedIndex.build(),

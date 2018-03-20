@@ -1,6 +1,5 @@
 package hbec.intellitrade.condorder.domain.orders.price;
 
-import com.google.common.base.Function;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
 import hbec.intellitrade.common.security.SecurityInfo;
@@ -16,16 +15,11 @@ import hbec.intellitrade.condorder.domain.trackindex.TrackedIndex;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.strategy.domain.MarketClosedEventListener;
 import hbec.intellitrade.strategy.domain.MutableStrategy;
-import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirm;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmConditionFactory;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmCounter;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrl;
-import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlConditionFactory;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
-import hbec.intellitrade.strategy.domain.condition.market.PredictableMarketCondition;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;
@@ -54,7 +48,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
     /**
      * 组合条件，组合了延迟确认、偏差控制和价格条件等条件
      */
-    private final MarketCondition compositeCondition;
+    private final DecoratedPriceCondition compositeCondition;
     /**
      * 延迟确认计数器包装器，用于为实现{@link MutableStrategy}和{@link MarketClosedEventListener}提供便利
      */
@@ -130,27 +124,16 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
               tradePlan
         );
         this.priceCondition = priceCondition;
-
-        PredictableMarketCondition deviationCtrlWrappedCondition = DeviationCtrlConditionFactory.INSTANCE.wrap(
-                priceCondition,
-                deviationCtrl);
-
-        int confirmedCount = singleDelayConfirmCount != null ? singleDelayConfirmCount.getConfirmedCount() : 0;
-        this.compositeCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(
-                deviationCtrlWrappedCondition,
-                delayConfirm,
-                confirmedCount);
+        this.compositeCondition = new DecoratedPriceCondition(priceCondition,
+                                                              delayConfirm,
+                                                              singleDelayConfirmCount,
+                                                              deviationCtrl);
         this.delayConfirmCounterExtractor = new DelayConfirmCounterExtractor(compositeCondition);
     }
 
     @Override
-    protected MarketCondition getCondition() {
+    public MarketCondition getCondition() {
         return compositeCondition;
-    }
-
-    @Override
-    public Condition getRawCondition() {
-        return priceCondition;
     }
 
     @Override
@@ -166,24 +149,17 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
      * @return 当前延迟确认次数
      */
     public Optional<SingleDelayConfirmCount> getDelayConfirmCount() {
-        return delayConfirmCounterExtractor
-                .getCounter()
-                .transform(new Function<DelayConfirmCounter, SingleDelayConfirmCount>() {
-                    @Override
-                    public SingleDelayConfirmCount apply(DelayConfirmCounter delayConfirmCounter) {
-                        return new SingleDelayConfirmCount(delayConfirmCounter.getConfirmedCount());
-                    }
-                });
+        return compositeCondition.getDelayConfirmCount();
     }
 
     @Override
     public boolean isDirty() {
-        return delayConfirmCounterExtractor.isDirty();
+        return compositeCondition.isDirty();
     }
 
     @Override
     public void clearDirty() {
-        delayConfirmCounterExtractor.clearDirtyIfNeed();
+        compositeCondition.clearDirty();
     }
 
     @Override
@@ -195,7 +171,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
     @Override
     public void onMarketClosed(LocalDateTime localDateTime) {
         // 盘后清除延迟确认次数
-        delayConfirmCounterExtractor.resetCounterIfNeed();
+        compositeCondition.reset();
     }
 
     @Override

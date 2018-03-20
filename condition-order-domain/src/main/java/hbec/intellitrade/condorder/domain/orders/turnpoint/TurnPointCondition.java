@@ -5,7 +5,11 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.strategy.domain.condition.AbstractBasicMarketCondition;
 import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
-import hbec.intellitrade.strategy.domain.factor.*;
+import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
+import hbec.intellitrade.strategy.domain.factor.CompareOperator;
+import hbec.intellitrade.strategy.domain.factor.InflexionFactor;
+import hbec.intellitrade.strategy.domain.factor.PercentBinaryTargetPriceFactor;
+import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
 
 import java.math.BigDecimal;
 
@@ -16,7 +20,7 @@ import java.math.BigDecimal;
  * @date 2018/1/30
  */
 public class TurnPointCondition extends AbstractBasicMarketCondition implements DynamicCondition {
-    private InflexionFactor inflexionFactor;
+    private final InflexionFactor inflexionFactor;
     private final BigDecimal baselinePrice;
 
     public TurnPointCondition(CompareOperator compareOperator,
@@ -83,23 +87,23 @@ public class TurnPointCondition extends AbstractBasicMarketCondition implements 
         inflexionFactor.clearDirty();
     }
 
-    @Override
-    public boolean isNeedSwap(DynamicCondition origin) {
-        BigDecimal newBreakPrice = inflexionFactor.getBreakPriceFactor().getTargetPrice();
-        BigDecimal oldBreakPrice = ((TurnPointCondition) origin).inflexionFactor.getBreakPriceFactor().getTargetPrice();
-        return newBreakPrice.compareTo(oldBreakPrice) == 0;
-    }
-
-    @Override
-    public void swap(DynamicCondition origin) {
-        TurnPointCondition that = (TurnPointCondition) origin;
-        this.inflexionFactor = new InflexionFactor(
-                inflexionFactor.getBreakPriceFactor(),
-                inflexionFactor.getTurnBackBinaryPriceFactor(),
-                false,
-                that.isBroken(),
-                that.getExtremePrice().orNull());
-    }
+//    @Override
+//    public boolean isNeedSwap(DynamicCondition origin) {
+//        BigDecimal newBreakPrice = inflexionFactor.getBreakPriceFactor().getTargetPrice();
+//        BigDecimal oldBreakPrice = ((TurnPointCondition) origin).inflexionFactor.getBreakPriceFactor().getTargetPrice();
+//        return newBreakPrice.compareTo(oldBreakPrice) == 0;
+//    }
+//
+//    @Override
+//    public void swap(DynamicCondition origin) {
+//        TurnPointCondition that = (TurnPointCondition) origin;
+//        this.inflexionFactor = new InflexionFactor(
+//                inflexionFactor.getBreakPriceFactor(),
+//                inflexionFactor.getTurnBackBinaryPriceFactor(),
+//                false,
+//                that.isBroken(),
+//                that.getExtremePrice().orNull());
+//    }
 
     @Override
     public boolean equals(Object o) {

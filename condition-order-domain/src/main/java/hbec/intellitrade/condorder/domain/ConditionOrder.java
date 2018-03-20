@@ -44,18 +44,18 @@ public interface ConditionOrder extends Strategy {
     boolean isMonitoringState();
 
     /**
+     * 条件
+     *
+     * @return 条件
+     */
+    Condition getCondition();
+
+    /**
      * 获取策略描述信息
      *
      * @return 策略描述信息
      */
     StrategyInfo getStrategyInfo();
-
-    /**
-     * 获取原始触发条件，即不包含装饰性因子（比如延迟确认、偏差控制）的条件
-     *
-     * @return 原始条件
-     */
-    Condition getRawCondition();
 
     /**
      * 获取交易计划

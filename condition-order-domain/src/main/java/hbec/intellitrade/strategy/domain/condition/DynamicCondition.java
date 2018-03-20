@@ -17,12 +17,12 @@ public interface DynamicCondition extends DirtyFlag {
      * @param origin 被更新对象
      * @return 是否需要交换
      */
-    boolean isNeedSwap(DynamicCondition origin);
+//    boolean isNeedSwap(DynamicCondition origin);
 
     /**
      * 覆盖更新条件参数时交换动态属性
      *
      * @param origin 被更新对象
      */
-    void swap(DynamicCondition origin);
+//    void swap(DynamicCondition origin);
 }
