@@ -40,7 +40,7 @@ public class ConditionOrderDO {
     @FieldMapping(mappedProperty = "securityInfo.name")
     private String securityName;
     @FieldMapping(mappedProperty = "trackedIndex.option")
-    private Integer trackIndexOption = 0;
+    private Integer trackedIndexOption = 0;
     @FieldMapping(mappedProperty = "trackedIndex.code")
     private String trackedIndexCode;
     @FieldMapping(mappedProperty = "trackedIndex.source")
@@ -174,13 +174,13 @@ public class ConditionOrderDO {
     }
 
     @Basic
-    @Column(name = "track_index_option")
-    public Integer getTrackIndexOption() {
-        return trackIndexOption;
+    @Column(name = "tracked_index_option")
+    public Integer getTrackedIndexOption() {
+        return trackedIndexOption;
     }
 
-    public void setTrackIndexOption(Integer trackIndexOption) {
-        this.trackIndexOption = trackIndexOption;
+    public void setTrackedIndexOption(Integer trackedIndexOption) {
+        this.trackedIndexOption = trackedIndexOption;
     }
 
     @Basic
@@ -435,7 +435,7 @@ public class ConditionOrderDO {
                           .add("securityCode", securityCode)
                           .add("securityExchange", securityExchange)
                           .add("securityName", securityName)
-                          .add("trackIndexOption", trackIndexOption)
+                          .add("trackedIndexOption", trackedIndexOption)
                           .add("trackedIndexCode", trackedIndexCode)
                           .add("trackedIndexSource", trackedIndexSource)
                           .add("trackedIndexName", trackedIndexName)

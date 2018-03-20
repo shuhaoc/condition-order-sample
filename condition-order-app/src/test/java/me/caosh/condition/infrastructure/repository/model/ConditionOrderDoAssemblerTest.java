@@ -82,7 +82,7 @@ public class ConditionOrderDoAssemblerTest {
         assertEquals(conditionOrderDO.getSecurityExchange(), SecurityExchange.SH.name());
         assertEquals(conditionOrderDO.getSecurityName(), SECURITY_NAME);
         assertEquals(conditionOrderDO.getStrategyType().intValue(), NativeStrategyInfo.PRICE.getStrategyType());
-        assertEquals(conditionOrderDO.getTrackIndexOption(), TrackIndexOption.ENABLED.getValue());
+        assertEquals(conditionOrderDO.getTrackedIndexOption(), TrackIndexOption.ENABLED.getValue());
         assertEquals(conditionOrderDO.getTrackedIndexSource(), IndexSource.SZ.name());
         assertEquals(conditionOrderDO.getTrackedIndexCode(), "399001");
         assertEquals(conditionOrderDO.getTrackedIndexName(), "深证成指");
