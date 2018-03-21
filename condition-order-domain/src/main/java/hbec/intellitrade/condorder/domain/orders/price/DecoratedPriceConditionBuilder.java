@@ -39,6 +39,10 @@ public class DecoratedPriceConditionBuilder implements ConvertibleBuilder<Decora
         return this;
     }
 
+    public DelayConfirmCount getDelayConfirmCount() {
+        return delayConfirmCount;
+    }
+
     public DecoratedPriceConditionBuilder setDelayConfirmCount(DelayConfirmCount delayConfirmCount) {
         this.delayConfirmCount = delayConfirmCount;
         return this;

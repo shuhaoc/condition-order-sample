@@ -28,9 +28,12 @@ public class ConditionOrderDTO implements Serializable {
     private ConditionDTO condition;
     private String expireTime;
     private TradePlanDTO tradePlan;
+    @FieldMapping(mappedProperty = "condition.delayConfirm")
     private DelayConfirmDTO delayConfirm;
+    @FieldMapping(mappedProperty = "condition.delayConfirmCount")
     private DelayConfirmCountDTO delayConfirmCount;
     private MonitorTimeRangeDTO monitorTimeRange;
+    @FieldMapping(mappedProperty = "condition.deviationCtrl")
     private DeviationCtrlDTO deviationCtrl;
 
     public Long getOrderId() {

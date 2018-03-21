@@ -3,13 +3,9 @@ package hbec.intellitrade.condorder.domain.orders.price;
 import hbec.intellitrade.common.security.SecurityInfoBuilder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfoBuilder;
-import hbec.intellitrade.condorder.domain.delayconfirm.count.DelayConfirmCount;
-import hbec.intellitrade.condorder.domain.delayconfirm.count.SingleDelayConfirmCount;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfoBuilder;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanBuilder;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmBuilder;
-import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlBuilder;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRangeBuilder;
 import me.caosh.autoasm.ConvertibleBuilder;
 import org.joda.time.LocalDateTime;
@@ -24,7 +20,7 @@ public class PriceOrderBuilder implements ConvertibleBuilder<PriceOrder> {
     private OrderState orderState;
     private SecurityInfoBuilder securityInfo = new SecurityInfoBuilder();
     private TrackedIndexInfoBuilder trackedIndex = new TrackedIndexInfoBuilder();
-    private DecoratedPriceConditionBuilder condition = new DecoratedPriceConditionBuilder();
+    private DecoratedPriceCondition condition;
     private LocalDateTime expireTime;
     private TradePlanBuilder tradePlan = new TradePlanBuilder();
     private MonitorTimeRangeBuilder monitorTimeRange = new MonitorTimeRangeBuilder();
@@ -57,20 +53,16 @@ public class PriceOrderBuilder implements ConvertibleBuilder<PriceOrder> {
         return this;
     }
 
+    public void setCondition(DecoratedPriceCondition condition) {
+        this.condition = condition;
+    }
+
     public TrackedIndexInfoBuilder getTrackedIndex() {
         return trackedIndex;
     }
 
     public void setTrackedIndex(TrackedIndexInfoBuilder trackedIndex) {
         this.trackedIndex = trackedIndex;
-    }
-
-    public DecoratedPriceConditionBuilder getCondition() {
-        return condition;
-    }
-
-    public void setCondition(DecoratedPriceConditionBuilder condition) {
-        this.condition = condition;
     }
 
     public void setExpireTime(LocalDateTime expireTime) {
@@ -85,18 +77,6 @@ public class PriceOrderBuilder implements ConvertibleBuilder<PriceOrder> {
         this.tradePlan = tradePlan;
     }
 
-    public DelayConfirmBuilder getDelayConfirm() {
-        return delayConfirm;
-    }
-
-    public void setDelayConfirm(DelayConfirmBuilder delayConfirm) {
-        this.delayConfirm = delayConfirm;
-    }
-
-    public void setDelayConfirmCount(DelayConfirmCount delayConfirmCount) {
-        this.delayConfirmCount = delayConfirmCount;
-    }
-
     public MonitorTimeRangeBuilder getMonitorTimeRange() {
         return monitorTimeRange;
     }
@@ -105,32 +85,19 @@ public class PriceOrderBuilder implements ConvertibleBuilder<PriceOrder> {
         this.monitorTimeRange = monitorTimeRange;
     }
 
-    public DeviationCtrlBuilder getDeviationCtrl() {
-        return deviationCtrl;
-    }
-
-    public void setDeviationCtrl(DeviationCtrlBuilder deviationCtrl) {
-        this.deviationCtrl = deviationCtrl;
-    }
-
     @Override
     public PriceOrder build() {
-        DecoratedPriceCondition decoratedPriceCondition = condition
-                .setDelayConfirm(delayConfirm)
-                .setDelayConfirmCount(delayConfirmCount)
-                .setDeviationCtrl(deviationCtrl)
-                .build();
         return new PriceOrder(orderId,
                               customer.build(),
                               orderState,
                               securityInfo.build(),
-                              condition.build(),
+                              condition,
                               expireTime,
                               (BasicTradePlan) tradePlan.build(),
                               trackedIndex.build(),
                               monitorTimeRange.build(),
-                              delayConfirm.build(),
-                              (SingleDelayConfirmCount) delayConfirmCount,
-                              deviationCtrl.build());
+                              condition.getDelayConfirm(),
+                              condition.getDelayConfirmCount().orNull(),
+                              condition.getDeviationCtrl());
     }
 }

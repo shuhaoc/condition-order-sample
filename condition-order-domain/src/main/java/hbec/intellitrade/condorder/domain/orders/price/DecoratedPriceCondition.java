@@ -22,6 +22,11 @@ import java.math.BigDecimal;
  */
 public class DecoratedPriceCondition implements MarketCondition, DynamicCondition {
     private final PriceCondition rawPriceCondition;
+    private final DelayConfirm delayConfirm;
+    // TODO: refactor
+
+    private final SingleDelayConfirmCount singleDelayConfirmCount;
+    private final DeviationCtrl deviationCtrl;
     private final MarketCondition decoratedCondition;
 
     public DecoratedPriceCondition(PriceCondition rawPriceCondition,
@@ -29,6 +34,9 @@ public class DecoratedPriceCondition implements MarketCondition, DynamicConditio
                                    SingleDelayConfirmCount singleDelayConfirmCount,
                                    DeviationCtrl deviationCtrl) {
         this.rawPriceCondition = rawPriceCondition;
+        this.delayConfirm = delayConfirm;
+        this.singleDelayConfirmCount = singleDelayConfirmCount;
+        this.deviationCtrl = deviationCtrl;
 
         PredictableMarketCondition deviationCtrlWrappedCondition = DeviationCtrlConditionFactory.INSTANCE.wrap(
                 rawPriceCondition,
@@ -48,6 +56,18 @@ public class DecoratedPriceCondition implements MarketCondition, DynamicConditio
 
     public BigDecimal getTargetPrice() {
         return rawPriceCondition.getTargetPrice();
+    }
+
+    public DelayConfirm getDelayConfirm() {
+        return delayConfirm;
+    }
+
+    public SingleDelayConfirmCount getSingleDelayConfirmCount() {
+        return singleDelayConfirmCount;
+    }
+
+    public DeviationCtrl getDeviationCtrl() {
+        return deviationCtrl;
     }
 
     @Override
