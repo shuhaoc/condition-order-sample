@@ -10,19 +10,5 @@ import hbec.intellitrade.strategy.domain.shared.DirtyFlag;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/1/29
  */
-public interface DynamicCondition extends DirtyFlag {
-    /**
-     * 判断this条件在覆盖更新origin条件之前，是否需要与origin对象交换动态属性
-     *
-     * @param origin 被更新对象
-     * @return 是否需要交换
-     */
-//    boolean isNeedSwap(DynamicCondition origin);
-
-    /**
-     * 覆盖更新条件参数时交换动态属性
-     *
-     * @param origin 被更新对象
-     */
-//    void swap(DynamicCondition origin);
+public interface DynamicCondition extends Condition, DirtyFlag {
 }
