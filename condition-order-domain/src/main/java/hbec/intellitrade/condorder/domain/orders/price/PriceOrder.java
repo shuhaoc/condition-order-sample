@@ -5,7 +5,6 @@ import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.AbstractSimpleMarketConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
-import hbec.intellitrade.condorder.domain.delayconfirm.count.SingleDelayConfirmCount;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.condorder.domain.trackindex.NoneTrackedIndex;
@@ -13,9 +12,7 @@ import hbec.intellitrade.condorder.domain.trackindex.TrackedIndex;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.strategy.domain.MarketClosedEventListener;
 import hbec.intellitrade.strategy.domain.MutableStrategy;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
-import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrl;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
@@ -68,52 +65,6 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
              tradePlan,
              NoneTrackedIndex.NONE,
              NoneMonitorTimeRange.NONE
-        );
-    }
-
-    /**
-     * 构造价格条件单（全参数）
-     *
-     * @param orderId                 条件单ID
-     * @param tradeCustomerInfo       客户标识信息
-     * @param orderState              条件单状态
-     * @param securityInfo            交易证券信息
-     * @param priceCondition          价格条件
-     * @param expireTime              过期时间，可为空
-     * @param tradePlan               交易计划
-     * @param trackedIndexInfo        跟踪指数信息
-     * @param monitorTimeRange        监控时段
-     * @param delayConfirm            延迟确认参数
-     * @param singleDelayConfirmCount 当前延迟确认次数，可为空
-     * @param deviationCtrl           偏差控制参数
-     */
-    public PriceOrder(Long orderId,
-                      TradeCustomerInfo tradeCustomerInfo,
-                      OrderState orderState,
-                      SecurityInfo securityInfo,
-                      PriceCondition priceCondition,
-                      LocalDateTime expireTime,
-                      BasicTradePlan tradePlan,
-                      TrackedIndex trackedIndexInfo,
-                      MonitorTimeRange monitorTimeRange,
-                      DelayConfirm delayConfirm,
-                      SingleDelayConfirmCount singleDelayConfirmCount,
-                      DeviationCtrl deviationCtrl) {
-        super(orderId,
-              tradeCustomerInfo,
-              orderState,
-              securityInfo,
-              trackedIndexInfo,
-              expireTime,
-              monitorTimeRange,
-              delayConfirm,
-              deviationCtrl,
-              tradePlan
-        );
-        this.condition = new PriceConditionFacade(priceCondition,
-                                                  delayConfirm,
-                                                  deviationCtrl,
-                                                  singleDelayConfirmCount != null ? singleDelayConfirmCount.getConfirmedCount() : 0
         );
     }
 
