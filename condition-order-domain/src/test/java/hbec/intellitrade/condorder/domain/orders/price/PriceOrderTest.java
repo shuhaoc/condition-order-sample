@@ -30,13 +30,7 @@ import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
-import hbec.intellitrade.trade.domain.EntrustCommand;
-import hbec.intellitrade.trade.domain.EntrustOrderInfo;
-import hbec.intellitrade.trade.domain.EntrustOrderWriter;
-import hbec.intellitrade.trade.domain.EntrustSuccessResult;
-import hbec.intellitrade.trade.domain.ExchangeType;
-import hbec.intellitrade.trade.domain.OrderType;
-import hbec.intellitrade.trade.domain.TradeCustomer;
+import hbec.intellitrade.trade.domain.*;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.mockito.Matchers;
@@ -87,7 +81,6 @@ public class PriceOrderTest {
         SecurityInfo pfyh = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
         ExchangeType exchangeType = ExchangeType.BUY;
 
-        LocalDateTime expireTime = null;
         PriceOrder priceOrder1 = new PriceOrder(123L, tradeCustomerInfo, OrderState.ACTIVE, pfyh,
                                                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                                                 new BasicTradePlan(exchangeType,
@@ -201,7 +194,8 @@ public class PriceOrderTest {
                                                                    new TradeNumberDirect(100))
         );
 
-        assertEquals(priceOrder1.getCondition().getDelayConfirm(), DisabledDelayConfirm.DISABLED);
+        assertEquals(((PriceConditionFacade) priceOrder1.getCondition()).getDelayConfirm(),
+                     DisabledDelayConfirm.DISABLED);
 
         PriceOrder priceOrder2 = new PriceOrder(123L, tradeCustomerInfo,
                                                 OrderState.ACTIVE,
@@ -218,7 +212,7 @@ public class PriceOrderTest {
                                                 NoneTrackedIndex.NONE,
                                                 NoneMonitorTimeRange.NONE);
 
-        assertEquals(priceOrder2.getCondition().getDelayConfirm(),
+        assertEquals(((PriceConditionFacade) priceOrder2.getCondition()).getDelayConfirm(),
                      new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3));
     }
 

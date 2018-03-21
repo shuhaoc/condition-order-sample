@@ -14,6 +14,7 @@ import hbec.intellitrade.strategy.domain.MarketClosedEventListener;
 import hbec.intellitrade.strategy.domain.MutableStrategy;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrl;
+import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;
@@ -105,7 +106,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
     }
 
     @Override
-    public PriceConditionFacade getCondition() {
+    public MarketCondition getCondition() {
         return condition;
     }
 
