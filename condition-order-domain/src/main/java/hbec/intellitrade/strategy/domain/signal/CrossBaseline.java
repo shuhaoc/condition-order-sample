@@ -6,5 +6,5 @@ package hbec.intellitrade.strategy.domain.signal;
  * @author caoshuhao@touker.com
  * @date 2018/3/18
  */
-public class BreakBaseline extends AbstractSignal {
+public class CrossBaseline extends AbstractSignal {
 }
