@@ -82,7 +82,6 @@ public class PriceConditionFacade implements MarketConditionFacade, DynamicCondi
         }
     }
 
-    @Override
     public int getDelayConfirmedCount() {
         if (decoratedCondition instanceof DelayConfirmCondition) {
             return ((DelayConfirmCondition) decoratedCondition).getDelayConfirmedCount();
@@ -90,7 +89,6 @@ public class PriceConditionFacade implements MarketConditionFacade, DynamicCondi
         return 0;
     }
 
-    @Override
     public void resetCounter() {
         if (decoratedCondition instanceof DelayConfirmCondition) {
             ((DelayConfirmCondition) decoratedCondition).resetCounter();

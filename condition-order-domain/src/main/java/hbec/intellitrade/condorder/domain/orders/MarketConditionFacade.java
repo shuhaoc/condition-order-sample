@@ -1,7 +1,6 @@
 package hbec.intellitrade.condorder.domain.orders;
 
 import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmCondition;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 
 /**
@@ -10,5 +9,5 @@ import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/3/21
  */
-public interface MarketConditionFacade extends MarketCondition, DynamicCondition, DelayConfirmCondition {
+public interface MarketConditionFacade extends MarketCondition, DynamicCondition {
 }

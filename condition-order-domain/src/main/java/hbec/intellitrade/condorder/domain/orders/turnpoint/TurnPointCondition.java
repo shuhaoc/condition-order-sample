@@ -5,11 +5,7 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.strategy.domain.condition.AbstractMarketCondition;
 import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
-import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
-import hbec.intellitrade.strategy.domain.factor.CompareOperator;
-import hbec.intellitrade.strategy.domain.factor.InflexionFactor;
-import hbec.intellitrade.strategy.domain.factor.PercentBinaryTargetPriceFactor;
-import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
+import hbec.intellitrade.strategy.domain.factor.*;
 
 import java.math.BigDecimal;
 
@@ -21,21 +17,16 @@ import java.math.BigDecimal;
  */
 public class TurnPointCondition extends AbstractMarketCondition implements DynamicCondition {
     private final InflexionFactor inflexionFactor;
-    /**
-     * 底线价，可以为空
-     */
-    private final BigDecimal baselinePrice;
 
     public TurnPointCondition(CompareOperator compareOperator,
                               BigDecimal breakPrice,
                               BigDecimal turnBackPercent) {
-        this(compareOperator, breakPrice, turnBackPercent, null, false, null);
+        this(compareOperator, breakPrice, turnBackPercent, false, null);
     }
 
     public TurnPointCondition(CompareOperator compareOperator,
                               BigDecimal breakPrice,
                               BigDecimal turnBackPercent,
-                              BigDecimal baselinePrice,
                               boolean broken,
                               BigDecimal extremePrice) {
         if (compareOperator == CompareOperator.LE) {
@@ -52,7 +43,6 @@ public class TurnPointCondition extends AbstractMarketCondition implements Dynam
                 new PercentBinaryTargetPriceFactor(CompareOperator.GE, turnBackPercent),
                 false, broken,
                 extremePrice);
-        this.baselinePrice = baselinePrice;
     }
 
     public BigDecimal getBreakPrice() {
@@ -61,10 +51,6 @@ public class TurnPointCondition extends AbstractMarketCondition implements Dynam
 
     public BigDecimal getTurnUpPercent() {
         return ((PercentBinaryTargetPriceFactor) inflexionFactor.getTurnBackBinaryPriceFactor()).getPercent();
-    }
-
-    public Optional<BigDecimal> getBaselinePrice() {
-        return Optional.fromNullable(baselinePrice);
     }
 
     public boolean isBroken() {
