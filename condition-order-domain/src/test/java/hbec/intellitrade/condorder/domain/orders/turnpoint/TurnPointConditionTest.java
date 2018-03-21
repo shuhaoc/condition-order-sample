@@ -29,7 +29,8 @@ public class TurnPointConditionTest {
         assertFalse(turnPointCondition.getTargetPriceFactor().apply(new BigDecimal("10.01")));
         assertFalse(turnPointCondition.isDirty());
 
-        assertFalse(turnPointCondition.getTargetPriceFactor().apply(new BigDecimal("9.85"))); // 9.9485
+        // 9.9485
+        assertFalse(turnPointCondition.getTargetPriceFactor().apply(new BigDecimal("9.85")));
         assertTrue(turnPointCondition.isDirty());
         turnPointCondition.clearDirty();
 

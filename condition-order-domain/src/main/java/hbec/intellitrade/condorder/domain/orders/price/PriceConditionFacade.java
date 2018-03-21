@@ -35,7 +35,7 @@ public class PriceConditionFacade implements MarketConditionFacade, DynamicCondi
         this.delayConfirm = delayConfirm;
         this.deviationCtrl = deviationCtrl;
 
-        PredictableMarketCondition deviationCtrlWrappedCondition = DeviationCtrlConditionFactory.INSTANCE.wrap(
+        PredictableMarketCondition deviationCtrlWrappedCondition = DeviationCtrlConditionFactory.INSTANCE.wrapWith(
                 priceCondition,
                 deviationCtrl);
 

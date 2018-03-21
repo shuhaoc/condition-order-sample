@@ -12,8 +12,8 @@ public enum DeviationCtrlConditionFactory {
      */
     INSTANCE;
 
-    public PredictableMarketCondition wrap(PredictableMarketCondition marketCondition,
-                                           DeviationCtrl deviationCtrl) {
+    public PredictableMarketCondition wrapWith(PredictableMarketCondition marketCondition,
+                                               DeviationCtrl deviationCtrl) {
         if (deviationCtrl.getOption() == DeviationCtrlOption.DISABLED) {
             return marketCondition;
         } else {
