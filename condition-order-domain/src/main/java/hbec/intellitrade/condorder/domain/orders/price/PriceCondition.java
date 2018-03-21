@@ -1,7 +1,7 @@
 package hbec.intellitrade.condorder.domain.orders.price;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.strategy.domain.condition.AbstractBasicMarketCondition;
+import hbec.intellitrade.strategy.domain.condition.AbstractMarketCondition;
 import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 
@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/1/29
  */
-public class PriceCondition extends AbstractBasicMarketCondition {
+public class PriceCondition extends AbstractMarketCondition {
     private final BasicTargetPriceFactor targetPriceFactor;
 
     public PriceCondition(CompareOperator compareOperator, BigDecimal targetPrice) {
