@@ -3,10 +3,10 @@ package me.caosh.condition.interfaces.facade.impl;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilder;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.trade.EntrustOrderDTO;
+import me.caosh.condition.infrastructure.repository.assembler.ConditionOrderDoAssembler;
 import me.caosh.condition.infrastructure.tunnel.impl.ConditionOrderDoRepository;
 import me.caosh.condition.infrastructure.tunnel.impl.EntrustOrderDoRepository;
 import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;
@@ -46,7 +46,7 @@ public class ConditionOrderQueryFacadeImpl implements ConditionOrderQueryFacade 
     }
 
     private static ConditionOrderDTO assembleDataObjectToDTO(ConditionOrderDO conditionOrderDO) {
-        ConditionOrder conditionOrder = AutoAssemblers.getDefault().disassemble(conditionOrderDO, ConditionOrderBuilder.class).build();
+        ConditionOrder conditionOrder = ConditionOrderDoAssembler.disassemble(conditionOrderDO);
         return AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDTO.class);
     }
 

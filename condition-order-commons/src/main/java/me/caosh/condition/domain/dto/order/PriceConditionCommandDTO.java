@@ -4,7 +4,11 @@ import com.google.common.base.MoreObjects;
 import hbec.intellitrade.condorder.domain.orders.price.PriceConditionFacade;
 import hbec.intellitrade.condorder.domain.orders.price.PriceConditionFacadeBuilder;
 import me.caosh.autoasm.MappedClass;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
@@ -13,14 +17,19 @@ import java.math.BigDecimal;
  * @author caoshuhao@touker.com
  */
 @MappedClass(value = PriceConditionFacade.class, builderClass = PriceConditionFacadeBuilder.class)
-public class PriceConditionDTO implements ConditionDTO {
+public class PriceConditionCommandDTO implements ConditionDTO {
     private static final long serialVersionUID = 1L;
 
+    @NotNull
+    @Range(min = 0, max = 1)
     private Integer compareOperator;
+    @NotNull
+    @DecimalMin("0")
     private BigDecimal targetPrice;
+    @Valid
     private DelayConfirmDTO delayConfirm;
+    @Valid
     private DeviationCtrlDTO deviationCtrl;
-    private Integer delayConfirmedCount;
 
     public Integer getCompareOperator() {
         return compareOperator;
@@ -54,22 +63,13 @@ public class PriceConditionDTO implements ConditionDTO {
         this.deviationCtrl = deviationCtrl;
     }
 
-    public Integer getDelayConfirmedCount() {
-        return delayConfirmedCount;
-    }
-
-    public void setDelayConfirmedCount(Integer delayConfirmedCount) {
-        this.delayConfirmedCount = delayConfirmedCount;
-    }
-
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(PriceConditionDTO.class).omitNullValues()
+        return MoreObjects.toStringHelper(PriceConditionCommandDTO.class).omitNullValues()
                           .add("compareOperator", compareOperator)
                           .add("targetPrice", targetPrice)
                           .add("delayConfirm", delayConfirm)
                           .add("deviationCtrl", deviationCtrl)
-                          .add("delayConfirmedCount", delayConfirmedCount)
                           .toString();
     }
 }

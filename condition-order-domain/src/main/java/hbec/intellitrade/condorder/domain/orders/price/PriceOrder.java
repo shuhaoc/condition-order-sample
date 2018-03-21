@@ -1,7 +1,6 @@
 package hbec.intellitrade.condorder.domain.orders.price;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Optional;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.AbstractSimpleMarketConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
@@ -18,7 +17,6 @@ import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrl;
-import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;
@@ -43,7 +41,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
     /**
      * 组合条件，组合了延迟确认、偏差控制和价格条件等条件
      */
-    private final DecoratedPriceCondition condition;
+    private final PriceConditionFacade condition;
 
     /**
      * 构造价格条件单（最少参数）
@@ -65,14 +63,12 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
              tradeCustomerInfo,
              orderState,
              securityInfo,
-             priceCondition,
+             new PriceConditionFacade(priceCondition, DisabledDelayConfirm.DISABLED, DisabledDeviationCtrl.DISABLED, 0),
              null,
              tradePlan,
              NoneTrackedIndex.NONE,
-             NoneMonitorTimeRange.NONE,
-             DisabledDelayConfirm.DISABLED,
-             null,
-             DisabledDeviationCtrl.DISABLED);
+             NoneMonitorTimeRange.NONE
+        );
     }
 
     /**
@@ -114,24 +110,36 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
               deviationCtrl,
               tradePlan
         );
-        this.condition = new DecoratedPriceCondition(priceCondition,
-                                                     delayConfirm,
-                                                     singleDelayConfirmCount,
-                                                     deviationCtrl);
+        this.condition = new PriceConditionFacade(priceCondition,
+                                                  delayConfirm,
+                                                  deviationCtrl,
+                                                  singleDelayConfirmCount != null ? singleDelayConfirmCount.getConfirmedCount() : 0
+        );
     }
 
+
+    /**
+     * 构造价格条件单（全参数）
+     *
+     * @param orderId           条件单ID
+     * @param tradeCustomerInfo 客户标识信息
+     * @param orderState        条件单状态
+     * @param securityInfo      交易证券信息
+     * @param condition         组合行情条件，包含价格条件、延迟确认、偏差控制等因子
+     * @param expireTime        过期时间，可为空
+     * @param tradePlan         交易计划
+     * @param trackedIndexInfo  跟踪指数信息
+     * @param monitorTimeRange  监控时段
+     */
     public PriceOrder(Long orderId,
                       TradeCustomerInfo tradeCustomerInfo,
                       OrderState orderState,
                       SecurityInfo securityInfo,
-                      DecoratedPriceCondition condition,
+                      PriceConditionFacade condition,
                       LocalDateTime expireTime,
                       BasicTradePlan tradePlan,
                       TrackedIndex trackedIndexInfo,
-                      MonitorTimeRange monitorTimeRange,
-                      DelayConfirm delayConfirm,
-                      SingleDelayConfirmCount singleDelayConfirmCount,
-                      DeviationCtrl deviationCtrl) {
+                      MonitorTimeRange monitorTimeRange) {
         super(orderId,
               tradeCustomerInfo,
               orderState,
@@ -139,31 +147,20 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
               trackedIndexInfo,
               expireTime,
               monitorTimeRange,
-              delayConfirm,
-              deviationCtrl,
+              null,
+              null,
               tradePlan);
         this.condition = condition;
     }
 
     @Override
-    public MarketCondition getCondition() {
+    public PriceConditionFacade getCondition() {
         return condition;
     }
 
     @Override
     public StrategyInfo getStrategyInfo() {
         return NativeStrategyInfo.PRICE;
-    }
-
-    /**
-     * 获取当前延迟确认次数，未开启延迟确认时返回{@link Optional#absent()}
-     * <p>
-     * 构建DTO时调用
-     *
-     * @return 当前延迟确认次数
-     */
-    public Optional<SingleDelayConfirmCount> getDelayConfirmCount() {
-        return condition.getDelayConfirmCount();
     }
 
     @Override
@@ -185,7 +182,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
     @Override
     public void onMarketClosed(LocalDateTime localDateTime) {
         // 盘后清除延迟确认次数
-        condition.reset();
+        condition.resetCounter();
     }
 
     @Override

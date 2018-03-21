@@ -97,16 +97,8 @@ public abstract class AbstractMarketConditionOrder extends AbstractExplicitTradi
         return trackedIndex;
     }
 
-    public DelayConfirm getDelayConfirm() {
-        return delayConfirm;
-    }
-
     public MonitorTimeRange getMonitorTimeRange() {
         return monitorTimeRange;
-    }
-
-    public DeviationCtrl getDeviationCtrl() {
-        return deviationCtrl;
     }
 
     @Override

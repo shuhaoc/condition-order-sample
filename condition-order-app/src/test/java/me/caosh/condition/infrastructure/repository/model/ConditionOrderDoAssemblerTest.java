@@ -7,8 +7,8 @@ import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
-import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilder;
 import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
+import hbec.intellitrade.condorder.domain.orders.price.PriceConditionFacade;
 import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.trackindex.TrackIndexOption;
@@ -28,7 +28,7 @@ import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRangeOption;
 import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
 import hbec.intellitrade.trade.domain.ExchangeType;
-import me.caosh.autoasm.AutoAssemblers;
+import me.caosh.condition.infrastructure.repository.assembler.ConditionOrderDoAssembler;
 import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
@@ -59,19 +59,19 @@ public class ConditionOrderDoAssemblerTest {
                 new TradeCustomerInfo(USER_ID, CUSTOMER_NO),
                 OrderState.ACTIVE,
                 new SecurityInfo(SecurityType.STOCK, SECURITY_CODE, SecurityExchange.SH, SECURITY_NAME),
-                new PriceCondition(CompareOperator.GE, new BigDecimal("9999.00")),
+                new PriceConditionFacade(
+                        new PriceCondition(CompareOperator.GE, new BigDecimal("9999.00")),
+                        new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
+                        new DeviationCtrlInfo(new BigDecimal("1")),
+                        0),
                 LocalDateTime.parse("2018-03-12T15:00:00"),
                 new BasicTradePlan(ExchangeType.SELL, EntrustStrategy.BUY1,
                                    new TradeNumberByAmount(new BigDecimal("10000.00"))),
                 new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"),
                 new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
-                                  new LocalTimeRange(LocalTime.parse("10:00:00"), LocalTime.parse("10:30:00"))),
-                new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
-                null,
-                new DeviationCtrlInfo(new BigDecimal("1"))
-        );
-        ConditionOrderDO conditionOrderDO = AutoAssemblers.getDefault()
-                                                          .assemble(conditionOrder, ConditionOrderDO.class);
+                                  new LocalTimeRange(LocalTime.parse("10:00:00"), LocalTime.parse("10:30:00"))));
+        ConditionOrderDO conditionOrderDO = ConditionOrderDoAssembler.assemble(conditionOrder);
+
         assertEquals(conditionOrderDO.getOrderId().longValue(), ORDER_ID);
         assertEquals(conditionOrderDO.getUserId().intValue(), USER_ID);
         assertEquals(conditionOrderDO.getCustomerNo(), CUSTOMER_NO);
@@ -106,9 +106,8 @@ public class ConditionOrderDoAssemblerTest {
         assertNull(conditionOrderDO.getCreateTime());
         assertNull(conditionOrderDO.getUpdateTime());
 
-        ConditionOrder conditionOrder1 = AutoAssemblers.getDefault()
-                                                       .disassemble(conditionOrderDO, ConditionOrderBuilder.class)
-                                                       .build();
+        ConditionOrder conditionOrder1 = ConditionOrderDoAssembler.disassemble(conditionOrderDO);
         assertEquals(conditionOrder1, conditionOrder);
     }
+
 }

@@ -13,12 +13,14 @@ public class DeviationCtrlBuilder implements ConvertibleBuilder<DeviationCtrl> {
     private DeviationCtrlOption option = DeviationCtrlOption.DISABLED;
     private BigDecimal limitPercent;
 
-    public void setOption(DeviationCtrlOption option) {
+    public DeviationCtrlBuilder setOption(DeviationCtrlOption option) {
         this.option = option;
+        return this;
     }
 
-    public void setLimitPercent(BigDecimal limitPercent) {
+    public DeviationCtrlBuilder setLimitPercent(BigDecimal limitPercent) {
         this.limitPercent = limitPercent;
+        return this;
     }
 
     @Override

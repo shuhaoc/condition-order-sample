@@ -28,13 +28,7 @@ public class ConditionOrderDTO implements Serializable {
     private ConditionDTO condition;
     private String expireTime;
     private TradePlanDTO tradePlan;
-    @FieldMapping(mappedProperty = "condition.delayConfirm")
-    private DelayConfirmDTO delayConfirm;
-    @FieldMapping(mappedProperty = "condition.delayConfirmCount")
-    private DelayConfirmCountDTO delayConfirmCount;
     private MonitorTimeRangeDTO monitorTimeRange;
-    @FieldMapping(mappedProperty = "condition.deviationCtrl")
-    private DeviationCtrlDTO deviationCtrl;
 
     public Long getOrderId() {
         return orderId;
@@ -116,36 +110,12 @@ public class ConditionOrderDTO implements Serializable {
         this.tradePlan = tradePlan;
     }
 
-    public DelayConfirmDTO getDelayConfirm() {
-        return delayConfirm;
-    }
-
-    public void setDelayConfirm(DelayConfirmDTO delayConfirm) {
-        this.delayConfirm = delayConfirm;
-    }
-
-    public DelayConfirmCountDTO getDelayConfirmCount() {
-        return delayConfirmCount;
-    }
-
-    public void setDelayConfirmCount(DelayConfirmCountDTO delayConfirmCount) {
-        this.delayConfirmCount = delayConfirmCount;
-    }
-
     public MonitorTimeRangeDTO getMonitorTimeRange() {
         return monitorTimeRange;
     }
 
     public void setMonitorTimeRange(MonitorTimeRangeDTO monitorTimeRange) {
         this.monitorTimeRange = monitorTimeRange;
-    }
-
-    public DeviationCtrlDTO getDeviationCtrl() {
-        return deviationCtrl;
-    }
-
-    public void setDeviationCtrl(DeviationCtrlDTO deviationCtrl) {
-        this.deviationCtrl = deviationCtrl;
     }
 
     @Override
@@ -161,10 +131,7 @@ public class ConditionOrderDTO implements Serializable {
                           .add("condition", condition)
                           .add("expireTime", expireTime)
                           .add("tradePlan", tradePlan)
-                          .add("delayConfirm", delayConfirm)
-                          .add("delayConfirmCount", delayConfirmCount)
                           .add("monitorTimeRange", monitorTimeRange)
-                          .add("deviationCtrl", deviationCtrl)
                           .toString();
     }
 }

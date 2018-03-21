@@ -14,7 +14,7 @@ public interface DelayConfirmCondition extends DynamicCondition {
      *
      * @return 当前已确认次数
      */
-    int getConfirmedCount();
+    int getDelayConfirmedCount();
 
     /**
      * 重置延迟确认计数器

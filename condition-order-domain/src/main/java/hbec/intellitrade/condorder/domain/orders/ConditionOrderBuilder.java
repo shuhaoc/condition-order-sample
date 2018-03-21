@@ -4,10 +4,7 @@ import hbec.intellitrade.common.security.SecurityInfoBuilder;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfoBuilder;
-import hbec.intellitrade.condorder.domain.delayconfirm.count.DelayConfirmCount;
-import hbec.intellitrade.condorder.domain.delayconfirm.count.SingleDelayConfirmCount;
-import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceCondition;
-import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceConditionBuilder;
+import hbec.intellitrade.condorder.domain.orders.price.PriceConditionFacade;
 import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
@@ -32,12 +29,11 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
     private SecurityInfoBuilder securityInfo = new SecurityInfoBuilder();
     private TrackedIndexInfoBuilder trackedIndex = new TrackedIndexInfoBuilder();
     private StrategyInfoBuilder strategyInfo = new StrategyInfoBuilder();
-    private ConvertibleBuilder<? extends Condition> condition;
+    private Condition condition;
     private LocalDateTime expireTime;
     private TradePlanBuilder tradePlan = new TradePlanBuilder();
     private MonitorTimeRangeBuilder monitorTimeRange = new MonitorTimeRangeBuilder();
     private DelayConfirmBuilder delayConfirm = new DelayConfirmBuilder();
-    private DelayConfirmCount delayConfirmCount;
     private DeviationCtrlBuilder deviationCtrl = new DeviationCtrlBuilder();
 
     public ConditionOrderBuilder setOrderId(Long orderId) {
@@ -85,8 +81,9 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return this;
     }
 
-    public void setCondition(ConvertibleBuilder<? extends Condition> condition) {
+    public ConditionOrderBuilder setCondition(Condition condition) {
         this.condition = condition;
+        return this;
     }
 
     public void setExpireTime(LocalDateTime expireTime) {
@@ -109,11 +106,6 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         this.delayConfirm = delayConfirm;
     }
 
-    public ConditionOrderBuilder setDelayConfirmCount(DelayConfirmCount delayConfirmCount) {
-        this.delayConfirmCount = delayConfirmCount;
-        return this;
-    }
-
     public MonitorTimeRangeBuilder getMonitorTimeRange() {
         return monitorTimeRange;
     }
@@ -130,27 +122,32 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         this.deviationCtrl = deviationCtrl;
     }
 
+    public static class StrategyInfoBuilder {
+        private NativeStrategyInfo strategyType;
+
+        public NativeStrategyInfo getStrategyType() {
+            return strategyType;
+        }
+
+        public void setStrategyType(NativeStrategyInfo strategyType) {
+            this.strategyType = strategyType;
+        }
+    }
+
     @Override
     public ConditionOrder build() {
         StrategyInfo strategyInfo = this.strategyInfo.getStrategyType();
         if (strategyInfo == NativeStrategyInfo.PRICE) {
-            DecoratedPriceCondition decoratedPriceCondition = ((DecoratedPriceConditionBuilder) condition)
-                    .setDelayConfirm(delayConfirm)
-                    .setDelayConfirmCount(delayConfirmCount)
-                    .setDeviationCtrl(deviationCtrl)
-                    .build();
             return new PriceOrder(orderId,
                                   customer.build(),
                                   orderState,
                                   securityInfo.build(),
-                                  decoratedPriceCondition,
+                                  (PriceConditionFacade) condition,
                                   expireTime,
                                   (BasicTradePlan) tradePlan.build(),
                                   trackedIndex.build(),
-                                  monitorTimeRange.build(),
-                                  delayConfirm.build(),
-                                  (SingleDelayConfirmCount) delayConfirmCount,
-                                  deviationCtrl.build());
+                                  monitorTimeRange.build()
+            );
 //        } else if (strategyInfo == NativeStrategyInfo.TURN_POINT) {
 //            return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,
 //                                      null, (BasicTradePlan) tradePlan, orderState);
@@ -168,18 +165,5 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
 //                                     orderState);
         }
         throw new IllegalArgumentException("strategyInfo=" + strategyInfo);
-    }
-
-    public static class StrategyInfoBuilder {
-        private NativeStrategyInfo strategyType;
-
-        public NativeStrategyInfo getStrategyType() {
-            return strategyType;
-        }
-
-        public StrategyInfoBuilder setStrategyType(NativeStrategyInfo strategyType) {
-            this.strategyType = strategyType;
-            return this;
-        }
     }
 }

@@ -165,16 +165,17 @@ public class PriceOrderTest {
         ExchangeType exchangeType = ExchangeType.BUY;
 
         PriceOrder priceOrder = new PriceOrder(123L, tradeCustomerInfo, OrderState.ACTIVE, pfyh,
-                                               new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
+                                               new PriceConditionFacade(
+                                                       new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
+                                                       DisabledDelayConfirm.DISABLED,
+                                                       DisabledDeviationCtrl.DISABLED,
+                                                       0),
                                                LocalDateTime.parse("2018-03-06T10:00:00"),
                                                new BasicTradePlan(exchangeType,
                                                                   EntrustStrategy.CURRENT_PRICE,
                                                                   new TradeNumberDirect(100)),
                                                NoneTrackedIndex.NONE,
-                                               NoneMonitorTimeRange.NONE,
-                                               DisabledDelayConfirm.DISABLED,
-                                               null,
-                                               DisabledDeviationCtrl.DISABLED
+                                               NoneMonitorTimeRange.NONE
         );
 
         assertEquals(priceOrder.onTimeTick(LocalDateTime.parse("2018-03-06T09:59:59")), Signals.none());
@@ -200,23 +201,24 @@ public class PriceOrderTest {
                                                                    new TradeNumberDirect(100))
         );
 
-        assertEquals(priceOrder1.getDelayConfirm(), DisabledDelayConfirm.DISABLED);
+        assertEquals(priceOrder1.getCondition().getDelayConfirm(), DisabledDelayConfirm.DISABLED);
 
         PriceOrder priceOrder2 = new PriceOrder(123L, tradeCustomerInfo,
                                                 OrderState.ACTIVE,
                                                 pfyh,
-                                                new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
+                                                new PriceConditionFacade(
+                                                        new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
+                                                        new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
+                                                        DisabledDeviationCtrl.DISABLED,
+                                                        0),
                                                 LocalDateTime.now().plusDays(1),
                                                 new BasicTradePlan(ExchangeType.BUY,
                                                                    EntrustStrategy.CURRENT_PRICE,
                                                                    new TradeNumberDirect(100)),
                                                 NoneTrackedIndex.NONE,
-                                                NoneMonitorTimeRange.NONE,
-                                                new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
-                                                null,
-                                                DisabledDeviationCtrl.DISABLED);
+                                                NoneMonitorTimeRange.NONE);
 
-        assertEquals(priceOrder2.getDelayConfirm(),
+        assertEquals(priceOrder2.getCondition().getDelayConfirm(),
                      new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3));
     }
 
@@ -228,16 +230,18 @@ public class PriceOrderTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "PFYH"),
-                                               new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
+                                               new PriceConditionFacade(
+                                                       new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
+
+                                                       new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
+                                                       DisabledDeviationCtrl.DISABLED,
+                                                       0),
                                                LocalDateTime.now().plusDays(1),
                                                new BasicTradePlan(ExchangeType.BUY,
                                                                   EntrustStrategy.CURRENT_PRICE,
                                                                   new TradeNumberDirect(100)),
                                                NoneTrackedIndex.NONE,
-                                               NoneMonitorTimeRange.NONE,
-                                               new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
-                                               null,
-                                               DisabledDeviationCtrl.DISABLED);
+                                               NoneMonitorTimeRange.NONE);
 
         assertEquals(priceOrder.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("13.00"))), Signals.none());
         assertTrue(priceOrder.isDirty());
@@ -263,7 +267,11 @@ public class PriceOrderTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "PFYH"),
-                                               new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
+                                               new PriceConditionFacade(
+                                                       new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
+                                                       DisabledDelayConfirm.DISABLED,
+                                                       DisabledDeviationCtrl.DISABLED,
+                                                       0),
                                                LocalDateTime.now().plusDays(1),
                                                new BasicTradePlan(ExchangeType.BUY,
                                                                   EntrustStrategy.CURRENT_PRICE,
@@ -271,10 +279,7 @@ public class PriceOrderTest {
                                                NoneTrackedIndex.NONE,
                                                new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                                                  new LocalTimeRange(LocalTime.parse("10:00:00"),
-                                                                                    LocalTime.parse("11:00:00"))),
-                                               DisabledDelayConfirm.DISABLED,
-                                               null,
-                                               DisabledDeviationCtrl.DISABLED);
+                                                                                    LocalTime.parse("11:00:00"))));
 
         RealTimeMarket realTimeMarket1 = MockMarkets.builderWithCurrentPrice(new BigDecimal("12.99"))
                                                     .setArriveTime(LocalDateTime.parse("2018-03-12T09:30:00"))
@@ -295,16 +300,17 @@ public class PriceOrderTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "PFYH"),
-                                               new PriceCondition(CompareOperator.LE, new BigDecimal("10.00")),
+                                               new PriceConditionFacade(
+                                                       new PriceCondition(CompareOperator.LE, new BigDecimal("10.00")),
+                                                       DisabledDelayConfirm.DISABLED,
+                                                       new DeviationCtrlInfo(new BigDecimal("1")),
+                                                       0),
                                                LocalDateTime.now().plusDays(1),
                                                new BasicTradePlan(ExchangeType.BUY,
                                                                   EntrustStrategy.CURRENT_PRICE,
                                                                   new TradeNumberDirect(100)),
                                                NoneTrackedIndex.NONE,
-                                               NoneMonitorTimeRange.NONE,
-                                               DisabledDelayConfirm.DISABLED,
-                                               null,
-                                               new DeviationCtrlInfo(new BigDecimal("1")));
+                                               NoneMonitorTimeRange.NONE);
 
         System.out.println(priceOrder);
 
@@ -323,16 +329,17 @@ public class PriceOrderTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "PFYH"),
-                                               new PriceCondition(CompareOperator.LE, new BigDecimal("10.00")),
+                                               new PriceConditionFacade(
+                                                       new PriceCondition(CompareOperator.LE, new BigDecimal("10.00")),
+                                                       new DelayConfirmInfo(DelayConfirmOption.CONTINUOUS, 2),
+                                                       new DeviationCtrlInfo(new BigDecimal("1")),
+                                                       0),
                                                LocalDateTime.now().plusDays(1),
                                                new BasicTradePlan(ExchangeType.BUY,
                                                                   EntrustStrategy.CURRENT_PRICE,
                                                                   new TradeNumberDirect(100)),
                                                NoneTrackedIndex.NONE,
-                                               NoneMonitorTimeRange.NONE,
-                                               new DelayConfirmInfo(DelayConfirmOption.CONTINUOUS, 2),
-                                               null,
-                                               new DeviationCtrlInfo(new BigDecimal("1")));
+                                               NoneMonitorTimeRange.NONE);
 
         System.out.println(priceOrder);
 
@@ -358,16 +365,17 @@ public class PriceOrderTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "PFYH"),
-                                               new PriceCondition(CompareOperator.LE, new BigDecimal("10.00")),
+                                               new PriceConditionFacade(
+                                                       new PriceCondition(CompareOperator.LE, new BigDecimal("10.00")),
+                                                       new DelayConfirmInfo(DelayConfirmOption.CONTINUOUS, 2),
+                                                       new DeviationCtrlInfo(new BigDecimal("1")),
+                                                       0),
                                                LocalDateTime.now().plusDays(1),
                                                new BasicTradePlan(ExchangeType.BUY,
                                                                   EntrustStrategy.CURRENT_PRICE,
                                                                   new TradeNumberDirect(100)),
                                                new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"),
-                                               NoneMonitorTimeRange.NONE,
-                                               new DelayConfirmInfo(DelayConfirmOption.CONTINUOUS, 2),
-                                               null,
-                                               new DeviationCtrlInfo(new BigDecimal("1")));
+                                               NoneMonitorTimeRange.NONE);
 
         assertEquals(priceOrder.getTrackIndexOption(), TrackIndexOption.ENABLED);
         assertEquals(priceOrder.getTrackedIndex(), new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"));

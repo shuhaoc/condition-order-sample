@@ -25,7 +25,7 @@ public abstract class AbstractDelayConfirmCondition implements DelayConfirmCondi
     }
 
     @Override
-    public int getConfirmedCount() {
+    public int getDelayConfirmedCount() {
         return counter.getConfirmedCount();
     }
 

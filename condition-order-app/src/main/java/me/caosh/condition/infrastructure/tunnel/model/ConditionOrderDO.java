@@ -63,9 +63,9 @@ public class ConditionOrderDO {
     private Integer entrustMethod;
     @FieldMapping(mappedProperty = "tradePlan.tradeNumber.number")
     private BigDecimal entrustAmount;
-    @FieldMapping(mappedProperty = "delayConfirm.option")
+    @FieldMapping(mappedProperty = "condition.delayConfirm.option")
     private Integer delayConfirmOption = 0;
-    @FieldMapping(mappedProperty = "delayConfirm.confirmTimes")
+    @FieldMapping(mappedProperty = "condition.delayConfirm.confirmTimes")
     private Integer delayConfirmTimes = 0;
     @FieldMapping(mappedProperty = "monitorTimeRange.option")
     private Integer monitorTimeRangeOption = 0;
@@ -77,9 +77,9 @@ public class ConditionOrderDO {
     private Date beginTime = LocalTime.MIDNIGHT.toDateTimeToday().toDate();
     @FieldMapping(mappedProperty = "monitorTimeRange.localTimeRange.endTime")
     private Date endTime = LocalTime.MIDNIGHT.toDateTimeToday().toDate();
-    @FieldMapping(mappedProperty = "deviationCtrl.option")
+    @FieldMapping(mappedProperty = "condition.deviationCtrl.option")
     private Integer deviationCtrlOption = 0;
-    @FieldMapping(mappedProperty = "deviationCtrl.limitPercent")
+    @FieldMapping(mappedProperty = "condition.deviationCtrl.limitPercent")
     private BigDecimal deviationLimitPercent = BigDecimal.ZERO;
     private Timestamp createTime;
     private Timestamp updateTime;

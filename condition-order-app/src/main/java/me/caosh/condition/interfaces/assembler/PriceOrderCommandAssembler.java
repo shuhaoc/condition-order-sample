@@ -21,14 +21,14 @@ public class PriceOrderCommandAssembler {
                                                                      .disassemble(tradeCustomerInfo,
                                                                                   TradeCustomerInfoBuilder.class);
 
-        return AutoAssemblers.getDefault()
-                             .useBuilder(new PriceOrderBuilder())
-                             .disassemble(command)
-                             .getConvertibleBuilder()
-                             .setOrderId(orderId)
-                             .setCustomer(customerInfoBuilder)
-                             .setOrderState(OrderState.ACTIVE)
-                             .build();
+        return (PriceOrder) AutoAssemblers.getDefault()
+                                          .useBuilder(new PriceOrderBuilder())
+                                          .disassemble(command)
+                                          .getConvertibleBuilder()
+                                          .setOrderId(orderId)
+                                          .setCustomer(customerInfoBuilder)
+                                          .setOrderState(OrderState.ACTIVE)
+                                          .build();
     }
 
     public static PriceOrder mergePriceOrder(PriceOrder oldPriceOrder, PriceOrderUpdateCommand command) {
@@ -39,14 +39,14 @@ public class PriceOrderCommandAssembler {
                                                                 .disassemble(oldPriceOrder.getSecurityInfo(),
                                                                              SecurityInfoBuilder.class);
 
-        return AutoAssemblers.getDefault().useBuilder(new PriceOrderBuilder())
-                             .disassemble(command)
-                             .getConvertibleBuilder()
-                             .setOrderId(oldPriceOrder.getOrderId())
-                             .setCustomer(customerInfoBuilder)
-                             .setSecurityInfo(securityInfoBuilder)
-                             .setOrderState(OrderState.ACTIVE)
-                             .build();
+        return (PriceOrder) AutoAssemblers.getDefault().useBuilder(new PriceOrderBuilder())
+                                          .disassemble(command)
+                                          .getConvertibleBuilder()
+                                          .setOrderId(oldPriceOrder.getOrderId())
+                                          .setCustomer(customerInfoBuilder)
+                                          .setSecurityInfo(securityInfoBuilder)
+                                          .setOrderState(OrderState.ACTIVE)
+                                          .build();
     }
 
     private PriceOrderCommandAssembler() {

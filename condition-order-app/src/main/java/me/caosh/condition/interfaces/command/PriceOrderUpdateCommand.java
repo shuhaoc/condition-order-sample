@@ -2,7 +2,9 @@ package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.condition.domain.dto.market.TrackedIndexDTO;
-import me.caosh.condition.domain.dto.order.*;
+import me.caosh.condition.domain.dto.order.MonitorTimeRangeDTO;
+import me.caosh.condition.domain.dto.order.PriceConditionCommandDTO;
+import me.caosh.condition.domain.dto.order.TradePlanDTO;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.Valid;
@@ -24,7 +26,7 @@ public class PriceOrderUpdateCommand implements Serializable {
     private TrackedIndexDTO trackedIndexInfo;
 
     @NotNull
-    private PriceConditionDTO priceCondition;
+    private PriceConditionCommandDTO condition;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Future
@@ -34,13 +36,7 @@ public class PriceOrderUpdateCommand implements Serializable {
     private TradePlanDTO tradePlan;
 
     @Valid
-    private DelayConfirmDTO delayConfirm;
-
-    @Valid
     private MonitorTimeRangeDTO monitorTimeRange;
-
-    @Valid
-    private DeviationCtrlDTO deviationCtrl;
 
     public Long getOrderId() {
         return orderId;
@@ -58,12 +54,12 @@ public class PriceOrderUpdateCommand implements Serializable {
         this.trackedIndexInfo = trackedIndexInfo;
     }
 
-    public PriceConditionDTO getPriceCondition() {
-        return priceCondition;
+    public PriceConditionCommandDTO getCondition() {
+        return condition;
     }
 
-    public void setPriceCondition(PriceConditionDTO priceCondition) {
-        this.priceCondition = priceCondition;
+    public void setCondition(PriceConditionCommandDTO condition) {
+        this.condition = condition;
     }
 
     public Date getExpireTime() {
@@ -82,14 +78,6 @@ public class PriceOrderUpdateCommand implements Serializable {
         this.tradePlan = tradePlan;
     }
 
-    public DelayConfirmDTO getDelayConfirm() {
-        return delayConfirm;
-    }
-
-    public void setDelayConfirm(DelayConfirmDTO delayConfirm) {
-        this.delayConfirm = delayConfirm;
-    }
-
     public MonitorTimeRangeDTO getMonitorTimeRange() {
         return monitorTimeRange;
     }
@@ -98,25 +86,15 @@ public class PriceOrderUpdateCommand implements Serializable {
         this.monitorTimeRange = monitorTimeRange;
     }
 
-    public DeviationCtrlDTO getDeviationCtrl() {
-        return deviationCtrl;
-    }
-
-    public void setDeviationCtrl(DeviationCtrlDTO deviationCtrl) {
-        this.deviationCtrl = deviationCtrl;
-    }
-
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(PriceOrderUpdateCommand.class).omitNullValues()
                           .add("orderId", orderId)
                           .add("trackedIndexInfo", trackedIndexInfo)
-                          .add("priceCondition", priceCondition)
+                          .add("condition", condition)
                           .add("expireTime", expireTime)
                           .add("tradePlan", tradePlan)
-                          .add("delayConfirm", delayConfirm)
                           .add("monitorTimeRange", monitorTimeRange)
-                          .add("deviationCtrl", deviationCtrl)
                           .toString();
     }
 }

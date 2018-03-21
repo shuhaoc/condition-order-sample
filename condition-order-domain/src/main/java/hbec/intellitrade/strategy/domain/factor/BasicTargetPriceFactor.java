@@ -1,5 +1,7 @@
 package hbec.intellitrade.strategy.domain.factor;
 
+import com.google.common.base.Preconditions;
+
 import java.math.BigDecimal;
 
 /**
@@ -19,6 +21,9 @@ public class BasicTargetPriceFactor extends AbstractStatelessTargetPriceFactor {
      * @param targetPrice     目标价格，精度不限
      */
     public BasicTargetPriceFactor(CompareOperator compareOperator, BigDecimal targetPrice) {
+        Preconditions.checkNotNull(compareOperator, "compareOperator cannot be null");
+        Preconditions.checkNotNull(targetPrice, "targetPrice cannot be null");
+
         this.compareOperator = compareOperator;
         this.targetPrice = targetPrice;
     }

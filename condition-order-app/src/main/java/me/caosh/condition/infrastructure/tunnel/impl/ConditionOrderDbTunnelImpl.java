@@ -4,8 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilder;
-import me.caosh.autoasm.AutoAssemblers;
+import me.caosh.condition.infrastructure.repository.assembler.ConditionOrderDoAssembler;
 import me.caosh.condition.infrastructure.tunnel.ConditionOrderDbTunnel;
 import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;
 import org.springframework.stereotype.Repository;
@@ -26,7 +25,7 @@ public class ConditionOrderDbTunnelImpl implements ConditionOrderDbTunnel {
 
     @Override
     public void save(ConditionOrder conditionOrder) {
-        ConditionOrderDO conditionOrderDO = AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDO.class);
+        ConditionOrderDO conditionOrderDO = ConditionOrderDoAssembler.assemble(conditionOrder);
         conditionOrderDoRepository.save(conditionOrderDO);
     }
 
@@ -45,9 +44,7 @@ public class ConditionOrderDbTunnelImpl implements ConditionOrderDbTunnel {
         if (conditionOrderDO == null) {
             return Optional.absent();
         }
-        ConditionOrder conditionOrder = AutoAssemblers.getDefault()
-                .disassemble(conditionOrderDO, ConditionOrderBuilder.class)
-                .build();
+        ConditionOrder conditionOrder = ConditionOrderDoAssembler.disassemble(conditionOrderDO);
         return Optional.of(conditionOrder);
     }
 
@@ -57,7 +54,7 @@ public class ConditionOrderDbTunnelImpl implements ConditionOrderDbTunnel {
         return Lists.transform(conditionOrderDOs, new Function<ConditionOrderDO, ConditionOrder>() {
             @Override
             public ConditionOrder apply(ConditionOrderDO conditionOrderDO) {
-                return AutoAssemblers.getDefault().disassemble(conditionOrderDO, ConditionOrderBuilder.class).build();
+                return ConditionOrderDoAssembler.disassemble(conditionOrderDO);
             }
         });
     }
