@@ -141,11 +141,12 @@ public class StrategyContainer implements MarketClosedEventListener {
                     if (mutableStrategy.isPersistentPropertyDirty()) {
                         strategyContext.markDelaySync();
                         logger.info("Mark delay sync, strategy={}", strategyContext.getStrategy());
-                        // 清除脏标志，下次动态属性变更时再标记
-                        mutableStrategy.clearDirty();
                     }
                 }
-                dirtyFlag.clearDirty();
+                // 清除脏标志，下次动态属性变更时再标记
+                if (dirtyFlag.isDirty()) {
+                    dirtyFlag.clearDirty();
+                }
             }
         }
     }
