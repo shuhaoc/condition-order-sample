@@ -70,14 +70,16 @@ public class PriceConditionFacade implements MarketConditionFacade, DynamicCondi
     public boolean isDirty() {
         // 仅延迟确认条件会产生脏标志
         if (decoratedCondition instanceof DelayConfirmCondition) {
-            return ((DelayConfirmCondition) decoratedCondition).isDirty();
+            return ((DynamicCondition) decoratedCondition).isDirty();
         }
         return false;
     }
 
     @Override
     public void clearDirty() {
-        ((DynamicCondition) decoratedCondition).clearDirty();
+        if (decoratedCondition instanceof DelayConfirmCondition) {
+            ((DynamicCondition) decoratedCondition).clearDirty();
+        }
     }
 
     @Override

@@ -16,12 +16,11 @@ import java.math.BigDecimal;
  * @author caoshuhao@touker.com
  * @date 2018/1/28
  */
-public class EnabledDeviationCtrlCondition implements DeviationCtrlCondition, PredictableMarketCondition {
-    private final PredictableMarketCondition predictableMarketCondition;
+public class DeviationCtrlConditionImpl implements DeviationCtrlCondition, PredictableMarketCondition {
     private final BigDecimal limitPercent;
+    private final PredictableMarketCondition predictableMarketCondition;
 
-    public EnabledDeviationCtrlCondition(PredictableMarketCondition predictableMarketCondition,
-                                         BigDecimal limitPercent) {
+    public DeviationCtrlConditionImpl(BigDecimal limitPercent, PredictableMarketCondition predictableMarketCondition) {
         this.predictableMarketCondition = predictableMarketCondition;
         this.limitPercent = limitPercent;
     }
@@ -78,7 +77,7 @@ public class EnabledDeviationCtrlCondition implements DeviationCtrlCondition, Pr
             return false;
         }
 
-        EnabledDeviationCtrlCondition that = (EnabledDeviationCtrlCondition) o;
+        DeviationCtrlConditionImpl that = (DeviationCtrlConditionImpl) o;
 
         if (!predictableMarketCondition.equals(that.predictableMarketCondition)) {
             return false;
@@ -95,7 +94,7 @@ public class EnabledDeviationCtrlCondition implements DeviationCtrlCondition, Pr
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(EnabledDeviationCtrlCondition.class).omitNullValues()
+        return MoreObjects.toStringHelper(DeviationCtrlConditionImpl.class).omitNullValues()
                           .add("limitPercent", limitPercent)
                           .add("predictableMarketCondition", predictableMarketCondition)
                           .toString();

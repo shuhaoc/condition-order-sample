@@ -19,9 +19,9 @@ import static org.testng.Assert.assertEquals;
 public class DeviationCtrlConditionTest {
     @Test
     public void testPriceCondition() throws Exception {
-        EnabledDeviationCtrlCondition deviationCtrlCondition = new EnabledDeviationCtrlCondition(
-                new PriceCondition(CompareOperator.GE, new BigDecimal("10.00")),
-                new BigDecimal(1));
+        DeviationCtrlConditionImpl deviationCtrlCondition = new DeviationCtrlConditionImpl(
+                new BigDecimal(1), new PriceCondition(CompareOperator.GE, new BigDecimal("10.00"))
+        );
 
         TradeSignal tradeSignal1 = deviationCtrlCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal(
                 "9.99")));

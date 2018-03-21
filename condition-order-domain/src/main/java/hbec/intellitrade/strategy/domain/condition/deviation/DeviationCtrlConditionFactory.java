@@ -18,7 +18,7 @@ public enum DeviationCtrlConditionFactory {
             return marketCondition;
         } else {
             DeviationCtrlInfo param = (DeviationCtrlInfo) deviationCtrl;
-            return new EnabledDeviationCtrlCondition(marketCondition, param.getLimitPercent());
+            return new DeviationCtrlConditionImpl(param.getLimitPercent(), marketCondition);
         }
     }
 }

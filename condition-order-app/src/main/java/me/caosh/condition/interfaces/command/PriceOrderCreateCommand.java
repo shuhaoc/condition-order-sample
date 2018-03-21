@@ -28,6 +28,7 @@ public class PriceOrderCreateCommand implements Serializable {
     private TrackedIndexDTO trackedIndex;
 
     @NotNull
+    @Valid
     private PriceConditionCommandDTO condition;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -35,6 +36,7 @@ public class PriceOrderCreateCommand implements Serializable {
     private Date expireTime;
 
     @NotNull
+    @Valid
     private TradePlanDTO tradePlan;
 
     @Valid
