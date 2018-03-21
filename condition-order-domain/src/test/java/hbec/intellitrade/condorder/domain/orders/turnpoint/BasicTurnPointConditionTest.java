@@ -12,12 +12,12 @@ import static org.testng.Assert.assertTrue;
 /**
  * Created by caosh on 2017/8/19.
  */
-public class TurnPointConditionTest {
+public class BasicTurnPointConditionTest {
     @Test
     public void testTurnUp() throws Exception {
-        TurnPointCondition turnPointCondition = new TurnPointCondition(CompareOperator.LE,
-                                                                       BigDecimal.valueOf(11),
-                                                                       BigDecimal.valueOf(1));
+        BasicTurnPointCondition turnPointCondition = new BasicTurnPointCondition(CompareOperator.LE,
+                                                                                 BigDecimal.valueOf(11),
+                                                                                 BigDecimal.valueOf(1));
         assertFalse(turnPointCondition.getTargetPriceFactor().apply(new BigDecimal("10.01")));
         assertTrue(turnPointCondition.isDirty());
         turnPointCondition.clearDirty();
