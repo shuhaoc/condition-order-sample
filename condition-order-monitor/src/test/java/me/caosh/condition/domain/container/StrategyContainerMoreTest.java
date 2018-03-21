@@ -4,7 +4,7 @@ import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
-import hbec.intellitrade.condorder.domain.orders.turnpoint.BasicTurnPointCondition;
+import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointCondition;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
@@ -79,10 +79,10 @@ public class StrategyContainerMoreTest {
         StrategyContainer container = new StrategyContainer(new StrategyContextConfig(1, 1),
                 NopStrategyWriter.INSTANCE);
         TestTurnUpStrategy testTurnUpStrategy = new TestTurnUpStrategy(1, MARKET_ID,
-                                                                       new BasicTurnPointCondition(CompareOperator.LE,
-                                                                                                   new BigDecimal(
+                                                                       new TurnPointCondition(CompareOperator.LE,
+                                                                                              new BigDecimal(
                                                                                                            "10.00"),
-                                                                                                   new BigDecimal("1.00")));
+                                                                                              new BigDecimal("1.00")));
         container.add(testTurnUpStrategy);
 
         RealTimeMarket realTimeMarket1 = MockMarkets.withCurrentPrice(new BigDecimal("9.00"));

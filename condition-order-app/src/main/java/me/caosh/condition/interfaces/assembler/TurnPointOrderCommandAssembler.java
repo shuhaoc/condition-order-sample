@@ -6,7 +6,7 @@ import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
-import hbec.intellitrade.condorder.domain.orders.turnpoint.BasicTurnPointCondition;
+import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointCondition;
 import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointOrder;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
@@ -29,9 +29,9 @@ public class TurnPointOrderCommandAssembler {
         SecurityExchange securityExchange = SecurityExchange.valueOf(command.getSecurityExchange());
         SecurityInfo securityInfo = new SecurityInfo(securityType, command.getSecurityCode(), securityExchange,
                 command.getSecurityName());
-        BasicTurnPointCondition turnPointCondition = new BasicTurnPointCondition(CompareOperator.LE,
-                                                                                 command.getBreakPrice(),
-                                                                                 command.getTurnUpPercent());
+        TurnPointCondition turnPointCondition = new TurnPointCondition(CompareOperator.LE,
+                                                                       command.getBreakPrice(),
+                                                                       command.getTurnUpPercent());
         EntrustStrategy entrustStrategy = ValuedEnumUtil.valueOf(command.getEntrustStrategy(), EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
@@ -42,9 +42,9 @@ public class TurnPointOrderCommandAssembler {
 
     public static TurnPointOrder merge(TurnPointOrder oldOrder, TurnUpBuyOrderUpdateCommand command) {
         OrderState orderState = OrderState.ACTIVE;
-        BasicTurnPointCondition turnPointCondition = new BasicTurnPointCondition(CompareOperator.LE,
-                                                                                 command.getBreakPrice(),
-                                                                                 command.getTurnUpPercent());
+        TurnPointCondition turnPointCondition = new TurnPointCondition(CompareOperator.LE,
+                                                                       command.getBreakPrice(),
+                                                                       command.getTurnUpPercent());
 //        if (turnPointCondition.isNeedSwap(oldOrder.getTurnPointCondition())) {
 //            turnPointCondition.swap(oldOrder.getTurnPointCondition());
 //        }

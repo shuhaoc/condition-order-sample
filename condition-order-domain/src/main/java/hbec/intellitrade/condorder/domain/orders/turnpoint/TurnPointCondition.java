@@ -14,30 +14,30 @@ import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
 import java.math.BigDecimal;
 
 /**
- * 基本的拐点条件，不包含踩线条件
+ * 拐点条件
  *
  * @author caosh/caoshuhao@touker.com
  * @date 2018/1/30
  */
-public class BasicTurnPointCondition extends AbstractMarketCondition implements DynamicCondition {
+public class TurnPointCondition extends AbstractMarketCondition implements DynamicCondition {
     private final InflexionFactor inflexionFactor;
     /**
      * 底线价，可以为空
      */
     private final BigDecimal baselinePrice;
 
-    public BasicTurnPointCondition(CompareOperator compareOperator,
-                                   BigDecimal breakPrice,
-                                   BigDecimal turnBackPercent) {
+    public TurnPointCondition(CompareOperator compareOperator,
+                              BigDecimal breakPrice,
+                              BigDecimal turnBackPercent) {
         this(compareOperator, breakPrice, turnBackPercent, null, false, null);
     }
 
-    public BasicTurnPointCondition(CompareOperator compareOperator,
-                                   BigDecimal breakPrice,
-                                   BigDecimal turnBackPercent,
-                                   BigDecimal baselinePrice,
-                                   boolean broken,
-                                   BigDecimal extremePrice) {
+    public TurnPointCondition(CompareOperator compareOperator,
+                              BigDecimal breakPrice,
+                              BigDecimal turnBackPercent,
+                              BigDecimal baselinePrice,
+                              boolean broken,
+                              BigDecimal extremePrice) {
         if (compareOperator == CompareOperator.LE) {
             Preconditions.checkArgument(turnBackPercent.compareTo(BigDecimal.ZERO) > 0,
                                         "Turn up percent should be greater than 0");
@@ -99,7 +99,7 @@ public class BasicTurnPointCondition extends AbstractMarketCondition implements 
             return false;
         }
 
-        BasicTurnPointCondition that = (BasicTurnPointCondition) o;
+        TurnPointCondition that = (TurnPointCondition) o;
 
         return inflexionFactor.equals(that.inflexionFactor);
     }
@@ -111,7 +111,7 @@ public class BasicTurnPointCondition extends AbstractMarketCondition implements 
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(BasicTurnPointCondition.class).omitNullValues()
+        return MoreObjects.toStringHelper(TurnPointCondition.class).omitNullValues()
                           .addValue(inflexionFactor)
                           .toString();
     }

@@ -4,7 +4,7 @@ import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.condorder.domain.OrderState;
-import hbec.intellitrade.condorder.domain.orders.turnpoint.BasicTurnPointCondition;
+import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointCondition;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import hbec.intellitrade.strategy.domain.MutableStrategy;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
@@ -20,10 +20,10 @@ import org.joda.time.LocalDateTime;
 public class TestTurnUpStrategy implements MarketDrivenStrategy, TimeDrivenStrategy, MutableStrategy {
     private final int strategyId;
     private final MarketID marketID;
-    private final BasicTurnPointCondition turnPointCondition;
+    private final TurnPointCondition turnPointCondition;
     private OrderState orderState = OrderState.ACTIVE;
 
-    public TestTurnUpStrategy(int strategyId, MarketID marketID, BasicTurnPointCondition turnPointCondition) {
+    public TestTurnUpStrategy(int strategyId, MarketID marketID, TurnPointCondition turnPointCondition) {
         this.strategyId = strategyId;
         this.marketID = marketID;
         this.turnPointCondition = turnPointCondition;

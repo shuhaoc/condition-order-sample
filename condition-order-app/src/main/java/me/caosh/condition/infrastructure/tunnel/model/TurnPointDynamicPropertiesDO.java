@@ -1,7 +1,7 @@
 package me.caosh.condition.infrastructure.tunnel.model;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.condorder.domain.orders.turnpoint.BasicTurnPointCondition;
+import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointCondition;
 import me.caosh.autoasm.MappedClass;
 
 import java.math.BigDecimal;
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 /**
  * Created by caosh on 2017/8/19.
  */
-@MappedClass(BasicTurnPointCondition.class)
+@MappedClass(TurnPointCondition.class)
 public class TurnPointDynamicPropertiesDO implements DynamicPropertiesDO {
     private Boolean broken;
     private BigDecimal lowestPrice;

@@ -7,12 +7,12 @@ import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
  * @date 2018/3/21
  */
 public class TurnPointConditionFacade implements DynamicCondition {
-    private final BasicTurnPointCondition basicTurnPointCondition;
+    private final TurnPointCondition basicTurnPointCondition;
     private final CrossBaselineCondition crossBaselineCondition;
 
-    public TurnPointConditionFacade(BasicTurnPointCondition basicTurnPointCondition,
+    public TurnPointConditionFacade(TurnPointCondition turnPointCondition,
                                     CrossBaselineCondition crossBaselineCondition) {
-        this.basicTurnPointCondition = basicTurnPointCondition;
+        this.basicTurnPointCondition = turnPointCondition;
         this.crossBaselineCondition = crossBaselineCondition;
     }
 
