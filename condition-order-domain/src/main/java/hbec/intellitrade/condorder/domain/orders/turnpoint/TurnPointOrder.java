@@ -21,13 +21,13 @@ import org.joda.time.LocalDateTime;
  * @date 2017/8/19
  */
 public class TurnPointOrder extends AbstractSimpleMarketConditionOrder {
-    private final TurnPointCondition turnPointCondition;
+    private final BasicTurnPointCondition turnPointCondition;
 
     public TurnPointOrder(Long orderId,
                           TradeCustomerInfo tradeCustomerInfo,
                           OrderState orderState,
                           SecurityInfo securityInfo,
-                          TurnPointCondition turnPointCondition,
+                          BasicTurnPointCondition turnPointCondition,
                           LocalDateTime expireTime,
                           BasicTradePlan tradePlan) {
         super(orderId,
@@ -43,7 +43,7 @@ public class TurnPointOrder extends AbstractSimpleMarketConditionOrder {
         this.turnPointCondition = turnPointCondition;
     }
 
-    public TurnPointCondition getTurnPointCondition() {
+    public BasicTurnPointCondition getTurnPointCondition() {
         return turnPointCondition;
     }
 

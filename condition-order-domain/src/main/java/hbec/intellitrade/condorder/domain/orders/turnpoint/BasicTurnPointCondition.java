@@ -3,7 +3,7 @@ package hbec.intellitrade.condorder.domain.orders.turnpoint;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import hbec.intellitrade.strategy.domain.condition.AbstractBasicMarketCondition;
+import hbec.intellitrade.strategy.domain.condition.AbstractMarketCondition;
 import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
 import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
@@ -14,12 +14,12 @@ import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
 import java.math.BigDecimal;
 
 /**
- * 拐点条件
+ * 基本的拐点条件，不包含踩线条件
  *
  * @author caosh/caoshuhao@touker.com
  * @date 2018/1/30
  */
-public class BasicTurnPointCondition extends AbstractBasicMarketCondition implements DynamicCondition {
+public class BasicTurnPointCondition extends AbstractMarketCondition implements DynamicCondition {
     private final InflexionFactor inflexionFactor;
     /**
      * 底线价，可以为空
