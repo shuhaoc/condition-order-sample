@@ -29,6 +29,10 @@ public class ConditionOrderDTO implements Serializable {
     private String expireTime;
     private TradePlanDTO tradePlan;
     private MonitorTimeRangeDTO monitorTimeRange;
+    @FieldMapping(mappedProperty = "condition.delayConfirm")
+    private DelayConfirmDTO delayConfirm;
+    @FieldMapping(mappedProperty = "condition.deviationCtrl")
+    private DeviationCtrlDTO deviationCtrl;
 
     public Long getOrderId() {
         return orderId;
@@ -118,6 +122,22 @@ public class ConditionOrderDTO implements Serializable {
         this.monitorTimeRange = monitorTimeRange;
     }
 
+    public DelayConfirmDTO getDelayConfirm() {
+        return delayConfirm;
+    }
+
+    public void setDelayConfirm(DelayConfirmDTO delayConfirm) {
+        this.delayConfirm = delayConfirm;
+    }
+
+    public DeviationCtrlDTO getDeviationCtrl() {
+        return deviationCtrl;
+    }
+
+    public void setDeviationCtrl(DeviationCtrlDTO deviationCtrl) {
+        this.deviationCtrl = deviationCtrl;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(ConditionOrderDTO.class).omitNullValues()
@@ -132,6 +152,8 @@ public class ConditionOrderDTO implements Serializable {
                           .add("expireTime", expireTime)
                           .add("tradePlan", tradePlan)
                           .add("monitorTimeRange", monitorTimeRange)
+                          .add("delayConfirm", delayConfirm)
+                          .add("deviationCtrl", deviationCtrl)
                           .toString();
     }
 }

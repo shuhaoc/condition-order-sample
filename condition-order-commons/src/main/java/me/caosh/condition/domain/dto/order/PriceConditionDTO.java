@@ -18,8 +18,6 @@ public class PriceConditionDTO implements ConditionDTO {
 
     private Integer compareOperator;
     private BigDecimal targetPrice;
-    private DelayConfirmDTO delayConfirm;
-    private DeviationCtrlDTO deviationCtrl;
     private Integer delayConfirmedCount;
 
     public Integer getCompareOperator() {
@@ -38,22 +36,6 @@ public class PriceConditionDTO implements ConditionDTO {
         this.targetPrice = targetPrice;
     }
 
-    public DelayConfirmDTO getDelayConfirm() {
-        return delayConfirm;
-    }
-
-    public void setDelayConfirm(DelayConfirmDTO delayConfirm) {
-        this.delayConfirm = delayConfirm;
-    }
-
-    public DeviationCtrlDTO getDeviationCtrl() {
-        return deviationCtrl;
-    }
-
-    public void setDeviationCtrl(DeviationCtrlDTO deviationCtrl) {
-        this.deviationCtrl = deviationCtrl;
-    }
-
     public Integer getDelayConfirmedCount() {
         return delayConfirmedCount;
     }
@@ -67,8 +49,6 @@ public class PriceConditionDTO implements ConditionDTO {
         return MoreObjects.toStringHelper(PriceConditionDTO.class).omitNullValues()
                           .add("compareOperator", compareOperator)
                           .add("targetPrice", targetPrice)
-                          .add("delayConfirm", delayConfirm)
-                          .add("deviationCtrl", deviationCtrl)
                           .add("delayConfirmedCount", delayConfirmedCount)
                           .toString();
     }

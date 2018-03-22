@@ -55,7 +55,7 @@ public class ConditionOrderDoAssembler {
         }
 
         return autoAssembler.disassemble(conditionOrderDO, ConditionOrderBuilder.class)
-                            .setCondition(conditionFacadeBuilder.build())
+                            .setCondition(conditionFacadeBuilder)
                             .build();
     }
 

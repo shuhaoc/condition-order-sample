@@ -1,12 +1,12 @@
-package me.caosh.condition.domain.dto.order;
+package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.condorder.domain.orders.price.PriceConditionFacade;
 import hbec.intellitrade.condorder.domain.orders.price.PriceConditionFacadeBuilder;
 import me.caosh.autoasm.MappedClass;
+import me.caosh.condition.domain.dto.order.ConditionDTO;
 import org.hibernate.validator.constraints.Range;
 
-import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -26,10 +26,6 @@ public class PriceConditionCommandDTO implements ConditionDTO {
     @NotNull
     @DecimalMin("0")
     private BigDecimal targetPrice;
-    @Valid
-    private DelayConfirmDTO delayConfirm;
-    @Valid
-    private DeviationCtrlDTO deviationCtrl;
 
     public Integer getCompareOperator() {
         return compareOperator;
@@ -47,29 +43,11 @@ public class PriceConditionCommandDTO implements ConditionDTO {
         this.targetPrice = targetPrice;
     }
 
-    public DelayConfirmDTO getDelayConfirm() {
-        return delayConfirm;
-    }
-
-    public void setDelayConfirm(DelayConfirmDTO delayConfirm) {
-        this.delayConfirm = delayConfirm;
-    }
-
-    public DeviationCtrlDTO getDeviationCtrl() {
-        return deviationCtrl;
-    }
-
-    public void setDeviationCtrl(DeviationCtrlDTO deviationCtrl) {
-        this.deviationCtrl = deviationCtrl;
-    }
-
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(PriceConditionCommandDTO.class).omitNullValues()
                           .add("compareOperator", compareOperator)
                           .add("targetPrice", targetPrice)
-                          .add("delayConfirm", delayConfirm)
-                          .add("deviationCtrl", deviationCtrl)
                           .toString();
     }
 }

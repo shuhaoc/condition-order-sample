@@ -1,9 +1,11 @@
 package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
+import me.caosh.autoasm.FieldMapping;
 import me.caosh.condition.domain.dto.market.TrackedIndexDTO;
+import me.caosh.condition.domain.dto.order.DelayConfirmDTO;
+import me.caosh.condition.domain.dto.order.DeviationCtrlDTO;
 import me.caosh.condition.domain.dto.order.MonitorTimeRangeDTO;
-import me.caosh.condition.domain.dto.order.PriceConditionCommandDTO;
 import me.caosh.condition.domain.dto.order.TradePlanDTO;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -39,6 +41,14 @@ public class PriceOrderUpdateCommand implements Serializable {
 
     @Valid
     private MonitorTimeRangeDTO monitorTimeRange;
+
+    @Valid
+    @FieldMapping(mappedProperty = "condition.delayConfirm")
+    private DelayConfirmDTO delayConfirm;
+
+    @Valid
+    @FieldMapping(mappedProperty = "condition.deviationCtrl")
+    private DeviationCtrlDTO deviationCtrl;
 
     public Long getOrderId() {
         return orderId;
@@ -88,6 +98,22 @@ public class PriceOrderUpdateCommand implements Serializable {
         this.monitorTimeRange = monitorTimeRange;
     }
 
+    public DelayConfirmDTO getDelayConfirm() {
+        return delayConfirm;
+    }
+
+    public void setDelayConfirm(DelayConfirmDTO delayConfirm) {
+        this.delayConfirm = delayConfirm;
+    }
+
+    public DeviationCtrlDTO getDeviationCtrl() {
+        return deviationCtrl;
+    }
+
+    public void setDeviationCtrl(DeviationCtrlDTO deviationCtrl) {
+        this.deviationCtrl = deviationCtrl;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(PriceOrderUpdateCommand.class).omitNullValues()
@@ -97,6 +123,8 @@ public class PriceOrderUpdateCommand implements Serializable {
                           .add("expireTime", expireTime)
                           .add("tradePlan", tradePlan)
                           .add("monitorTimeRange", monitorTimeRange)
+                          .add("delayConfirm", delayConfirm)
+                          .add("deviationCtrl", deviationCtrl)
                           .toString();
     }
 }

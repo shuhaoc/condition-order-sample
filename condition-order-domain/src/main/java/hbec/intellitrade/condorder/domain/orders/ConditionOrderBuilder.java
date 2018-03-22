@@ -12,8 +12,6 @@ import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfoBuilder;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanBuilder;
 import hbec.intellitrade.strategy.domain.condition.Condition;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmBuilder;
-import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlBuilder;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRangeBuilder;
 import me.caosh.autoasm.ConvertibleBuilder;
 import org.joda.time.LocalDateTime;
@@ -29,12 +27,10 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
     private SecurityInfoBuilder securityInfo = new SecurityInfoBuilder();
     private TrackedIndexInfoBuilder trackedIndex = new TrackedIndexInfoBuilder();
     private StrategyInfoBuilder strategyInfo = new StrategyInfoBuilder();
-    private Condition condition;
+    private ConvertibleBuilder<? extends Condition> condition;
     private LocalDateTime expireTime;
     private TradePlanBuilder tradePlan = new TradePlanBuilder();
     private MonitorTimeRangeBuilder monitorTimeRange = new MonitorTimeRangeBuilder();
-    private DelayConfirmBuilder delayConfirm = new DelayConfirmBuilder();
-    private DeviationCtrlBuilder deviationCtrl = new DeviationCtrlBuilder();
 
     public ConditionOrderBuilder setOrderId(Long orderId) {
         this.orderId = orderId;
@@ -81,7 +77,11 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         return this;
     }
 
-    public ConditionOrderBuilder setCondition(Condition condition) {
+    public ConvertibleBuilder<? extends Condition> getCondition() {
+        return condition;
+    }
+
+    public ConditionOrderBuilder setCondition(ConvertibleBuilder<? extends Condition> condition) {
         this.condition = condition;
         return this;
     }
@@ -98,28 +98,12 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         this.tradePlan = tradePlan;
     }
 
-    public DelayConfirmBuilder getDelayConfirm() {
-        return delayConfirm;
-    }
-
-    public void setDelayConfirm(DelayConfirmBuilder delayConfirm) {
-        this.delayConfirm = delayConfirm;
-    }
-
     public MonitorTimeRangeBuilder getMonitorTimeRange() {
         return monitorTimeRange;
     }
 
     public void setMonitorTimeRange(MonitorTimeRangeBuilder monitorTimeRange) {
         this.monitorTimeRange = monitorTimeRange;
-    }
-
-    public DeviationCtrlBuilder getDeviationCtrl() {
-        return deviationCtrl;
-    }
-
-    public void setDeviationCtrl(DeviationCtrlBuilder deviationCtrl) {
-        this.deviationCtrl = deviationCtrl;
     }
 
     public static class StrategyInfoBuilder {
@@ -142,7 +126,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
                                   customer.build(),
                                   orderState,
                                   securityInfo.build(),
-                                  (PriceConditionFacade) condition,
+                                  (PriceConditionFacade) condition.build(),
                                   expireTime,
                                   (BasicTradePlan) tradePlan.build(),
                                   trackedIndex.build(),

@@ -56,7 +56,7 @@ public class PriceConditionFacadeBuilder implements ConvertibleBuilder<PriceCond
     public PriceConditionFacade build() {
         return new PriceConditionFacade(new PriceCondition(compareOperator, targetPrice),
                                         delayConfirm.build(),
-                                        deviationCtrl.build(), delayConfirmedCount
-        );
+                                        deviationCtrl.build(),
+                                        delayConfirmedCount);
     }
 }

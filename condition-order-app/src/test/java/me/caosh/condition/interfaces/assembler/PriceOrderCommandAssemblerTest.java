@@ -27,8 +27,8 @@ import me.caosh.condition.domain.dto.market.TrackedIndexDTO;
 import me.caosh.condition.domain.dto.order.DelayConfirmDTO;
 import me.caosh.condition.domain.dto.order.DeviationCtrlDTO;
 import me.caosh.condition.domain.dto.order.MonitorTimeRangeDTO;
-import me.caosh.condition.domain.dto.order.PriceConditionCommandDTO;
 import me.caosh.condition.domain.dto.order.TradePlanDTO;
+import me.caosh.condition.interfaces.command.PriceConditionCommandDTO;
 import me.caosh.condition.interfaces.command.PriceOrderCreateCommand;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
@@ -64,16 +64,6 @@ public class PriceOrderCommandAssemblerTest {
         priceCondition.setCompareOperator(1);
         priceCondition.setTargetPrice(new BigDecimal("13.00"));
 
-        DelayConfirmDTO delayConfirmParam = new DelayConfirmDTO();
-        delayConfirmParam.setOption(1);
-        delayConfirmParam.setConfirmTimes(3);
-        priceCondition.setDelayConfirm(delayConfirmParam);
-
-        DeviationCtrlDTO deviationCtrlParam = new DeviationCtrlDTO();
-        deviationCtrlParam.setOption(1);
-        deviationCtrlParam.setLimitPercent(new BigDecimal(1));
-        priceCondition.setDeviationCtrl(deviationCtrlParam);
-
         createCommand.setCondition(priceCondition);
 
         createCommand.setExpireTime(LocalDateTime.parse("2018-03-15T15:00:00").toDate());
@@ -92,6 +82,16 @@ public class PriceOrderCommandAssemblerTest {
         monitorTimeRange.setBeginTime("10:00:00");
         monitorTimeRange.setEndTime("14:00:00");
         createCommand.setMonitorTimeRange(monitorTimeRange);
+
+        DelayConfirmDTO delayConfirmParam = new DelayConfirmDTO();
+        delayConfirmParam.setOption(1);
+        delayConfirmParam.setConfirmTimes(3);
+        createCommand.setDelayConfirm(delayConfirmParam);
+
+        DeviationCtrlDTO deviationCtrlParam = new DeviationCtrlDTO();
+        deviationCtrlParam.setOption(1);
+        deviationCtrlParam.setLimitPercent(new BigDecimal(1));
+        createCommand.setDeviationCtrl(deviationCtrlParam);
 
         TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
         PriceOrder priceOrder = PriceOrderCommandAssembler.assemblePriceOrder(123L, tradeCustomerInfo, createCommand);

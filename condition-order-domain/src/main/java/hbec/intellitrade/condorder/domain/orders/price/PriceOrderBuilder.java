@@ -10,6 +10,7 @@ import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 public class PriceOrderBuilder extends ConditionOrderBuilder {
     public PriceOrderBuilder() {
         getStrategyInfo().setStrategyType(NativeStrategyInfo.PRICE);
+        setCondition(new PriceConditionFacadeBuilder());
     }
 
     @Override
