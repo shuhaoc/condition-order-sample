@@ -13,7 +13,7 @@
     <properties>
         <java.version>1.7</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <auto-assembler.version>1.0.1</auto-assembler.version>
+        <auto-assembler.version>1.0.2-SNAPSHOT</auto-assembler.version>
     </properties>
     <modules>
         <module>condition-order-domain</module>
