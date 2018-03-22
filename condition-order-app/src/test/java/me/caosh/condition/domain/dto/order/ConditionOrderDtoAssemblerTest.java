@@ -14,7 +14,6 @@ import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
-import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmInfo;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlInfo;
@@ -31,7 +30,6 @@ import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
 import me.caosh.condition.domain.dto.market.TrackedIndexDTO;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
-import org.springframework.beans.BeanUtils;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
@@ -134,16 +132,12 @@ public class ConditionOrderDtoAssemblerTest {
 
         assertEquals(assemble.toString(), conditionOrderDTO.toString());
 
-        Class<? extends ConvertibleBuilder> conditionBuilderClass = conditionOrderDTO.getCondition()
-                                                                                     .getClass()
-                                                                                     .getAnnotation(MappedClass.class)
-                                                                                     .builderClass();
 
-
-        ConvertibleBuilder<? extends Condition> conditionBuilder = BeanUtils.instantiate(conditionBuilderClass);
-        ConditionOrderBuilder conditionOrderBuilder = new ConditionOrderBuilder().setCondition(conditionBuilder);
+        Class<? extends ConvertibleBuilder> conditionBuilderClass =
+                conditionOrderDTO.getCondition().getClass().getAnnotation(MappedClass.class).builderClass();
         PriceOrder disassemble = (PriceOrder) AutoAssemblers.getDefault()
-                                                            .disassemble(conditionOrderDTO, conditionOrderBuilder)
+                                                            .useBuilder(new ConditionOrderBuilder(conditionBuilderClass))
+                                                            .disassemble(conditionOrderDTO)
                                                             .build();
         assertEquals(disassemble, priceOrder);
     }

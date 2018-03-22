@@ -32,6 +32,18 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
     private TradePlanBuilder tradePlan = new TradePlanBuilder();
     private MonitorTimeRangeBuilder monitorTimeRange = new MonitorTimeRangeBuilder();
 
+    public ConditionOrderBuilder() {
+    }
+
+    @SuppressWarnings("unchecked")
+    public ConditionOrderBuilder(Class<? extends ConvertibleBuilder> conditionBuilderClass) {
+        try {
+            this.condition = conditionBuilderClass.newInstance();
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public ConditionOrderBuilder setOrderId(Long orderId) {
         this.orderId = orderId;
         return this;

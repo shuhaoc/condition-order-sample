@@ -2,7 +2,7 @@ package hbec.intellitrade.condorder.domain.orders.turnpoint;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.market.RealTimeMarket;
-import hbec.intellitrade.condorder.domain.orders.MarketConditionFacade;
+import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmCondition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmConditionFactory;
@@ -21,7 +21,7 @@ import java.util.Objects;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/3/21
  */
-public class TurnPointConditionFacade implements MarketConditionFacade {
+public class TurnPointConditionFacade implements MarketCondition, DelayConfirmCondition, DynamicCondition {
     private final TurnPointCondition turnPointCondition;
     private final CrossBaselineCondition crossBaselineCondition;
     private final DelayConfirm delayConfirm;
@@ -114,6 +114,12 @@ public class TurnPointConditionFacade implements MarketConditionFacade {
         }
     }
 
+    @Override
+    public int getDelayConfirmedCount() {
+        return 0;
+    }
+
+    @Override
     public void resetCounter() {
 
     }

@@ -1,7 +1,6 @@
 package hbec.intellitrade.condorder.domain.orders.price;
 
 import hbec.intellitrade.common.market.RealTimeMarket;
-import hbec.intellitrade.condorder.domain.orders.MarketConditionFacade;
 import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmCondition;
@@ -21,11 +20,11 @@ import java.math.BigDecimal;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/3/20
  */
-public class PriceConditionFacade implements MarketConditionFacade, DynamicCondition {
-    private final PriceCondition priceCondition;
-    private final DelayConfirm delayConfirm;
-    private final DeviationCtrl deviationCtrl;
-    private final MarketCondition decoratedCondition;
+public class PriceConditionFacade extends DecoratedMarketCondition<PriceCondition> implements DynamicCondition {
+    protected final PriceCondition priceCondition;
+    protected final DelayConfirm delayConfirm;
+    protected final DeviationCtrl deviationCtrl;
+    protected final MarketCondition decoratedCondition;
 
     public PriceConditionFacade(PriceCondition priceCondition,
                                 DelayConfirm delayConfirm,
