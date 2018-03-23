@@ -5,12 +5,16 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.strategy.domain.condition.AbstractMarketCondition;
 import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
-import hbec.intellitrade.strategy.domain.factor.*;
+import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
+import hbec.intellitrade.strategy.domain.factor.CompareOperator;
+import hbec.intellitrade.strategy.domain.factor.InflexionFactor;
+import hbec.intellitrade.strategy.domain.factor.PercentBinaryTargetPriceFactor;
+import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
 
 import java.math.BigDecimal;
 
 /**
- * 拐点条件
+ * 基本拐点条件
  *
  * @author caosh/caoshuhao@touker.com
  * @date 2018/1/30

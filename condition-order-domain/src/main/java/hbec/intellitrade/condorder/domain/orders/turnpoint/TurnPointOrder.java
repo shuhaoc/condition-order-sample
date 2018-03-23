@@ -8,8 +8,6 @@ import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
-import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;
@@ -37,8 +35,6 @@ public class TurnPointOrder extends AbstractSimpleMarketConditionOrder {
               null,
               expireTime,
               NoneMonitorTimeRange.NONE,
-              DisabledDelayConfirm.DISABLED,
-              DisabledDeviationCtrl.DISABLED,
               tradePlan);
         this.turnPointCondition = turnPointCondition;
     }

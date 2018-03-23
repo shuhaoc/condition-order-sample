@@ -8,10 +8,6 @@ import hbec.intellitrade.condorder.domain.trackindex.TrackedIndex;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
 import hbec.intellitrade.strategy.domain.MarketDrivenStrategy;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirm;
-import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
-import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrl;
-import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
@@ -35,30 +31,16 @@ public abstract class AbstractMarketConditionOrder extends AbstractExplicitTradi
      */
     private final MonitorTimeRange monitorTimeRange;
 
-    /**
-     * 偏差控制参数，非空，未开启为{@link DisabledDelayConfirm}
-     */
-    private final DelayConfirm delayConfirm;
-
-    /**
-     * 偏差控制参数，非空，未开启为{@link DisabledDeviationCtrl}
-     */
-    private final DeviationCtrl deviationCtrl;
-
     public AbstractMarketConditionOrder(Long orderId,
                                         TradeCustomerInfo tradeCustomerInfo,
                                         OrderState orderState,
                                         SecurityInfo securityInfo,
                                         LocalDateTime expireTime,
                                         TrackedIndex trackedIndex,
-                                        MonitorTimeRange monitorTimeRange,
-                                        DelayConfirm delayConfirm,
-                                        DeviationCtrl deviationCtrl) {
+                                        MonitorTimeRange monitorTimeRange) {
         super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime);
         this.trackedIndex = trackedIndex;
         this.monitorTimeRange = monitorTimeRange;
-        this.delayConfirm = delayConfirm;
-        this.deviationCtrl = deviationCtrl;
     }
 
     /**

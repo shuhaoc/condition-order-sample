@@ -102,8 +102,6 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
               trackedIndexInfo,
               expireTime,
               monitorTimeRange,
-              null,
-              null,
               tradePlan);
         this.condition = condition;
     }
