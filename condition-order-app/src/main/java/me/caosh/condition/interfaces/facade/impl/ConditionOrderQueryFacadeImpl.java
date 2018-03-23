@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
+import me.caosh.condition.domain.dto.order.assembler.ConditionOrderAssemblers;
 import me.caosh.condition.domain.dto.trade.EntrustOrderDTO;
 import me.caosh.condition.infrastructure.repository.assembler.ConditionOrderDoAssembler;
 import me.caosh.condition.infrastructure.tunnel.impl.ConditionOrderDoRepository;
@@ -47,7 +48,7 @@ public class ConditionOrderQueryFacadeImpl implements ConditionOrderQueryFacade 
 
     private static ConditionOrderDTO assembleDataObjectToDTO(ConditionOrderDO conditionOrderDO) {
         ConditionOrder conditionOrder = ConditionOrderDoAssembler.disassemble(conditionOrderDO);
-        return AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDTO.class);
+        return ConditionOrderAssemblers.dtoSupported().assemble(conditionOrder, ConditionOrderDTO.class);
     }
 
     @Override

@@ -2,9 +2,9 @@ package me.caosh.condition.infrastructure.rabbitmq.impl;
 
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
+import me.caosh.condition.domain.dto.order.assembler.ConditionOrderAssemblers;
 import me.caosh.condition.domain.dto.order.constants.OrderCommandType;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
@@ -69,7 +69,9 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
     }
 
     private void sendSaveCommand(String exchangeName, String routingKey, ConditionOrder conditionOrder) {
-        ConditionOrderDTO conditionOrderDTO = AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDTO.class);
+        ConditionOrderDTO conditionOrderDTO = ConditionOrderAssemblers.dtoSupported()
+                                                                      .assemble(conditionOrder,
+                                                                                ConditionOrderDTO.class);
         ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(OrderCommandType.SAVE.getValue(), conditionOrderDTO);
         Message message = messageConverter.toMessage(conditionOrderMonitorDTO, new MessageProperties());
         amqpTemplate.send(exchangeName, routingKey, message);

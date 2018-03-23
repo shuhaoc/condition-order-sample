@@ -1,7 +1,7 @@
 package hbec.intellitrade.strategy.domain.signalpayload;
 
 import hbec.intellitrade.common.market.RealTimeMarketBuilder;
-import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilder;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import me.caosh.autoasm.ConvertibleBuilder;
 
@@ -12,7 +12,7 @@ import me.caosh.autoasm.ConvertibleBuilder;
 public class SignalPayloadBuilder implements ConvertibleBuilder<SignalPayload> {
     private Integer triggerId;
     private Signal signal;
-    private ConditionOrderBuilder strategy;
+    private ConditionOrder strategy;
     private RealTimeMarketBuilder realTimeMarket;
 
     public SignalPayloadBuilder setTriggerId(Integer triggerId) {
@@ -25,9 +25,8 @@ public class SignalPayloadBuilder implements ConvertibleBuilder<SignalPayload> {
         return this;
     }
 
-    public SignalPayloadBuilder setStrategy(ConditionOrderBuilder strategy) {
+    public void setStrategy(ConditionOrder strategy) {
         this.strategy = strategy;
-        return this;
     }
 
     public SignalPayloadBuilder setRealTimeMarket(RealTimeMarketBuilder realTimeMarket) {
@@ -38,8 +37,8 @@ public class SignalPayloadBuilder implements ConvertibleBuilder<SignalPayload> {
     @Override
     public SignalPayload build() {
         if (realTimeMarket != null) {
-            return new MarketSignalPayload(triggerId, signal, strategy.build(), realTimeMarket.build());
+            return new MarketSignalPayload(triggerId, signal, strategy, realTimeMarket.build());
         }
-        return new SignalPayload(triggerId, signal, strategy.build());
+        return new SignalPayload(triggerId, signal, strategy);
     }
 }

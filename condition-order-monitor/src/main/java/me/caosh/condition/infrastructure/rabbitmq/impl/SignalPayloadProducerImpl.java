@@ -1,8 +1,8 @@
 package me.caosh.condition.infrastructure.rabbitmq.impl;
 
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
-import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.dto.order.SignalPayloadDTO;
+import me.caosh.condition.domain.dto.order.assembler.ConditionOrderAssemblers;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
 import me.caosh.condition.infrastructure.rabbitmq.SignalPayloadProducer;
 import org.slf4j.Logger;
@@ -57,7 +57,8 @@ public class SignalPayloadProducerImpl implements SignalPayloadProducer {
 
     @Override
     public void send(SignalPayload signalPayload) {
-        SignalPayloadDTO signalPayloadDTO = AutoAssemblers.getDefault().assemble(signalPayload, SignalPayloadDTO.class);
+        SignalPayloadDTO signalPayloadDTO = ConditionOrderAssemblers.dtoSupported()
+                                                                    .assemble(signalPayload, SignalPayloadDTO.class);
         send(signalPayloadDTO);
     }
 

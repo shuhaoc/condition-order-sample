@@ -1,4 +1,4 @@
-package me.caosh.condition.infrastructure.assembler;
+package me.caosh.condition.domain.dto.order.assembler;
 
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilder;
@@ -12,10 +12,10 @@ import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
  * @date 2018/3/23
  */
 public class ConditionOrderDtoAssembler {
+    private static final ConditionOrderDtoAssembler CODE_COVERAGE = new ConditionOrderDtoAssembler();
+
     private ConditionOrderDtoAssembler() {
     }
-
-    private static final ConditionOrderDtoAssembler CODE_COVERAGE = new ConditionOrderDtoAssembler();
 
     public static ConditionOrderDTO assemble(ConditionOrder conditionOrder) {
         return AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDTO.class);

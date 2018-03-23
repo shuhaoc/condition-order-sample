@@ -2,13 +2,17 @@ package me.caosh.condition.infrastructure.rabbitmq;
 
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayloadBuilder;
-import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.application.order.SignalHandlerService;
 import me.caosh.condition.domain.dto.order.SignalPayloadDTO;
+import me.caosh.condition.domain.dto.order.assembler.ConditionOrderAssemblers;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageListener;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -79,7 +83,9 @@ public class SignalPayloadConsumer {
         SignalPayloadDTO signalPayloadDTO = (SignalPayloadDTO) messageConverter.fromMessage(message);
         logger.debug("Receive trigger message <== {}", signalPayloadDTO);
 
-        SignalPayload signalPayload = AutoAssemblers.getDefault().disassemble(signalPayloadDTO, SignalPayloadBuilder.class).build();
+        SignalPayload signalPayload = ConditionOrderAssemblers.dtoSupported()
+                                                              .disassemble(signalPayloadDTO, SignalPayloadBuilder.class)
+                                                              .build();
         signalHandlerService.handleSignalPayload(signalPayload);
     }
 

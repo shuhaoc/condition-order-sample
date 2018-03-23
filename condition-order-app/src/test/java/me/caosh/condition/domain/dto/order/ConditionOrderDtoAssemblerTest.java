@@ -23,10 +23,9 @@ import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
 import hbec.intellitrade.trade.domain.ExchangeType;
-import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
 import me.caosh.condition.domain.dto.market.TrackedIndexDTO;
-import me.caosh.condition.infrastructure.assembler.ConditionOrderDtoAssembler;
+import me.caosh.condition.domain.dto.order.assembler.ConditionOrderAssemblers;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.testng.annotations.Test;
@@ -65,7 +64,8 @@ public class ConditionOrderDtoAssemblerTest {
                                                                                     LocalTime.parse("14:00:00")))
         );
 
-        ConditionOrderDTO assemble = AutoAssemblers.getDefault().assemble(priceOrder, ConditionOrderDTO.class);
+        ConditionOrderDTO assemble = ConditionOrderAssemblers.dtoSupported()
+                                                             .assemble(priceOrder, ConditionOrderDTO.class);
 
         ConditionOrderDTO conditionOrderDTO = new ConditionOrderDTO();
         conditionOrderDTO.setOrderId(123L);
@@ -131,7 +131,8 @@ public class ConditionOrderDtoAssemblerTest {
 
         assertEquals(assemble.toString(), conditionOrderDTO.toString());
 
-        ConditionOrder disassemble = ConditionOrderDtoAssembler.disassemble(conditionOrderDTO);
+        ConditionOrder disassemble = ConditionOrderAssemblers.dtoSupported()
+                                                             .disassemble(conditionOrderDTO, ConditionOrder.class);
         assertEquals(disassemble, priceOrder);
     }
 

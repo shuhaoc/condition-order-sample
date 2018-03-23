@@ -2,9 +2,8 @@ package me.caosh.condition.infrastructure.rabbitmq;
 
 import hbec.intellitrade.common.ValuedEnumUtil;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilder;
-import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
+import me.caosh.condition.domain.dto.order.assembler.ConditionOrderAssemblers;
 import me.caosh.condition.domain.dto.order.constants.OrderCommandType;
 import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
 import me.caosh.condition.domain.event.OrderCommandEvent;
@@ -13,7 +12,11 @@ import me.caosh.condition.domain.event.OrderSaveCommandEvent;
 import me.caosh.condition.infrastructure.eventbus.MonitorEventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageListener;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -84,8 +87,9 @@ public class ConditionOrderConsumer {
         OrderCommandType orderCommandType = ValuedEnumUtil.valueOf(dto.getOrderCommandType(), OrderCommandType.class);
         switch (orderCommandType) {
             case SAVE:
-                ConditionOrder conditionOrder = AutoAssemblers.getDefault().disassemble(dto.getConditionOrderDTO(),
-                        ConditionOrderBuilder.class).build();
+                ConditionOrder conditionOrder = ConditionOrderAssemblers.dtoSupported()
+                                                                        .disassemble(dto.getConditionOrderDTO(),
+                                                                                     ConditionOrder.class);
                 return new OrderSaveCommandEvent(conditionOrder);
             case REMOVE:
                 return new OrderRemoveCommandEvent(dto.getOrderId());

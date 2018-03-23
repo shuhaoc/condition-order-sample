@@ -30,7 +30,8 @@
         </dependency>
         <dependency>
             <groupId>me.caosh</groupId>
-            <artifactId>auto-assembler-api</artifactId>
+            <artifactId>auto-assembler</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
