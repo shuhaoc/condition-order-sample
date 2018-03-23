@@ -39,7 +39,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
     /**
      * 组合条件，组合了延迟确认、偏差控制和价格条件等条件
      */
-    private final PriceConditionFacade condition;
+    private final DecoratedPriceCondition condition;
 
     /**
      * 构造价格条件单（最少参数）
@@ -61,7 +61,10 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
              tradeCustomerInfo,
              orderState,
              securityInfo,
-             new PriceConditionFacade(priceCondition, DisabledDelayConfirm.DISABLED, DisabledDeviationCtrl.DISABLED, 0),
+             new DecoratedPriceCondition(priceCondition,
+                                         DisabledDelayConfirm.DISABLED,
+                                         DisabledDeviationCtrl.DISABLED,
+                                         0),
              null,
              tradePlan,
              NoneTrackedIndex.NONE,
@@ -87,7 +90,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
                       TradeCustomerInfo tradeCustomerInfo,
                       OrderState orderState,
                       SecurityInfo securityInfo,
-                      PriceConditionFacade condition,
+                      DecoratedPriceCondition condition,
                       LocalDateTime expireTime,
                       BasicTradePlan tradePlan,
                       TrackedIndex trackedIndexInfo,

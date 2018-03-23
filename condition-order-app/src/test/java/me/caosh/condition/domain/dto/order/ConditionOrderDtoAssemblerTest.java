@@ -7,8 +7,8 @@ import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceCondition;
 import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
-import hbec.intellitrade.condorder.domain.orders.price.PriceConditionFacade;
 import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
@@ -48,7 +48,7 @@ public class ConditionOrderDtoAssemblerTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "浦发银行"),
-                                               new PriceConditionFacade(
+                                               new DecoratedPriceCondition(
                                                        new PriceCondition(CompareOperator.GE,
                                                                           new BigDecimal("9999.00")),
                                                        new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
@@ -97,7 +97,6 @@ public class ConditionOrderDtoAssemblerTest {
         PriceConditionDTO priceCondition = new PriceConditionDTO();
         priceCondition.setCompareOperator(1);
         priceCondition.setTargetPrice(new BigDecimal("9999.00"));
-
         priceCondition.setDelayConfirmedCount(2);
 
         conditionOrderDTO.setCondition(priceCondition);

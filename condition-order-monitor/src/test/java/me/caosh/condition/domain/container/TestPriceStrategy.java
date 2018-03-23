@@ -102,10 +102,10 @@ class TestPriceStrategy implements MarketDrivenStrategy, TimeDrivenStrategy {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(TestPriceStrategy.class).omitNullValues()
-                .add("strategyId", strategyId)
-                .add("marketID", marketID)
-                .add("priceCondition", priceCondition)
-                .add("strategyState", orderState)
-                .toString();
+                          .add("strategyId", strategyId)
+                          .add("marketID", marketID)
+                          .add("rawCondition", priceCondition)
+                          .add("strategyState", orderState)
+                          .toString();
     }
 }

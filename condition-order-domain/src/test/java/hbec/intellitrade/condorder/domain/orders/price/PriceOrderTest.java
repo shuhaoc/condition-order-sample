@@ -30,7 +30,13 @@ import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
-import hbec.intellitrade.trade.domain.*;
+import hbec.intellitrade.trade.domain.EntrustCommand;
+import hbec.intellitrade.trade.domain.EntrustOrderInfo;
+import hbec.intellitrade.trade.domain.EntrustOrderWriter;
+import hbec.intellitrade.trade.domain.EntrustSuccessResult;
+import hbec.intellitrade.trade.domain.ExchangeType;
+import hbec.intellitrade.trade.domain.OrderType;
+import hbec.intellitrade.trade.domain.TradeCustomer;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.mockito.Matchers;
@@ -158,7 +164,7 @@ public class PriceOrderTest {
         ExchangeType exchangeType = ExchangeType.BUY;
 
         PriceOrder priceOrder = new PriceOrder(123L, tradeCustomerInfo, OrderState.ACTIVE, pfyh,
-                                               new PriceConditionFacade(
+                                               new DecoratedPriceCondition(
                                                        new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                                                        DisabledDelayConfirm.DISABLED,
                                                        DisabledDeviationCtrl.DISABLED,
@@ -194,13 +200,13 @@ public class PriceOrderTest {
                                                                    new TradeNumberDirect(100))
         );
 
-        assertEquals(((PriceConditionFacade) priceOrder1.getCondition()).getDelayConfirm(),
+        assertEquals(((DecoratedPriceCondition) priceOrder1.getCondition()).getDelayConfirm(),
                      DisabledDelayConfirm.DISABLED);
 
         PriceOrder priceOrder2 = new PriceOrder(123L, tradeCustomerInfo,
                                                 OrderState.ACTIVE,
                                                 pfyh,
-                                                new PriceConditionFacade(
+                                                new DecoratedPriceCondition(
                                                         new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                                                         new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
                                                         DisabledDeviationCtrl.DISABLED,
@@ -212,7 +218,7 @@ public class PriceOrderTest {
                                                 NoneTrackedIndex.NONE,
                                                 NoneMonitorTimeRange.NONE);
 
-        assertEquals(((PriceConditionFacade) priceOrder2.getCondition()).getDelayConfirm(),
+        assertEquals(((DecoratedPriceCondition) priceOrder2.getCondition()).getDelayConfirm(),
                      new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3));
     }
 
@@ -224,7 +230,7 @@ public class PriceOrderTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "PFYH"),
-                                               new PriceConditionFacade(
+                                               new DecoratedPriceCondition(
                                                        new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
 
                                                        new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
@@ -261,7 +267,7 @@ public class PriceOrderTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "PFYH"),
-                                               new PriceConditionFacade(
+                                               new DecoratedPriceCondition(
                                                        new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                                                        DisabledDelayConfirm.DISABLED,
                                                        DisabledDeviationCtrl.DISABLED,
@@ -294,7 +300,7 @@ public class PriceOrderTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "PFYH"),
-                                               new PriceConditionFacade(
+                                               new DecoratedPriceCondition(
                                                        new PriceCondition(CompareOperator.LE, new BigDecimal("10.00")),
                                                        DisabledDelayConfirm.DISABLED,
                                                        new DeviationCtrlInfo(new BigDecimal("1")),
@@ -323,7 +329,7 @@ public class PriceOrderTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "PFYH"),
-                                               new PriceConditionFacade(
+                                               new DecoratedPriceCondition(
                                                        new PriceCondition(CompareOperator.LE, new BigDecimal("10.00")),
                                                        new DelayConfirmInfo(DelayConfirmOption.CONTINUOUS, 2),
                                                        new DeviationCtrlInfo(new BigDecimal("1")),
@@ -359,7 +365,7 @@ public class PriceOrderTest {
                                                                 "600000",
                                                                 SecurityExchange.SH,
                                                                 "PFYH"),
-                                               new PriceConditionFacade(
+                                               new DecoratedPriceCondition(
                                                        new PriceCondition(CompareOperator.LE, new BigDecimal("10.00")),
                                                        new DelayConfirmInfo(DelayConfirmOption.CONTINUOUS, 2),
                                                        new DeviationCtrlInfo(new BigDecimal("1")),

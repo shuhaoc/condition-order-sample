@@ -1,8 +1,8 @@
 package me.caosh.condition.infrastructure.tunnel.model;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.condorder.domain.orders.price.PriceConditionFacade;
-import hbec.intellitrade.condorder.domain.orders.price.PriceConditionFacadeBuilder;
+import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceCondition;
+import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceConditionBuilder;
 import me.caosh.autoasm.MappedClass;
 
 import java.math.BigDecimal;
@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 /**
  * Created by caosh on 2017/8/15.
  */
-@MappedClass(value = PriceConditionFacade.class, builderClass = PriceConditionFacadeBuilder.class)
+@MappedClass(value = DecoratedPriceCondition.class, builderClass = DecoratedPriceConditionBuilder.class)
 public class PriceConditionDO implements ConditionDO {
     private Integer compareOperator;
     private BigDecimal targetPrice;

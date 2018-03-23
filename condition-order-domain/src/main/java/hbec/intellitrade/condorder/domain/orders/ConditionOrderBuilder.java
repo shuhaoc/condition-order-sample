@@ -4,7 +4,7 @@ import hbec.intellitrade.common.security.SecurityInfoBuilder;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfoBuilder;
-import hbec.intellitrade.condorder.domain.orders.price.PriceConditionFacade;
+import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceCondition;
 import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
@@ -138,7 +138,7 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
                                   customer.build(),
                                   orderState,
                                   securityInfo.build(),
-                                  (PriceConditionFacade) condition.build(),
+                                  (DecoratedPriceCondition) condition.build(),
                                   expireTime,
                                   (BasicTradePlan) tradePlan.build(),
                                   trackedIndex.build(),

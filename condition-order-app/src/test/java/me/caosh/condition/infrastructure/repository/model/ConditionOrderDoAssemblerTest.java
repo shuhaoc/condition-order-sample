@@ -7,8 +7,8 @@ import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceCondition;
 import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
-import hbec.intellitrade.condorder.domain.orders.price.PriceConditionFacade;
 import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.trackindex.TrackIndexOption;
@@ -59,7 +59,7 @@ public class ConditionOrderDoAssemblerTest {
                 new TradeCustomerInfo(USER_ID, CUSTOMER_NO),
                 OrderState.ACTIVE,
                 new SecurityInfo(SecurityType.STOCK, SECURITY_CODE, SecurityExchange.SH, SECURITY_NAME),
-                new PriceConditionFacade(
+                new DecoratedPriceCondition(
                         new PriceCondition(CompareOperator.GE, new BigDecimal("9999.00")),
                         new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
                         new DeviationCtrlInfo(new BigDecimal("1")),

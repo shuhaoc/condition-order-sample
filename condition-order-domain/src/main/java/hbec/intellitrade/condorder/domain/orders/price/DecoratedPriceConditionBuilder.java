@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/2/4
  */
-public class PriceConditionFacadeBuilder implements ConvertibleBuilder<PriceConditionFacade> {
+public class DecoratedPriceConditionBuilder implements ConvertibleBuilder<DecoratedPriceCondition> {
     private CompareOperator compareOperator;
     private BigDecimal targetPrice;
     private DelayConfirmBuilder delayConfirm = new DelayConfirmBuilder();
@@ -47,10 +47,10 @@ public class PriceConditionFacadeBuilder implements ConvertibleBuilder<PriceCond
     }
 
     @Override
-    public PriceConditionFacade build() {
-        return new PriceConditionFacade(new PriceCondition(compareOperator, targetPrice),
-                                        delayConfirm.build(),
-                                        deviationCtrl.build(),
-                                        delayConfirmedCount);
+    public DecoratedPriceCondition build() {
+        return new DecoratedPriceCondition(new PriceCondition(compareOperator, targetPrice),
+                                           delayConfirm.build(),
+                                           deviationCtrl.build(),
+                                           delayConfirmedCount);
     }
 }

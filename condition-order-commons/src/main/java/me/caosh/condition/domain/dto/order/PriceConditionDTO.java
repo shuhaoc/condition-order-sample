@@ -1,8 +1,8 @@
 package me.caosh.condition.domain.dto.order;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.condorder.domain.orders.price.PriceConditionFacade;
-import hbec.intellitrade.condorder.domain.orders.price.PriceConditionFacadeBuilder;
+import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceCondition;
+import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceConditionBuilder;
 import me.caosh.autoasm.MappedClass;
 
 import java.math.BigDecimal;
@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  *
  * @author caoshuhao@touker.com
  */
-@MappedClass(value = PriceConditionFacade.class, builderClass = PriceConditionFacadeBuilder.class)
+@MappedClass(value = DecoratedPriceCondition.class, builderClass = DecoratedPriceConditionBuilder.class)
 public class PriceConditionDTO implements ConditionDTO {
     private static final long serialVersionUID = 1L;
 

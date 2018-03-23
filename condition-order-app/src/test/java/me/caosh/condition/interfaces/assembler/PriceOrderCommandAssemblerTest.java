@@ -6,8 +6,8 @@ import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceCondition;
 import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
-import hbec.intellitrade.condorder.domain.orders.price.PriceConditionFacade;
 import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
@@ -103,7 +103,7 @@ public class PriceOrderCommandAssemblerTest {
                                                               "600000",
                                                               SecurityExchange.SH,
                                                               "浦发银行"),
-                                             new PriceConditionFacade(
+                                             new DecoratedPriceCondition(
                                                      new PriceCondition(CompareOperator.GE, new BigDecimal("13.00")),
                                                      new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
                                                      new DeviationCtrlInfo(new BigDecimal("1")), 0

@@ -9,8 +9,8 @@ import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceCondition;
 import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
-import hbec.intellitrade.condorder.domain.orders.price.PriceConditionFacade;
 import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
@@ -59,7 +59,7 @@ public class ConditionOrderRepositoryTest extends AbstractTestNGSpringContextTes
         PriceOrder priceOrder = new PriceOrder(conditionOrderIdGenerator.nextId(), tradeCustomerInfo,
                                                OrderState.ACTIVE,
                                                securityInfo,
-                                               new PriceConditionFacade(
+                                               new DecoratedPriceCondition(
                                                        new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
                                                        new DelayConfirmInfo(DelayConfirmOption.CONTINUOUS, 3),
                                                        new DeviationCtrlInfo(new BigDecimal("1.00")),
