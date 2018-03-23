@@ -1,7 +1,5 @@
 package hbec.intellitrade.condorder.domain.orders.price;
 
-import hbec.intellitrade.condorder.domain.orders.DelayConfirmSupportedBuilder;
-import hbec.intellitrade.condorder.domain.orders.DeviationCtrlSupportedBuilder;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmBuilder;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlBuilder;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
@@ -13,9 +11,7 @@ import java.math.BigDecimal;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/2/4
  */
-public class PriceConditionFacadeBuilder implements ConvertibleBuilder<PriceConditionFacade>,
-        DelayConfirmSupportedBuilder,
-        DeviationCtrlSupportedBuilder {
+public class PriceConditionFacadeBuilder implements ConvertibleBuilder<PriceConditionFacade> {
     private CompareOperator compareOperator;
     private BigDecimal targetPrice;
     private DelayConfirmBuilder delayConfirm = new DelayConfirmBuilder();
@@ -30,7 +26,6 @@ public class PriceConditionFacadeBuilder implements ConvertibleBuilder<PriceCond
         this.targetPrice = targetPrice;
     }
 
-    @Override
     public DelayConfirmBuilder getDelayConfirm() {
         return delayConfirm;
     }
@@ -39,7 +34,6 @@ public class PriceConditionFacadeBuilder implements ConvertibleBuilder<PriceCond
         this.delayConfirm = delayConfirm;
     }
 
-    @Override
     public DeviationCtrlBuilder getDeviationCtrl() {
         return deviationCtrl;
     }
