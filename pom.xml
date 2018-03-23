@@ -79,6 +79,18 @@
         <plugins>
         </plugins>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>hbec internal releases repository</name>
+            <url>http://10.0.30.78:8080/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>hbec internal snapshots repository</name>
+            <url>http://10.0.30.78:8080/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
     <repositories>
         <repository>
             <id>public</id>
