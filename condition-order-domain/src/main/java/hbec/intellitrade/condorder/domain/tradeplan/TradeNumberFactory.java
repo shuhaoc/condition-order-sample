@@ -2,7 +2,7 @@ package hbec.intellitrade.condorder.domain.tradeplan;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
-import hbec.intellitrade.common.ValuedEnumUtil;
+import me.caosh.autoasm.AutoAssemblers;
 
 import java.math.BigDecimal;
 
@@ -18,7 +18,8 @@ public class TradeNumberFactory {
 
     public TradeNumber create(Integer entrustMethod, Integer number, BigDecimal entrustAmount) {
         int intEntrustMethod = MoreObjects.firstNonNull(entrustMethod, EntrustMethod.NUMBER.getValue());
-        EntrustMethod theEntrustMethod = ValuedEnumUtil.valueOf(intEntrustMethod, EntrustMethod.class);
+        EntrustMethod theEntrustMethod = AutoAssemblers.getDefault()
+                                                       .disassemble(intEntrustMethod, EntrustMethod.class);
         if (theEntrustMethod == EntrustMethod.NUMBER) {
             return new TradeNumberDirect(number);
         } else {

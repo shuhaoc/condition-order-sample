@@ -1,7 +1,7 @@
 package hbec.intellitrade.condorder.domain.tradeplan;
 
-import hbec.intellitrade.common.ValuedEnumUtil;
 import hbec.intellitrade.trade.domain.ExchangeType;
+import me.caosh.autoasm.AutoAssemblers;
 
 import java.math.BigDecimal;
 
@@ -30,19 +30,24 @@ public class TradePlanFactory {
     public BasicTradePlan createBasic(int exchangeType, Integer entrustStrategy, Integer entrustMethod,
                                       Integer number, BigDecimal entrustAmount) {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance().create(entrustMethod, number, entrustAmount);
-        EntrustStrategy theEntrustStrategy = ValuedEnumUtil.valueOf(entrustStrategy, EntrustStrategy.class);
-        ExchangeType theExchangeType = ValuedEnumUtil.valueOf(exchangeType, ExchangeType.class);
+        EntrustStrategy theEntrustStrategy = AutoAssemblers.getDefault()
+                                                           .disassemble(entrustStrategy, EntrustStrategy.class);
+        ExchangeType theExchangeType = AutoAssemblers.getDefault()
+                                                     .disassemble(exchangeType, ExchangeType.class);
         return new BasicTradePlan(theExchangeType, theEntrustStrategy, tradeNumber);
     }
 
     public DoubleDirectionTradePlan createDouble(Integer entrustStrategy, Integer entrustMethod, Integer number, BigDecimal entrustAmount) {
         TradeNumber tradeNumber = TradeNumberFactory.getInstance().create(entrustMethod, number, entrustAmount);
-        EntrustStrategy buyEntrustStrategy = ValuedEnumUtil.valueOf(entrustStrategy, EntrustStrategy.class);
+        EntrustStrategy buyEntrustStrategy = AutoAssemblers.getDefault()
+                                                           .disassemble(entrustStrategy, EntrustStrategy.class);
         EntrustStrategy sellEntrustStrategy;
         if (buyEntrustStrategy == EntrustStrategy.CURRENT_PRICE) {
             sellEntrustStrategy = EntrustStrategy.CURRENT_PRICE;
         } else {
-            sellEntrustStrategy = ValuedEnumUtil.valueOf(OPPOSITE_ENTRUST_STRATEGY_SUM - entrustStrategy, EntrustStrategy.class);
+            sellEntrustStrategy = AutoAssemblers.getDefault()
+                                                .disassemble(OPPOSITE_ENTRUST_STRATEGY_SUM - entrustStrategy,
+                                                             EntrustStrategy.class);
         }
         BasicTradePlan buyPlan = new BasicTradePlan(ExchangeType.BUY, buyEntrustStrategy, tradeNumber);
         BasicTradePlan sellPlan = new BasicTradePlan(ExchangeType.SELL, sellEntrustStrategy, tradeNumber);

@@ -1,7 +1,7 @@
 package me.caosh.condition.infrastructure.rabbitmq;
 
-import hbec.intellitrade.common.ValuedEnumUtil;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
+import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
 import me.caosh.condition.domain.dto.order.assembler.ConditionOrderAssemblers;
 import me.caosh.condition.domain.dto.order.constants.OrderCommandType;
@@ -84,7 +84,9 @@ public class ConditionOrderConsumer {
     }
 
     private OrderCommandEvent create(ConditionOrderMonitorDTO dto) {
-        OrderCommandType orderCommandType = ValuedEnumUtil.valueOf(dto.getOrderCommandType(), OrderCommandType.class);
+        OrderCommandType orderCommandType = AutoAssemblers.getDefault()
+                                                          .disassemble(dto.getOrderCommandType(),
+                                                                       OrderCommandType.class);
         switch (orderCommandType) {
             case SAVE:
                 ConditionOrder conditionOrder = ConditionOrderAssemblers.dtoSupported()
