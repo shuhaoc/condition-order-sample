@@ -1,7 +1,6 @@
 package hbec.intellitrade.strategy.domain.factor;
 
 import me.caosh.autoasm.ConvertibleEnum;
-import hbec.intellitrade.common.ValuedEnum;
 
 /**
  * 函数化的比较操作符
@@ -10,7 +9,7 @@ import hbec.intellitrade.common.ValuedEnum;
  * @date 2018/1/29
  */
 @SuppressWarnings("unchecked")
-public enum CompareOperator implements BinaryFactor<Comparable>, ValuedEnum<Integer>, ConvertibleEnum<Integer> {
+public enum CompareOperator implements BinaryFactor<Comparable>, ConvertibleEnum<Integer> {
     /**
      * 小于等于
      */

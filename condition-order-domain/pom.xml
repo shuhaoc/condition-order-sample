@@ -29,12 +29,7 @@
         </dependency>
         <dependency>
             <groupId>me.caosh</groupId>
-            <artifactId>auto-assembler-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>me.caosh</groupId>
             <artifactId>auto-assembler</artifactId>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
     <build>

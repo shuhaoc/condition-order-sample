@@ -1,7 +1,6 @@
 package hbec.intellitrade.condorder.domain.tradeplan;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.common.ValuedEnum;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import me.caosh.autoasm.ConvertibleEnum;
 
@@ -11,7 +10,7 @@ import java.math.BigDecimal;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/3/13
  */
-public enum OfferedPriceSelector implements ValuedEnum<Integer>, ConvertibleEnum<Integer> {
+public enum OfferedPriceSelector implements ConvertibleEnum<Integer> {
     CURRENT_PRICE(1) {
         @Override
         public BigDecimal selectOfferedPrice(RealTimeMarket realTimeMarket) {

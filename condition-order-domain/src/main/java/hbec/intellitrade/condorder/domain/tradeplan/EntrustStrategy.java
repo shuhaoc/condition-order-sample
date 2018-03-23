@@ -1,12 +1,11 @@
 package hbec.intellitrade.condorder.domain.tradeplan;
 
-import hbec.intellitrade.common.ValuedEnum;
 import me.caosh.autoasm.ConvertibleEnum;
 
 /**
  * Created by caosh on 2017/8/2.
  */
-public enum EntrustStrategy implements ValuedEnum<Integer>, ConvertibleEnum<Integer> {
+public enum EntrustStrategy implements ConvertibleEnum<Integer> {
     ASSIGNED_PRICE(0),
     CURRENT_PRICE(1),
     SELL5(2),

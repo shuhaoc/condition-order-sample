@@ -1,13 +1,12 @@
 package hbec.intellitrade.condorder.domain.strategyinfo;
 
-import hbec.intellitrade.common.ValuedEnum;
 import me.caosh.autoasm.ConvertibleEnum;
 
 /**
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/1
  */
-public enum NativeStrategyInfo implements StrategyInfo, ValuedEnum<Integer>, ConvertibleEnum<Integer> {
+public enum NativeStrategyInfo implements StrategyInfo, ConvertibleEnum<Integer> {
     /**
      * 价格条件单
      */

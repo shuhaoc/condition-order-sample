@@ -1,12 +1,11 @@
 package hbec.intellitrade.common.security;
 
 import me.caosh.autoasm.ConvertibleEnum;
-import hbec.intellitrade.common.ValuedEnum;
 
 /**
  * Created by caosh on 2017/8/1.
  */
-public enum SecurityType implements ValuedEnum<Integer>, ConvertibleEnum<Integer> {
+public enum SecurityType implements ConvertibleEnum<Integer> {
     STOCK(4),
     FUND(3);
 
