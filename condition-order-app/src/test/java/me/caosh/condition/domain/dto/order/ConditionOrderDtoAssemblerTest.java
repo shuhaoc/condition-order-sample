@@ -4,9 +4,9 @@ import hbec.intellitrade.common.market.index.IndexSource;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
-import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilder;
 import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
 import hbec.intellitrade.condorder.domain.orders.price.PriceConditionFacade;
 import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
@@ -24,10 +24,9 @@ import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import me.caosh.autoasm.AutoAssemblers;
-import me.caosh.autoasm.ConvertibleBuilder;
-import me.caosh.autoasm.MappedClass;
 import me.caosh.condition.domain.dto.market.SecurityInfoDTO;
 import me.caosh.condition.domain.dto.market.TrackedIndexDTO;
+import me.caosh.condition.infrastructure.assembler.ConditionOrderDtoAssembler;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.testng.annotations.Test;
@@ -132,13 +131,8 @@ public class ConditionOrderDtoAssemblerTest {
 
         assertEquals(assemble.toString(), conditionOrderDTO.toString());
 
-
-        Class<? extends ConvertibleBuilder> conditionBuilderClass =
-                conditionOrderDTO.getCondition().getClass().getAnnotation(MappedClass.class).builderClass();
-        PriceOrder disassemble = (PriceOrder) AutoAssemblers.getDefault()
-                                                            .useBuilder(new ConditionOrderBuilder(conditionBuilderClass))
-                                                            .disassemble(conditionOrderDTO)
-                                                            .build();
+        ConditionOrder disassemble = ConditionOrderDtoAssembler.disassemble(conditionOrderDTO);
         assertEquals(disassemble, priceOrder);
     }
+
 }
