@@ -13,7 +13,7 @@ import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceCondition;
 import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
 import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
-import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
+import hbec.intellitrade.condorder.domain.tradeplan.BaseTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmInfo;
@@ -65,9 +65,9 @@ public class ConditionOrderRepositoryTest extends AbstractTestNGSpringContextTes
                                                        new DeviationCtrlInfo(new BigDecimal("1.00")),
                                                        0),
                                                LocalDateTime.parse("2018-03-09T15:00:00"),
-                                               new BasicTradePlan(ExchangeType.BUY,
-                                                                  EntrustStrategy.CURRENT_PRICE,
-                                                                  new TradeNumberDirect(100)),
+                                               new BaseTradePlan(ExchangeType.BUY,
+                                                                 EntrustStrategy.CURRENT_PRICE,
+                                                                 new TradeNumberDirect(100)),
                                                new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"),
                                                new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                                                  new LocalTimeRange(LocalTime.parse("10:00:00"),

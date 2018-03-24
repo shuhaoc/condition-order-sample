@@ -13,7 +13,7 @@ import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.trackindex.NoneTrackedIndex;
 import hbec.intellitrade.condorder.domain.trackindex.TrackIndexOption;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
-import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
+import hbec.intellitrade.condorder.domain.tradeplan.BaseTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
 import hbec.intellitrade.condorder.domain.trigger.BasicTriggerTradingContext;
@@ -30,13 +30,7 @@ import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
-import hbec.intellitrade.trade.domain.EntrustCommand;
-import hbec.intellitrade.trade.domain.EntrustOrderInfo;
-import hbec.intellitrade.trade.domain.EntrustOrderWriter;
-import hbec.intellitrade.trade.domain.EntrustSuccessResult;
-import hbec.intellitrade.trade.domain.ExchangeType;
-import hbec.intellitrade.trade.domain.OrderType;
-import hbec.intellitrade.trade.domain.TradeCustomer;
+import hbec.intellitrade.trade.domain.*;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.mockito.Matchers;
@@ -89,15 +83,15 @@ public class PriceOrderTest {
 
         PriceOrder priceOrder1 = new PriceOrder(123L, tradeCustomerInfo, OrderState.ACTIVE, pfyh,
                                                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
-                                                new BasicTradePlan(exchangeType,
-                                                                   EntrustStrategy.CURRENT_PRICE,
-                                                                   new TradeNumberDirect(100))
+                                                new BaseTradePlan(exchangeType,
+                                                                  EntrustStrategy.CURRENT_PRICE,
+                                                                  new TradeNumberDirect(100))
         );
         PriceOrder priceOrder2 = new PriceOrder(123L, tradeCustomerInfo, OrderState.ACTIVE, pfyh,
                                                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
-                                                new BasicTradePlan(exchangeType,
-                                                                   EntrustStrategy.CURRENT_PRICE,
-                                                                   new TradeNumberDirect(100))
+                                                new BaseTradePlan(exchangeType,
+                                                                  EntrustStrategy.CURRENT_PRICE,
+                                                                  new TradeNumberDirect(100))
         );
 
         System.out.println(priceOrder1);
@@ -114,9 +108,9 @@ public class PriceOrderTest {
                                                tradeCustomerInfo,
                                                OrderState.ACTIVE, pfyh,
                                                new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
-                                               new BasicTradePlan(exchangeType,
-                                                                  EntrustStrategy.CURRENT_PRICE,
-                                                                  new TradeNumberDirect(100))
+                                               new BaseTradePlan(exchangeType,
+                                                                 EntrustStrategy.CURRENT_PRICE,
+                                                                 new TradeNumberDirect(100))
         );
         assertEquals(priceOrder.getTrackedIndex(), NoneTrackedIndex.NONE);
 
@@ -170,9 +164,9 @@ public class PriceOrderTest {
                                                        DisabledDeviationCtrl.DISABLED,
                                                        0),
                                                LocalDateTime.parse("2018-03-06T10:00:00"),
-                                               new BasicTradePlan(exchangeType,
-                                                                  EntrustStrategy.CURRENT_PRICE,
-                                                                  new TradeNumberDirect(100)),
+                                               new BaseTradePlan(exchangeType,
+                                                                 EntrustStrategy.CURRENT_PRICE,
+                                                                 new TradeNumberDirect(100)),
                                                NoneTrackedIndex.NONE,
                                                NoneMonitorTimeRange.NONE
         );
@@ -195,9 +189,9 @@ public class PriceOrderTest {
                                                 OrderState.ACTIVE,
                                                 pfyh,
                                                 new PriceCondition(CompareOperator.LE, new BigDecimal("13.00")),
-                                                new BasicTradePlan(ExchangeType.BUY,
-                                                                   EntrustStrategy.CURRENT_PRICE,
-                                                                   new TradeNumberDirect(100))
+                                                new BaseTradePlan(ExchangeType.BUY,
+                                                                  EntrustStrategy.CURRENT_PRICE,
+                                                                  new TradeNumberDirect(100))
         );
 
         assertEquals(((DecoratedPriceCondition) priceOrder1.getCondition()).getDelayConfirm(),
@@ -212,9 +206,9 @@ public class PriceOrderTest {
                                                         DisabledDeviationCtrl.DISABLED,
                                                         0),
                                                 LocalDateTime.now().plusDays(1),
-                                                new BasicTradePlan(ExchangeType.BUY,
-                                                                   EntrustStrategy.CURRENT_PRICE,
-                                                                   new TradeNumberDirect(100)),
+                                                new BaseTradePlan(ExchangeType.BUY,
+                                                                  EntrustStrategy.CURRENT_PRICE,
+                                                                  new TradeNumberDirect(100)),
                                                 NoneTrackedIndex.NONE,
                                                 NoneMonitorTimeRange.NONE);
 
@@ -237,9 +231,9 @@ public class PriceOrderTest {
                                                        DisabledDeviationCtrl.DISABLED,
                                                        0),
                                                LocalDateTime.now().plusDays(1),
-                                               new BasicTradePlan(ExchangeType.BUY,
-                                                                  EntrustStrategy.CURRENT_PRICE,
-                                                                  new TradeNumberDirect(100)),
+                                               new BaseTradePlan(ExchangeType.BUY,
+                                                                 EntrustStrategy.CURRENT_PRICE,
+                                                                 new TradeNumberDirect(100)),
                                                NoneTrackedIndex.NONE,
                                                NoneMonitorTimeRange.NONE);
 
@@ -273,9 +267,9 @@ public class PriceOrderTest {
                                                        DisabledDeviationCtrl.DISABLED,
                                                        0),
                                                LocalDateTime.now().plusDays(1),
-                                               new BasicTradePlan(ExchangeType.BUY,
-                                                                  EntrustStrategy.CURRENT_PRICE,
-                                                                  new TradeNumberDirect(100)),
+                                               new BaseTradePlan(ExchangeType.BUY,
+                                                                 EntrustStrategy.CURRENT_PRICE,
+                                                                 new TradeNumberDirect(100)),
                                                NoneTrackedIndex.NONE,
                                                new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                                                  new LocalTimeRange(LocalTime.parse("10:00:00"),
@@ -306,9 +300,9 @@ public class PriceOrderTest {
                                                        new DeviationCtrlInfo(new BigDecimal("1")),
                                                        0),
                                                LocalDateTime.now().plusDays(1),
-                                               new BasicTradePlan(ExchangeType.BUY,
-                                                                  EntrustStrategy.CURRENT_PRICE,
-                                                                  new TradeNumberDirect(100)),
+                                               new BaseTradePlan(ExchangeType.BUY,
+                                                                 EntrustStrategy.CURRENT_PRICE,
+                                                                 new TradeNumberDirect(100)),
                                                NoneTrackedIndex.NONE,
                                                NoneMonitorTimeRange.NONE);
 
@@ -335,9 +329,9 @@ public class PriceOrderTest {
                                                        new DeviationCtrlInfo(new BigDecimal("1")),
                                                        0),
                                                LocalDateTime.now().plusDays(1),
-                                               new BasicTradePlan(ExchangeType.BUY,
-                                                                  EntrustStrategy.CURRENT_PRICE,
-                                                                  new TradeNumberDirect(100)),
+                                               new BaseTradePlan(ExchangeType.BUY,
+                                                                 EntrustStrategy.CURRENT_PRICE,
+                                                                 new TradeNumberDirect(100)),
                                                NoneTrackedIndex.NONE,
                                                NoneMonitorTimeRange.NONE);
 
@@ -371,9 +365,9 @@ public class PriceOrderTest {
                                                        new DeviationCtrlInfo(new BigDecimal("1")),
                                                        0),
                                                LocalDateTime.now().plusDays(1),
-                                               new BasicTradePlan(ExchangeType.BUY,
-                                                                  EntrustStrategy.CURRENT_PRICE,
-                                                                  new TradeNumberDirect(100)),
+                                               new BaseTradePlan(ExchangeType.BUY,
+                                                                 EntrustStrategy.CURRENT_PRICE,
+                                                                 new TradeNumberDirect(100)),
                                                new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"),
                                                NoneMonitorTimeRange.NONE);
 

@@ -9,7 +9,7 @@ import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfoBuilder;
-import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
+import hbec.intellitrade.condorder.domain.tradeplan.BaseTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanBuilder;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRangeBuilder;
@@ -140,16 +140,16 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
                                   securityInfo.build(),
                                   (DecoratedPriceCondition) condition.build(),
                                   expireTime,
-                                  (BasicTradePlan) tradePlan.build(),
+                                  (BaseTradePlan) tradePlan.build(),
                                   trackedIndex.build(),
                                   monitorTimeRange.build()
             );
 //        } else if (strategyInfo == NativeStrategyInfo.TURN_POINT) {
 //            return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,
-//                                      null, (BasicTradePlan) tradePlan, orderState);
+//                                      null, (BaseTradePlan) tradePlan, orderState);
 //        } else if (strategyInfo == NativeStrategyInfo.TIME) {
 //            return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, (TimeReachedCondition) condition, expireTime,
-//                                 (BasicTradePlan) tradePlan, orderState);
+//                                 (BaseTradePlan) tradePlan, orderState);
 //        } else if (strategyInfo == NativeStrategyInfo.GRID) {
 //            return new GridTradeOrder(orderId, tradeCustomerInfo, securityInfo, (GridCondition) condition,
 //                                      null, (DoubleDirectionTradePlan) tradePlan, orderState);

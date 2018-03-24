@@ -5,7 +5,7 @@ import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
-import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
+import hbec.intellitrade.condorder.domain.tradeplan.BaseTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumber;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberFactory;
@@ -36,7 +36,7 @@ public class TimeOrderCommandAssembler {
                                                                      EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        BasicTradePlan tradePlan = new BasicTradePlan(exchangeType, entrustStrategy, tradeNumber);
+        BaseTradePlan tradePlan = new BaseTradePlan(exchangeType, entrustStrategy, tradeNumber);
         return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, timeReachedCondition, null, tradePlan, orderState);
     }
 
@@ -50,7 +50,7 @@ public class TimeOrderCommandAssembler {
                                                                      EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        BasicTradePlan tradePlan = new BasicTradePlan(exchangeType, entrustStrategy, tradeNumber);
+        BaseTradePlan tradePlan = new BaseTradePlan(exchangeType, entrustStrategy, tradeNumber);
         return new TimeOrder(oldOrder.getOrderId(), oldOrder.getCustomer(),
                 oldOrder.getSecurityInfo(), timeReachedCondition, null, tradePlan, orderState);
     }

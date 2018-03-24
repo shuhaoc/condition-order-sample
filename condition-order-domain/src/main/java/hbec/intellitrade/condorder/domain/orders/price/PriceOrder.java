@@ -9,7 +9,7 @@ import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.condorder.domain.trackindex.NoneTrackedIndex;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndex;
-import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
+import hbec.intellitrade.condorder.domain.tradeplan.BaseTradePlan;
 import hbec.intellitrade.strategy.domain.MarketClosedEventListener;
 import hbec.intellitrade.strategy.domain.MutableStrategy;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
@@ -56,7 +56,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
                       OrderState orderState,
                       SecurityInfo securityInfo,
                       PriceCondition priceCondition,
-                      BasicTradePlan tradePlan) {
+                      BaseTradePlan tradePlan) {
         this(orderId,
              tradeCustomerInfo,
              orderState,
@@ -92,7 +92,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
                       SecurityInfo securityInfo,
                       DecoratedPriceCondition condition,
                       LocalDateTime expireTime,
-                      BasicTradePlan tradePlan,
+                      BaseTradePlan tradePlan,
                       TrackedIndex trackedIndexInfo,
                       MonitorTimeRange monitorTimeRange) {
         super(orderId,

@@ -14,21 +14,21 @@ import hbec.intellitrade.trade.domain.ExchangeType;
  * Created by caosh on 2017/8/24.
  */
 public class DoubleDirectionTradePlan implements SingleEntrustTradePlan {
-    private final BasicTradePlan buyPlan;
-    private final BasicTradePlan sellPlan;
+    private final BaseTradePlan buyPlan;
+    private final BaseTradePlan sellPlan;
 
-    public DoubleDirectionTradePlan(BasicTradePlan buyPlan, BasicTradePlan sellPlan) {
+    public DoubleDirectionTradePlan(BaseTradePlan buyPlan, BaseTradePlan sellPlan) {
         Preconditions.checkArgument(buyPlan.getExchangeType() == ExchangeType.BUY);
         Preconditions.checkArgument(sellPlan.getExchangeType() == ExchangeType.SELL);
         this.buyPlan = buyPlan;
         this.sellPlan = sellPlan;
     }
 
-    public BasicTradePlan getBuyPlan() {
+    public BaseTradePlan getBuyPlan() {
         return buyPlan;
     }
 
-    public BasicTradePlan getSellPlan() {
+    public BaseTradePlan getSellPlan() {
         return sellPlan;
     }
 

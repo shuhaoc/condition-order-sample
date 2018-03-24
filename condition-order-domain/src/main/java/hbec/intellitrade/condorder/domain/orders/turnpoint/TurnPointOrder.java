@@ -7,7 +7,7 @@ import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
-import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
+import hbec.intellitrade.condorder.domain.tradeplan.BaseTradePlan;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;
@@ -27,7 +27,7 @@ public class TurnPointOrder extends AbstractSimpleMarketConditionOrder {
                           SecurityInfo securityInfo,
                           TurnPointCondition turnPointCondition,
                           LocalDateTime expireTime,
-                          BasicTradePlan tradePlan) {
+                          BaseTradePlan tradePlan) {
         super(orderId,
               tradeCustomerInfo,
               orderState,

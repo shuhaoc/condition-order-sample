@@ -7,7 +7,7 @@ import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointCondition;
 import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointOrder;
-import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
+import hbec.intellitrade.condorder.domain.tradeplan.BaseTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumber;
 import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberFactory;
@@ -38,7 +38,7 @@ public class TurnPointOrderCommandAssembler {
                                                                      EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        BasicTradePlan tradePlan = new BasicTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
+        BaseTradePlan tradePlan = new BaseTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
         return new TurnPointOrder(orderId, tradeCustomerInfo, orderState, securityInfo,
                                   turnPointCondition, null, tradePlan);
     }
@@ -56,7 +56,7 @@ public class TurnPointOrderCommandAssembler {
                                                                      EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        BasicTradePlan tradePlan = new BasicTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
+        BaseTradePlan tradePlan = new BaseTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
         return new TurnPointOrder(oldOrder.getOrderId(), oldOrder.getCustomer(), orderState, oldOrder.getSecurityInfo(),
                                   turnPointCondition, null, tradePlan);
     }

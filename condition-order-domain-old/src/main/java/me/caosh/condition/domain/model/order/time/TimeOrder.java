@@ -7,7 +7,7 @@ import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
-import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
+import hbec.intellitrade.condorder.domain.tradeplan.BaseTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import hbec.intellitrade.strategy.domain.condition.Condition;
@@ -25,11 +25,11 @@ public class TimeOrder extends AbstractExplicitTradingSecurityOrder implements T
     private static final Logger logger = LoggerFactory.getLogger(TimeOrder.class);
 
     private final TimeReachedCondition timeReachedCondition;
-    private final BasicTradePlan tradePlan;
+    private final BaseTradePlan tradePlan;
 
     public TimeOrder(Long orderId, TradeCustomerInfo tradeCustomerInfo, SecurityInfo securityInfo,
                      TimeReachedCondition timeCondition, LocalDateTime expireTime,
-                     BasicTradePlan tradePlan, OrderState orderState) {
+                     BaseTradePlan tradePlan, OrderState orderState) {
         super(orderId, tradeCustomerInfo, orderState, securityInfo, expireTime);
         this.timeReachedCondition = timeCondition;
         this.tradePlan = tradePlan;

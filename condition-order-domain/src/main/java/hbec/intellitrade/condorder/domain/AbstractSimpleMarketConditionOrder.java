@@ -2,19 +2,19 @@ package hbec.intellitrade.condorder.domain;
 
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndex;
-import hbec.intellitrade.condorder.domain.tradeplan.BasicTradePlan;
+import hbec.intellitrade.condorder.domain.tradeplan.BaseTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
 import org.joda.time.LocalDateTime;
 
 /**
- * 简单行情条件单，指交易计划为{@link BasicTradePlan}的一次性触发的条件单
+ * 简单行情条件单，指交易计划为{@link BaseTradePlan}的一次性触发的条件单
  *
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/20
  */
 public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketConditionOrder {
-    private final BasicTradePlan tradePlan;
+    private final BaseTradePlan tradePlan;
 
     public AbstractSimpleMarketConditionOrder(Long orderId,
                                               TradeCustomerInfo tradeCustomerInfo,
@@ -23,7 +23,7 @@ public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketC
                                               TrackedIndex trackedIndexInfo,
                                               LocalDateTime expireTime,
                                               MonitorTimeRange monitorTimeRange,
-                                              BasicTradePlan tradePlan) {
+                                              BaseTradePlan tradePlan) {
         super(orderId,
               tradeCustomerInfo,
               orderState,

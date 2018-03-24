@@ -17,12 +17,12 @@ import java.math.BigDecimal;
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/23
  */
-public class BasicTradePlan implements SingleEntrustTradePlan {
+public class BaseTradePlan implements SingleEntrustTradePlan {
     private final ExchangeType exchangeType;
     private final EntrustStrategy entrustStrategy;
     private final TradeNumber tradeNumber;
 
-    public BasicTradePlan(ExchangeType exchangeType, EntrustStrategy entrustStrategy, TradeNumber tradeNumber) {
+    public BaseTradePlan(ExchangeType exchangeType, EntrustStrategy entrustStrategy, TradeNumber tradeNumber) {
         this.exchangeType = exchangeType;
         this.entrustStrategy = entrustStrategy;
         this.tradeNumber = tradeNumber;
@@ -54,11 +54,11 @@ public class BasicTradePlan implements SingleEntrustTradePlan {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof BasicTradePlan)) {
+        if (!(o instanceof BaseTradePlan)) {
             return false;
         }
 
-        BasicTradePlan that = (BasicTradePlan) o;
+        BaseTradePlan that = (BaseTradePlan) o;
 
         if (exchangeType != that.exchangeType) {
             return false;
@@ -80,10 +80,10 @@ public class BasicTradePlan implements SingleEntrustTradePlan {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(BasicTradePlan.class).omitNullValues()
-                .add("exchangeType", exchangeType)
-                .add("entrustStrategy", entrustStrategy)
-                .add("tradeNumber", tradeNumber)
-                .toString();
+        return MoreObjects.toStringHelper(BaseTradePlan.class).omitNullValues()
+                          .add("exchangeType", exchangeType)
+                          .add("entrustStrategy", entrustStrategy)
+                          .add("tradeNumber", tradeNumber)
+                          .toString();
     }
 }
