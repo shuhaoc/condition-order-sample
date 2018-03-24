@@ -1,8 +1,8 @@
 package me.caosh.condition.domain.container;
 
 import hbec.intellitrade.common.market.MarketID;
+import hbec.intellitrade.common.market.MarketType;
 import hbec.intellitrade.common.market.RealTimeMarket;
-import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
@@ -26,7 +26,7 @@ import static org.testng.Assert.assertTrue;
  */
 public class StrategyContainerTest {
 
-    private static final MarketID MARKET_ID = new MarketID(SecurityType.STOCK, "600000");
+    private static final MarketID MARKET_ID = new MarketID(MarketType.STOCK, "600000");
     private static final PriceCondition PRICE_CONDITION = new PriceCondition(CompareOperator.GE, new BigDecimal("10.00"));
 
     @Test
@@ -53,7 +53,7 @@ public class StrategyContainerTest {
                 new PriceCondition(CompareOperator.GE, new BigDecimal("11.00")));
         container.add(testPriceStrategy2);
         assertEquals(testPriceStrategy1, testPriceStrategy2);
-        assertTrue(container.getBucket(new MarketID(SecurityType.FUND, "510050")).isEmpty());
+        assertTrue(container.getBucket(new MarketID(MarketType.FUND, "510050")).isEmpty());
         assertEquals(container.getBucket(MARKET_ID).size(), 1);
         assertEquals(container.getBucket(MARKET_ID).iterator().next(), testPriceStrategy1);
 
@@ -70,12 +70,11 @@ public class StrategyContainerTest {
         TestPriceStrategy testPriceStrategy = new TestPriceStrategy(1, MARKET_ID, PRICE_CONDITION);
         container.add(testPriceStrategy);
 
-        RealTimeMarket realTimeMarket1 = new RealTimeMarket(new MarketID(SecurityType.STOCK, "600012"),
-                new BigDecimal("10.99"), new BigDecimal("11.00"), Collections.<BigDecimal>emptyList(), LocalDateTime.now());
+        RealTimeMarket realTimeMarket1 = MockMarkets.withCurrentPrice(new MarketID(MarketType.STOCK, "600012"),
+                                                                      new BigDecimal("10.99"));
         assertTrue(container.onMarketTicks(Collections.singleton(realTimeMarket1)).isEmpty());
 
-        RealTimeMarket realTimeMarket2 = new RealTimeMarket(MARKET_ID, new BigDecimal("10.00"), new BigDecimal("9.99"),
-                Collections.<BigDecimal>emptyList(), LocalDateTime.now());
+        RealTimeMarket realTimeMarket2 = MockMarkets.withCurrentPrice(new BigDecimal("10.00"));
         Collection<SignalPayload> signalPayloads = container.onMarketTicks(Collections.singleton(realTimeMarket2));
         assertEquals(signalPayloads.size(), 1);
         SignalPayload signalPayload = signalPayloads.iterator().next();

@@ -1,6 +1,7 @@
 package hbec.intellitrade.common.market;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Preconditions;
 import org.joda.time.LocalDateTime;
 
 import java.math.BigDecimal;
@@ -17,18 +18,6 @@ public class RealTimeMarket {
     private final LocalDateTime marketTime;
     private final LocalDateTime arriveTime;
 
-    @Deprecated
-    public RealTimeMarket(MarketID marketID, BigDecimal currentPrice, List<BigDecimal> offeredPrices) {
-        this(marketID, currentPrice, currentPrice, offeredPrices, LocalDateTime.now(), LocalDateTime.now());
-    }
-
-    @Deprecated
-    public RealTimeMarket(MarketID marketID, BigDecimal currentPrice,
-                          BigDecimal previousPrice,
-                          List<BigDecimal> offeredPrices) {
-        this(marketID, currentPrice, previousPrice, offeredPrices, LocalDateTime.now(), LocalDateTime.now());
-    }
-
     public RealTimeMarket(MarketID marketID,
                           BigDecimal currentPrice,
                           BigDecimal previousPrice,
@@ -37,12 +26,23 @@ public class RealTimeMarket {
         this(marketID, currentPrice, previousPrice, offeredPrices, marketTime, marketTime);
     }
 
+    /**
+     * 构造实时行情对象
+     *
+     * @param marketID      行情ID
+     * @param currentPrice  当前价
+     * @param previousPrice 昨收价
+     * @param offeredPrices 买卖五档价格，必须为10个元素，元素允许为空
+     * @param marketTime    行情时间
+     * @param arriveTime    行情到达时间
+     */
     public RealTimeMarket(MarketID marketID,
                           BigDecimal currentPrice,
                           BigDecimal previousPrice,
                           List<BigDecimal> offeredPrices,
                           LocalDateTime marketTime,
                           LocalDateTime arriveTime) {
+        Preconditions.checkArgument(offeredPrices.size() == 10, "Offered prices must be 10 elements");
         this.marketID = marketID;
         this.currentPrice = currentPrice;
         this.previousPrice = previousPrice;

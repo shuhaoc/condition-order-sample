@@ -1,8 +1,8 @@
 package me.caosh.condition.domain.container;
 
 import hbec.intellitrade.common.market.MarketID;
+import hbec.intellitrade.common.market.MarketType;
 import hbec.intellitrade.common.market.RealTimeMarket;
-import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
 import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointCondition;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
@@ -24,7 +24,7 @@ import static org.testng.Assert.*;
  * @date 2018/2/7
  */
 public class StrategyContainerMoreTest {
-    private static final MarketID MARKET_ID = new MarketID(SecurityType.STOCK, "600000");
+    private static final MarketID MARKET_ID = new MarketID(MarketType.STOCK, "600000");
     private static final PriceCondition PRICE_CONDITION = new PriceCondition(CompareOperator.GE, new BigDecimal("10.00"));
 
     @Test
