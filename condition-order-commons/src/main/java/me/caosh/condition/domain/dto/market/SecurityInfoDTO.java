@@ -19,7 +19,7 @@ public class SecurityInfoDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    @Range(min = 3, max = 4)
+    @Range(min = 3, max = 7)
     private Integer type;
     @NotBlank
     @Length(min = 6, max = 6)
