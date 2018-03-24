@@ -82,7 +82,8 @@ public class StrategyContainerMoreTest {
                                                                        new TurnPointCondition(CompareOperator.LE,
                                                                                               new BigDecimal(
                                                                                                            "10.00"),
-                                                                                              new BigDecimal("1.00")));
+                                                                                              new BigDecimal("1.00"),
+                                                                                              false));
         container.add(testTurnUpStrategy);
 
         RealTimeMarket realTimeMarket1 = MockMarkets.withCurrentPrice(new BigDecimal("9.00"));

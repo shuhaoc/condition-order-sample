@@ -32,7 +32,7 @@ public class TurnPointOrderCommandAssembler {
                 command.getSecurityName());
         TurnPointCondition turnPointCondition = new TurnPointCondition(CompareOperator.LE,
                                                                        command.getBreakPrice(),
-                                                                       command.getTurnUpPercent());
+                                                                       command.getTurnUpPercent(), false);
         EntrustStrategy entrustStrategy = AutoAssemblers.getDefault()
                                                         .disassemble(command.getEntrustStrategy(),
                                                                      EntrustStrategy.class);
@@ -47,7 +47,7 @@ public class TurnPointOrderCommandAssembler {
         OrderState orderState = OrderState.ACTIVE;
         TurnPointCondition turnPointCondition = new TurnPointCondition(CompareOperator.LE,
                                                                        command.getBreakPrice(),
-                                                                       command.getTurnUpPercent());
+                                                                       command.getTurnUpPercent(), false);
 //        if (turnPointCondition.isNeedSwap(oldOrder.getTurnPointCondition())) {
 //            turnPointCondition.swap(oldOrder.getTurnPointCondition());
 //        }

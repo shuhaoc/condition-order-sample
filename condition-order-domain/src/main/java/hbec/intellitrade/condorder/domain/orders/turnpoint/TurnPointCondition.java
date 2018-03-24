@@ -5,11 +5,7 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.strategy.domain.condition.AbstractMarketCondition;
 import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
-import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
-import hbec.intellitrade.strategy.domain.factor.CompareOperator;
-import hbec.intellitrade.strategy.domain.factor.InflexionFactor;
-import hbec.intellitrade.strategy.domain.factor.PercentBinaryTargetPriceFactor;
-import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
+import hbec.intellitrade.strategy.domain.factor.*;
 
 import java.math.BigDecimal;
 
@@ -24,13 +20,15 @@ public class TurnPointCondition extends AbstractMarketCondition implements Dynam
 
     public TurnPointCondition(CompareOperator compareOperator,
                               BigDecimal breakPrice,
-                              BigDecimal turnBackPercent) {
-        this(compareOperator, breakPrice, turnBackPercent, false, null);
+                              BigDecimal turnBackPercent,
+                              boolean useGuaranteedPrice) {
+        this(compareOperator, breakPrice, turnBackPercent, useGuaranteedPrice, false, null);
     }
 
     public TurnPointCondition(CompareOperator compareOperator,
                               BigDecimal breakPrice,
                               BigDecimal turnBackPercent,
+                              boolean useGuaranteedPrice,
                               boolean broken,
                               BigDecimal extremePrice) {
         if (compareOperator == CompareOperator.LE) {
@@ -45,8 +43,12 @@ public class TurnPointCondition extends AbstractMarketCondition implements Dynam
         this.inflexionFactor = new InflexionFactor(
                 new BasicTargetPriceFactor(CompareOperator.LE, breakPrice),
                 new PercentBinaryTargetPriceFactor(CompareOperator.GE, turnBackPercent),
-                false, broken,
+                useGuaranteedPrice, broken,
                 extremePrice);
+    }
+
+    public CompareOperator getCompareOperator() {
+        return inflexionFactor.getBreakPriceFactor().getCompareOperator();
     }
 
     public BigDecimal getBreakPrice() {
