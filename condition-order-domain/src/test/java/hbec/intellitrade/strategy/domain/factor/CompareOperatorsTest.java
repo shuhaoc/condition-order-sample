@@ -11,17 +11,17 @@ import static org.testng.Assert.assertEquals;
 public class CompareOperatorsTest {
     @Test
     public void testReverse() throws Exception {
-        assertEquals(CompareOperators.reverse(CompareOperator.GE), CompareOperator.LE);
-        assertEquals(CompareOperators.reverse(CompareOperator.LE), CompareOperator.GE);
-        assertEquals(CompareOperators.reverse(CompareOperator.GT), CompareOperator.LT);
-        assertEquals(CompareOperators.reverse(CompareOperator.LT), CompareOperator.GT);
+        assertEquals(CompareOperator.GE.reverse(), CompareOperator.LE);
+        assertEquals(CompareOperator.LE.reverse(), CompareOperator.GE);
+        assertEquals(CompareOperator.GT.reverse(), CompareOperator.LT);
+        assertEquals(CompareOperator.LT.reverse(), CompareOperator.GT);
     }
 
     @Test
     public void testNonEquals() throws Exception {
-        assertEquals(CompareOperators.nonEquals(CompareOperator.GE), CompareOperator.GT);
-        assertEquals(CompareOperators.nonEquals(CompareOperator.LE), CompareOperator.LT);
-        assertEquals(CompareOperators.nonEquals(CompareOperator.GT), CompareOperator.GT);
-        assertEquals(CompareOperators.nonEquals(CompareOperator.LT), CompareOperator.LT);
+        assertEquals(CompareOperator.GE.withoutEquals(), CompareOperator.GT);
+        assertEquals(CompareOperator.LE.withoutEquals(), CompareOperator.LT);
+        assertEquals(CompareOperator.GT.withoutEquals(), CompareOperator.GT);
+        assertEquals(CompareOperator.LT.withoutEquals(), CompareOperator.LT);
     }
 }

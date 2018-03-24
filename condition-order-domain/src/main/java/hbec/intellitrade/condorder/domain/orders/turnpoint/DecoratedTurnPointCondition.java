@@ -9,7 +9,6 @@ import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
-import hbec.intellitrade.strategy.domain.factor.CompareOperators;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 
 import java.math.BigDecimal;
@@ -43,7 +42,7 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
             // 穿越底线条件的价格方向，与拐点条件的突破条件方向相同，但是价格等于底线价时不满足条件
             CompareOperator compareOperator = turnPointCondition.getTargetPriceFactor().getCompareOperator();
             CrossBaselineCondition rawCrossBaselineCondition = new CrossBaselineCondition(
-                    CompareOperators.nonEquals(compareOperator),
+                    compareOperator.withoutEquals(),
                     baselinePrice);
             // 穿越底线条件仅支持延迟确认
             this.crossBaselineCondition = new DecoratedMarketCondition<>(rawCrossBaselineCondition,

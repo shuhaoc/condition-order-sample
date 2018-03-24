@@ -91,7 +91,7 @@ public class InflexionFactor implements TargetPriceFactor, DirtyFlag {
     }
 
     private CompareOperator getContinuousCompareOperator() {
-        return CompareOperators.nonEquals(breakPriceFactor.getCompareOperator());
+        return breakPriceFactor.getCompareOperator().withoutEquals();
     }
 
     public TargetPriceFactor getBreakPriceFactor() {
@@ -114,7 +114,7 @@ public class InflexionFactor implements TargetPriceFactor, DirtyFlag {
 
         // 保底价因子
         TargetPriceFactor guranteedPriceFactor = new BasicTargetPriceFactor(
-                CompareOperators.reverse(breakPriceFactor.getCompareOperator()),
+                breakPriceFactor.getCompareOperator().reverse(),
                 breakPriceFactor.getTargetPrice());
         // 折返至突破价或原定折返目标价都满足条件
         return new OrTargetPriceFactor(originTurnBackFactor, guranteedPriceFactor);
