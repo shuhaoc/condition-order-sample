@@ -5,6 +5,7 @@ import hbec.intellitrade.common.market.MarketType;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
 import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointCondition;
+import hbec.intellitrade.strategy.domain.factor.BinaryFactorType;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
@@ -80,9 +81,10 @@ public class StrategyContainerMoreTest {
                 NopStrategyWriter.INSTANCE);
         TestTurnUpStrategy testTurnUpStrategy = new TestTurnUpStrategy(1, MARKET_ID,
                                                                        new TurnPointCondition(CompareOperator.LE,
-                                                                                              new BigDecimal(
-                                                                                                           "10.00"),
+                                                                                              new BigDecimal("10.00"),
+                                                                                              BinaryFactorType.PERCENT,
                                                                                               new BigDecimal("1.00"),
+                                                                                              null,
                                                                                               false));
         container.add(testTurnUpStrategy);
 

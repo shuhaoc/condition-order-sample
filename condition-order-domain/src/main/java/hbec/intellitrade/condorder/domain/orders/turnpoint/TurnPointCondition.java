@@ -18,33 +18,85 @@ import java.math.BigDecimal;
 public class TurnPointCondition extends AbstractMarketCondition implements DynamicCondition {
     private final InflexionFactor inflexionFactor;
 
+    @Deprecated
     public TurnPointCondition(CompareOperator compareOperator,
                               BigDecimal breakPrice,
                               BigDecimal turnBackPercent,
                               boolean useGuaranteedPrice) {
-        this(compareOperator, breakPrice, turnBackPercent, useGuaranteedPrice, false, null);
+        this(compareOperator,
+             breakPrice,
+             BinaryFactorType.PERCENT,
+             turnBackPercent,
+             null,
+             useGuaranteedPrice,
+             false,
+             null
+        );
     }
 
     public TurnPointCondition(CompareOperator compareOperator,
                               BigDecimal breakPrice,
+                              BinaryFactorType binaryFactorType,
                               BigDecimal turnBackPercent,
+                              BigDecimal turnBackIncrement,
+                              boolean useGuaranteedPrice) {
+        this(compareOperator,
+             breakPrice,
+             binaryFactorType,
+             turnBackPercent,
+             turnBackIncrement,
+             useGuaranteedPrice,
+             false,
+             null);
+    }
+
+    public TurnPointCondition(CompareOperator compareOperator,
+                              BigDecimal breakPrice,
+                              BinaryFactorType binaryFactorType,
+                              BigDecimal turnBackPercent,
+                              BigDecimal turnBackIncrement,
                               boolean useGuaranteedPrice,
                               boolean broken,
                               BigDecimal extremePrice) {
-        if (compareOperator == CompareOperator.LE) {
-            Preconditions.checkArgument(turnBackPercent.compareTo(BigDecimal.ZERO) > 0,
+        if (compareOperator.getNumericalDirection() == NumericalDirection.LESS) {
+            Preconditions.checkArgument(turnBackPercent == null || turnBackPercent.compareTo(BigDecimal.ZERO) > 0,
                                         "Turn up percent should be greater than 0");
+            Preconditions.checkArgument(turnBackIncrement == null || turnBackIncrement.compareTo(BigDecimal.ZERO) > 0,
+                                        "Turn up increment should be greater than 0");
         }
-        if (compareOperator == CompareOperator.GE) {
-            Preconditions.checkArgument(turnBackPercent.compareTo(BigDecimal.ZERO) < 0,
+        if (compareOperator.getNumericalDirection() == NumericalDirection.GREATER) {
+            Preconditions.checkArgument(turnBackPercent == null || turnBackPercent.compareTo(BigDecimal.ZERO) < 0,
                                         "Turn down percent should be less than 0");
+            Preconditions.checkArgument(turnBackIncrement == null || turnBackIncrement.compareTo(BigDecimal.ZERO) < 0,
+                                        "Turn down increment should be less than 0");
         }
 
+        BinaryTargetPriceFactor turnBackFactor = createTurnBackFactor(
+                compareOperator.reverse(),
+                binaryFactorType,
+                turnBackPercent,
+                turnBackIncrement);
         this.inflexionFactor = new InflexionFactor(
-                new BasicTargetPriceFactor(CompareOperator.LE, breakPrice),
-                new PercentBinaryTargetPriceFactor(CompareOperator.GE, turnBackPercent),
-                useGuaranteedPrice, broken,
+                new BasicTargetPriceFactor(compareOperator, breakPrice),
+                turnBackFactor,
+                useGuaranteedPrice,
+                broken,
                 extremePrice);
+    }
+
+    private BinaryTargetPriceFactor createTurnBackFactor(CompareOperator compareOperator,
+                                                         BinaryFactorType binaryFactorType,
+                                                         BigDecimal turnBackPercent,
+                                                         BigDecimal turnBackIncrement) {
+        BinaryTargetPriceFactor turnBackFactor;
+        if (binaryFactorType == BinaryFactorType.PERCENT) {
+            turnBackFactor = new PercentBinaryTargetPriceFactor(compareOperator, turnBackPercent);
+        } else if (binaryFactorType == BinaryFactorType.INCREMENT) {
+            turnBackFactor = new IncrementBinaryTargetPriceFactor(compareOperator, turnBackIncrement);
+        } else {
+            throw new IllegalArgumentException("binaryFactorType=" + binaryFactorType);
+        }
+        return turnBackFactor;
     }
 
     public CompareOperator getCompareOperator() {
