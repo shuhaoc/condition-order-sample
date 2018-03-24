@@ -22,9 +22,9 @@ import org.joda.time.LocalDateTime;
 /**
  * 价格条件单
  * <p>
- * 一次性条件单，触发条件为到价触发，使用通用的单向交易计划
+ * 触发条件为到价触发，交易计划为单次委托，触发一次后立即正常终止
  * <p>
- * 支持的特性：
+ * 支持的条件特性：
  * <ol>
  * <li>跟踪指数</li>
  * <li>监控时段</li>
@@ -81,7 +81,7 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
      * @param orderState        条件单状态
      * @param securityInfo      交易证券信息
      * @param condition         组合行情条件，包含价格条件、延迟确认、偏差控制等因子
-     * @param expireTime        过期时间，可为空
+     * @param expireTime        过期时间，空视为永久有效
      * @param tradePlan         交易计划
      * @param trackedIndexInfo  跟踪指数信息
      * @param monitorTimeRange  监控时段

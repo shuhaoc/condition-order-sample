@@ -22,6 +22,9 @@ public abstract class AbstractConditionOrder implements ConditionOrder {
     private final Long orderId;
     private final TradeCustomerInfo tradeCustomerInfo;
     private OrderState orderState;
+    /**
+     * 过期时间，空视为永久有效
+     */
     private final LocalDateTime expireTime;
 
     public AbstractConditionOrder(Long orderId,
