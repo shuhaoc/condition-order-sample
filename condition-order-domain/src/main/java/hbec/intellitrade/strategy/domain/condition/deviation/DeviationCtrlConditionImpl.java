@@ -60,7 +60,6 @@ public class DeviationCtrlConditionImpl implements DeviationCtrlCondition, Predi
         BigDecimal targetPrice = targetPriceFactor.getTargetPrice();
 
         // 偏差控制允许的区间
-        // TODO: 是否可以不使用区间，直接使用>=或<=
         Range<BigDecimal> deviationLimitedRange = BigDecimalRanges.openCenterWithPercent(
                 targetPrice, limitPercent);
 
