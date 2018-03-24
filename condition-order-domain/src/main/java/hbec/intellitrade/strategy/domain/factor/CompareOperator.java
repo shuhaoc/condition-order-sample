@@ -13,7 +13,7 @@ public enum CompareOperator implements BinaryFactor<Comparable>, ConvertibleEnum
     /**
      * 小于等于
      */
-    LE(0, "<=") {
+    LE(0, NumericalDirection.LESS, "<=") {
         @Override
         public boolean apply(Comparable a, Comparable b) {
             return a.compareTo(b) <= 0;
@@ -26,14 +26,14 @@ public enum CompareOperator implements BinaryFactor<Comparable>, ConvertibleEnum
 
         @Override
         public CompareOperator withoutEquals() {
-            return GT;
+            return LT;
         }
     },
 
     /**
      * 大于等于
      */
-    GE(1, ">=") {
+    GE(1, NumericalDirection.GREATER, ">=") {
         @Override
         public boolean apply(Comparable a, Comparable b) {
             return a.compareTo(b) >= 0;
@@ -50,7 +50,7 @@ public enum CompareOperator implements BinaryFactor<Comparable>, ConvertibleEnum
         }
     },
 
-    LT(3, "<") {
+    LT(3, NumericalDirection.LESS, "<") {
         @Override
         public boolean apply(Comparable a, Comparable b) {
             return a.compareTo(b) < 0;
@@ -67,7 +67,7 @@ public enum CompareOperator implements BinaryFactor<Comparable>, ConvertibleEnum
         }
     },
 
-    GT(4, ">") {
+    GT(4, NumericalDirection.GREATER, ">") {
         @Override
         public boolean apply(Comparable a, Comparable b) {
             return a.compareTo(b) > 0;
@@ -90,18 +90,28 @@ public enum CompareOperator implements BinaryFactor<Comparable>, ConvertibleEnum
     int value;
 
     /**
+     * 对应的数值变化方向
+     */
+    NumericalDirection numericalDirection;
+
+    /**
      * 数学符合，用于日志打印
      */
     String mathSign;
 
-    CompareOperator(int value, String mathSign) {
+    CompareOperator(int value, NumericalDirection numericalDirection, String mathSign) {
         this.value = value;
+        this.numericalDirection = numericalDirection;
         this.mathSign = mathSign;
     }
 
     @Override
     public Integer getValue() {
         return value;
+    }
+
+    public NumericalDirection getNumericalDirection() {
+        return numericalDirection;
     }
 
     public String getMathSign() {
