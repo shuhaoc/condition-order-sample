@@ -61,7 +61,7 @@ public class CustomizedPriceTradePlan extends BaseTradePlan {
         return new EntrustCommand(securityInfo,
                                   getExchangeType(),
                                   entrustPrice,
-                                  getTradeNumber().getNumber(entrustPrice),
+                                  getTradeNumber().getNumber(securityInfo, entrustPrice),
                                   OrderType.LIMITED);
     }
 

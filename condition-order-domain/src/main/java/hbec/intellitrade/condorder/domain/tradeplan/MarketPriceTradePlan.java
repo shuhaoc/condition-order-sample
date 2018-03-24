@@ -62,7 +62,7 @@ public class MarketPriceTradePlan extends BaseTradePlan {
             return new EntrustCommand(securityInfo,
                                       getExchangeType(),
                                       null,
-                                      tradeNumber.getNumber(currentPrice),
+                                      tradeNumber.getNumber(securityInfo, currentPrice),
                                       orderType);
         } else {
             throw new IllegalArgumentException("tradeNumber=" + tradeNumber);

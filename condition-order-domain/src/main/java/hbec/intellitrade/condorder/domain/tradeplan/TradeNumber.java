@@ -1,5 +1,7 @@
 package hbec.intellitrade.condorder.domain.tradeplan;
 
+import hbec.intellitrade.common.security.SecurityInfo;
+
 import java.math.BigDecimal;
 
 /**
@@ -19,8 +21,10 @@ public interface TradeNumber {
     /**
      * 基于给定的委托价格计算委托数量
      *
+     *
+     * @param securityInfo
      * @param entrustPrice 委托价格
      * @return 委托数量
      */
-    int getNumber(BigDecimal entrustPrice);
+    int getNumber(SecurityInfo securityInfo, BigDecimal entrustPrice);
 }

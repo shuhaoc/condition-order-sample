@@ -1,11 +1,16 @@
 package hbec.intellitrade.condorder.domain.tradeplan;
 
 import com.google.common.base.MoreObjects;
+import hbec.intellitrade.common.security.SecurityInfo;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
- * Created by caosh on 2017/8/17.
+ * 数量下单计算方法
+ *
+ * @author caosh/caoshuhao@touker.com
+ * @date 2017/8/17
  */
 public class TradeNumberDirect implements TradeNumber {
     private final int number;
@@ -20,7 +25,7 @@ public class TradeNumberDirect implements TradeNumber {
     }
 
     @Override
-    public int getNumber(BigDecimal entrustPrice) {
+    public int getNumber(SecurityInfo securityInfo, BigDecimal entrustPrice) {
         return number;
     }
 
@@ -30,25 +35,25 @@ public class TradeNumberDirect implements TradeNumber {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TradeNumberDirect)) return false;
-
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         TradeNumberDirect that = (TradeNumberDirect) o;
-
         return number == that.number;
-
     }
 
     @Override
     public int hashCode() {
-        return number;
+        return Objects.hash(number);
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("number", number)
-                .toString();
+        return MoreObjects.toStringHelper(TradeNumberDirect.class).omitNullValues()
+                          .addValue(number)
+                          .toString();
     }
-
 }
