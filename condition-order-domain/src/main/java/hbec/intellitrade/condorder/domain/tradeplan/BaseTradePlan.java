@@ -12,20 +12,25 @@ import hbec.intellitrade.trade.domain.OrderType;
 import java.math.BigDecimal;
 
 /**
- * 基本的单向交易计划
+ * 单向交易计划基类
  *
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/23
  */
-public class BaseTradePlan implements SingleEntrustTradePlan {
+public abstract class BaseTradePlan implements SingleEntrustTradePlan {
     private final ExchangeType exchangeType;
     private final EntrustStrategy entrustStrategy;
     private final TradeNumber tradeNumber;
+    private final OrderType orderType;
 
-    public BaseTradePlan(ExchangeType exchangeType, EntrustStrategy entrustStrategy, TradeNumber tradeNumber) {
+    public BaseTradePlan(ExchangeType exchangeType,
+                         EntrustStrategy entrustStrategy,
+                         TradeNumber tradeNumber,
+                         OrderType orderType) {
         this.exchangeType = exchangeType;
         this.entrustStrategy = entrustStrategy;
         this.tradeNumber = tradeNumber;
+        this.orderType = orderType;
     }
 
     public ExchangeType getExchangeType() {
@@ -38,6 +43,10 @@ public class BaseTradePlan implements SingleEntrustTradePlan {
 
     public TradeNumber getTradeNumber() {
         return tradeNumber;
+    }
+
+    public OrderType getOrderType() {
+        return orderType;
     }
 
     @Override

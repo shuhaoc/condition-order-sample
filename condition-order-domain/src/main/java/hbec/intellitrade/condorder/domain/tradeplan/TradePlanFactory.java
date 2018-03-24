@@ -34,7 +34,7 @@ public class TradePlanFactory {
                                                            .disassemble(entrustStrategy, EntrustStrategy.class);
         ExchangeType theExchangeType = AutoAssemblers.getDefault()
                                                      .disassemble(exchangeType, ExchangeType.class);
-        return new BaseTradePlan(theExchangeType, theEntrustStrategy, tradeNumber);
+        return new OfferedPriceTradePlan(theExchangeType, theEntrustStrategy, tradeNumber);
     }
 
     public DoubleDirectionTradePlan createDouble(Integer entrustStrategy, Integer entrustMethod, Integer number, BigDecimal entrustAmount) {
@@ -49,8 +49,8 @@ public class TradePlanFactory {
                                                 .disassemble(OPPOSITE_ENTRUST_STRATEGY_SUM - entrustStrategy,
                                                              EntrustStrategy.class);
         }
-        BaseTradePlan buyPlan = new BaseTradePlan(ExchangeType.BUY, buyEntrustStrategy, tradeNumber);
-        BaseTradePlan sellPlan = new BaseTradePlan(ExchangeType.SELL, sellEntrustStrategy, tradeNumber);
+        BaseTradePlan buyPlan = new OfferedPriceTradePlan(ExchangeType.BUY, buyEntrustStrategy, tradeNumber);
+        BaseTradePlan sellPlan = new OfferedPriceTradePlan(ExchangeType.SELL, sellEntrustStrategy, tradeNumber);
         return new DoubleDirectionTradePlan(buyPlan, sellPlan);
     }
 

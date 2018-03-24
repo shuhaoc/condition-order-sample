@@ -3,24 +3,24 @@ package hbec.intellitrade.condorder.domain.tradeplan;
 import hbec.intellitrade.trade.domain.ExchangeType;
 
 /**
- * Created by caosh on 2017/8/31.
+ * 自动申购新股交易计划，仅用于DB字段占位
  *
- * @author caoshuhao@touker.com
+ * @author caosh/caoshuhao@touker.com
+ * @date 2017/8/31
  */
 public class AutoPurchaseTradePlan implements TradePlan {
-    private final TradeNumberDirect placeholder = new TradeNumberDirect(0);
+    private static final TradeNumberDirect TRADE_NUMBER = new TradeNumberDirect(0);
 
     public TradeNumber getTradeNumber() {
-        return placeholder;
+        return TRADE_NUMBER;
     }
 
-    public int getExchangeTypeValue() {
+    public int getExchangeType() {
         return ExchangeType.QUOTA_PURCHASE.getValue();
     }
 
-    public int getEntrustStrategyValue() {
-        // 使用默认值0占位
-        return EntrustStrategy.CUSTOMIZED_PRICE.getValue();
+    public int getEntrustStrategy() {
+        return 0;
     }
 
 }

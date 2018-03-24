@@ -18,8 +18,8 @@ public class DoubleDirectionTradePlan implements SingleEntrustTradePlan {
     private final BaseTradePlan sellPlan;
 
     public DoubleDirectionTradePlan(BaseTradePlan buyPlan, BaseTradePlan sellPlan) {
-        Preconditions.checkArgument(buyPlan.getExchangeType() == ExchangeType.BUY);
-        Preconditions.checkArgument(sellPlan.getExchangeType() == ExchangeType.SELL);
+        Preconditions.checkArgument(buyPlan.getExchangeType() == ExchangeType.BUY, "Buy plan should buy");
+        Preconditions.checkArgument(sellPlan.getExchangeType() == ExchangeType.SELL, "Sell plan should sell");
         this.buyPlan = buyPlan;
         this.sellPlan = sellPlan;
     }

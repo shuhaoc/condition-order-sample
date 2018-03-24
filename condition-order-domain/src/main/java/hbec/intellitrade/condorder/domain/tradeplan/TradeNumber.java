@@ -4,11 +4,9 @@ import java.math.BigDecimal;
 
 /**
  * 委托数量计算功能
- * <p>
- * Created by caosh on 2017/8/17.
  *
  * @author caosh/caoshuhao@touker.com
- * @date 2018/2/24
+ * @date 2017/8/17
  */
 public interface TradeNumber {
     /**

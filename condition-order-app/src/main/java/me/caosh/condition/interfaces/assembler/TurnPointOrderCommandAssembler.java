@@ -7,10 +7,7 @@ import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointCondition;
 import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointOrder;
-import hbec.intellitrade.condorder.domain.tradeplan.BaseTradePlan;
-import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
-import hbec.intellitrade.condorder.domain.tradeplan.TradeNumber;
-import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberFactory;
+import hbec.intellitrade.condorder.domain.tradeplan.*;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import me.caosh.autoasm.AutoAssemblers;
@@ -38,7 +35,7 @@ public class TurnPointOrderCommandAssembler {
                                                                      EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        BaseTradePlan tradePlan = new BaseTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
+        BaseTradePlan tradePlan = new OfferedPriceTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
         return new TurnPointOrder(orderId, tradeCustomerInfo, orderState, securityInfo,
                                   turnPointCondition, null, tradePlan);
     }
@@ -56,7 +53,7 @@ public class TurnPointOrderCommandAssembler {
                                                                      EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        BaseTradePlan tradePlan = new BaseTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
+        BaseTradePlan tradePlan = new OfferedPriceTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
         return new TurnPointOrder(oldOrder.getOrderId(), oldOrder.getCustomer(), orderState, oldOrder.getSecurityInfo(),
                                   turnPointCondition, null, tradePlan);
     }

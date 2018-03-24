@@ -3,10 +3,20 @@ package hbec.intellitrade.condorder.domain.tradeplan;
 import me.caosh.autoasm.ConvertibleEnum;
 
 /**
- * Created by caosh on 2017/8/18.
+ * 委托方式
+ *
+ * @author caosh/caoshuhao@touker.com
+ * @date 2017/8/18
  */
 public enum EntrustMethod implements ConvertibleEnum<Integer> {
+    /**
+     * 数量下单
+     */
     NUMBER(0),
+
+    /**
+     * 金额下单
+     */
     AMOUNT(1);
 
     int value;

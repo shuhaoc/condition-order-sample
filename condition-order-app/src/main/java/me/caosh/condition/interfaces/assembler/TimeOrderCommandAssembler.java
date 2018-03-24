@@ -5,10 +5,7 @@ import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
-import hbec.intellitrade.condorder.domain.tradeplan.BaseTradePlan;
-import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
-import hbec.intellitrade.condorder.domain.tradeplan.TradeNumber;
-import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberFactory;
+import hbec.intellitrade.condorder.domain.tradeplan.*;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;
@@ -36,7 +33,7 @@ public class TimeOrderCommandAssembler {
                                                                      EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        BaseTradePlan tradePlan = new BaseTradePlan(exchangeType, entrustStrategy, tradeNumber);
+        BaseTradePlan tradePlan = new OfferedPriceTradePlan(exchangeType, entrustStrategy, tradeNumber);
         return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, timeReachedCondition, null, tradePlan, orderState);
     }
 
@@ -50,7 +47,7 @@ public class TimeOrderCommandAssembler {
                                                                      EntrustStrategy.class);
         TradeNumber tradeNumber = TradeNumberFactory.getInstance()
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        BaseTradePlan tradePlan = new BaseTradePlan(exchangeType, entrustStrategy, tradeNumber);
+        BaseTradePlan tradePlan = new OfferedPriceTradePlan(exchangeType, entrustStrategy, tradeNumber);
         return new TimeOrder(oldOrder.getOrderId(), oldOrder.getCustomer(),
                 oldOrder.getSecurityInfo(), timeReachedCondition, null, tradePlan, orderState);
     }

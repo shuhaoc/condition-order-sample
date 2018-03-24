@@ -1,7 +1,6 @@
 package hbec.intellitrade.condorder.domain.tradeplan;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Preconditions;
 import me.caosh.autoasm.AutoAssemblers;
 
 import java.math.BigDecimal;
@@ -22,9 +21,10 @@ public class TradeNumberFactory {
                                                        .disassemble(intEntrustMethod, EntrustMethod.class);
         if (theEntrustMethod == EntrustMethod.NUMBER) {
             return new TradeNumberDirect(number);
-        } else {
-            Preconditions.checkArgument(theEntrustMethod ==  EntrustMethod.AMOUNT);
+        } else if (theEntrustMethod == EntrustMethod.AMOUNT) {
             return new TradeNumberByAmount(entrustAmount);
+        } else {
+            throw new IllegalArgumentException("entrustMethod=" + theEntrustMethod);
         }
     }
 
