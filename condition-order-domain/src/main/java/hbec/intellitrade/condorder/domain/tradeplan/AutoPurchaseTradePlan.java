@@ -19,7 +19,8 @@ public class AutoPurchaseTradePlan implements TradePlan {
     }
 
     public int getEntrustStrategyValue() {
-        return EntrustStrategy.ASSIGNED_PRICE.getValue();
+        // 使用默认值0占位
+        return EntrustStrategy.CUSTOMIZED_PRICE.getValue();
     }
 
 }

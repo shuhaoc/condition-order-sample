@@ -44,7 +44,7 @@ public class BasicTradePlan implements SingleEntrustTradePlan {
     public EntrustCommand createEntrustCommand(TradeSignal tradeSignal, SecurityInfo securityInfo,
                                                TradingMarketSupplier tradingMarketSupplier) {
         RealTimeMarket realTimeMarket = tradingMarketSupplier.getTradingMarket();
-        BigDecimal entrustPrice = EntrustPriceSelector.selectPrice(realTimeMarket, entrustStrategy);
+        BigDecimal entrustPrice = entrustStrategy.selectEntrustPrice(realTimeMarket);
         return new EntrustCommand(securityInfo, exchangeType, entrustPrice,
                 tradeNumber.getNumber(entrustPrice), OrderType.LIMITED);
     }

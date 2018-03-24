@@ -3,7 +3,10 @@ package hbec.intellitrade.trade.domain;
 import me.caosh.autoasm.ConvertibleEnum;
 
 /**
- * Created by caosh on 2017/8/2.
+ * 交易类别、交易方向，或称委托类别、委托方向
+ *
+ * @author caosh/caoshuhao@touker.com
+ * @date 2017/8/2
  */
 public enum ExchangeType implements ConvertibleEnum<Integer> {
     BUY(1),
