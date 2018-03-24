@@ -108,6 +108,7 @@ public class ConditionOrderDtoAssemblerTest {
         tradePlan.setEntrustStrategy(1);
         tradePlan.setEntrustMethod(0);
         tradePlan.setNumber(BigDecimal.valueOf(1000));
+        tradePlan.setOrderType(0);
         conditionOrderDTO.setTradePlan(tradePlan);
 
         MonitorTimeRangeDTO monitorTimeRange = new MonitorTimeRangeDTO();

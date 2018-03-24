@@ -7,6 +7,7 @@ import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.DoubleDirectionTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlanFactory;
+import hbec.intellitrade.trade.domain.OrderType;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.model.order.grid.GridCondition;
 import me.caosh.condition.domain.model.order.grid.GridTradeOrder;
@@ -25,9 +26,10 @@ public class GirdTradeOrderCommandAssembler {
         SecurityInfo securityInfo = new SecurityInfo(securityType, command.getSecurityCode(), securityExchange, command.getSecurityName());
         GridCondition gridCondition = new GridCondition(command.getGridLength(), command.getBasePrice());
         DoubleDirectionTradePlan tradePlan = TradePlanFactory.getInstance().createDouble(command.getEntrustStrategy(),
-                command.getEntrustMethod(),
-                command.getEntrustNumber(),
-                command.getEntrustAmount());
+                                                                                         command.getEntrustMethod(),
+                                                                                         command.getEntrustNumber(),
+                                                                                         command.getEntrustAmount(),
+                                                                                         OrderType.LIMITED);
         return new GridTradeOrder(orderId,
                 tradeCustomerInfo,
                 securityInfo,
@@ -43,7 +45,8 @@ public class GirdTradeOrderCommandAssembler {
                 command.getEntrustStrategy(),
                 command.getEntrustMethod(),
                 command.getEntrustNumber(),
-                command.getEntrustAmount());
+                command.getEntrustAmount(),
+                OrderType.LIMITED);
         return new GridTradeOrder(oldOrder.getOrderId(),
                 oldOrder.getCustomer(),
                 oldOrder.getSecurityInfo(),

@@ -9,11 +9,17 @@ import hbec.intellitrade.strategy.domain.signal.Sell;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import hbec.intellitrade.trade.domain.EntrustCommand;
 import hbec.intellitrade.trade.domain.ExchangeType;
+import hbec.intellitrade.trade.domain.OrderType;
 
 /**
- * Created by caosh on 2017/8/24.
+ * 双向交易计划
+ *
+ * @author caosh/caoshuhao@touker.com
+ * @date 2017/8/24
  */
 public class DoubleDirectionTradePlan implements SingleEntrustTradePlan {
+    static final int DOUBLE_EXCHANGE_TYPE = 0;
+
     private final BaseTradePlan buyPlan;
     private final BaseTradePlan sellPlan;
 
@@ -36,8 +42,14 @@ public class DoubleDirectionTradePlan implements SingleEntrustTradePlan {
         return getBuyPlan().getEntrustStrategy();
     }
 
+    @Override
     public TradeNumber getTradeNumber() {
         return buyPlan.getTradeNumber();
+    }
+
+    @Override
+    public OrderType getOrderType() {
+        return buyPlan.getOrderType();
     }
 
     @Override

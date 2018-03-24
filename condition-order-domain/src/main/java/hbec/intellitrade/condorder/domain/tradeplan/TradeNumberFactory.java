@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 /**
  * Created by caosh on 2017/8/18.
  */
+@Deprecated
 public class TradeNumberFactory {
     private static final TradeNumberFactory INSTANCE = new TradeNumberFactory();
 

@@ -1,5 +1,7 @@
 package hbec.intellitrade.condorder.domain.tradeplan;
 
+import hbec.intellitrade.trade.domain.ExchangeType;
+import hbec.intellitrade.trade.domain.OrderType;
 import me.caosh.autoasm.ConvertibleBuilder;
 
 import java.math.BigDecimal;
@@ -9,18 +11,22 @@ import java.math.BigDecimal;
  * @date 2018/2/4
  */
 public class TradePlanBuilder implements ConvertibleBuilder<TradePlan> {
-    private int exchangeType;
-    private Integer entrustStrategy;
+    private ExchangeType exchangeType;
+    private EntrustStrategy entrustStrategy;
+    private BigDecimal entrustPrice;
     private TradeNumberBuilder tradeNumber = new TradeNumberBuilder();
+    private OrderType orderType;
 
-    public TradePlanBuilder setExchangeType(int exchangeType) {
+    public void setExchangeType(ExchangeType exchangeType) {
         this.exchangeType = exchangeType;
-        return this;
     }
 
-    public TradePlanBuilder setEntrustStrategy(Integer entrustStrategy) {
+    public void setEntrustStrategy(EntrustStrategy entrustStrategy) {
         this.entrustStrategy = entrustStrategy;
-        return this;
+    }
+
+    public void setEntrustPrice(BigDecimal entrustPrice) {
+        this.entrustPrice = entrustPrice;
     }
 
     public TradeNumberBuilder getTradeNumber() {
@@ -32,33 +38,41 @@ public class TradePlanBuilder implements ConvertibleBuilder<TradePlan> {
         return this;
     }
 
+    public void setOrderType(OrderType orderType) {
+        this.orderType = orderType;
+    }
+
     @Override
     public TradePlan build() {
         return TradePlanFactory.getInstance().create(
-                exchangeType, entrustStrategy, tradeNumber.getEntrustMethod(), tradeNumber.getNumber().intValue(),
-                tradeNumber.getNumber());
+                exchangeType,
+                entrustStrategy,
+                entrustPrice,
+                tradeNumber.build(),
+                orderType);
     }
 
-    public static class TradeNumberBuilder {
-        private Integer entrustMethod;
+    public static class TradeNumberBuilder implements ConvertibleBuilder<TradeNumber> {
+        private EntrustMethod entrustMethod;
         private BigDecimal number;
 
-        public Integer getEntrustMethod() {
-            return entrustMethod;
-        }
-
-        public BigDecimal getNumber() {
-            return number;
-        }
-
-        public TradeNumberBuilder setEntrustMethod(Integer entrustMethod) {
+        public void setEntrustMethod(EntrustMethod entrustMethod) {
             this.entrustMethod = entrustMethod;
-            return this;
         }
 
-        public TradeNumberBuilder setNumber(BigDecimal number) {
+        public void setNumber(BigDecimal number) {
             this.number = number;
-            return this;
+        }
+
+        @Override
+        public TradeNumber build() {
+            if (entrustMethod == EntrustMethod.NUMBER) {
+                return new TradeNumberDirect(number.intValue());
+            } else if (entrustMethod == EntrustMethod.AMOUNT) {
+                return new TradeNumberByAmount(number);
+            } else {
+                throw new IllegalArgumentException("entrustMethod=" + entrustMethod);
+            }
         }
     }
 }

@@ -5,12 +5,7 @@ import me.caosh.autoasm.FieldMapping;
 import me.caosh.autoasm.SkippedField;
 import org.joda.time.LocalTime;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -59,10 +54,14 @@ public class ConditionOrderDO {
     private Integer exchangeType;
     @FieldMapping(mappedProperty = "tradePlan.entrustStrategy")
     private Integer entrustStrategy;
+    @FieldMapping(mappedProperty = "tradePlan.entrustPrice")
+    private BigDecimal entrustPrice;
     @FieldMapping(mappedProperty = "tradePlan.tradeNumber.entrustMethod")
     private Integer entrustMethod;
     @FieldMapping(mappedProperty = "tradePlan.tradeNumber.number")
     private BigDecimal entrustAmount;
+    @FieldMapping(mappedProperty = "tradePlan.orderType")
+    private Integer orderType;
     @FieldMapping(mappedProperty = "condition.delayConfirm.option")
     private Integer delayConfirmOption = 0;
     @FieldMapping(mappedProperty = "condition.delayConfirm.confirmTimes")
@@ -295,6 +294,16 @@ public class ConditionOrderDO {
     }
 
     @Basic
+    @Column(name = "entrust_price")
+    public BigDecimal getEntrustPrice() {
+        return entrustPrice;
+    }
+
+    public void setEntrustPrice(BigDecimal entrustPrice) {
+        this.entrustPrice = entrustPrice;
+    }
+
+    @Basic
     @Column(name = "entrust_method")
     public Integer getEntrustMethod() {
         return entrustMethod;
@@ -312,6 +321,16 @@ public class ConditionOrderDO {
 
     public void setEntrustAmount(BigDecimal entrustAmount) {
         this.entrustAmount = entrustAmount;
+    }
+
+    @Basic
+    @Column(name = "order_type")
+    public Integer getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(Integer orderType) {
+        this.orderType = orderType;
     }
 
     @Basic

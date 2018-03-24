@@ -28,6 +28,7 @@ import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRangeOption;
 import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
 import hbec.intellitrade.trade.domain.ExchangeType;
+import hbec.intellitrade.trade.domain.OrderType;
 import me.caosh.condition.infrastructure.repository.assembler.ConditionOrderDoAssembler;
 import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;
 import org.joda.time.LocalDateTime;
@@ -92,8 +93,10 @@ public class ConditionOrderDoAssemblerTest {
         assertEquals(conditionOrderDO.getExpireTime(), LocalDateTime.parse("2018-03-12T15:00:00").toDate());
         assertEquals(conditionOrderDO.getExchangeType(), ExchangeType.SELL.getValue());
         assertEquals(conditionOrderDO.getEntrustStrategy(), EntrustStrategy.BUY1.getValue());
+        assertNull(conditionOrderDO.getEntrustPrice());
         assertEquals(conditionOrderDO.getEntrustMethod(), EntrustMethod.AMOUNT.getValue());
         assertEquals(conditionOrderDO.getEntrustAmount(), new BigDecimal("10000.00"));
+        assertEquals(conditionOrderDO.getOrderType(), OrderType.LIMITED.getValue());
         assertEquals(conditionOrderDO.getDelayConfirmOption(), DelayConfirmOption.ACCUMULATE.getValue());
         assertEquals(conditionOrderDO.getDelayConfirmTimes().intValue(), 3);
         assertEquals(conditionOrderDO.getMonitorTimeRangeOption(), MonitorTimeRangeOption.ENABLED.getValue());
@@ -109,5 +112,4 @@ public class ConditionOrderDoAssemblerTest {
         ConditionOrder conditionOrder1 = ConditionOrderDoAssembler.disassemble(conditionOrderDO);
         assertEquals(conditionOrder1, conditionOrder);
     }
-
 }

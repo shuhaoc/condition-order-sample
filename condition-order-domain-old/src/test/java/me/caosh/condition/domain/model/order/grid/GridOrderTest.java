@@ -16,6 +16,7 @@ import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.trade.domain.EntrustOrderWriter;
+import hbec.intellitrade.trade.domain.OrderType;
 import hbec.intellitrade.trade.domain.TradeCustomer;
 import me.caosh.condition.mock.MockMarkets;
 import org.mockito.Mock;
@@ -53,7 +54,8 @@ public class GridOrderTest {
         SecurityInfo pfyh = new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "PFYH");
         GridCondition gridCondition = new GridCondition(new BigDecimal("1.00"), new BigDecimal("13.00"));
         DoubleDirectionTradePlan tradePlan = TradePlanFactory.getInstance().createDouble(
-                EntrustStrategy.CURRENT_PRICE.getValue(), EntrustMethod.AMOUNT.getValue(), 0, new BigDecimal("4500"));
+                EntrustStrategy.CURRENT_PRICE.getValue(), EntrustMethod.AMOUNT.getValue(), 0, new BigDecimal("4500"),
+                OrderType.LIMITED);
         GridTradeOrder gridTradeOrder = new GridTradeOrder(123L, tradeCustomerInfo, pfyh, gridCondition,
                 null, tradePlan, OrderState.ACTIVE);
 
