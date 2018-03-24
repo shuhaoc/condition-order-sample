@@ -22,7 +22,7 @@ import org.joda.time.LocalDateTime;
 /**
  * 价格条件单
  * <p>
- * 一次性条件单，触发条件为到价触发，使用单向交易计划
+ * 一次性条件单，触发条件为到价触发，使用通用的单向交易计划
  * <p>
  * 支持的特性：
  * <ol>
@@ -140,7 +140,6 @@ public class PriceOrder extends AbstractSimpleMarketConditionOrder implements Mu
 
     @Override
     public boolean equals(Object o) {
-        // 仅比较组合条件即可，组合条件组合了所有条件
         if (this == o) {
             return true;
         }

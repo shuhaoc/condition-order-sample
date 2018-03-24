@@ -15,6 +15,8 @@ import java.util.Objects;
 
 /**
  * 行情类条件包装类（Decorator模式），内部集成了延迟确认、偏差控制等装饰条件，对外开放动态条件、延迟确认次数查询与重置等功能
+ * <p>
+ * 被包装的行情条件必须是存在目标价的条件，否则无法实现通用偏差控制的集成
  *
  * @author caoshuhao@touker.com
  * @date 2018/3/22
@@ -36,6 +38,14 @@ public class DecoratedMarketCondition<T extends PredictableMarketCondition>
      */
     private final DelayConfirmCondition delayConfirmCondition;
 
+    /**
+     * 构造包装条件
+     *
+     * @param rawCondition        原始条件
+     * @param delayConfirm        延迟确认参数
+     * @param deviationCtrl       偏差控制参数
+     * @param delayConfirmedCount 当前原始条件的延迟确认次数，
+     */
     public DecoratedMarketCondition(
             T rawCondition,
             DelayConfirm delayConfirm,
@@ -43,15 +53,18 @@ public class DecoratedMarketCondition<T extends PredictableMarketCondition>
             int delayConfirmedCount) {
         this.rawCondition = rawCondition;
 
+        // 包装偏差控制条件，如果偏差控制参数为关闭，直接返回被包装条件
         PredictableMarketCondition deviationCtrlWrappedCondition = DeviationCtrlConditionFactory.INSTANCE.wrapWith(
                 rawCondition,
                 deviationCtrl);
 
+        // 包装延迟确认条件，如果延迟确认参数为关闭，直接返回被包装条件
         this.decoratedCondition = DelayConfirmConditionFactory.INSTANCE.wrapWith(
                 deviationCtrlWrappedCondition,
                 delayConfirm,
                 delayConfirmedCount);
 
+        // 记下访问延迟确认条件的快捷引用
         if (decoratedCondition instanceof DelayConfirmCondition) {
             this.delayConfirmCondition = (DelayConfirmCondition) decoratedCondition;
         } else {
@@ -72,7 +85,8 @@ public class DecoratedMarketCondition<T extends PredictableMarketCondition>
     public boolean isDirty() {
         boolean delayConfirmConditionDirty = delayConfirmCondition != null && delayConfirmCondition.isDirty();
 
-        boolean rawConditionDirty = rawCondition instanceof DynamicCondition && ((DynamicCondition) rawCondition).isDirty();
+        boolean rawConditionDirty = rawCondition instanceof DynamicCondition
+                                    && ((DynamicCondition) rawCondition).isDirty();
 
         return delayConfirmConditionDirty || rawConditionDirty;
     }
@@ -105,6 +119,7 @@ public class DecoratedMarketCondition<T extends PredictableMarketCondition>
 
     @Override
     public boolean equals(Object o) {
+        // 仅比较组合条件即可，组合条件组合了所有条件
         if (this == o) {
             return true;
         }

@@ -12,7 +12,7 @@ import hbec.intellitrade.trade.domain.OrderType;
 import java.math.BigDecimal;
 
 /**
- * 基本交易计划
+ * 基本的单向交易计划
  *
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/23

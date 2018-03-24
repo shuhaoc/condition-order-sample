@@ -8,7 +8,7 @@ import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import java.math.BigDecimal;
 
 /**
- * 原始的价格条件，到价触发
+ * 原始的价格条件，到价触发，基于目标价因子实现
  *
  * @author caosh/caoshuhao@touker.com
  * @date 2018/1/29
