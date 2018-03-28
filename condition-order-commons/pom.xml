@@ -6,7 +6,7 @@
     <packaging>jar</packaging>
     <parent>
         <groupId>hbec.intellitrade</groupId>
-        <artifactId>condition-order-sample</artifactId>
+        <artifactId>condition-order-domain-project</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <dependencies>
