@@ -1,14 +1,10 @@
-package me.caosh.condition.interfaces.command;
+package hbec.commons.domain.intellitrade.condition;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceCondition;
 import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceConditionBuilder;
 import me.caosh.autoasm.MappedClass;
-import hbec.commons.domain.intellitrade.condition.ConditionDTO;
-import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
@@ -17,15 +13,12 @@ import java.math.BigDecimal;
  * @author caoshuhao@touker.com
  */
 @MappedClass(value = DecoratedPriceCondition.class, builderClass = DecoratedPriceConditionBuilder.class)
-public class PriceConditionCommandDTO implements ConditionDTO {
+public class PriceConditionDTO implements ConditionDTO {
     private static final long serialVersionUID = 1L;
 
-    @NotNull
-    @Range(min = 0, max = 1)
     private Integer compareOperator;
-    @NotNull
-    @DecimalMin("0")
     private BigDecimal targetPrice;
+    private Integer delayConfirmedCount;
 
     public Integer getCompareOperator() {
         return compareOperator;
@@ -43,11 +36,20 @@ public class PriceConditionCommandDTO implements ConditionDTO {
         this.targetPrice = targetPrice;
     }
 
+    public Integer getDelayConfirmedCount() {
+        return delayConfirmedCount;
+    }
+
+    public void setDelayConfirmedCount(Integer delayConfirmedCount) {
+        this.delayConfirmedCount = delayConfirmedCount;
+    }
+
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(PriceConditionCommandDTO.class).omitNullValues()
+        return MoreObjects.toStringHelper(PriceConditionDTO.class).omitNullValues()
                           .add("compareOperator", compareOperator)
                           .add("targetPrice", targetPrice)
+                          .add("delayConfirmedCount", delayConfirmedCount)
                           .toString();
     }
 }

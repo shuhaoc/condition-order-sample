@@ -1,8 +1,8 @@
 package me.caosh.condition.interfaces.web;
 
 import me.caosh.condition.application.order.OrderCommandService;
-import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
-import me.caosh.condition.domain.dto.trade.EntrustOrderDTO;
+import hbec.commons.domain.intellitrade.condorder.ConditionOrderDTO;
+import hbec.commons.domain.intellitrade.trade.EntrustOrderDTO;
 import me.caosh.condition.interfaces.command.PageRequestDTO;
 import me.caosh.condition.interfaces.facade.ConditionOrderQueryFacade;
 import org.springframework.data.domain.Page;

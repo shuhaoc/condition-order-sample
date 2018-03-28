@@ -2,11 +2,11 @@ package me.caosh.condition.infrastructure.rabbitmq.impl;
 
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
-import me.caosh.condition.domain.dto.order.ConditionOrderDTO;
+import hbec.commons.domain.intellitrade.condorder.ConditionOrderDTO;
 import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
-import me.caosh.condition.domain.dto.order.assembler.ConditionOrderAssemblers;
+import hbec.commons.domain.intellitrade.util.ConditionOrderAssemblers;
 import me.caosh.condition.domain.dto.order.constants.OrderCommandType;
-import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
+import hbec.commons.domain.intellitrade.util.ConditionOrderGSONMessageConverter;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

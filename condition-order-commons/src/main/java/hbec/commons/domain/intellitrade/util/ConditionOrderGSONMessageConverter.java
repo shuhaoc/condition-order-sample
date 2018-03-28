@@ -1,7 +1,5 @@
-package me.caosh.condition.infrastructure.rabbitmq.model;
+package hbec.commons.domain.intellitrade.util;
 
-import com.google.gson.reflect.TypeToken;
-import hbec.commons.domain.intellitrade.util.ConditionOrderDTOGSONUtils;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.core.MessageProperties;
@@ -9,22 +7,30 @@ import org.springframework.amqp.support.converter.MessageConversionException;
 import org.springframework.amqp.support.converter.MessageConverter;
 
 import java.nio.charset.Charset;
-import java.util.HashMap;
 
 /**
- * Created by caosh on 2017/8/9.
+ * Created by caosh on 2017/8/14.
+ *
+ * @author caosh/caoshuhao@touker.com
  */
-public class RealTimeMarketMessageConverter implements MessageConverter {
+public class ConditionOrderGSONMessageConverter<T> implements MessageConverter {
+
+    private final Class<T> clazz;
+    private final Charset charset = Charset.forName("utf-8");;
+
+    public ConditionOrderGSONMessageConverter(Class<T> clazz) {
+        this.clazz = clazz;
+    }
+
     @Override
     public Message toMessage(Object o, MessageProperties messageProperties) throws MessageConversionException {
-        String json = ConditionOrderDTOGSONUtils.getMarketGSON().toJson(o);
-        return MessageBuilder.withBody(json.getBytes(Charset.forName("utf-8"))).build();
+        String json = ConditionOrderDTOGSONUtils.getConditionGSON().toJson(o);
+        return MessageBuilder.withBody(json.getBytes(charset)).build();
     }
 
     @Override
     public Object fromMessage(Message message) throws MessageConversionException {
         String json = new String(message.getBody(), Charset.forName("utf-8"));
-        return ConditionOrderDTOGSONUtils.getMarketGSON().fromJson(json, new TypeToken<HashMap<String, RealTimeMarketSimpleDTO>>(){
-        }.getType());
+        return ConditionOrderDTOGSONUtils.getConditionGSON().fromJson(json, clazz);
     }
 }

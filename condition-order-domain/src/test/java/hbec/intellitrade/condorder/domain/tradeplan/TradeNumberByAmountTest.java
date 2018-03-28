@@ -24,7 +24,7 @@ public class TradeNumberByAmountTest {
         assertEquals(tradeNumber.getNumber(), new BigDecimal("10000"));
         assertEquals(tradeNumber.getAmount(), new BigDecimal("10000"));
 
-        assertEquals(1000, tradeNumber.getNumber(SECURITY_INFO, BigDecimal.valueOf(10)));
-        assertEquals(900, tradeNumber.getNumber(SECURITY_INFO, BigDecimal.valueOf(11)));
+        assertEquals(tradeNumber.getNumber(SECURITY_INFO, BigDecimal.valueOf(10)),900);
+        assertEquals(tradeNumber.getNumber(SECURITY_INFO, BigDecimal.valueOf(12)),800);
     }
 }

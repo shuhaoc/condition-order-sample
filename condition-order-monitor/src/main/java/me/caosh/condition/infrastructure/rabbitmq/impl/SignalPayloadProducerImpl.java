@@ -1,9 +1,9 @@
 package me.caosh.condition.infrastructure.rabbitmq.impl;
 
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
-import me.caosh.condition.domain.dto.order.SignalPayloadDTO;
-import me.caosh.condition.domain.dto.order.assembler.ConditionOrderAssemblers;
-import me.caosh.condition.domain.dto.order.converter.ConditionOrderGSONMessageConverter;
+import hbec.commons.domain.intellitrade.signal.SignalPayloadDTO;
+import hbec.commons.domain.intellitrade.util.ConditionOrderAssemblers;
+import hbec.commons.domain.intellitrade.util.ConditionOrderGSONMessageConverter;
 import me.caosh.condition.infrastructure.rabbitmq.SignalPayloadProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

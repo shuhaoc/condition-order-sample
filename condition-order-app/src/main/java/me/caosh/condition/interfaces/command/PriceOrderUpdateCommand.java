@@ -2,11 +2,11 @@ package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.autoasm.FieldMapping;
-import me.caosh.condition.domain.dto.market.TrackedIndexDTO;
-import me.caosh.condition.domain.dto.order.DelayConfirmDTO;
-import me.caosh.condition.domain.dto.order.DeviationCtrlDTO;
-import me.caosh.condition.domain.dto.order.MonitorTimeRangeDTO;
-import me.caosh.condition.domain.dto.order.TradePlanDTO;
+import hbec.commons.domain.intellitrade.market.TrackedIndexDTO;
+import hbec.commons.domain.intellitrade.condorder.DelayConfirmDTO;
+import hbec.commons.domain.intellitrade.condorder.DeviationCtrlDTO;
+import hbec.commons.domain.intellitrade.condorder.MonitorTimeRangeDTO;
+import hbec.commons.domain.intellitrade.condorder.TradePlanDTO;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.Valid;

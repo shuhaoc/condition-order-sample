@@ -1,56 +1,71 @@
-package me.caosh.condition.interfaces.command;
+package hbec.commons.domain.intellitrade.condorder;
 
 import com.google.common.base.MoreObjects;
+import hbec.commons.domain.intellitrade.condition.ConditionDTO;
+import me.caosh.autoasm.Convertible;
 import me.caosh.autoasm.FieldMapping;
 import hbec.commons.domain.intellitrade.security.SecurityInfoDTO;
 import hbec.commons.domain.intellitrade.market.TrackedIndexDTO;
-import hbec.commons.domain.intellitrade.condorder.DelayConfirmDTO;
-import hbec.commons.domain.intellitrade.condorder.DeviationCtrlDTO;
-import hbec.commons.domain.intellitrade.condorder.MonitorTimeRangeDTO;
-import hbec.commons.domain.intellitrade.condorder.TradePlanDTO;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
- * @author caosh/caoshuhao@touker.com
- * @date 2017/8/9
+ * Created by caosh on 2017/8/11.
+ *
+ * @author caoshuhao@touker.com
  */
-public class PriceOrderCreateCommand implements Serializable {
+@Convertible
+public class ConditionOrderDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @NotNull
+    private Long orderId;
+    private TradeCustomerInfoDTO customer;
+    private Boolean deleted = false;
+    private Integer orderState;
     private SecurityInfoDTO securityInfo;
-
-    @Valid
     private TrackedIndexDTO trackedIndex;
-
-    @NotNull
-    @Valid
-    private PriceConditionCommandDTO condition;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Future
-    private Date expireTime;
-
-    @NotNull
-    @Valid
+    @FieldMapping(mappedProperty = "strategyInfo.strategyType")
+    private Integer strategyType;
+    private ConditionDTO condition;
+    private String expireTime;
     private TradePlanDTO tradePlan;
-
-    @Valid
     private MonitorTimeRangeDTO monitorTimeRange;
-
-    @Valid
     @FieldMapping(mappedProperty = "condition.delayConfirm")
     private DelayConfirmDTO delayConfirm;
-
-    @Valid
     @FieldMapping(mappedProperty = "condition.deviationCtrl")
     private DeviationCtrlDTO deviationCtrl;
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public TradeCustomerInfoDTO getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(TradeCustomerInfoDTO customer) {
+        this.customer = customer;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public Integer getOrderState() {
+        return orderState;
+    }
+
+    public void setOrderState(Integer orderState) {
+        this.orderState = orderState;
+    }
 
     public SecurityInfoDTO getSecurityInfo() {
         return securityInfo;
@@ -68,19 +83,27 @@ public class PriceOrderCreateCommand implements Serializable {
         this.trackedIndex = trackedIndex;
     }
 
-    public PriceConditionCommandDTO getCondition() {
+    public Integer getStrategyType() {
+        return strategyType;
+    }
+
+    public void setStrategyType(Integer strategyType) {
+        this.strategyType = strategyType;
+    }
+
+    public ConditionDTO getCondition() {
         return condition;
     }
 
-    public void setCondition(PriceConditionCommandDTO condition) {
+    public void setCondition(ConditionDTO condition) {
         this.condition = condition;
     }
 
-    public Date getExpireTime() {
+    public String getExpireTime() {
         return expireTime;
     }
 
-    public void setExpireTime(Date expireTime) {
+    public void setExpireTime(String expireTime) {
         this.expireTime = expireTime;
     }
 
@@ -118,9 +141,14 @@ public class PriceOrderCreateCommand implements Serializable {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(PriceOrderCreateCommand.class).omitNullValues()
+        return MoreObjects.toStringHelper(ConditionOrderDTO.class).omitNullValues()
+                          .add("orderId", orderId)
+                          .add("customer", customer)
+                          .add("deleted", deleted)
+                          .add("orderState", orderState)
                           .add("securityInfo", securityInfo)
                           .add("trackedIndex", trackedIndex)
+                          .add("strategyType", strategyType)
                           .add("condition", condition)
                           .add("expireTime", expireTime)
                           .add("tradePlan", tradePlan)
