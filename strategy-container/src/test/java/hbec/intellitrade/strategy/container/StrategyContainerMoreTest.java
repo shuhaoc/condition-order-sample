@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.container;
+package hbec.intellitrade.strategy.container;
 
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.MarketType;
@@ -50,7 +50,7 @@ public class StrategyContainerMoreTest {
     @Test
     public void testTriggerLock() throws Exception {
         StrategyContainer container = new StrategyContainer(new StrategyContextConfig(1, 1),
-                NopStrategyWriter.INSTANCE);
+                                                            NopStrategyWriter.INSTANCE);
         TestPriceStrategy testPriceStrategy = new TestPriceStrategy(1, MARKET_ID, PRICE_CONDITION);
         container.add(testPriceStrategy);
 

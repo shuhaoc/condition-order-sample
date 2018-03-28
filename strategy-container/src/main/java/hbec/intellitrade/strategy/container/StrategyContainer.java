@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.container;
+package hbec.intellitrade.strategy.container;
 
 import com.google.common.base.Function;
 import com.google.common.base.MoreObjects;

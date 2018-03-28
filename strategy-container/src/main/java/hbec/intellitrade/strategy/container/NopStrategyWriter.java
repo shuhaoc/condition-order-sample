@@ -1,5 +1,6 @@
-package me.caosh.condition.domain.container;
+package hbec.intellitrade.strategy.container;
 
+import hbec.intellitrade.strategy.container.StrategyWriter;
 import hbec.intellitrade.strategy.domain.Strategy;
 
 /**

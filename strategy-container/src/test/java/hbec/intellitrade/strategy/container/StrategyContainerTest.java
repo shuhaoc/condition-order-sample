@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.container;
+package hbec.intellitrade.strategy.container;
 
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.MarketType;

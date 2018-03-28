@@ -2,7 +2,7 @@ package me.caosh.condition.infrastructure;
 
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import hbec.intellitrade.strategy.domain.Strategy;
-import me.caosh.condition.domain.container.StrategyWriter;
+import hbec.intellitrade.strategy.container.StrategyWriter;
 import me.caosh.condition.infrastructure.repository.MonitorRepository;
 
 /**
