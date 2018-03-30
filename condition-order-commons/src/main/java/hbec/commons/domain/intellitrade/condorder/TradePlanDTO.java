@@ -3,6 +3,7 @@ package hbec.commons.domain.intellitrade.condorder;
 import com.google.common.base.MoreObjects;
 import me.caosh.autoasm.Convertible;
 import me.caosh.autoasm.FieldMapping;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,10 @@ import java.math.BigDecimal;
 public class TradePlanDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 股东号
+     */
+    private String stockHolderNo;
     @NotNull
     @Range(min = 1, max = 2)
     private Integer exchangeType;
@@ -33,6 +38,19 @@ public class TradePlanDTO implements Serializable {
     @FieldMapping(mappedProperty = "tradeNumber.number")
     private BigDecimal number;
     private Integer orderType;
+    /**
+     * 站点信息
+     */
+    @NotBlank
+    private String nodeInfo;
+
+    public String getStockHolderNo() {
+        return stockHolderNo;
+    }
+
+    public void setStockHolderNo(String stockHolderNo) {
+        this.stockHolderNo = stockHolderNo;
+    }
 
     public Integer getExchangeType() {
         return exchangeType;
@@ -82,15 +100,25 @@ public class TradePlanDTO implements Serializable {
         this.orderType = orderType;
     }
 
+    public String getNodeInfo() {
+        return nodeInfo;
+    }
+
+    public void setNodeInfo(String nodeInfo) {
+        this.nodeInfo = nodeInfo;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(TradePlanDTO.class).omitNullValues()
+                          .add("stockHolderNo", stockHolderNo)
                           .add("exchangeType", exchangeType)
                           .add("entrustStrategy", entrustStrategy)
                           .add("entrustPrice", entrustPrice)
                           .add("entrustMethod", entrustMethod)
                           .add("number", number)
                           .add("orderType", orderType)
+                          .add("nodeInfo", nodeInfo)
                           .toString();
     }
 }
