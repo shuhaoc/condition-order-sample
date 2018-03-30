@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.*;
 
 /**
  * @author caosh/caoshuhao@touker.com
@@ -20,8 +20,16 @@ public class ContinuousDelayConfirmConditionTest {
         ContinuousDelayConfirmCondition delayConfirmCondition = new ContinuousDelayConfirmCondition(3,
                 new PriceCondition(CompareOperator.GE, new BigDecimal("10.00")));
 
+        // 不满足
+        assertEquals(delayConfirmCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("9.00"))),
+                     Signals.none());
+        assertFalse(delayConfirmCondition.isDirty());
+
+        // 满足一次
         assertEquals(delayConfirmCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),
                 Signals.none());
+        assertTrue(delayConfirmCondition.isDirty());
+
         assertEquals(delayConfirmCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),
                 Signals.none());
         assertEquals(delayConfirmCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),

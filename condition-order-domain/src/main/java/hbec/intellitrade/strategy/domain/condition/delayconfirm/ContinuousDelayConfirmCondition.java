@@ -29,18 +29,21 @@ public class ContinuousDelayConfirmCondition extends AbstractDelayConfirmConditi
     @Override
     public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
         TradeSignal tradeSignal = marketCondition.onMarketTick(realTimeMarket);
-        if (!tradeSignal.isValid()) {
-            counter.reset();
-            logger.info("Confirmed count reset due to NONE signal");
+        boolean tradeSignalValid = tradeSignal.isValid();
+        if (!tradeSignalValid) {
+            if (counter.getConfirmedCount() > 0) {
+                counter.reset();
+                logger.trace("Confirmed count reset due to NONE signal");
+            }
             return tradeSignal;
         }
 
         counter.increaseConfirmedCount();
         if (counter.isConfirmCompleted()) {
-            logger.info("Confirmed count is enough, counter={}", counter);
+            logger.trace("Confirmed count is enough, counter={}", counter);
             return tradeSignal;
         } else {
-            logger.info("Delay confirm, counter={}", counter);
+            logger.trace("Delay confirm, counter={}", counter);
             return Signals.none();
         }
     }

@@ -34,11 +34,10 @@ public class AccumulatedDelayConfirmCondition extends AbstractDelayConfirmCondit
 
         counter.increaseConfirmedCount();
         if (counter.isConfirmCompleted()) {
-            // TODO: log with order id
-            logger.info("Confirmed count is enough, counter={}", counter);
+            logger.trace("Confirmed count is enough, counter={}", counter);
             return tradeSignal;
         } else {
-            logger.info("Delay confirm, counter={}", counter);
+            logger.trace("Delay confirm, counter={}", counter);
             return Signals.none();
         }
     }
