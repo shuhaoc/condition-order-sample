@@ -20,6 +20,15 @@ public class PriceConditionDTO implements ConditionDTO {
     private BigDecimal targetPrice;
     private Integer delayConfirmedCount;
 
+    public PriceConditionDTO() {
+    }
+
+    public PriceConditionDTO(Integer compareOperator, BigDecimal targetPrice, Integer delayConfirmedCount) {
+        this.compareOperator = compareOperator;
+        this.targetPrice = targetPrice;
+        this.delayConfirmedCount = delayConfirmedCount;
+    }
+
     public Integer getCompareOperator() {
         return compareOperator;
     }

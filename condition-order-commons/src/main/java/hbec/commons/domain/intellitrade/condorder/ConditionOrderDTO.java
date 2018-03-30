@@ -2,10 +2,10 @@ package hbec.commons.domain.intellitrade.condorder;
 
 import com.google.common.base.MoreObjects;
 import hbec.commons.domain.intellitrade.condition.ConditionDTO;
+import hbec.commons.domain.intellitrade.market.TrackedIndexDTO;
+import hbec.commons.domain.intellitrade.security.SecurityInfoDTO;
 import me.caosh.autoasm.Convertible;
 import me.caosh.autoasm.FieldMapping;
-import hbec.commons.domain.intellitrade.security.SecurityInfoDTO;
-import hbec.commons.domain.intellitrade.market.TrackedIndexDTO;
 
 import java.io.Serializable;
 
@@ -36,6 +36,41 @@ public class ConditionOrderDTO implements Serializable {
     @FieldMapping(mappedProperty = "condition.deviationCtrl")
     private DeviationCtrlDTO deviationCtrl;
     private Integer triggerCount;
+
+    public ConditionOrderDTO() {
+    }
+
+    public ConditionOrderDTO(Long orderId,
+                             TradeCustomerInfoDTO customer,
+                             Boolean deleted,
+                             Integer orderState,
+                             Integer dataVersion,
+                             SecurityInfoDTO securityInfo,
+                             TrackedIndexDTO trackedIndex,
+                             Integer strategyType,
+                             ConditionDTO condition,
+                             String expireTime,
+                             TradePlanDTO tradePlan,
+                             MonitorTimeRangeDTO monitorTimeRange,
+                             DelayConfirmDTO delayConfirm,
+                             DeviationCtrlDTO deviationCtrl,
+                             Integer triggerCount) {
+        this.orderId = orderId;
+        this.customer = customer;
+        this.deleted = deleted;
+        this.orderState = orderState;
+        this.dataVersion = dataVersion;
+        this.securityInfo = securityInfo;
+        this.trackedIndex = trackedIndex;
+        this.strategyType = strategyType;
+        this.condition = condition;
+        this.expireTime = expireTime;
+        this.tradePlan = tradePlan;
+        this.monitorTimeRange = monitorTimeRange;
+        this.delayConfirm = delayConfirm;
+        this.deviationCtrl = deviationCtrl;
+        this.triggerCount = triggerCount;
+    }
 
     public Long getOrderId() {
         return orderId;

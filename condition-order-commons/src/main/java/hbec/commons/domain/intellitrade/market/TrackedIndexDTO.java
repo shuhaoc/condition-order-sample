@@ -30,6 +30,16 @@ public class TrackedIndexDTO implements Serializable {
     @Length(min = 1, max = 128)
     private String name;
 
+    public TrackedIndexDTO() {
+    }
+
+    public TrackedIndexDTO(Integer option, String source, String code, String name) {
+        this.option = option;
+        this.source = source;
+        this.code = code;
+        this.name = name;
+    }
+
     public Integer getOption() {
         return option;
     }

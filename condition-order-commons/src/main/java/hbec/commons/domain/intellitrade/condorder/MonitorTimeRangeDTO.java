@@ -31,6 +31,25 @@ public class MonitorTimeRangeDTO implements Serializable {
     @FieldMapping(mappedProperty = "localTimeRange.endTime")
     private String endTime;
 
+    public MonitorTimeRangeDTO() {
+    }
+
+    public MonitorTimeRangeDTO(Integer option) {
+        this.option = option;
+    }
+
+    public MonitorTimeRangeDTO(Integer option,
+                               Integer beginWeek,
+                               Integer endWeek,
+                               String beginTime,
+                               String endTime) {
+        this.option = option;
+        this.beginWeek = beginWeek;
+        this.endWeek = endWeek;
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+    }
+
     public Integer getOption() {
         return option;
     }

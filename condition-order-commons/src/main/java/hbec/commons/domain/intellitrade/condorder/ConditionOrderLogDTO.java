@@ -37,6 +37,49 @@ public class ConditionOrderLogDTO implements Serializable {
     private Integer reason;
     private Date opTime;
 
+    public ConditionOrderLogDTO() {
+    }
+
+    public ConditionOrderLogDTO(Long logId,
+                                Integer opType,
+                                Long orderId,
+                                TradeCustomerInfoDTO customer,
+                                Boolean deleted,
+                                Integer orderState,
+                                Integer dataVersion,
+                                SecurityInfoDTO securityInfo,
+                                TrackedIndexDTO trackedIndex,
+                                Integer strategyType,
+                                ConditionDTO condition,
+                                String expireTime,
+                                TradePlanDTO tradePlan,
+                                MonitorTimeRangeDTO monitorTimeRange,
+                                DelayConfirmDTO delayConfirm,
+                                DeviationCtrlDTO deviationCtrl,
+                                Integer triggerCount,
+                                Integer reason,
+                                Date opTime) {
+        this.logId = logId;
+        this.opType = opType;
+        this.orderId = orderId;
+        this.customer = customer;
+        this.deleted = deleted;
+        this.orderState = orderState;
+        this.dataVersion = dataVersion;
+        this.securityInfo = securityInfo;
+        this.trackedIndex = trackedIndex;
+        this.strategyType = strategyType;
+        this.condition = condition;
+        this.expireTime = expireTime;
+        this.tradePlan = tradePlan;
+        this.monitorTimeRange = monitorTimeRange;
+        this.delayConfirm = delayConfirm;
+        this.deviationCtrl = deviationCtrl;
+        this.triggerCount = triggerCount;
+        this.reason = reason;
+        this.opTime = opTime;
+    }
+
     public Long getLogId() {
         return logId;
     }
