@@ -3,6 +3,7 @@ package hbec.intellitrade.condorder.domain;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.security.SecurityInfo;
+import hbec.intellitrade.condorder.domain.trackindex.NoneTrackedIndex;
 import hbec.intellitrade.condorder.domain.trackindex.TrackIndexOption;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndex;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
@@ -22,7 +23,7 @@ import org.joda.time.LocalDateTime;
  */
 public abstract class AbstractMarketConditionOrder extends AbstractExplicitTradingSecurityOrder implements MarketDrivenStrategy, TimeDrivenStrategy {
     /**
-     * 跟踪的指数信息，仅当跟踪指数开启时非空
+     * 跟踪的指数信息，非空，无效值为{@link NoneTrackedIndex}
      */
     private final TrackedIndex trackedIndex;
 
