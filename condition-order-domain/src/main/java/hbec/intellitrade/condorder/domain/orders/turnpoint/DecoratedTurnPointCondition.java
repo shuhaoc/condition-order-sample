@@ -1,6 +1,7 @@
 package hbec.intellitrade.condorder.domain.orders.turnpoint;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.condorder.domain.orders.DecoratedMarketCondition;
@@ -22,6 +23,7 @@ import java.util.Objects;
  * @date 2018/3/21
  */
 public class DecoratedTurnPointCondition implements MarketCondition, DynamicCondition {
+    private final TurnPointCondition rawTurnPointCondition;
     private final DecoratedMarketCondition<TurnPointCondition> turnPointCondition;
     private final DecoratedMarketCondition<CrossBaselineCondition> crossBaselineCondition;
     private final DelayConfirm delayConfirm;
@@ -40,6 +42,7 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
                                         "Baseline price must be more faraway than break price");
         }
 
+        this.rawTurnPointCondition = turnPointCondition;
         this.turnPointCondition = new DecoratedMarketCondition<>(turnPointCondition,
                                                                  delayConfirm,
                                                                  deviationCtrl,
@@ -79,6 +82,22 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
 
     public DeviationCtrl getDeviationCtrl() {
         return deviationCtrl;
+    }
+
+    public CompareOperator getCompareOperator() {
+        return rawTurnPointCondition.getCompareOperator();
+    }
+
+    public BigDecimal getBreakPrice() {
+        return rawTurnPointCondition.getBreakPrice();
+    }
+
+    public boolean isBroken() {
+        return rawTurnPointCondition.isBroken();
+    }
+
+    public Optional<BigDecimal> getExtremePrice() {
+        return rawTurnPointCondition.getExtremePrice();
     }
 
     @Override
@@ -126,7 +145,7 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
         }
         DecoratedTurnPointCondition that = (DecoratedTurnPointCondition) o;
         return Objects.equals(turnPointCondition, that.turnPointCondition) &&
-                Objects.equals(crossBaselineCondition, that.crossBaselineCondition);
+               Objects.equals(crossBaselineCondition, that.crossBaselineCondition);
     }
 
     @Override

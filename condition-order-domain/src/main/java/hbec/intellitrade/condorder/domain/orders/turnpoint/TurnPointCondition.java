@@ -107,8 +107,18 @@ public class TurnPointCondition extends AbstractMarketCondition implements Dynam
         return inflexionFactor.getBreakPriceFactor().getTargetPrice();
     }
 
-    public BigDecimal getTurnUpPercent() {
-        return ((PercentBinaryTargetPriceFactor) inflexionFactor.getTurnBackBinaryPriceFactor()).getPercent();
+    public BigDecimal getTurnBackPercent() {
+        if (inflexionFactor.getTurnBackBinaryPriceFactor() instanceof PercentBinaryTargetPriceFactor) {
+            return ((PercentBinaryTargetPriceFactor) inflexionFactor.getTurnBackBinaryPriceFactor()).getPercent();
+        }
+        return null;
+    }
+
+    public BigDecimal getTurnBackIncrement() {
+        if (inflexionFactor.getTurnBackBinaryPriceFactor() instanceof IncrementBinaryTargetPriceFactor) {
+            return ((IncrementBinaryTargetPriceFactor) inflexionFactor.getTurnBackBinaryPriceFactor()).getIncrement();
+        }
+        return null;
     }
 
     public boolean isBroken() {
