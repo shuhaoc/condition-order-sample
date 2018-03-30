@@ -8,7 +8,6 @@ import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmCond
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlConditionFactory;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
-import hbec.intellitrade.strategy.domain.condition.market.PredictableMarketCondition;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 
 import java.util.Objects;
@@ -21,7 +20,7 @@ import java.util.Objects;
  * @author caoshuhao@touker.com
  * @date 2018/3/22
  */
-public class DecoratedMarketCondition<T extends PredictableMarketCondition>
+public class DecoratedMarketCondition<T extends MarketCondition>
         implements MarketCondition, DelayConfirmCondition, DynamicCondition {
     /**
      * 原始条件
@@ -54,7 +53,7 @@ public class DecoratedMarketCondition<T extends PredictableMarketCondition>
         this.rawCondition = rawCondition;
 
         // 包装偏差控制条件，如果偏差控制参数为关闭，直接返回被包装条件
-        PredictableMarketCondition deviationCtrlWrappedCondition = DeviationCtrlConditionFactory.INSTANCE.wrapWith(
+        MarketCondition deviationCtrlWrappedCondition = DeviationCtrlConditionFactory.INSTANCE.wrapWith(
                 rawCondition,
                 deviationCtrl);
 

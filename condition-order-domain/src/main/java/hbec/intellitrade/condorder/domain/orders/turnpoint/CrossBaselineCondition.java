@@ -1,10 +1,12 @@
 package hbec.intellitrade.condorder.domain.orders.turnpoint;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.strategy.domain.condition.AbstractMarketCondition;
+import hbec.intellitrade.common.market.RealTimeMarket;
+import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
-import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
+import hbec.intellitrade.strategy.domain.signal.Signals;
+import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -15,7 +17,7 @@ import java.util.Objects;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/3/21
  */
-public class CrossBaselineCondition extends AbstractMarketCondition {
+public class CrossBaselineCondition implements MarketCondition {
     private final BasicTargetPriceFactor targetPriceFactor;
 
     public CrossBaselineCondition(CompareOperator compareOperator, BigDecimal targetPrice) {
@@ -23,8 +25,13 @@ public class CrossBaselineCondition extends AbstractMarketCondition {
     }
 
     @Override
-    public TargetPriceFactor getTargetPriceFactor() {
-        return targetPriceFactor;
+    public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
+        BigDecimal currentPrice = realTimeMarket.getCurrentPrice();
+        boolean satisfied = targetPriceFactor.apply(currentPrice);
+        if (satisfied) {
+            return Signals.crossBaseline();
+        }
+        return Signals.none();
     }
 
     @Override

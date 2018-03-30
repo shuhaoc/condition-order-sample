@@ -1,6 +1,7 @@
 package hbec.intellitrade.condorder.domain.orders.turnpoint;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Preconditions;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.condorder.domain.orders.DecoratedMarketCondition;
 import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
@@ -32,6 +33,13 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
                                        DeviationCtrl deviationCtrl,
                                        int turnPointDelayConfirmedCount,
                                        int crossDelayConfirmedCount) {
+        if (baselinePrice != null) {
+            CompareOperator breakCompareOperator = turnPointCondition.getCompareOperator().withoutEquals();
+            Preconditions.checkArgument(breakCompareOperator.apply(baselinePrice, turnPointCondition.getBreakPrice()));
+            Preconditions.checkArgument(breakCompareOperator.apply(baselinePrice, turnPointCondition.getBreakPrice()),
+                                        "Baseline price must be more faraway than break price");
+        }
+
         this.turnPointCondition = new DecoratedMarketCondition<>(turnPointCondition,
                                                                  delayConfirm,
                                                                  deviationCtrl,
@@ -40,7 +48,7 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
         // 踩线条件是可选的
         if (baselinePrice != null) {
             // 穿越底线条件的价格方向，与拐点条件的突破条件方向相同，但是价格等于底线价时不满足条件
-            CompareOperator compareOperator = turnPointCondition.getTargetPriceFactor().getCompareOperator();
+            CompareOperator compareOperator = turnPointCondition.getCompareOperator();
             CrossBaselineCondition rawCrossBaselineCondition = new CrossBaselineCondition(
                     compareOperator.withoutEquals(),
                     baselinePrice);

@@ -11,8 +11,7 @@ import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 /**
  * @author caosh/caoshuhao@touker.com
@@ -67,9 +66,34 @@ public class DecoratedTurnPointConditionTest {
                 0,
                 0
         );
+        // 突破突破价，未突破底线价
         assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("11.00"))),
                      Signals.none());
         assertTrue(turnPointCondition.getTurnPointCondition().isDirty());
+        assertFalse(turnPointCondition.getCrossBaselineCondition().isDirty());
         assertTrue(turnPointCondition.isDirty());
+
+        turnPointCondition.clearDirty();
+        assertFalse(turnPointCondition.isDirty());
+
+        //  继续下跌，刚刚到底线价
+        assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("9.00"))),
+                     Signals.none());
+        assertTrue(turnPointCondition.getTurnPointCondition().isDirty());
+        assertFalse(turnPointCondition.getCrossBaselineCondition().isDirty());
+
+        // 突破底线价，延迟确认
+        assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("8.99"))),
+                     Signals.none());
+        assertTrue(turnPointCondition.getTurnPointCondition().isDirty());
+        assertTrue(turnPointCondition.getCrossBaselineCondition().isDirty());
+
+        turnPointCondition.clearDirty();
+        assertFalse(turnPointCondition.isDirty());
+
+        assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("8.99"))),
+                     Signals.none());
+        assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("8.99"))),
+                     Signals.crossBaseline());
     }
 }

@@ -1,5 +1,6 @@
 package hbec.intellitrade.strategy.domain.condition.deviation;
 
+import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.condition.market.PredictableMarketCondition;
 
 /**
@@ -12,13 +13,14 @@ public enum DeviationCtrlConditionFactory {
      */
     INSTANCE;
 
-    public PredictableMarketCondition wrapWith(PredictableMarketCondition marketCondition,
-                                               DeviationCtrl deviationCtrl) {
+    public MarketCondition wrapWith(MarketCondition marketCondition,
+                                    DeviationCtrl deviationCtrl) {
         if (deviationCtrl.getOption() == DeviationCtrlOption.DISABLED) {
             return marketCondition;
         } else {
             DeviationCtrlInfo param = (DeviationCtrlInfo) deviationCtrl;
-            return new DeviationCtrlConditionImpl(param.getLimitPercent(), marketCondition);
+            return new DeviationCtrlConditionImpl(param.getLimitPercent(),
+                                                  (PredictableMarketCondition) marketCondition);
         }
     }
 }
