@@ -22,6 +22,7 @@ public class ConditionOrderDTO implements Serializable {
     private TradeCustomerInfoDTO customer;
     private Boolean deleted = false;
     private Integer orderState;
+    private Integer dataVersion;
     private SecurityInfoDTO securityInfo;
     private TrackedIndexDTO trackedIndex;
     @FieldMapping(mappedProperty = "strategyInfo.strategyType")
@@ -34,6 +35,7 @@ public class ConditionOrderDTO implements Serializable {
     private DelayConfirmDTO delayConfirm;
     @FieldMapping(mappedProperty = "condition.deviationCtrl")
     private DeviationCtrlDTO deviationCtrl;
+    private Integer triggerCount;
 
     public Long getOrderId() {
         return orderId;
@@ -65,6 +67,14 @@ public class ConditionOrderDTO implements Serializable {
 
     public void setOrderState(Integer orderState) {
         this.orderState = orderState;
+    }
+
+    public Integer getDataVersion() {
+        return dataVersion;
+    }
+
+    public void setDataVersion(Integer dataVersion) {
+        this.dataVersion = dataVersion;
     }
 
     public SecurityInfoDTO getSecurityInfo() {
@@ -139,6 +149,14 @@ public class ConditionOrderDTO implements Serializable {
         this.deviationCtrl = deviationCtrl;
     }
 
+    public Integer getTriggerCount() {
+        return triggerCount;
+    }
+
+    public void setTriggerCount(Integer triggerCount) {
+        this.triggerCount = triggerCount;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(ConditionOrderDTO.class).omitNullValues()
@@ -146,6 +164,7 @@ public class ConditionOrderDTO implements Serializable {
                           .add("customer", customer)
                           .add("deleted", deleted)
                           .add("orderState", orderState)
+                          .add("dataVersion", dataVersion)
                           .add("securityInfo", securityInfo)
                           .add("trackedIndex", trackedIndex)
                           .add("strategyType", strategyType)
@@ -155,6 +174,7 @@ public class ConditionOrderDTO implements Serializable {
                           .add("monitorTimeRange", monitorTimeRange)
                           .add("delayConfirm", delayConfirm)
                           .add("deviationCtrl", deviationCtrl)
+                          .add("triggerCount", triggerCount)
                           .toString();
     }
 }
