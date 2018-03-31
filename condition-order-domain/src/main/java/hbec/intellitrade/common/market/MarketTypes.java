@@ -1,6 +1,7 @@
 package hbec.intellitrade.common.market;
 
 import hbec.intellitrade.common.security.SecurityType;
+import me.caosh.autoasm.AutoAssemblers;
 
 /**
  * @author caoshuhao@touker.com
@@ -16,6 +17,10 @@ public class MarketTypes {
             default:
                 throw new IllegalArgumentException("securityType=" + securityType);
         }
+    }
+
+    public static MarketType valueOf(int marketType) {
+        return AutoAssemblers.getDefault().disassemble(marketType, MarketType.class);
     }
 
     private MarketTypes() {
