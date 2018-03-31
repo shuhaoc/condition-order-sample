@@ -1,12 +1,15 @@
 package me.caosh.condition.domain.dto.order;
 
+import hbec.commons.domain.intellitrade.condition.PriceConditionDTO;
 import hbec.commons.domain.intellitrade.condorder.ConditionOrderDTO;
 import hbec.commons.domain.intellitrade.condorder.DelayConfirmDTO;
 import hbec.commons.domain.intellitrade.condorder.DeviationCtrlDTO;
 import hbec.commons.domain.intellitrade.condorder.MonitorTimeRangeDTO;
-import hbec.commons.domain.intellitrade.condition.PriceConditionDTO;
 import hbec.commons.domain.intellitrade.condorder.TradeCustomerInfoDTO;
 import hbec.commons.domain.intellitrade.condorder.TradePlanDTO;
+import hbec.commons.domain.intellitrade.market.TrackedIndexDTO;
+import hbec.commons.domain.intellitrade.security.SecurityInfoDTO;
+import hbec.commons.domain.intellitrade.util.ConditionOrderAssemblers;
 import hbec.intellitrade.common.market.index.IndexSource;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
@@ -30,9 +33,6 @@ import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
 import hbec.intellitrade.trade.domain.ExchangeType;
-import hbec.commons.domain.intellitrade.security.SecurityInfoDTO;
-import hbec.commons.domain.intellitrade.market.TrackedIndexDTO;
-import hbec.commons.domain.intellitrade.util.ConditionOrderAssemblers;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.testng.annotations.Test;
@@ -114,7 +114,7 @@ public class ConditionOrderDtoAssemblerTest {
         tradePlan.setExchangeType(1);
         tradePlan.setEntrustStrategy(1);
         tradePlan.setEntrustMethod(0);
-        tradePlan.setNumber(BigDecimal.valueOf(1000));
+        tradePlan.setEntrustNumber(1000);
         tradePlan.setOrderType(0);
         conditionOrderDTO.setTradePlan(tradePlan);
 

@@ -21,8 +21,7 @@ public interface TradeNumber {
     /**
      * 基于给定的委托价格计算委托数量
      *
-     *
-     * @param securityInfo
+     * @param securityInfo 证券信息
      * @param entrustPrice 委托价格
      * @return 委托数量
      */

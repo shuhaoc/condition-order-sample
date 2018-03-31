@@ -1,5 +1,11 @@
 package me.caosh.condition.interfaces.assembler;
 
+import hbec.commons.domain.intellitrade.condorder.DelayConfirmDTO;
+import hbec.commons.domain.intellitrade.condorder.DeviationCtrlDTO;
+import hbec.commons.domain.intellitrade.condorder.MonitorTimeRangeDTO;
+import hbec.commons.domain.intellitrade.condorder.TradePlanDTO;
+import hbec.commons.domain.intellitrade.market.TrackedIndexDTO;
+import hbec.commons.domain.intellitrade.security.SecurityInfoDTO;
 import hbec.intellitrade.common.market.index.IndexSource;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
@@ -12,7 +18,7 @@ import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.condorder.domain.tradeplan.OfferedPriceTradePlan;
-import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberDirect;
+import hbec.intellitrade.condorder.domain.tradeplan.TradeNumberByAmount;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmInfo;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlInfo;
@@ -22,12 +28,6 @@ import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
 import hbec.intellitrade.trade.domain.ExchangeType;
-import hbec.commons.domain.intellitrade.security.SecurityInfoDTO;
-import hbec.commons.domain.intellitrade.market.TrackedIndexDTO;
-import hbec.commons.domain.intellitrade.condorder.DelayConfirmDTO;
-import hbec.commons.domain.intellitrade.condorder.DeviationCtrlDTO;
-import hbec.commons.domain.intellitrade.condorder.MonitorTimeRangeDTO;
-import hbec.commons.domain.intellitrade.condorder.TradePlanDTO;
 import me.caosh.condition.interfaces.command.PriceConditionCommandDTO;
 import me.caosh.condition.interfaces.command.PriceOrderCreateCommand;
 import org.joda.time.LocalDateTime;
@@ -71,8 +71,8 @@ public class PriceOrderCommandAssemblerTest {
         TradePlanDTO tradePlan = new TradePlanDTO();
         tradePlan.setExchangeType(1);
         tradePlan.setEntrustStrategy(1);
-        tradePlan.setEntrustMethod(0);
-        tradePlan.setNumber(BigDecimal.valueOf(1000));
+        tradePlan.setEntrustMethod(1);
+        tradePlan.setEntrustAmount(new BigDecimal("10000.00"));
         createCommand.setTradePlan(tradePlan);
 
         MonitorTimeRangeDTO monitorTimeRange = new MonitorTimeRangeDTO();
@@ -111,7 +111,7 @@ public class PriceOrderCommandAssemblerTest {
                                              LocalDateTime.parse("2018-03-15T15:00:00"),
                                              new OfferedPriceTradePlan(ExchangeType.BUY,
                                                                        EntrustStrategy.CURRENT_PRICE,
-                                                                       new TradeNumberDirect(1000)),
+                                                                       new TradeNumberByAmount(new BigDecimal("10000.00"))),
                                              new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"),
                                              new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                                                new LocalTimeRange(LocalTime.parse("10:00:00"),

@@ -53,6 +53,10 @@ public class PriceConditionDTO implements ConditionDTO {
         this.delayConfirmedCount = delayConfirmedCount;
     }
 
+    public BigDecimal getTargetValue() {
+        return getTargetPrice();
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(PriceConditionDTO.class).omitNullValues()

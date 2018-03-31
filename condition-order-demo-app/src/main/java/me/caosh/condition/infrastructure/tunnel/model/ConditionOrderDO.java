@@ -5,7 +5,12 @@ import me.caosh.autoasm.FieldMapping;
 import me.caosh.autoasm.SkippedField;
 import org.joda.time.LocalTime;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -59,7 +64,9 @@ public class ConditionOrderDO {
     @FieldMapping(mappedProperty = "tradePlan.tradeNumber.entrustMethod")
     private Integer entrustMethod;
     @FieldMapping(mappedProperty = "tradePlan.tradeNumber.number")
-    private BigDecimal entrustAmount;
+    private Integer entrustNumber = 0;
+    @FieldMapping(mappedProperty = "tradePlan.tradeNumber.amount")
+    private BigDecimal entrustAmount = BigDecimal.ZERO;
     @FieldMapping(mappedProperty = "tradePlan.orderType")
     private Integer orderType;
     @FieldMapping(mappedProperty = "condition.delayConfirm.option")
@@ -311,6 +318,16 @@ public class ConditionOrderDO {
 
     public void setEntrustMethod(Integer entrustMethod) {
         this.entrustMethod = entrustMethod;
+    }
+
+    @Basic
+    @Column(name = "entrust_number")
+    public Integer getEntrustNumber() {
+        return entrustNumber;
+    }
+
+    public void setEntrustNumber(Integer entrustNumber) {
+        this.entrustNumber = entrustNumber;
     }
 
     @Basic

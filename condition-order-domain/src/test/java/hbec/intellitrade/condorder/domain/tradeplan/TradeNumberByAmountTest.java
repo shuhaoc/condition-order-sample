@@ -21,7 +21,6 @@ public class TradeNumberByAmountTest {
     @Test
     public void test() throws Exception {
         TradeNumberByAmount tradeNumber = new TradeNumberByAmount(new BigDecimal("10000"));
-        assertEquals(tradeNumber.getNumber(), new BigDecimal("10000"));
         assertEquals(tradeNumber.getAmount(), new BigDecimal("10000"));
 
         assertEquals(tradeNumber.getNumber(SECURITY_INFO, BigDecimal.valueOf(10)),900);

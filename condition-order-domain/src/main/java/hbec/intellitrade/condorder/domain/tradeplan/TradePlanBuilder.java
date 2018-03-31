@@ -54,22 +54,27 @@ public class TradePlanBuilder implements ConvertibleBuilder<TradePlan> {
 
     public static class TradeNumberBuilder implements ConvertibleBuilder<TradeNumber> {
         private EntrustMethod entrustMethod;
-        private BigDecimal number;
+        private Integer number;
+        private BigDecimal amount;
 
         public void setEntrustMethod(EntrustMethod entrustMethod) {
             this.entrustMethod = entrustMethod;
         }
 
-        public void setNumber(BigDecimal number) {
+        public void setNumber(Integer number) {
             this.number = number;
+        }
+
+        public void setAmount(BigDecimal amount) {
+            this.amount = amount;
         }
 
         @Override
         public TradeNumber build() {
             if (entrustMethod == EntrustMethod.NUMBER) {
-                return new TradeNumberDirect(number.intValue());
+                return new TradeNumberDirect(number);
             } else if (entrustMethod == EntrustMethod.AMOUNT) {
-                return new TradeNumberByAmount(number);
+                return new TradeNumberByAmount(amount);
             } else {
                 throw new IllegalArgumentException("entrustMethod=" + entrustMethod);
             }

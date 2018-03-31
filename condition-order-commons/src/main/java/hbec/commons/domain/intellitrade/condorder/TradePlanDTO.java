@@ -34,9 +34,10 @@ public class TradePlanDTO implements Serializable {
     @Range(min = 0, max = 1)
     @FieldMapping(mappedProperty = "tradeNumber.entrustMethod")
     private Integer entrustMethod;
-    @NotNull
     @FieldMapping(mappedProperty = "tradeNumber.number")
-    private BigDecimal number;
+    private Integer entrustNumber;
+    @FieldMapping(mappedProperty = "tradeNumber.amount")
+    private BigDecimal entrustAmount;
     private Integer orderType;
     /**
      * 站点信息
@@ -52,7 +53,8 @@ public class TradePlanDTO implements Serializable {
                         Integer entrustStrategy,
                         BigDecimal entrustPrice,
                         Integer entrustMethod,
-                        BigDecimal number,
+                        Integer entrustNumber,
+                        BigDecimal entrustAmount,
                         Integer orderType,
                         String nodeInfo) {
         this.stockHolderNo = stockHolderNo;
@@ -60,7 +62,8 @@ public class TradePlanDTO implements Serializable {
         this.entrustStrategy = entrustStrategy;
         this.entrustPrice = entrustPrice;
         this.entrustMethod = entrustMethod;
-        this.number = number;
+        this.entrustNumber = entrustNumber;
+        this.entrustAmount = entrustAmount;
         this.orderType = orderType;
         this.nodeInfo = nodeInfo;
     }
@@ -105,12 +108,20 @@ public class TradePlanDTO implements Serializable {
         this.entrustMethod = entrustMethod;
     }
 
-    public BigDecimal getNumber() {
-        return number;
+    public Integer getEntrustNumber() {
+        return entrustNumber;
     }
 
-    public void setNumber(BigDecimal number) {
-        this.number = number;
+    public void setEntrustNumber(Integer entrustNumber) {
+        this.entrustNumber = entrustNumber;
+    }
+
+    public BigDecimal getEntrustAmount() {
+        return entrustAmount;
+    }
+
+    public void setEntrustAmount(BigDecimal entrustAmount) {
+        this.entrustAmount = entrustAmount;
     }
 
     public Integer getOrderType() {
@@ -137,7 +148,8 @@ public class TradePlanDTO implements Serializable {
                           .add("entrustStrategy", entrustStrategy)
                           .add("entrustPrice", entrustPrice)
                           .add("entrustMethod", entrustMethod)
-                          .add("number", number)
+                          .add("entrustNumber", entrustNumber)
+                          .add("entrustAmount", entrustAmount)
                           .add("orderType", orderType)
                           .add("nodeInfo", nodeInfo)
                           .toString();

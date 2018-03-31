@@ -21,6 +21,7 @@ CREATE TABLE `condition_order` (
   `entrust_strategy`          INT            NOT NULL,
   `entrust_price`             DECIMAL(13, 3),
   `entrust_method`            INT            NOT NULL,
+  `entrust_number`            INT            NOT NULL,
   `entrust_amount`            DECIMAL(13, 2) NOT NULL,
   `order_type`                INT            NOT NULL,
   `delay_confirm_option`      INT            NOT NULL,
