@@ -1,7 +1,4 @@
-package hbec.intellitrade.common.market.index;
-
-import hbec.intellitrade.common.market.MarketID;
-import hbec.intellitrade.common.market.MarketType;
+package hbec.intellitrade.common.market;
 
 /**
  * 指数信息
@@ -13,7 +10,7 @@ public class IndexInfo {
     /**
      * 指数来源
      */
-    private final IndexSource source;
+    private final MarketSource source;
 
     /**
      * 指数代码
@@ -25,13 +22,13 @@ public class IndexInfo {
      */
     private final String name;
 
-    public IndexInfo(IndexSource source, String code, String name) {
+    public IndexInfo(MarketSource source, String code, String name) {
         this.source = source;
         this.code = code;
         this.name = name;
     }
 
-    public IndexSource getSource() {
+    public MarketSource getSource() {
         return source;
     }
 

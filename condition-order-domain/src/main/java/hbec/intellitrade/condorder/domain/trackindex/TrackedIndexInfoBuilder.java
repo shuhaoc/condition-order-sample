@@ -1,6 +1,6 @@
 package hbec.intellitrade.condorder.domain.trackindex;
 
-import hbec.intellitrade.common.market.index.IndexSource;
+import hbec.intellitrade.common.market.MarketSource;
 import me.caosh.autoasm.ConvertibleBuilder;
 
 /**
@@ -9,7 +9,7 @@ import me.caosh.autoasm.ConvertibleBuilder;
  */
 public class TrackedIndexInfoBuilder implements ConvertibleBuilder<TrackedIndex> {
     private TrackIndexOption option = TrackIndexOption.DISABLED;
-    private IndexSource source;
+    private MarketSource source;
     private String code;
     private String name;
 
@@ -18,7 +18,7 @@ public class TrackedIndexInfoBuilder implements ConvertibleBuilder<TrackedIndex>
         return this;
     }
 
-    public TrackedIndexInfoBuilder setSource(IndexSource source) {
+    public TrackedIndexInfoBuilder setSource(MarketSource source) {
         this.source = source;
         return this;
     }

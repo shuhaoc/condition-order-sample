@@ -1,8 +1,8 @@
 package hbec.intellitrade.condorder.domain.trackindex;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.common.market.index.IndexInfo;
-import hbec.intellitrade.common.market.index.IndexSource;
+import hbec.intellitrade.common.market.IndexInfo;
+import hbec.intellitrade.common.market.MarketSource;
 
 /**
  * 开启状态下的跟踪指数信息
@@ -11,7 +11,7 @@ import hbec.intellitrade.common.market.index.IndexSource;
  * @date 2018/3/17
  */
 public class TrackedIndexInfo extends IndexInfo implements TrackedIndex {
-    public TrackedIndexInfo(IndexSource source, String code, String name) {
+    public TrackedIndexInfo(MarketSource source, String code, String name) {
         super(source, code, name);
     }
 

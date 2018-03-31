@@ -6,7 +6,7 @@ import hbec.commons.domain.intellitrade.condorder.MonitorTimeRangeDTO;
 import hbec.commons.domain.intellitrade.condorder.TradePlanDTO;
 import hbec.commons.domain.intellitrade.market.TrackedIndexDTO;
 import hbec.commons.domain.intellitrade.security.SecurityInfoDTO;
-import hbec.intellitrade.common.market.index.IndexSource;
+import hbec.intellitrade.common.market.MarketSource;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
@@ -112,7 +112,7 @@ public class PriceOrderCommandAssemblerTest {
                                              new OfferedPriceTradePlan(ExchangeType.BUY,
                                                                        EntrustStrategy.CURRENT_PRICE,
                                                                        new TradeNumberByAmount(new BigDecimal("10000.00"))),
-                                             new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"),
+                                             new TrackedIndexInfo(MarketSource.SZ, "399001", "深证成指"),
                                              new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                                                new LocalTimeRange(LocalTime.parse("10:00:00"),
                                                                                   LocalTime.parse("14:00:00"))));

@@ -1,10 +1,10 @@
 package hbec.intellitrade.condorder.domain.orders.price;
 
 import hbec.intellitrade.common.market.MarketID;
+import hbec.intellitrade.common.market.MarketSource;
 import hbec.intellitrade.common.market.MarketType;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.market.RealTimeMarketSupplier;
-import hbec.intellitrade.common.market.index.IndexSource;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
@@ -30,7 +30,13 @@ import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekRange;
 import hbec.intellitrade.strategy.domain.timerange.WeekTimeRange;
-import hbec.intellitrade.trade.domain.*;
+import hbec.intellitrade.trade.domain.EntrustCommand;
+import hbec.intellitrade.trade.domain.EntrustOrderInfo;
+import hbec.intellitrade.trade.domain.EntrustOrderWriter;
+import hbec.intellitrade.trade.domain.EntrustSuccessResult;
+import hbec.intellitrade.trade.domain.ExchangeType;
+import hbec.intellitrade.trade.domain.OrderType;
+import hbec.intellitrade.trade.domain.TradeCustomer;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.mockito.Matchers;
@@ -368,11 +374,11 @@ public class PriceOrderTest {
                                                new OfferedPriceTradePlan(ExchangeType.BUY,
                                                                          EntrustStrategy.CURRENT_PRICE,
                                                                          new TradeNumberDirect(100)),
-                                               new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"),
+                                               new TrackedIndexInfo(MarketSource.SZ, "399001", "深证成指"),
                                                NoneMonitorTimeRange.NONE);
 
         assertEquals(priceOrder.getTrackIndexOption(), TrackIndexOption.ENABLED);
-        assertEquals(priceOrder.getTrackedIndex(), new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"));
+        assertEquals(priceOrder.getTrackedIndex(), new TrackedIndexInfo(MarketSource.SZ, "399001", "深证成指"));
 
         assertEquals(priceOrder.getTrackMarketID(), new MarketID(MarketType.INDEX, "399001"));
     }

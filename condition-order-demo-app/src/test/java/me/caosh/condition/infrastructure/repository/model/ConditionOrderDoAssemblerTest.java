@@ -1,6 +1,6 @@
 package me.caosh.condition.infrastructure.repository.model;
 
-import hbec.intellitrade.common.market.index.IndexSource;
+import hbec.intellitrade.common.market.MarketSource;
 import hbec.intellitrade.common.security.SecurityExchange;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
@@ -68,7 +68,7 @@ public class ConditionOrderDoAssemblerTest {
                 LocalDateTime.parse("2018-03-12T15:00:00"),
                 new OfferedPriceTradePlan(ExchangeType.SELL, EntrustStrategy.BUY1,
                                           new TradeNumberByAmount(new BigDecimal("10000.00"))),
-                new TrackedIndexInfo(IndexSource.SZ, "399001", "深证成指"),
+                new TrackedIndexInfo(MarketSource.SZ, "399001", "深证成指"),
                 new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
                                   new LocalTimeRange(LocalTime.parse("10:00:00"), LocalTime.parse("10:30:00"))));
         ConditionOrderDO conditionOrderDO = ConditionOrderDoAssembler.assemble(conditionOrder);
@@ -84,7 +84,7 @@ public class ConditionOrderDoAssemblerTest {
         assertEquals(conditionOrderDO.getSecurityName(), SECURITY_NAME);
         assertEquals(conditionOrderDO.getStrategyType().intValue(), NativeStrategyInfo.PRICE.getStrategyType());
         assertEquals(conditionOrderDO.getTrackedIndexOption(), TrackIndexOption.ENABLED.getValue());
-        assertEquals(conditionOrderDO.getTrackedIndexSource(), IndexSource.SZ.name());
+        assertEquals(conditionOrderDO.getTrackedIndexSource(), MarketSource.SZ.name());
         assertEquals(conditionOrderDO.getTrackedIndexCode(), "399001");
         assertEquals(conditionOrderDO.getTrackedIndexName(), "深证成指");
         assertEquals(conditionOrderDO.getConditionProperties(),
