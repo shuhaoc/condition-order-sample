@@ -1,11 +1,11 @@
 package me.caosh.condition.infrastructure.rabbitmq;
 
+import hbec.commons.domain.intellitrade.condorder.ConditionOrderCommandDTO;
+import hbec.commons.domain.intellitrade.condorder.OrderCommandType;
+import hbec.commons.domain.intellitrade.util.ConditionOrderAssemblers;
+import hbec.commons.domain.intellitrade.util.ConditionOrderGSONMessageConverter;
 import hbec.intellitrade.condorder.domain.ConditionOrder;
 import me.caosh.autoasm.AutoAssemblers;
-import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
-import hbec.commons.domain.intellitrade.util.ConditionOrderAssemblers;
-import me.caosh.condition.domain.dto.order.constants.OrderCommandType;
-import hbec.commons.domain.intellitrade.util.ConditionOrderGSONMessageConverter;
 import me.caosh.condition.domain.event.OrderCommandEvent;
 import me.caosh.condition.domain.event.OrderRemoveCommandEvent;
 import me.caosh.condition.domain.event.OrderSaveCommandEvent;
@@ -40,7 +40,7 @@ public class ConditionOrderConsumer {
 
     private final ConnectionFactory connectionFactory;
     private final AmqpAdmin amqpAdmin;
-    private final MessageConverter messageConverter = new ConditionOrderGSONMessageConverter<>(ConditionOrderMonitorDTO.class);
+    private final MessageConverter messageConverter = new ConditionOrderGSONMessageConverter<>(ConditionOrderCommandDTO.class);
 
     public void setExchangeName(String exchangeName) {
         this.exchangeName = exchangeName;
@@ -74,16 +74,17 @@ public class ConditionOrderConsumer {
         container.setMessageListener(new MessageListener() {
             @Override
             public void onMessage(Message message) {
-                ConditionOrderMonitorDTO conditionOrderMonitorDTO = (ConditionOrderMonitorDTO) messageConverter.fromMessage(message);
-                logger.debug("Receive condition order message <== {}", conditionOrderMonitorDTO);
-                OrderCommandEvent event = create(conditionOrderMonitorDTO);
+                ConditionOrderCommandDTO conditionOrderCommandDTO = (ConditionOrderCommandDTO) messageConverter.fromMessage(
+                        message);
+                logger.debug("Receive condition order message <== {}", conditionOrderCommandDTO);
+                OrderCommandEvent event = create(conditionOrderCommandDTO);
                 MonitorEventBus.EVENT_SERIALIZED.post(event);
             }
         });
         container.start();
     }
 
-    private OrderCommandEvent create(ConditionOrderMonitorDTO dto) {
+    private OrderCommandEvent create(ConditionOrderCommandDTO dto) {
         OrderCommandType orderCommandType = AutoAssemblers.getDefault()
                                                           .disassemble(dto.getOrderCommandType(),
                                                                        OrderCommandType.class);

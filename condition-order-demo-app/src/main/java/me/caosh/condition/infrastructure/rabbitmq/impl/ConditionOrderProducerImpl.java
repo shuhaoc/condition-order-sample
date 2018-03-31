@@ -1,12 +1,12 @@
 package me.caosh.condition.infrastructure.rabbitmq.impl;
 
 import com.google.common.base.Preconditions;
-import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.commons.domain.intellitrade.condorder.ConditionOrderCommandDTO;
 import hbec.commons.domain.intellitrade.condorder.ConditionOrderDTO;
-import me.caosh.condition.domain.dto.order.ConditionOrderMonitorDTO;
+import hbec.commons.domain.intellitrade.condorder.OrderCommandType;
 import hbec.commons.domain.intellitrade.util.ConditionOrderAssemblers;
-import me.caosh.condition.domain.dto.order.constants.OrderCommandType;
 import hbec.commons.domain.intellitrade.util.ConditionOrderGSONMessageConverter;
+import hbec.intellitrade.condorder.domain.ConditionOrder;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +38,7 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
 
     private final AmqpTemplate amqpTemplate;
 
-    private final MessageConverter messageConverter = new ConditionOrderGSONMessageConverter<>(ConditionOrderMonitorDTO.class);
+    private final MessageConverter messageConverter = new ConditionOrderGSONMessageConverter<>(ConditionOrderCommandDTO.class);
 
     public ConditionOrderProducerImpl(AmqpAdmin amqpAdmin, AmqpTemplate amqpTemplate) {
         this.amqpAdmin = amqpAdmin;
@@ -72,16 +72,18 @@ public class ConditionOrderProducerImpl implements ConditionOrderProducer {
         ConditionOrderDTO conditionOrderDTO = ConditionOrderAssemblers.dtoSupported()
                                                                       .assemble(conditionOrder,
                                                                                 ConditionOrderDTO.class);
-        ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(OrderCommandType.SAVE.getValue(), conditionOrderDTO);
-        Message message = messageConverter.toMessage(conditionOrderMonitorDTO, new MessageProperties());
+        ConditionOrderCommandDTO conditionOrderCommandDTO = new ConditionOrderCommandDTO(OrderCommandType.SAVE.getValue(),
+                                                                                         conditionOrderDTO);
+        Message message = messageConverter.toMessage(conditionOrderCommandDTO, new MessageProperties());
         amqpTemplate.send(exchangeName, routingKey, message);
         logger.info("Send <SAVE> command ==> {}", conditionOrderDTO);
     }
 
     @Override
     public void remove(Long orderId) {
-        ConditionOrderMonitorDTO conditionOrderMonitorDTO = new ConditionOrderMonitorDTO(OrderCommandType.REMOVE.getValue(), orderId);
-        Message message = messageConverter.toMessage(conditionOrderMonitorDTO, new MessageProperties());
+        ConditionOrderCommandDTO conditionOrderCommandDTO = new ConditionOrderCommandDTO(OrderCommandType.REMOVE.getValue(),
+                                                                                         orderId);
+        Message message = messageConverter.toMessage(conditionOrderCommandDTO, new MessageProperties());
         amqpTemplate.send(exchangeName, routingKey, message);
         logger.info("Send <REMOVE> command ==> {}", orderId);
     }
