@@ -1,18 +1,21 @@
 package hbec.commons.domain.intellitrade.condorder;
 
 import com.google.common.base.MoreObjects;
+import hbec.intellitrade.replay.InputStreamObject;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by caosh on 2017/8/13.
  */
-public class ConditionOrderCommandDTO implements Serializable {
+public class ConditionOrderCommandDTO implements Serializable, InputStreamObject {
     private static final long serialVersionUID = 1L;
 
     private Integer orderCommandType;
     private Long orderId;
     private ConditionOrderDTO conditionOrderDTO;
+    private Date opTime;
 
     public ConditionOrderCommandDTO() {
     }
@@ -26,6 +29,22 @@ public class ConditionOrderCommandDTO implements Serializable {
         this.orderCommandType = orderCommandType;
         this.orderId = conditionOrderDTO.getOrderId();
         this.conditionOrderDTO = conditionOrderDTO;
+    }
+
+    public ConditionOrderCommandDTO(Integer orderCommandType, Long orderId, Date opTime) {
+        this.orderCommandType = orderCommandType;
+        this.orderId = orderId;
+        this.opTime = opTime;
+    }
+
+    public ConditionOrderCommandDTO(Integer orderCommandType,
+                                    Long orderId,
+                                    ConditionOrderDTO conditionOrderDTO,
+                                    Date opTime) {
+        this.orderCommandType = orderCommandType;
+        this.orderId = orderId;
+        this.conditionOrderDTO = conditionOrderDTO;
+        this.opTime = opTime;
     }
 
     public Integer getOrderCommandType() {
@@ -52,13 +71,26 @@ public class ConditionOrderCommandDTO implements Serializable {
         this.conditionOrderDTO = conditionOrderDTO;
     }
 
+    public Date getOpTime() {
+        return opTime;
+    }
+
+    public void setOpTime(Date opTime) {
+        this.opTime = opTime;
+    }
+
+    @Override
+    public long getInputTimestamp() {
+        return opTime.getTime();
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(ConditionOrderCommandDTO.class).omitNullValues()
-                          .addValue(ConditionOrderCommandDTO.class.getSuperclass() != Object.class ? super.toString() : null)
                           .add("orderCommandType", orderCommandType)
                           .add("orderId", orderId)
                           .add("conditionOrderDTO", conditionOrderDTO)
+                          .add("opTime", opTime)
                           .toString();
     }
 }
