@@ -19,6 +19,9 @@ public class ConditionOrderLogDTO implements Serializable {
 
     private Long logId;
     private Integer opType;
+
+    // ------------------------------ Condition order fields begin ------------------------------
+
     private Long orderId;
     private TradeCustomerInfoDTO customer;
     private Boolean deleted;
@@ -34,6 +37,9 @@ public class ConditionOrderLogDTO implements Serializable {
     private DelayConfirmDTO delayConfirm;
     private DeviationCtrlDTO deviationCtrl;
     private Integer triggerCount;
+
+    // ------------------------------ Condition order fields end   ------------------------------
+
     private Integer reason;
     private Date opTime;
 
