@@ -1,6 +1,7 @@
 package hbec.commons.domain.intellitrade.market;
 
 import com.google.common.base.MoreObjects;
+import hbec.intellitrade.replay.InputStreamObject;
 import me.caosh.autoasm.Convertible;
 import me.caosh.autoasm.FieldMapping;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * @author caoshuhao@touker.com
  */
 @Convertible
-public class RealTimeMarketDTO implements Serializable {
+public class RealTimeMarketDTO implements Serializable, InputStreamObject {
     private static final long serialVersionUID = 1L;
 
     @FieldMapping(mappedProperty = "marketID.type")
@@ -73,6 +74,11 @@ public class RealTimeMarketDTO implements Serializable {
 
     public void setMarketTime(Date marketTime) {
         this.marketTime = marketTime;
+    }
+
+    @Override
+    public long getInputTimestamp() {
+        return marketTime.getTime();
     }
 
     @Override

@@ -1,7 +1,10 @@
 package hbec.commons.domain.intellitrade.condorder;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Optional;
+import hbec.intellitrade.common.market.MarketXID;
 import hbec.intellitrade.replay.InputStreamObject;
+import hbec.intellitrade.replay.TrackingMarketStreamObject;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,7 +12,7 @@ import java.util.Date;
 /**
  * Created by caosh on 2017/8/13.
  */
-public class ConditionOrderCommandDTO implements Serializable, InputStreamObject {
+public class ConditionOrderCommandDTO implements Serializable, InputStreamObject, TrackingMarketStreamObject {
     private static final long serialVersionUID = 1L;
 
     private Integer orderCommandType;
@@ -45,6 +48,14 @@ public class ConditionOrderCommandDTO implements Serializable, InputStreamObject
         this.orderId = orderId;
         this.conditionOrderDTO = conditionOrderDTO;
         this.opTime = opTime;
+    }
+
+    @Override
+    public Optional<MarketXID> getTrackMarketXID() {
+        if (conditionOrderDTO == null) {
+            return Optional.absent();
+        }
+        return conditionOrderDTO.getTrackMarketXID();
     }
 
     public Integer getOrderCommandType() {

@@ -1,9 +1,16 @@
 package hbec.commons.domain.intellitrade.condorder;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Optional;
 import hbec.commons.domain.intellitrade.condition.ConditionDTO;
 import hbec.commons.domain.intellitrade.market.TrackedIndexDTO;
 import hbec.commons.domain.intellitrade.security.SecurityInfoDTO;
+import hbec.intellitrade.common.market.MarketSource;
+import hbec.intellitrade.common.market.MarketType;
+import hbec.intellitrade.common.market.MarketTypes;
+import hbec.intellitrade.common.market.MarketXID;
+import hbec.intellitrade.condorder.domain.trackindex.TrackIndexOption;
+import hbec.intellitrade.replay.TrackingMarketStreamObject;
 import me.caosh.autoasm.Convertible;
 import me.caosh.autoasm.FieldMapping;
 
@@ -15,7 +22,7 @@ import java.io.Serializable;
  * @author caoshuhao@touker.com
  */
 @Convertible
-public class ConditionOrderDTO implements Serializable {
+public class ConditionOrderDTO implements Serializable, TrackingMarketStreamObject {
     private static final long serialVersionUID = 1L;
 
     private Long orderId;
@@ -190,6 +197,31 @@ public class ConditionOrderDTO implements Serializable {
 
     public void setTriggerCount(Integer triggerCount) {
         this.triggerCount = triggerCount;
+    }
+
+    @Override
+    public long getInputTimestamp() {
+        // DTO作为条件单快照加载时，不需要排序，可视为0
+        return 0;
+    }
+
+    @Override
+    public Optional<MarketXID> getTrackMarketXID() {
+        if (trackedIndex != null && TrackIndexOption.ENABLED.getValue().equals(trackedIndex.getOption())) {
+            // 跟踪指数的，需要指数行情
+            return Optional.of(new MarketXID(MarketType.INDEX,
+                                             MarketSource.valueOf(trackedIndex.getSource()),
+                                             trackedIndex.getCode()));
+        }
+
+        // 跟踪交易证券
+        if (securityInfo == null) {
+            return Optional.absent();
+        }
+
+        return Optional.of(new MarketXID(MarketTypes.valueOf(securityInfo.getType()),
+                                         MarketSource.valueOf(securityInfo.getExchange()),
+                                         securityInfo.getCode()));
     }
 
     @Override
