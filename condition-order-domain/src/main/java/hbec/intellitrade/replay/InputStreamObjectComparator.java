@@ -6,7 +6,12 @@ import java.util.Comparator;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/3/31
  */
-public class InputStreamObjectComparator implements Comparator<InputStreamObject> {
+public enum InputStreamObjectComparator implements Comparator<InputStreamObject> {
+    /**
+     * 单例
+     */
+    INSTANCE;
+
     @Override
     public int compare(InputStreamObject a, InputStreamObject b) {
         if (a.getInputTimestamp() > b.getInputTimestamp()) {
