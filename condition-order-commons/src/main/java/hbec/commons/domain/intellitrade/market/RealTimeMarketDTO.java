@@ -20,7 +20,7 @@ public class RealTimeMarketDTO implements Serializable, InputStreamObject {
     private static final long serialVersionUID = 1L;
 
     @FieldMapping(mappedProperty = "marketID.type")
-    private Integer type;
+    private Integer marketType;
     @FieldMapping(mappedProperty = "marketID.code")
     private String code;
     private BigDecimal currentPrice;
@@ -28,12 +28,12 @@ public class RealTimeMarketDTO implements Serializable, InputStreamObject {
     private List<BigDecimal> offeredPrices;
     private Date marketTime;
 
-    public Integer getType() {
-        return type;
+    public Integer getMarketType() {
+        return marketType;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setMarketType(Integer marketType) {
+        this.marketType = marketType;
     }
 
     public String getCode() {
@@ -84,12 +84,12 @@ public class RealTimeMarketDTO implements Serializable, InputStreamObject {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(RealTimeMarketDTO.class).omitNullValues()
-                .add("type", type)
-                .add("code", code)
-                .add("currentPrice", currentPrice)
-                .add("previousPrice", previousPrice)
-                .add("offeredPrices", offeredPrices)
-                .add("marketTime", marketTime)
-                .toString();
+                          .add("marketType", marketType)
+                          .add("code", code)
+                          .add("currentPrice", currentPrice)
+                          .add("previousPrice", previousPrice)
+                          .add("offeredPrices", offeredPrices)
+                          .add("marketTime", marketTime)
+                          .toString();
     }
 }
