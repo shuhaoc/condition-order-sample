@@ -1,7 +1,6 @@
 package hbec.intellitrade.condorder.domain.orders.turnpoint;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.condorder.domain.orders.DecoratedMarketCondition;
@@ -68,12 +67,8 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
         this.deviationCtrl = deviationCtrl;
     }
 
-    public DecoratedMarketCondition<TurnPointCondition> getTurnPointCondition() {
-        return turnPointCondition;
-    }
-
-    public DecoratedMarketCondition<CrossBaselineCondition> getCrossBaselineCondition() {
-        return crossBaselineCondition;
+    public TurnPointCondition getRawCondition() {
+        return rawTurnPointCondition;
     }
 
     public DelayConfirm getDelayConfirm() {
@@ -84,20 +79,12 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
         return deviationCtrl;
     }
 
-    public CompareOperator getCompareOperator() {
-        return rawTurnPointCondition.getCompareOperator();
+    DecoratedMarketCondition<TurnPointCondition> getTurnPointCondition() {
+        return turnPointCondition;
     }
 
-    public BigDecimal getBreakPrice() {
-        return rawTurnPointCondition.getBreakPrice();
-    }
-
-    public boolean isBroken() {
-        return rawTurnPointCondition.isBroken();
-    }
-
-    public Optional<BigDecimal> getExtremePrice() {
-        return rawTurnPointCondition.getExtremePrice();
+    DecoratedMarketCondition<CrossBaselineCondition> getCrossBaselineCondition() {
+        return crossBaselineCondition;
     }
 
     @Override

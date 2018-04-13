@@ -8,6 +8,7 @@ import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointCondition;
 import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointOrder;
 import hbec.intellitrade.condorder.domain.tradeplan.*;
+import hbec.intellitrade.strategy.domain.factor.BinaryFactorType;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import me.caosh.autoasm.AutoAssemblers;
@@ -29,7 +30,10 @@ public class TurnPointOrderCommandAssembler {
                 command.getSecurityName());
         TurnPointCondition turnPointCondition = new TurnPointCondition(CompareOperator.LE,
                                                                        command.getBreakPrice(),
-                                                                       command.getTurnUpPercent(), false);
+                                                                       BinaryFactorType.PERCENT,
+                                                                       command.getTurnUpPercent(),
+                                                                       null,
+                                                                       false);
         EntrustStrategy entrustStrategy = AutoAssemblers.getDefault()
                                                         .disassemble(command.getEntrustStrategy(),
                                                                      EntrustStrategy.class);
@@ -37,17 +41,17 @@ public class TurnPointOrderCommandAssembler {
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
         BaseTradePlan tradePlan = new OfferedPriceTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
         return new TurnPointOrder(orderId, tradeCustomerInfo, orderState, securityInfo,
-                                  turnPointCondition, null, tradePlan);
+                                  turnPointCondition, tradePlan);
     }
 
     public static TurnPointOrder merge(TurnPointOrder oldOrder, TurnUpBuyOrderUpdateCommand command) {
         OrderState orderState = OrderState.ACTIVE;
         TurnPointCondition turnPointCondition = new TurnPointCondition(CompareOperator.LE,
                                                                        command.getBreakPrice(),
-                                                                       command.getTurnUpPercent(), false);
-//        if (turnPointCondition.isNeedSwap(oldOrder.getTurnPointCondition())) {
-//            turnPointCondition.swap(oldOrder.getTurnPointCondition());
-//        }
+                                                                       BinaryFactorType.PERCENT,
+                                                                       command.getTurnUpPercent(),
+                                                                       null,
+                                                                       false);
         EntrustStrategy entrustStrategy = AutoAssemblers.getDefault()
                                                         .disassemble(command.getEntrustStrategy(),
                                                                      EntrustStrategy.class);
@@ -55,7 +59,7 @@ public class TurnPointOrderCommandAssembler {
                 .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
         BaseTradePlan tradePlan = new OfferedPriceTradePlan(ExchangeType.BUY, entrustStrategy, tradeNumber);
         return new TurnPointOrder(oldOrder.getOrderId(), oldOrder.getCustomer(), orderState, oldOrder.getSecurityInfo(),
-                                  turnPointCondition, null, tradePlan);
+                                  turnPointCondition, tradePlan);
     }
 
     private TurnPointOrderCommandAssembler() {

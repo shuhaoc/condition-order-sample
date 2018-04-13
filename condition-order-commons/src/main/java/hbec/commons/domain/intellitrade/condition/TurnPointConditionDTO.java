@@ -17,32 +17,38 @@ public class TurnPointConditionDTO implements Serializable {
 
     private CompareOperator compareOperator;
     private BigDecimal breakPrice;
-    private BigDecimal turnBackPercent;
     private Integer binaryFactorType;
+    private BigDecimal turnBackPercent;
     private BigDecimal turnBackIncrement;
-    private boolean useGuaranteedPrice;
-    private boolean broken;
+    private Boolean useGuaranteedPrice;
+    private Boolean broken;
     private BigDecimal extremePrice;
+    private Integer turnPointDelayConfirmedCount;
+    private Integer crossDelayConfirmedCount;
 
     public TurnPointConditionDTO() {
     }
 
     public TurnPointConditionDTO(CompareOperator compareOperator,
                                  BigDecimal breakPrice,
-                                 BigDecimal turnBackPercent,
                                  Integer binaryFactorType,
+                                 BigDecimal turnBackPercent,
                                  BigDecimal turnBackIncrement,
-                                 boolean useGuaranteedPrice,
-                                 boolean broken,
-                                 BigDecimal extremePrice) {
+                                 Boolean useGuaranteedPrice,
+                                 Boolean broken,
+                                 BigDecimal extremePrice,
+                                 Integer turnPointDelayConfirmedCount,
+                                 Integer crossDelayConfirmedCount) {
         this.compareOperator = compareOperator;
         this.breakPrice = breakPrice;
-        this.turnBackPercent = turnBackPercent;
         this.binaryFactorType = binaryFactorType;
+        this.turnBackPercent = turnBackPercent;
         this.turnBackIncrement = turnBackIncrement;
         this.useGuaranteedPrice = useGuaranteedPrice;
         this.broken = broken;
         this.extremePrice = extremePrice;
+        this.turnPointDelayConfirmedCount = turnPointDelayConfirmedCount;
+        this.crossDelayConfirmedCount = crossDelayConfirmedCount;
     }
 
     public CompareOperator getCompareOperator() {
@@ -61,20 +67,20 @@ public class TurnPointConditionDTO implements Serializable {
         this.breakPrice = breakPrice;
     }
 
-    public BigDecimal getTurnBackPercent() {
-        return turnBackPercent;
-    }
-
-    public void setTurnBackPercent(BigDecimal turnBackPercent) {
-        this.turnBackPercent = turnBackPercent;
-    }
-
     public Integer getBinaryFactorType() {
         return binaryFactorType;
     }
 
     public void setBinaryFactorType(Integer binaryFactorType) {
         this.binaryFactorType = binaryFactorType;
+    }
+
+    public BigDecimal getTurnBackPercent() {
+        return turnBackPercent;
+    }
+
+    public void setTurnBackPercent(BigDecimal turnBackPercent) {
+        this.turnBackPercent = turnBackPercent;
     }
 
     public BigDecimal getTurnBackIncrement() {
@@ -85,19 +91,19 @@ public class TurnPointConditionDTO implements Serializable {
         this.turnBackIncrement = turnBackIncrement;
     }
 
-    public boolean isUseGuaranteedPrice() {
+    public Boolean getUseGuaranteedPrice() {
         return useGuaranteedPrice;
     }
 
-    public void setUseGuaranteedPrice(boolean useGuaranteedPrice) {
+    public void setUseGuaranteedPrice(Boolean useGuaranteedPrice) {
         this.useGuaranteedPrice = useGuaranteedPrice;
     }
 
-    public boolean isBroken() {
+    public Boolean getBroken() {
         return broken;
     }
 
-    public void setBroken(boolean broken) {
+    public void setBroken(Boolean broken) {
         this.broken = broken;
     }
 
@@ -109,17 +115,35 @@ public class TurnPointConditionDTO implements Serializable {
         this.extremePrice = extremePrice;
     }
 
+    public Integer getTurnPointDelayConfirmedCount() {
+        return turnPointDelayConfirmedCount;
+    }
+
+    public void setTurnPointDelayConfirmedCount(Integer turnPointDelayConfirmedCount) {
+        this.turnPointDelayConfirmedCount = turnPointDelayConfirmedCount;
+    }
+
+    public Integer getCrossDelayConfirmedCount() {
+        return crossDelayConfirmedCount;
+    }
+
+    public void setCrossDelayConfirmedCount(Integer crossDelayConfirmedCount) {
+        this.crossDelayConfirmedCount = crossDelayConfirmedCount;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(TurnPointConditionDTO.class).omitNullValues()
                           .add("compareOperator", compareOperator)
                           .add("breakPrice", breakPrice)
-                          .add("turnBackPercent", turnBackPercent)
                           .add("binaryFactorType", binaryFactorType)
+                          .add("turnBackPercent", turnBackPercent)
                           .add("turnBackIncrement", turnBackIncrement)
                           .add("useGuaranteedPrice", useGuaranteedPrice)
                           .add("broken", broken)
                           .add("extremePrice", extremePrice)
+                          .add("turnPointDelayConfirmedCount", turnPointDelayConfirmedCount)
+                          .add("crossDelayConfirmedCount", crossDelayConfirmedCount)
                           .toString();
     }
 }

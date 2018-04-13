@@ -32,7 +32,6 @@ public class TurnPointConditionTest {
         assertEquals(turnPointCondition1.hashCode(), turnPointCondition2.hashCode());
         assertEquals(turnPointCondition1.getCompareOperator(), CompareOperator.LE);
         assertEquals(turnPointCondition1.getBreakPrice(), BigDecimal.valueOf(11));
-        assertEquals(turnPointCondition2.getTurnBackPercent(), BigDecimal.valueOf(1));
     }
 
     @Test
