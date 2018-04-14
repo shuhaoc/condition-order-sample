@@ -36,7 +36,6 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
                                        int crossDelayConfirmedCount) {
         if (baselinePrice != null) {
             CompareOperator breakCompareOperator = turnPointCondition.getCompareOperator().withoutEquals();
-            Preconditions.checkArgument(breakCompareOperator.apply(baselinePrice, turnPointCondition.getBreakPrice()));
             Preconditions.checkArgument(breakCompareOperator.apply(baselinePrice, turnPointCondition.getBreakPrice()),
                                         "Baseline price must be more faraway than break price");
         }
