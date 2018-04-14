@@ -1,5 +1,6 @@
 package hbec.intellitrade.condorder.domain.orders.turnpoint;
 
+import com.google.common.base.Optional;
 import hbec.intellitrade.mock.MockMarkets;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmInfo;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
@@ -7,6 +8,7 @@ import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayCon
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlInfo;
 import hbec.intellitrade.strategy.domain.factor.BinaryFactorType;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
+import hbec.intellitrade.strategy.domain.factor.PercentBinaryTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 import org.testng.annotations.Test;
@@ -50,6 +52,14 @@ public class DecoratedTurnPointConditionTest {
         );
         assertEquals(turnPointCondition1, turnPointCondition);
         assertEquals(turnPointCondition1.hashCode(), turnPointCondition.hashCode());
+        assertEquals(turnPointCondition1.getCompareOperator(), CompareOperator.LE);
+        assertEquals(turnPointCondition1.getBreakPrice(), new BigDecimal("11.00"));
+        assertEquals(turnPointCondition1.getTurnBackBinaryPriceFactor(),
+                     new PercentBinaryTargetPriceFactor(CompareOperator.GE, new BigDecimal("1.00")));
+        assertEquals(turnPointCondition1.getRawCrossBaselineCondition(),
+                     Optional.of(new CrossBaselineCondition(CompareOperator.LT, new BigDecimal("9.00"))));
+        assertTrue(turnPointCondition1.getRawCrossBaselineCondition().isPresent());
+        assertEquals(turnPointCondition1.getRawCrossBaselineCondition().get().getTargetPrice(), new BigDecimal("9.00"));
         assertEquals(turnPointCondition1.getDelayConfirm(), new DelayConfirmInfo(DelayConfirmOption.CONTINUOUS, 3));
         assertEquals(turnPointCondition1.getDeviationCtrl(), new DeviationCtrlInfo(new BigDecimal("0.5")));
         System.out.println(turnPointCondition);
@@ -75,15 +85,15 @@ public class DecoratedTurnPointConditionTest {
         assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("11.01"))),
                      Signals.none());
         assertFalse(turnPointCondition.isDirty());
-        assertFalse(turnPointCondition.getRawCondition().isBroken());
+        assertFalse(turnPointCondition.isBroken());
 
         // 突破突破价
         assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("11.00"))),
                      Signals.none());
         assertTrue(turnPointCondition.getTurnPointCondition().isDirty());
         assertTrue(turnPointCondition.isDirty());
-        assertTrue(turnPointCondition.getRawCondition().isBroken());
-        assertEquals(turnPointCondition.getRawCondition().getExtremePrice().orNull(), new BigDecimal("11.00"));
+        assertTrue(turnPointCondition.isBroken());
+        assertEquals(turnPointCondition.getExtremePrice().orNull(), new BigDecimal("11.00"));
 
         turnPointCondition.clearDirty();
         assertFalse(turnPointCondition.isDirty());
@@ -92,8 +102,8 @@ public class DecoratedTurnPointConditionTest {
         assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),
                      Signals.none());
         assertTrue(turnPointCondition.getTurnPointCondition().isDirty());
-        assertTrue(turnPointCondition.getRawCondition().isBroken());
-        assertEquals(turnPointCondition.getRawCondition().getExtremePrice().orNull(), new BigDecimal("10.00"));
+        assertTrue(turnPointCondition.isBroken());
+        assertEquals(turnPointCondition.getExtremePrice().orNull(), new BigDecimal("10.00"));
 
         turnPointCondition.clearDirty();
 
@@ -101,8 +111,8 @@ public class DecoratedTurnPointConditionTest {
         assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("10.09"))),
                      Signals.none());
         assertFalse(turnPointCondition.getTurnPointCondition().isDirty());
-        assertTrue(turnPointCondition.getRawCondition().isBroken());
-        assertEquals(turnPointCondition.getRawCondition().getExtremePrice().orNull(), new BigDecimal("10.00"));
+        assertTrue(turnPointCondition.isBroken());
+        assertEquals(turnPointCondition.getExtremePrice().orNull(), new BigDecimal("10.00"));
 
 
         // 达到反弹目标价，延迟确认

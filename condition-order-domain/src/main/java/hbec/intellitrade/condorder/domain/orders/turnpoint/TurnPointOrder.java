@@ -1,6 +1,7 @@
 package hbec.intellitrade.condorder.domain.orders.turnpoint;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Preconditions;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.AbstractSimpleMarketConditionOrder;
 import hbec.intellitrade.condorder.domain.OrderState;
@@ -17,6 +18,8 @@ import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;
+
+import java.util.Objects;
 
 /**
  * 拐点条件单（拐点买入、回落卖出）
@@ -103,6 +106,7 @@ public class TurnPointOrder extends AbstractSimpleMarketConditionOrder implement
               expireTime,
               monitorTimeRange,
               tradePlan);
+        Preconditions.checkNotNull(condition, "condition cannot be null");
         this.condition = condition;
     }
 
@@ -129,7 +133,7 @@ public class TurnPointOrder extends AbstractSimpleMarketConditionOrder implement
     @Override
     public boolean isPersistentPropertyDirty() {
         // 延迟确认次数不需要持久化，仅拐点状态需要
-        return condition.getRawCondition().isDirty();
+        return condition.getRawTurnPointCondition().isDirty();
     }
 
     @Override
@@ -142,6 +146,26 @@ public class TurnPointOrder extends AbstractSimpleMarketConditionOrder implement
      */
     public void onCrossBaseline() {
         setOrderState(OrderState.TERMINATED);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        TurnPointOrder that = (TurnPointOrder) o;
+        return Objects.equals(condition, that.condition);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), condition);
     }
 
     @Override

@@ -9,8 +9,8 @@ import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointOrder;
 import me.caosh.condition.application.order.OrderCommandService;
 import me.caosh.condition.infrastructure.tunnel.impl.ConditionOrderIdGenerator;
 import me.caosh.condition.interfaces.assembler.TurnPointOrderCommandAssembler;
-import me.caosh.condition.interfaces.command.TurnUpBuyOrderCreateCommand;
-import me.caosh.condition.interfaces.command.TurnUpBuyOrderUpdateCommand;
+import me.caosh.condition.interfaces.command.TurnPointOrderCreateCommand;
+import me.caosh.condition.interfaces.command.TurnPointOrderUpdateCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,7 +39,7 @@ public class TurnPointOrderController {
     }
 
     @RequestMapping("/create")
-    public Long create(@Valid TurnUpBuyOrderCreateCommand command) {
+    public Long create(@Valid TurnPointOrderCreateCommand command) {
         Long orderId = idGenerator.nextId();
         TradeCustomerInfo tradeCustomerInfo = new TradeCustomerInfo(303348, "010000061086");
         TurnPointOrder turnPointOrder = TurnPointOrderCommandAssembler.assemble(orderId, tradeCustomerInfo, command);
@@ -47,7 +47,7 @@ public class TurnPointOrderController {
         return orderId;
     }
     @RequestMapping("/update")
-    public Long update(@Valid TurnUpBuyOrderUpdateCommand command) {
+    public Long update(@Valid TurnPointOrderUpdateCommand command) {
         Long orderId = command.getOrderId();
         Optional<ConditionOrder> conditionOrderOptional = conditionOrderRepository.findOne(orderId);
         if (!conditionOrderOptional.isPresent()) {

@@ -1,5 +1,7 @@
 package hbec.intellitrade.strategy.domain.factor;
 
+import com.google.common.base.Preconditions;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -20,6 +22,9 @@ public class PercentBinaryTargetPriceFactor implements BinaryTargetPriceFactor {
      * @param percent         百分比，可正可负
      */
     public PercentBinaryTargetPriceFactor(CompareOperator compareOperator, BigDecimal percent) {
+        Preconditions.checkNotNull(compareOperator, "compareOperator cannot be null");
+        Preconditions.checkNotNull(percent, "percent cannot be null");
+
         this.compareOperator = compareOperator;
         this.percent = percent;
     }

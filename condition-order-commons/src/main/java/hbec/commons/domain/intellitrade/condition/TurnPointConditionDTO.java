@@ -21,6 +21,9 @@ public class TurnPointConditionDTO implements Serializable {
     private BigDecimal turnBackPercent;
     private BigDecimal turnBackIncrement;
     private Boolean useGuaranteedPrice;
+
+    // ---------------------------------- Dynamic properties ----------------------------------
+
     private Boolean broken;
     private BigDecimal extremePrice;
     private Integer turnPointDelayConfirmedCount;

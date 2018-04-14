@@ -42,6 +42,10 @@ public class TurnPointCondition extends AbstractMarketCondition implements Dynam
                               boolean useGuaranteedPrice,
                               boolean broken,
                               BigDecimal extremePrice) {
+        Preconditions.checkNotNull(compareOperator, "compareOperator cannot be null");
+        Preconditions.checkNotNull(breakPrice, "breakPrice cannot be null");
+        Preconditions.checkNotNull(binaryFactorType, "binaryFactorType cannot be null");
+
         if (compareOperator.getNumericalDirection() == NumericalDirection.LESS) {
             Preconditions.checkArgument(turnBackPercent == null || turnBackPercent.compareTo(BigDecimal.ZERO) > 0,
                                         "Turn up percent should be greater than 0");
@@ -97,6 +101,10 @@ public class TurnPointCondition extends AbstractMarketCondition implements Dynam
 
     public Optional<BigDecimal> getExtremePrice() {
         return inflexionFactor.getExtremePrice();
+    }
+
+    public BinaryTargetPriceFactor getTurnBackBinaryPriceFactor() {
+        return inflexionFactor.getTurnBackBinaryPriceFactor();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package hbec.intellitrade.condorder.domain.orders.turnpoint;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.condorder.domain.orders.DecoratedMarketCondition;
@@ -9,6 +10,7 @@ import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
+import hbec.intellitrade.strategy.domain.factor.BinaryTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
 
@@ -34,6 +36,10 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
                                        DeviationCtrl deviationCtrl,
                                        int turnPointDelayConfirmedCount,
                                        int crossDelayConfirmedCount) {
+        Preconditions.checkNotNull(turnPointCondition, "turnPointCondition cannot be null");
+        Preconditions.checkNotNull(delayConfirm, "delayConfirm cannot be null");
+        Preconditions.checkNotNull(deviationCtrl, "deviationCtrl cannot be null");
+
         if (baselinePrice != null) {
             CompareOperator breakCompareOperator = turnPointCondition.getCompareOperator().withoutEquals();
             Preconditions.checkArgument(breakCompareOperator.apply(baselinePrice, turnPointCondition.getBreakPrice()),
@@ -66,8 +72,35 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
         this.deviationCtrl = deviationCtrl;
     }
 
-    public TurnPointCondition getRawCondition() {
+    public TurnPointCondition getRawTurnPointCondition() {
         return rawTurnPointCondition;
+    }
+
+    public CompareOperator getCompareOperator() {
+        return rawTurnPointCondition.getCompareOperator();
+    }
+
+    public BigDecimal getBreakPrice() {
+        return rawTurnPointCondition.getBreakPrice();
+    }
+
+    public boolean isBroken() {
+        return rawTurnPointCondition.isBroken();
+    }
+
+    public Optional<BigDecimal> getExtremePrice() {
+        return rawTurnPointCondition.getExtremePrice();
+    }
+
+    public BinaryTargetPriceFactor getTurnBackBinaryPriceFactor() {
+        return rawTurnPointCondition.getTurnBackBinaryPriceFactor();
+    }
+
+    public Optional<CrossBaselineCondition> getRawCrossBaselineCondition() {
+        if (crossBaselineCondition == null) {
+            return Optional.absent();
+        }
+        return Optional.of(crossBaselineCondition.getRawCondition());
     }
 
     public DelayConfirm getDelayConfirm() {
@@ -123,6 +156,7 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
 
     @Override
     public boolean equals(Object o) {
+        // 仅比较关键字段，忽略冗余字段
         if (this == o) {
             return true;
         }
