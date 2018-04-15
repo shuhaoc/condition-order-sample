@@ -155,6 +155,10 @@ public class InflexionFactor implements TargetPriceFactor, DirtyFlag {
         return priceFactor.getTargetPrice();
     }
 
+    public boolean isUseGuaranteedPrice() {
+        return useGuaranteedPrice;
+    }
+
     @Override
     public boolean isDirty() {
         return broken.isDirty() || extremePrice.isDirty();
