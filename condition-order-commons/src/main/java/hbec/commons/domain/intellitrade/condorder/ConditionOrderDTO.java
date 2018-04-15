@@ -10,9 +10,10 @@ import me.caosh.autoasm.FieldMapping;
 import java.io.Serializable;
 
 /**
- * Created by caosh on 2017/8/11.
+ * 通用条件单DTO，适用于All (types) In One架构
  *
  * @author caoshuhao@touker.com
+ * @date 2017/8/11
  */
 @Convertible
 public class ConditionOrderDTO implements Serializable {
@@ -35,7 +36,6 @@ public class ConditionOrderDTO implements Serializable {
     private DelayConfirmDTO delayConfirm;
     @FieldMapping(mappedProperty = "condition.deviationCtrl")
     private DeviationCtrlDTO deviationCtrl;
-    private Integer triggerCount;
 
     public ConditionOrderDTO() {
     }
@@ -53,8 +53,7 @@ public class ConditionOrderDTO implements Serializable {
                              TradePlanDTO tradePlan,
                              MonitorTimeRangeDTO monitorTimeRange,
                              DelayConfirmDTO delayConfirm,
-                             DeviationCtrlDTO deviationCtrl,
-                             Integer triggerCount) {
+                             DeviationCtrlDTO deviationCtrl) {
         this.orderId = orderId;
         this.customer = customer;
         this.deleted = deleted;
@@ -69,7 +68,6 @@ public class ConditionOrderDTO implements Serializable {
         this.monitorTimeRange = monitorTimeRange;
         this.delayConfirm = delayConfirm;
         this.deviationCtrl = deviationCtrl;
-        this.triggerCount = triggerCount;
     }
 
     public Long getOrderId() {
@@ -184,14 +182,6 @@ public class ConditionOrderDTO implements Serializable {
         this.deviationCtrl = deviationCtrl;
     }
 
-    public Integer getTriggerCount() {
-        return triggerCount;
-    }
-
-    public void setTriggerCount(Integer triggerCount) {
-        this.triggerCount = triggerCount;
-    }
-
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(ConditionOrderDTO.class).omitNullValues()
@@ -209,7 +199,6 @@ public class ConditionOrderDTO implements Serializable {
                           .add("monitorTimeRange", monitorTimeRange)
                           .add("delayConfirm", delayConfirm)
                           .add("deviationCtrl", deviationCtrl)
-                          .add("triggerCount", triggerCount)
                           .toString();
     }
 }
