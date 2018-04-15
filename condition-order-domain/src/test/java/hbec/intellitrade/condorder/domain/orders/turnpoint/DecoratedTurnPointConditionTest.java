@@ -1,6 +1,5 @@
 package hbec.intellitrade.condorder.domain.orders.turnpoint;
 
-import com.google.common.base.Optional;
 import hbec.intellitrade.mock.MockMarkets;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmInfo;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
@@ -54,12 +53,10 @@ public class DecoratedTurnPointConditionTest {
         assertEquals(turnPointCondition1.hashCode(), turnPointCondition.hashCode());
         assertEquals(turnPointCondition1.getCompareOperator(), CompareOperator.LE);
         assertEquals(turnPointCondition1.getBreakPrice(), new BigDecimal("11.00"));
+        assertEquals(turnPointCondition1.getBinaryFactorType(), BinaryFactorType.PERCENT);
         assertEquals(turnPointCondition1.getTurnBackBinaryPriceFactor(),
                      new PercentBinaryTargetPriceFactor(CompareOperator.GE, new BigDecimal("1.00")));
-        assertEquals(turnPointCondition1.getRawCrossBaselineCondition(),
-                     Optional.of(new CrossBaselineCondition(CompareOperator.LT, new BigDecimal("9.00"))));
-        assertTrue(turnPointCondition1.getRawCrossBaselineCondition().isPresent());
-        assertEquals(turnPointCondition1.getRawCrossBaselineCondition().get().getTargetPrice(), new BigDecimal("9.00"));
+        assertEquals(turnPointCondition1.getBaselinePrice(), new BigDecimal("9.00"));
         assertEquals(turnPointCondition1.getDelayConfirm(), new DelayConfirmInfo(DelayConfirmOption.CONTINUOUS, 3));
         assertEquals(turnPointCondition1.getDeviationCtrl(), new DeviationCtrlInfo(new BigDecimal("0.5")));
         System.out.println(turnPointCondition);

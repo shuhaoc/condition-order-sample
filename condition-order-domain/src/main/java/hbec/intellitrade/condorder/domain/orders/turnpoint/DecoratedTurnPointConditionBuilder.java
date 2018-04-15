@@ -16,9 +16,7 @@ import java.math.BigDecimal;
 public class DecoratedTurnPointConditionBuilder implements ConvertibleBuilder<DecoratedTurnPointCondition> {
     private CompareOperator compareOperator;
     private BigDecimal breakPrice;
-    private BinaryFactorType binaryFactorType = BinaryFactorType.PERCENT;
-    private BigDecimal turnBackPercent;
-    private BigDecimal turnBackIncrement;
+    private BinaryPriceFactorBuilder turnBackBinaryPriceFactor = new BinaryPriceFactorBuilder();
     private Boolean useGuaranteedPrice = false;
     private Boolean broken = false;
     private BigDecimal extremePrice;
@@ -39,16 +37,8 @@ public class DecoratedTurnPointConditionBuilder implements ConvertibleBuilder<De
         this.breakPrice = breakPrice;
     }
 
-    public void setBinaryFactorType(BinaryFactorType binaryFactorType) {
-        this.binaryFactorType = binaryFactorType;
-    }
-
-    public void setTurnBackPercent(BigDecimal turnBackPercent) {
-        this.turnBackPercent = turnBackPercent;
-    }
-
-    public void setTurnBackIncrement(BigDecimal turnBackIncrement) {
-        this.turnBackIncrement = turnBackIncrement;
+    public BinaryPriceFactorBuilder getTurnBackBinaryPriceFactor() {
+        return turnBackBinaryPriceFactor;
     }
 
     public void setUseGuaranteedPrice(Boolean useGuaranteedPrice) {
@@ -83,6 +73,36 @@ public class DecoratedTurnPointConditionBuilder implements ConvertibleBuilder<De
         this.crossDelayConfirmedCount = crossDelayConfirmedCount;
     }
 
+    public static class BinaryPriceFactorBuilder {
+        private BinaryFactorType binaryFactorType = BinaryFactorType.PERCENT;
+        private BigDecimal percent;
+        private BigDecimal increment;
+
+        public BinaryFactorType getBinaryFactorType() {
+            return binaryFactorType;
+        }
+
+        public void setBinaryFactorType(BinaryFactorType binaryFactorType) {
+            this.binaryFactorType = binaryFactorType;
+        }
+
+        public BigDecimal getPercent() {
+            return percent;
+        }
+
+        public void setPercent(BigDecimal percent) {
+            this.percent = percent;
+        }
+
+        public BigDecimal getIncrement() {
+            return increment;
+        }
+
+        public void setIncrement(BigDecimal increment) {
+            this.increment = increment;
+        }
+    }
+
     @Override
     public DecoratedTurnPointCondition build() {
         if (broken) {
@@ -90,10 +110,12 @@ public class DecoratedTurnPointConditionBuilder implements ConvertibleBuilder<De
         }
         return new DecoratedTurnPointCondition(new TurnPointCondition(compareOperator,
                                                                       breakPrice,
-                                                                      binaryFactorType,
-                                                                      turnBackPercent,
-                                                                      turnBackIncrement,
-                                                                      useGuaranteedPrice),
+                                                                      turnBackBinaryPriceFactor.getBinaryFactorType(),
+                                                                      turnBackBinaryPriceFactor.getPercent(),
+                                                                      turnBackBinaryPriceFactor.getIncrement(),
+                                                                      useGuaranteedPrice,
+                                                                      broken,
+                                                                      extremePrice),
                                                baselinePrice,
                                                delayConfirm.build(),
                                                deviationCtrl.build(),

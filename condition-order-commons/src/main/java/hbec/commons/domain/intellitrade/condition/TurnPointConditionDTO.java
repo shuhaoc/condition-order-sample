@@ -1,8 +1,11 @@
 package hbec.commons.domain.intellitrade.condition;
 
 import com.google.common.base.MoreObjects;
+import hbec.intellitrade.condorder.domain.orders.turnpoint.DecoratedTurnPointCondition;
+import hbec.intellitrade.condorder.domain.orders.turnpoint.DecoratedTurnPointConditionBuilder;
+import me.caosh.autoasm.FieldMapping;
+import me.caosh.autoasm.MappedClass;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -11,15 +14,20 @@ import java.math.BigDecimal;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/3/30
  */
-public class TurnPointConditionDTO implements Serializable {
+@MappedClass(value = DecoratedTurnPointCondition.class, builderClass = DecoratedTurnPointConditionBuilder.class)
+public class TurnPointConditionDTO implements ConditionDTO {
     private static final long serialVersionUID = 1L;
 
     private Integer compareOperator;
     private BigDecimal breakPrice;
+    @FieldMapping(mappedProperty = "turnBackBinaryPriceFactor.binaryFactorType")
     private Integer binaryFactorType;
+    @FieldMapping(mappedProperty = "turnBackBinaryPriceFactor.percent")
     private BigDecimal turnBackPercent;
+    @FieldMapping(mappedProperty = "turnBackBinaryPriceFactor.increment")
     private BigDecimal turnBackIncrement;
     private Boolean useGuaranteedPrice;
+    private BigDecimal baselinePrice;
 
     // ---------------------------------- Dynamic properties ----------------------------------
 
@@ -53,11 +61,11 @@ public class TurnPointConditionDTO implements Serializable {
         this.crossDelayConfirmedCount = crossDelayConfirmedCount;
     }
 
-    public Integer getInteger() {
+    public Integer getCompareOperator() {
         return compareOperator;
     }
 
-    public void setInteger(Integer compareOperator) {
+    public void setCompareOperator(Integer compareOperator) {
         this.compareOperator = compareOperator;
     }
 
@@ -101,6 +109,14 @@ public class TurnPointConditionDTO implements Serializable {
         this.useGuaranteedPrice = useGuaranteedPrice;
     }
 
+    public BigDecimal getBaselinePrice() {
+        return baselinePrice;
+    }
+
+    public void setBaselinePrice(BigDecimal baselinePrice) {
+        this.baselinePrice = baselinePrice;
+    }
+
     public Boolean getBroken() {
         return broken;
     }
@@ -142,6 +158,7 @@ public class TurnPointConditionDTO implements Serializable {
                           .add("turnBackPercent", turnBackPercent)
                           .add("turnBackIncrement", turnBackIncrement)
                           .add("useGuaranteedPrice", useGuaranteedPrice)
+                          .add("baselinePrice", baselinePrice)
                           .add("broken", broken)
                           .add("extremePrice", extremePrice)
                           .add("turnPointDelayConfirmedCount", turnPointDelayConfirmedCount)

@@ -95,6 +95,10 @@ public class TurnPointCondition extends AbstractMarketCondition implements Dynam
         return inflexionFactor.getBreakPriceFactor().getTargetPrice();
     }
 
+    public boolean isUseGuaranteedPrice() {
+        return inflexionFactor.isUseGuaranteedPrice();
+    }
+
     public boolean isBroken() {
         return inflexionFactor.isBroken();
     }

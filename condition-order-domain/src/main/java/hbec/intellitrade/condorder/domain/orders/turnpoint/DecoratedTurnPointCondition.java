@@ -10,6 +10,7 @@ import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrl;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
+import hbec.intellitrade.strategy.domain.factor.BinaryFactorType;
 import hbec.intellitrade.strategy.domain.factor.BinaryTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
@@ -94,6 +95,10 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
         return rawTurnPointCondition.getBreakPrice();
     }
 
+    public boolean isUseGuaranteedPrice() {
+        return rawTurnPointCondition.isUseGuaranteedPrice();
+    }
+
     public boolean isBroken() {
         return rawTurnPointCondition.isBroken();
     }
@@ -102,15 +107,19 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
         return rawTurnPointCondition.getExtremePrice();
     }
 
+    public BinaryFactorType getBinaryFactorType() {
+        return getTurnBackBinaryPriceFactor().getBinaryFactorType();
+    }
+
     public BinaryTargetPriceFactor getTurnBackBinaryPriceFactor() {
         return rawTurnPointCondition.getTurnBackBinaryPriceFactor();
     }
 
-    public Optional<CrossBaselineCondition> getRawCrossBaselineCondition() {
+    public Optional<BigDecimal> getBaselinePrice() {
         if (crossBaselineCondition == null) {
             return Optional.absent();
         }
-        return Optional.of(crossBaselineCondition.getRawCondition());
+        return Optional.of(crossBaselineCondition.getRawCondition().getTargetPrice());
     }
 
     public DelayConfirm getDelayConfirm() {
@@ -127,6 +136,14 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
 
     DecoratedMarketCondition<CrossBaselineCondition> getCrossBaselineCondition() {
         return crossBaselineCondition;
+    }
+
+    public int getTurnPointDelayConfirmedCount() {
+        return turnPointCondition.getDelayConfirmedCount();
+    }
+
+    public int getCrossDelayConfirmedCount() {
+        return crossBaselineCondition.getDelayConfirmedCount();
     }
 
     @Override
