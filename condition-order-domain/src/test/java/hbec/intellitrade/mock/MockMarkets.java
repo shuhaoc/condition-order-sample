@@ -14,6 +14,10 @@ import java.util.ArrayList;
 public class MockMarkets {
     public static final MarketID DEFAULT_MARKET_ID = new MarketID(MarketType.STOCK, "600000");
 
+    public static RealTimeMarket withCurrentPrice(String currentPrice) {
+        return withCurrentPrice(new BigDecimal(currentPrice));
+    }
+
     public static RealTimeMarket withCurrentPrice(BigDecimal currentPrice) {
         return new RealTimeMarket(DEFAULT_MARKET_ID,
                                   currentPrice,

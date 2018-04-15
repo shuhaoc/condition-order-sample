@@ -6,6 +6,8 @@ import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfoBuilder;
 import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceCondition;
 import hbec.intellitrade.condorder.domain.orders.price.PriceOrder;
+import hbec.intellitrade.condorder.domain.orders.turnpoint.DecoratedTurnPointCondition;
+import hbec.intellitrade.condorder.domain.orders.turnpoint.TurnPointOrder;
 import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfoBuilder;
@@ -142,11 +144,17 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
                                   expireTime,
                                   (BaseTradePlan) tradePlan.build(),
                                   trackedIndex.build(),
-                                  monitorTimeRange.build()
-            );
-//        } else if (strategyInfo == NativeStrategyInfo.TURN_POINT) {
-//            return new TurnUpBuyOrder(orderId, tradeCustomerInfo, securityInfo, (TurnUpCondition) condition,
-//                                      null, (BaseTradePlan) tradePlan, orderState);
+                                  monitorTimeRange.build());
+        } else if (strategyInfo == NativeStrategyInfo.TURN_POINT) {
+            return new TurnPointOrder(orderId,
+                                      customer.build(),
+                                      orderState,
+                                      securityInfo.build(),
+                                      (DecoratedTurnPointCondition) condition.build(),
+                                      expireTime,
+                                      (BaseTradePlan) tradePlan.build(),
+                                      trackedIndex.build(),
+                                      monitorTimeRange.build());
 //        } else if (strategyInfo == NativeStrategyInfo.TIME) {
 //            return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, (TimeReachedCondition) condition, expireTime,
 //                                 (BaseTradePlan) tradePlan, orderState);

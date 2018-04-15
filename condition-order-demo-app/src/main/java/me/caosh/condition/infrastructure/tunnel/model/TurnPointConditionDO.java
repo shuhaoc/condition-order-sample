@@ -1,4 +1,4 @@
-package hbec.commons.domain.intellitrade.condition;
+package me.caosh.condition.infrastructure.tunnel.model;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.condorder.domain.orders.turnpoint.DecoratedTurnPointCondition;
@@ -9,15 +9,10 @@ import me.caosh.autoasm.MappedClass;
 import java.math.BigDecimal;
 
 /**
- * 拐点（回落）条件DTO
- *
- * @author caosh/caoshuhao@touker.com
- * @date 2018/3/30
+ * Created by caosh on 2017/8/15.
  */
 @MappedClass(value = DecoratedTurnPointCondition.class, builderClass = DecoratedTurnPointConditionBuilder.class)
-public class TurnPointConditionDTO implements ConditionDTO {
-    private static final long serialVersionUID = 1L;
-
+public class TurnPointConditionDO implements ConditionDO {
     private Integer compareOperator;
     private BigDecimal breakPrice;
     @FieldMapping(mappedProperty = "turnBackBinaryPriceFactor.binaryFactorType")
@@ -33,33 +28,6 @@ public class TurnPointConditionDTO implements ConditionDTO {
 
     private Boolean broken;
     private BigDecimal extremePrice;
-    private Integer turnPointDelayConfirmedCount;
-    private Integer crossDelayConfirmedCount;
-
-    public TurnPointConditionDTO() {
-    }
-
-    public TurnPointConditionDTO(Integer compareOperator,
-                                 BigDecimal breakPrice,
-                                 Integer binaryFactorType,
-                                 BigDecimal turnBackPercent,
-                                 BigDecimal turnBackIncrement,
-                                 Boolean useGuaranteedPrice,
-                                 Boolean broken,
-                                 BigDecimal extremePrice,
-                                 Integer turnPointDelayConfirmedCount,
-                                 Integer crossDelayConfirmedCount) {
-        this.compareOperator = compareOperator;
-        this.breakPrice = breakPrice;
-        this.binaryFactorType = binaryFactorType;
-        this.turnBackPercent = turnBackPercent;
-        this.turnBackIncrement = turnBackIncrement;
-        this.useGuaranteedPrice = useGuaranteedPrice;
-        this.broken = broken;
-        this.extremePrice = extremePrice;
-        this.turnPointDelayConfirmedCount = turnPointDelayConfirmedCount;
-        this.crossDelayConfirmedCount = crossDelayConfirmedCount;
-    }
 
     public Integer getCompareOperator() {
         return compareOperator;
@@ -133,25 +101,9 @@ public class TurnPointConditionDTO implements ConditionDTO {
         this.extremePrice = extremePrice;
     }
 
-    public Integer getTurnPointDelayConfirmedCount() {
-        return turnPointDelayConfirmedCount;
-    }
-
-    public void setTurnPointDelayConfirmedCount(Integer turnPointDelayConfirmedCount) {
-        this.turnPointDelayConfirmedCount = turnPointDelayConfirmedCount;
-    }
-
-    public Integer getCrossDelayConfirmedCount() {
-        return crossDelayConfirmedCount;
-    }
-
-    public void setCrossDelayConfirmedCount(Integer crossDelayConfirmedCount) {
-        this.crossDelayConfirmedCount = crossDelayConfirmedCount;
-    }
-
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(TurnPointConditionDTO.class).omitNullValues()
+        return MoreObjects.toStringHelper(TurnPointConditionDO.class).omitNullValues()
                           .add("compareOperator", compareOperator)
                           .add("breakPrice", breakPrice)
                           .add("binaryFactorType", binaryFactorType)
@@ -161,8 +113,6 @@ public class TurnPointConditionDTO implements ConditionDTO {
                           .add("baselinePrice", baselinePrice)
                           .add("broken", broken)
                           .add("extremePrice", extremePrice)
-                          .add("turnPointDelayConfirmedCount", turnPointDelayConfirmedCount)
-                          .add("crossDelayConfirmedCount", crossDelayConfirmedCount)
                           .toString();
     }
 }

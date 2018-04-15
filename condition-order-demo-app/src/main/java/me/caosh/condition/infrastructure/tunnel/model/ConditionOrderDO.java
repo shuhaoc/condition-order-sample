@@ -2,15 +2,9 @@ package me.caosh.condition.infrastructure.tunnel.model;
 
 import com.google.common.base.MoreObjects;
 import me.caosh.autoasm.FieldMapping;
-import me.caosh.autoasm.SkippedField;
 import org.joda.time.LocalTime;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -52,8 +46,6 @@ public class ConditionOrderDO {
     private Integer strategyType;
     @FieldMapping(mappedProperty = "condition")
     private ConditionDO conditionPropertiesObj;
-    @SkippedField
-    private DynamicPropertiesDO dynamicPropertiesObj;
     private Date expireTime;
     @FieldMapping(mappedProperty = "tradePlan.exchangeType")
     private Integer exchangeType;
@@ -239,15 +231,6 @@ public class ConditionOrderDO {
         this.conditionPropertiesObj = conditionPropertiesObj;
     }
 
-    @Transient
-    public DynamicPropertiesDO getDynamicPropertiesObj() {
-        return dynamicPropertiesObj;
-    }
-
-    public void setDynamicPropertiesObj(DynamicPropertiesDO dynamicPropertiesObj) {
-        this.dynamicPropertiesObj = dynamicPropertiesObj;
-    }
-
     @Basic
     @Column(name = "condition_properties")
     public String getConditionProperties() {
@@ -257,17 +240,6 @@ public class ConditionOrderDO {
     public void setConditionProperties(String conditionProperties) {
         this.conditionPropertiesObj = ConditionOrderDOGSONUtils.getGSON()
                                                                .fromJson(conditionProperties, ConditionDO.class);
-    }
-
-    @Basic
-    @Column(name = "dynamic_properties")
-    public String getDynamicProperties() {
-        return dynamicPropertiesObj != null ? ConditionOrderDOGSONUtils.getGSON().toJson(dynamicPropertiesObj) : null;
-    }
-
-    public void setDynamicProperties(String dynamicProperties) {
-        this.dynamicPropertiesObj = ConditionOrderDOGSONUtils.getGSON()
-                                                             .fromJson(dynamicProperties, DynamicPropertiesDO.class);
     }
 
     @Basic
@@ -478,7 +450,6 @@ public class ConditionOrderDO {
                           .add("trackedIndexName", trackedIndexName)
                           .add("strategyType", strategyType)
                           .add("conditionPropertiesObj", conditionPropertiesObj)
-                          .add("dynamicPropertiesObj", dynamicPropertiesObj)
                           .add("expireTime", expireTime)
                           .add("exchangeType", exchangeType)
                           .add("entrustStrategy", entrustStrategy)
@@ -495,8 +466,6 @@ public class ConditionOrderDO {
                           .add("deviationLimitPercent", deviationLimitPercent)
                           .add("createTime", createTime)
                           .add("updateTime", updateTime)
-                          .add("conditionProperties", getConditionProperties())
-                          .add("dynamicProperties", getDynamicProperties())
                           .toString();
     }
 }

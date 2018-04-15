@@ -18,22 +18,6 @@ import java.math.BigDecimal;
 public class TurnPointCondition extends AbstractMarketCondition implements DynamicCondition {
     private final InflexionFactor inflexionFactor;
 
-    @Deprecated
-    public TurnPointCondition(CompareOperator compareOperator,
-                              BigDecimal breakPrice,
-                              BigDecimal turnBackPercent,
-                              boolean useGuaranteedPrice) {
-        this(compareOperator,
-             breakPrice,
-             BinaryFactorType.PERCENT,
-             turnBackPercent,
-             null,
-             useGuaranteedPrice,
-             false,
-             null
-        );
-    }
-
     public TurnPointCondition(CompareOperator compareOperator,
                               BigDecimal breakPrice,
                               BinaryFactorType binaryFactorType,
@@ -58,6 +42,10 @@ public class TurnPointCondition extends AbstractMarketCondition implements Dynam
                               boolean useGuaranteedPrice,
                               boolean broken,
                               BigDecimal extremePrice) {
+        Preconditions.checkNotNull(compareOperator, "compareOperator cannot be null");
+        Preconditions.checkNotNull(breakPrice, "breakPrice cannot be null");
+        Preconditions.checkNotNull(binaryFactorType, "binaryFactorType cannot be null");
+
         if (compareOperator.getNumericalDirection() == NumericalDirection.LESS) {
             Preconditions.checkArgument(turnBackPercent == null || turnBackPercent.compareTo(BigDecimal.ZERO) > 0,
                                         "Turn up percent should be greater than 0");
@@ -107,18 +95,8 @@ public class TurnPointCondition extends AbstractMarketCondition implements Dynam
         return inflexionFactor.getBreakPriceFactor().getTargetPrice();
     }
 
-    public BigDecimal getTurnBackPercent() {
-        if (inflexionFactor.getTurnBackBinaryPriceFactor() instanceof PercentBinaryTargetPriceFactor) {
-            return ((PercentBinaryTargetPriceFactor) inflexionFactor.getTurnBackBinaryPriceFactor()).getPercent();
-        }
-        return null;
-    }
-
-    public BigDecimal getTurnBackIncrement() {
-        if (inflexionFactor.getTurnBackBinaryPriceFactor() instanceof IncrementBinaryTargetPriceFactor) {
-            return ((IncrementBinaryTargetPriceFactor) inflexionFactor.getTurnBackBinaryPriceFactor()).getIncrement();
-        }
-        return null;
+    public boolean isUseGuaranteedPrice() {
+        return inflexionFactor.isUseGuaranteedPrice();
     }
 
     public boolean isBroken() {
@@ -127,6 +105,10 @@ public class TurnPointCondition extends AbstractMarketCondition implements Dynam
 
     public Optional<BigDecimal> getExtremePrice() {
         return inflexionFactor.getExtremePrice();
+    }
+
+    public BinaryTargetPriceFactor getTurnBackBinaryPriceFactor() {
+        return inflexionFactor.getTurnBackBinaryPriceFactor();
     }
 
     @Override

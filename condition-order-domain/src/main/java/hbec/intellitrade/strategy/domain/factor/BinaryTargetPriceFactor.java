@@ -12,6 +12,13 @@ import java.math.BigDecimal;
  */
 public interface BinaryTargetPriceFactor {
     /**
+     * 获取二元因子类别
+     *
+     * @return 二元因子类别
+     */
+    BinaryFactorType getBinaryFactorType();
+
+    /**
      * 价格条件比较操作符
      *
      * @return 比较操作符

@@ -4,6 +4,7 @@ import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndex;
 import hbec.intellitrade.condorder.domain.tradeplan.BaseTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
+import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
 import org.joda.time.LocalDateTime;
 
@@ -33,6 +34,11 @@ public abstract class AbstractSimpleMarketConditionOrder extends AbstractMarketC
               monitorTimeRange
         );
         this.tradePlan = tradePlan;
+    }
+
+    @Override
+    protected void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext) {
+        setOrderState(OrderState.TERMINATED);
     }
 
     @Override

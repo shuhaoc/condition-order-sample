@@ -24,6 +24,10 @@ public class CrossBaselineCondition implements MarketCondition {
         this.targetPriceFactor = new BasicTargetPriceFactor(compareOperator, targetPrice);
     }
 
+    public BigDecimal getTargetPrice() {
+        return targetPriceFactor.getTargetPrice();
+    }
+
     @Override
     public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
         BigDecimal currentPrice = realTimeMarket.getCurrentPrice();

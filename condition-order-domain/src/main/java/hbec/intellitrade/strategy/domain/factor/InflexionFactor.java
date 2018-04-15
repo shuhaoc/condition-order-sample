@@ -60,6 +60,10 @@ public class InflexionFactor implements TargetPriceFactor, DirtyFlag {
         this.turnBackBinaryPriceFactor = turnBackBinaryPriceFactor;
         this.useGuaranteedPrice = useGuaranteedPrice;
         this.broken = new DynamicProperty<>(broken);
+
+        if (broken) {
+            Preconditions.checkNotNull(extremePrice, "extremePrice cannot be null when broken");
+        }
         this.extremePrice = new DynamicProperty<>(extremePrice);
     }
 
@@ -149,6 +153,10 @@ public class InflexionFactor implements TargetPriceFactor, DirtyFlag {
                                     "Target price is not available until broken");
         TargetPriceFactor priceFactor = getTurnBackTargetPriceFactor();
         return priceFactor.getTargetPrice();
+    }
+
+    public boolean isUseGuaranteedPrice() {
+        return useGuaranteedPrice;
     }
 
     @Override

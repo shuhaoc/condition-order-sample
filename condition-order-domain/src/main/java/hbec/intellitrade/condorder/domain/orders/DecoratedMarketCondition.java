@@ -71,7 +71,7 @@ public class DecoratedMarketCondition<T extends MarketCondition>
         }
     }
 
-    protected T getRawCondition() {
+    public T getRawCondition() {
         return rawCondition;
     }
 

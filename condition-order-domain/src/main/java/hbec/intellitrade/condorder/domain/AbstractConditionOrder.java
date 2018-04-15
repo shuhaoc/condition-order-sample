@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 条件单骨架，并实现最常见的单委托、单次条件单逻辑
+ * 条件单骨架
  *
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/2

@@ -12,11 +12,6 @@ import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;
  * @date 2018/3/21
  */
 public class ConditionOrderDoAssembler {
-    private static final ConditionOrderDoAssembler CODE_COVERAGE = new ConditionOrderDoAssembler();
-
-    private ConditionOrderDoAssembler() {
-    }
-
     public static ConditionOrderDO assemble(ConditionOrder conditionOrder) {
         return AutoAssemblers.getDefault().assemble(conditionOrder, ConditionOrderDO.class);
     }
@@ -29,4 +24,9 @@ public class ConditionOrderDoAssembler {
                              .disassemble(conditionOrderDO)
                              .build();
     }
+
+    private ConditionOrderDoAssembler() {
+    }
+
+    private static final ConditionOrderDoAssembler CODE_COVERAGE = new ConditionOrderDoAssembler();
 }

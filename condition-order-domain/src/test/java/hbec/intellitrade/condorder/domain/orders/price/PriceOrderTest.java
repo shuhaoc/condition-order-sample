@@ -10,6 +10,7 @@ import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.condorder.domain.OrderState;
 import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.trackindex.NoneTrackedIndex;
 import hbec.intellitrade.condorder.domain.trackindex.TrackIndexOption;
 import hbec.intellitrade.condorder.domain.trackindex.TrackedIndexInfo;
@@ -103,6 +104,7 @@ public class PriceOrderTest {
         System.out.println(priceOrder1);
         assertEquals(priceOrder1, priceOrder2);
         assertEquals(priceOrder1.hashCode(), priceOrder2.hashCode());
+        assertEquals(priceOrder1.getStrategyInfo(), NativeStrategyInfo.PRICE);
     }
 
     @Test

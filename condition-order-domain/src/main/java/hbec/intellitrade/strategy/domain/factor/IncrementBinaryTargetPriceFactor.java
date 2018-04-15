@@ -1,5 +1,7 @@
 package hbec.intellitrade.strategy.domain.factor;
 
+import com.google.common.base.Preconditions;
+
 import java.math.BigDecimal;
 
 /**
@@ -19,8 +21,16 @@ public class IncrementBinaryTargetPriceFactor implements BinaryTargetPriceFactor
      * @param increment       价格增量，可正可负
      */
     public IncrementBinaryTargetPriceFactor(CompareOperator compareOperator, BigDecimal increment) {
+        Preconditions.checkNotNull(compareOperator, "compareOperator cannot be null");
+        Preconditions.checkNotNull(increment, "increment cannot be null");
+
         this.compareOperator = compareOperator;
         this.increment = increment;
+    }
+
+    @Override
+    public BinaryFactorType getBinaryFactorType() {
+        return BinaryFactorType.INCREMENT;
     }
 
     public BigDecimal getIncrement() {

@@ -15,7 +15,6 @@ CREATE TABLE `condition_order` (
   `tracked_index_name`        VARCHAR(128),
   `strategy_type`             INT            NOT NULL,
   `condition_properties`      TEXT,
-  `dynamic_properties`        TEXT,
   `expire_time`               DATETIME,
   `exchange_type`             INT            NOT NULL,
   `entrust_strategy`          INT            NOT NULL,
