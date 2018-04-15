@@ -28,6 +28,11 @@ public class IncrementBinaryTargetPriceFactor implements BinaryTargetPriceFactor
         this.increment = increment;
     }
 
+    @Override
+    public BinaryFactorType getBinaryFactorType() {
+        return BinaryFactorType.INCREMENT;
+    }
+
     public BigDecimal getIncrement() {
         return increment;
     }

@@ -29,6 +29,11 @@ public class PercentBinaryTargetPriceFactor implements BinaryTargetPriceFactor {
         this.percent = percent;
     }
 
+    @Override
+    public BinaryFactorType getBinaryFactorType() {
+        return BinaryFactorType.PERCENT;
+    }
+
     public BigDecimal getPercent() {
         return percent;
     }
