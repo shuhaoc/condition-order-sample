@@ -65,7 +65,5 @@ public abstract class AbstractExplicitTradingSecurityOrder extends AbstractCondi
      *
      * @param triggerTradingContext 触发交易上下文
      */
-    protected void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext) {
-        setOrderState(OrderState.TERMINATED);
-    }
+    protected abstract void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext);
 }

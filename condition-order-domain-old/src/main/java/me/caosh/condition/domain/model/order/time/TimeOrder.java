@@ -9,6 +9,7 @@ import hbec.intellitrade.condorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.condorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.condorder.domain.tradeplan.BaseTradePlan;
 import hbec.intellitrade.condorder.domain.tradeplan.TradePlan;
+import hbec.intellitrade.condorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import hbec.intellitrade.strategy.domain.condition.Condition;
 import hbec.intellitrade.strategy.domain.signal.Signal;
@@ -61,6 +62,11 @@ public class TimeOrder extends AbstractExplicitTradingSecurityOrder implements T
     @Override
     public TradePlan getTradePlan() {
         return tradePlan;
+    }
+
+    @Override
+    protected void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext) {
+        setOrderState(OrderState.TERMINATED);
     }
 
     @Override
