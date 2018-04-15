@@ -30,6 +30,16 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
     private final DelayConfirm delayConfirm;
     private final DeviationCtrl deviationCtrl;
 
+    /**
+     * 构造拐点包装条件
+     *
+     * @param turnPointCondition           原始拐点条件
+     * @param baselinePrice                底线价，可以为空
+     * @param delayConfirm                 延迟确认参数
+     * @param deviationCtrl                偏差控制参数
+     * @param turnPointDelayConfirmedCount 拐点条件当前延迟确认次数
+     * @param crossDelayConfirmedCount     穿越底线当前延迟确认次数
+     */
     public DecoratedTurnPointCondition(TurnPointCondition turnPointCondition,
                                        BigDecimal baselinePrice,
                                        DelayConfirm delayConfirm,

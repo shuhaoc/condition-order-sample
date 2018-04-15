@@ -1,7 +1,6 @@
 package hbec.commons.domain.intellitrade.condition;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -15,7 +14,7 @@ import java.math.BigDecimal;
 public class TurnPointConditionDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private CompareOperator compareOperator;
+    private Integer compareOperator;
     private BigDecimal breakPrice;
     private Integer binaryFactorType;
     private BigDecimal turnBackPercent;
@@ -32,7 +31,7 @@ public class TurnPointConditionDTO implements Serializable {
     public TurnPointConditionDTO() {
     }
 
-    public TurnPointConditionDTO(CompareOperator compareOperator,
+    public TurnPointConditionDTO(Integer compareOperator,
                                  BigDecimal breakPrice,
                                  Integer binaryFactorType,
                                  BigDecimal turnBackPercent,
@@ -54,11 +53,11 @@ public class TurnPointConditionDTO implements Serializable {
         this.crossDelayConfirmedCount = crossDelayConfirmedCount;
     }
 
-    public CompareOperator getCompareOperator() {
+    public Integer getInteger() {
         return compareOperator;
     }
 
-    public void setCompareOperator(CompareOperator compareOperator) {
+    public void setInteger(Integer compareOperator) {
         this.compareOperator = compareOperator;
     }
 
