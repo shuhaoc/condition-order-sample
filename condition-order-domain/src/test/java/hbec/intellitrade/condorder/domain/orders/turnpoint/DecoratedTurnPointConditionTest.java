@@ -56,7 +56,8 @@ public class DecoratedTurnPointConditionTest {
         assertEquals(turnPointCondition1.getBinaryFactorType(), BinaryFactorType.PERCENT);
         assertEquals(turnPointCondition1.getTurnBackBinaryPriceFactor(),
                      new PercentBinaryTargetPriceFactor(CompareOperator.GE, new BigDecimal("1.00")));
-        assertEquals(turnPointCondition1.getBaselinePrice(), new BigDecimal("9.00"));
+        assertTrue(turnPointCondition1.isUseGuaranteedPrice());
+        assertEquals(turnPointCondition1.getBaselinePrice().orNull(), new BigDecimal("9.00"));
         assertEquals(turnPointCondition1.getDelayConfirm(), new DelayConfirmInfo(DelayConfirmOption.CONTINUOUS, 3));
         assertEquals(turnPointCondition1.getDeviationCtrl(), new DeviationCtrlInfo(new BigDecimal("0.5")));
         System.out.println(turnPointCondition);
@@ -73,10 +74,7 @@ public class DecoratedTurnPointConditionTest {
                                        true),
                 null,
                 new DelayConfirmInfo(DelayConfirmOption.CONTINUOUS, 3),
-                new DeviationCtrlInfo(new BigDecimal("0.5")),
-                0,
-                0
-        );
+                new DeviationCtrlInfo(new BigDecimal("0.5")));
 
         // 未突破
         assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("11.01"))),
@@ -116,17 +114,20 @@ public class DecoratedTurnPointConditionTest {
         assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("10.10"))),
                      Signals.none());
         assertTrue(turnPointCondition.getTurnPointCondition().isDirty());
+        assertEquals(turnPointCondition.getTurnPointDelayConfirmedCount(), 1);
 
         turnPointCondition.clearDirty();
 
         assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("10.10"))),
                      Signals.none());
+        assertEquals(turnPointCondition.getTurnPointDelayConfirmedCount(), 2);
 
         turnPointCondition.clearDirty();
 
         TradeSignal tradeSignal = turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("10.10")));
         assertEquals(tradeSignal, Signals.buyOrSell());
         assertFalse(tradeSignal.getDeviationExceeded());
+        assertEquals(turnPointCondition.getTurnPointDelayConfirmedCount(), 3);
     }
 
     @Test
@@ -199,15 +200,18 @@ public class DecoratedTurnPointConditionTest {
                      Signals.none());
         assertTrue(turnPointCondition.getTurnPointCondition().isDirty());
         assertTrue(turnPointCondition.getCrossBaselineCondition().isDirty());
+        assertEquals(turnPointCondition.getCrossDelayConfirmedCount(), 1);
 
         turnPointCondition.clearDirty();
         assertFalse(turnPointCondition.isDirty());
 
         assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("8.99"))),
                      Signals.none());
+        assertEquals(turnPointCondition.getCrossDelayConfirmedCount(), 2);
         // 穿越底线无偏差控制
         assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("8.00"))),
                      Signals.crossBaseline());
+        assertEquals(turnPointCondition.getCrossDelayConfirmedCount(), 3);
     }
 
     @Test
