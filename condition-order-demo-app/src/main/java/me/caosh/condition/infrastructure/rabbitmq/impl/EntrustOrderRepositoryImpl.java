@@ -1,8 +1,8 @@
 package me.caosh.condition.infrastructure.rabbitmq.impl;
 
+import hbec.intellitrade.conditionorder.domain.EntrustOrderRepository;
 import hbec.intellitrade.trade.domain.EntrustOrder;
 import me.caosh.autoasm.AutoAssemblers;
-import hbec.intellitrade.condorder.domain.EntrustOrderRepository;
 import me.caosh.condition.infrastructure.tunnel.impl.EntrustOrderDoRepository;
 import me.caosh.condition.infrastructure.tunnel.model.EntrustOrderDO;
 import org.springframework.stereotype.Repository;

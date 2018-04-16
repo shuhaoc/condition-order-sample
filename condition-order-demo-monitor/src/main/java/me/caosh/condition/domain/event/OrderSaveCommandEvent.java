@@ -1,6 +1,6 @@
 package me.caosh.condition.domain.event;
 
-import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.conditionorder.domain.ConditionOrder;
 
 /**
  * Created by caosh on 2017/8/11.

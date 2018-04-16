@@ -1,7 +1,7 @@
 package hbec.intellitrade.trade.domain;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.condorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.conditionorder.domain.TradeCustomerInfo;
 
 /**
  * Created by caosh on 2017/8/14.

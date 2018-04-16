@@ -1,6 +1,6 @@
 package me.caosh.condition.interfaces.facade;
 
-import hbec.commons.domain.intellitrade.condorder.ConditionOrderDTO;
+import hbec.commons.domain.intellitrade.conditionorder.ConditionOrderDTO;
 import hbec.commons.domain.intellitrade.trade.EntrustOrderDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,7 +1,7 @@
 package hbec.intellitrade.strategy.container;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.condorder.domain.OrderState;
+import hbec.intellitrade.conditionorder.domain.OrderState;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import me.caosh.condition.domain.model.condition.TimeReachedCondition;

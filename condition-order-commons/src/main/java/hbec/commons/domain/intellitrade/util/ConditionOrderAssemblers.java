@@ -1,10 +1,10 @@
 package hbec.commons.domain.intellitrade.util;
 
 import com.google.common.base.Converter;
-import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.commons.domain.intellitrade.conditionorder.ConditionOrderDTO;
+import hbec.intellitrade.conditionorder.domain.ConditionOrder;
 import me.caosh.autoasm.AutoAssembler;
 import me.caosh.autoasm.AutoAssemblerBuilder;
-import hbec.commons.domain.intellitrade.condorder.ConditionOrderDTO;
 
 /**
  * @author caosh/caoshuhao@touker.com

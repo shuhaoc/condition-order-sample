@@ -1,7 +1,7 @@
 package hbec.intellitrade.strategy.domain.signalpayload;
 
 import hbec.intellitrade.common.market.RealTimeMarketBuilder;
-import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.conditionorder.domain.ConditionOrder;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import me.caosh.autoasm.ConvertibleBuilder;
 

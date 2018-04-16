@@ -1,9 +1,9 @@
 package me.caosh.condition.infrastructure.repository.serializer;
 
-import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.commons.domain.intellitrade.condorder.ConditionOrderDTO;
+import hbec.commons.domain.intellitrade.conditionorder.ConditionOrderDTO;
 import hbec.commons.domain.intellitrade.util.ConditionOrderAssemblers;
 import hbec.commons.domain.intellitrade.util.ConditionOrderDTOGSONUtils;
+import hbec.intellitrade.conditionorder.domain.ConditionOrder;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 

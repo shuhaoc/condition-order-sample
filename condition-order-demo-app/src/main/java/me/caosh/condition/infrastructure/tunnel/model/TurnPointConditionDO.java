@@ -1,8 +1,8 @@
 package me.caosh.condition.infrastructure.tunnel.model;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.condorder.domain.orders.turnpoint.DecoratedTurnPointCondition;
-import hbec.intellitrade.condorder.domain.orders.turnpoint.DecoratedTurnPointConditionBuilder;
+import hbec.intellitrade.conditionorder.domain.orders.turnpoint.DecoratedTurnPointCondition;
+import hbec.intellitrade.conditionorder.domain.orders.turnpoint.DecoratedTurnPointConditionBuilder;
 import me.caosh.autoasm.FieldMapping;
 import me.caosh.autoasm.MappedClass;
 

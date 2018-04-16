@@ -1,6 +1,6 @@
 package hbec.intellitrade.strategy.domain.condition.deviation;
 
-import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
+import hbec.intellitrade.conditionorder.domain.orders.price.PriceCondition;
 import hbec.intellitrade.mock.MockMarkets;
 import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;

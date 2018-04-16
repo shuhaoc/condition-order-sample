@@ -1,10 +1,10 @@
 package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceCondition;
-import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceConditionBuilder;
-import me.caosh.autoasm.MappedClass;
 import hbec.commons.domain.intellitrade.condition.ConditionDTO;
+import hbec.intellitrade.conditionorder.domain.orders.price.DecoratedPriceCondition;
+import hbec.intellitrade.conditionorder.domain.orders.price.DecoratedPriceConditionBuilder;
+import me.caosh.autoasm.MappedClass;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.DecimalMin;

@@ -1,8 +1,8 @@
 package hbec.commons.domain.intellitrade.signal;
 
 import com.google.common.base.MoreObjects;
+import hbec.commons.domain.intellitrade.conditionorder.ConditionOrderDTO;
 import hbec.commons.domain.intellitrade.market.RealTimeMarketDTO;
-import hbec.commons.domain.intellitrade.condorder.ConditionOrderDTO;
 
 import java.io.Serializable;
 

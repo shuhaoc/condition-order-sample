@@ -1,7 +1,7 @@
 package me.caosh.condition.infrastructure.tunnel;
 
 import com.google.common.base.Optional;
-import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.conditionorder.domain.ConditionOrder;
 
 import java.util.List;
 

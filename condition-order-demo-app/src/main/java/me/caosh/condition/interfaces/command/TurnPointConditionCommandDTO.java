@@ -2,8 +2,8 @@ package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
 import hbec.commons.domain.intellitrade.condition.ConditionDTO;
-import hbec.intellitrade.condorder.domain.orders.turnpoint.DecoratedTurnPointCondition;
-import hbec.intellitrade.condorder.domain.orders.turnpoint.DecoratedTurnPointConditionBuilder;
+import hbec.intellitrade.conditionorder.domain.orders.turnpoint.DecoratedTurnPointCondition;
+import hbec.intellitrade.conditionorder.domain.orders.turnpoint.DecoratedTurnPointConditionBuilder;
 import me.caosh.autoasm.MappedClass;
 import org.hibernate.validator.constraints.Range;
 

@@ -1,7 +1,7 @@
 package hbec.commons.domain.intellitrade.trade;
 
 import com.google.common.base.MoreObjects;
-import hbec.commons.domain.intellitrade.condorder.TradeCustomerInfoDTO;
+import hbec.commons.domain.intellitrade.conditionorder.TradeCustomerInfoDTO;
 
 import java.io.Serializable;
 

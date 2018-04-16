@@ -3,7 +3,7 @@ package me.caosh.condition.infrastructure.tunnel.impl;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
-import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.conditionorder.domain.ConditionOrder;
 import me.caosh.condition.infrastructure.repository.assembler.ConditionOrderDoAssembler;
 import me.caosh.condition.infrastructure.tunnel.ConditionOrderDbTunnel;
 import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;

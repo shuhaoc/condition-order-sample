@@ -1,7 +1,7 @@
 package me.caosh.condition.infrastructure.repository.assembler;
 
-import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilder;
+import hbec.intellitrade.conditionorder.domain.ConditionOrder;
+import hbec.intellitrade.conditionorder.domain.orders.ConditionOrderBuilder;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.autoasm.ConvertibleBuilder;
 import me.caosh.autoasm.MappedClass;

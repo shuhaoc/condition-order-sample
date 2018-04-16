@@ -1,8 +1,8 @@
 package hbec.commons.domain.intellitrade.condition;
 
 import com.google.common.base.MoreObjects;
-import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceCondition;
-import hbec.intellitrade.condorder.domain.orders.price.DecoratedPriceConditionBuilder;
+import hbec.intellitrade.conditionorder.domain.orders.price.DecoratedPriceCondition;
+import hbec.intellitrade.conditionorder.domain.orders.price.DecoratedPriceConditionBuilder;
 import me.caosh.autoasm.MappedClass;
 
 import java.math.BigDecimal;

@@ -1,10 +1,10 @@
 package me.caosh.condition.infrastructure.rabbitmq;
 
-import hbec.commons.domain.intellitrade.condorder.ConditionOrderCommandDTO;
-import hbec.commons.domain.intellitrade.condorder.OrderCommandType;
+import hbec.commons.domain.intellitrade.conditionorder.ConditionOrderCommandDTO;
+import hbec.commons.domain.intellitrade.conditionorder.OrderCommandType;
 import hbec.commons.domain.intellitrade.util.ConditionOrderAssemblers;
 import hbec.commons.domain.intellitrade.util.ConditionOrderGSONMessageConverter;
-import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.conditionorder.domain.ConditionOrder;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.condition.domain.event.OrderCommandEvent;
 import me.caosh.condition.domain.event.OrderRemoveCommandEvent;

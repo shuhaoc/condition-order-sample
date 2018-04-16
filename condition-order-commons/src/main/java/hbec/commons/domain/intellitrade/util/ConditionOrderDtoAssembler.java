@@ -1,11 +1,11 @@
 package hbec.commons.domain.intellitrade.util;
 
-import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.orders.ConditionOrderBuilder;
+import hbec.commons.domain.intellitrade.conditionorder.ConditionOrderDTO;
+import hbec.intellitrade.conditionorder.domain.ConditionOrder;
+import hbec.intellitrade.conditionorder.domain.orders.ConditionOrderBuilder;
 import me.caosh.autoasm.AutoAssemblers;
 import me.caosh.autoasm.ConvertibleBuilder;
 import me.caosh.autoasm.MappedClass;
-import hbec.commons.domain.intellitrade.condorder.ConditionOrderDTO;
 
 /**
  * @author caosh/caoshuhao@touker.com

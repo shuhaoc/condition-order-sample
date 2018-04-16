@@ -1,6 +1,6 @@
 package hbec.intellitrade.strategy.domain.condition.delayconfirm;
 
-import hbec.intellitrade.condorder.domain.orders.price.PriceCondition;
+import hbec.intellitrade.conditionorder.domain.orders.price.PriceCondition;
 import hbec.intellitrade.mock.MockMarkets;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.signal.Signals;

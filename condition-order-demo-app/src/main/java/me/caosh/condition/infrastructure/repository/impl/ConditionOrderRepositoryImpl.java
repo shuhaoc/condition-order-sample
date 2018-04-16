@@ -1,9 +1,9 @@
 package me.caosh.condition.infrastructure.repository.impl;
 
 import com.google.common.base.Optional;
-import hbec.intellitrade.condorder.domain.ConditionOrder;
+import hbec.intellitrade.conditionorder.domain.ConditionOrder;
+import hbec.intellitrade.conditionorder.domain.ConditionOrderRepository;
 import me.caosh.condition.infrastructure.rabbitmq.ConditionOrderProducer;
-import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
 import me.caosh.condition.infrastructure.tunnel.ConditionOrderDbTunnel;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
 package me.caosh.condition.application.order.impl;
 
-import hbec.intellitrade.condorder.domain.ConditionOrder;
-import hbec.intellitrade.condorder.domain.ConditionOrderRepository;
+import hbec.intellitrade.conditionorder.domain.ConditionOrder;
+import hbec.intellitrade.conditionorder.domain.ConditionOrderRepository;
 import me.caosh.condition.application.order.OrderCommandService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
