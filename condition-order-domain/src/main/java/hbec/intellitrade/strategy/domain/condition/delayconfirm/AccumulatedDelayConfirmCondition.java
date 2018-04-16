@@ -2,6 +2,7 @@ package hbec.intellitrade.strategy.domain.condition.delayconfirm;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.market.RealTimeMarket;
+import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
 import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
@@ -29,6 +30,15 @@ public class AccumulatedDelayConfirmCondition extends AbstractDelayConfirmCondit
     public TradeSignal onMarketTick(RealTimeMarket realTimeMarket) {
         TradeSignal tradeSignal = marketCondition.onMarketTick(realTimeMarket);
         if (!tradeSignal.isValid()) {
+            // 未触发交易信号时，检查动态属性是否变化
+            boolean isDynamic = marketCondition instanceof DynamicCondition;
+            if (isDynamic) {
+                boolean hasDirty = ((DynamicCondition) marketCondition).isDirty();
+                if (hasDirty) {
+                    counter.reset();
+                }
+            }
+
             return tradeSignal;
         }
 

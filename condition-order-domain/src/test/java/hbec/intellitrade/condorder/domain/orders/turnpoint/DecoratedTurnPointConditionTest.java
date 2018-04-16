@@ -5,6 +5,7 @@ import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmInfo
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DisabledDelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlInfo;
+import hbec.intellitrade.strategy.domain.condition.deviation.DisabledDeviationCtrl;
 import hbec.intellitrade.strategy.domain.factor.BinaryFactorType;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.factor.PercentBinaryTargetPriceFactor;
@@ -244,5 +245,52 @@ public class DecoratedTurnPointConditionTest {
         // 超过偏差控制
         assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("10.20"))),
                      Signals.buyOrSell().withDeviationExceeded());
+    }
+
+    @Test
+    public void testAccumulatedDelayConfirmCountReset() throws Exception {
+        DecoratedTurnPointCondition turnPointCondition = new DecoratedTurnPointCondition(
+                new TurnPointCondition(CompareOperator.LE,
+                                       new BigDecimal("11.00"),
+                                       BinaryFactorType.PERCENT,
+                                       new BigDecimal("1.00"),
+                                       null,
+                                       true),
+                null,
+                new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
+                DisabledDeviationCtrl.DISABLED,
+                0,
+                0
+        );
+
+        // 突破突破价
+        assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice("10.50")), Signals.none());
+        assertTrue(turnPointCondition.isDirty());
+
+        turnPointCondition.clearDirty();
+
+        // 达到反弹目标价，延迟确认
+        assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice("10.70")), Signals.none());
+        assertTrue(turnPointCondition.isDirty());
+        assertEquals(turnPointCondition.getTurnPointDelayConfirmedCount(), 1);
+
+        turnPointCondition.clearDirty();
+
+        // 继续下跌，更新最低价
+        assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice("10.00")), Signals.none());
+        // 累计确认次数重置
+        assertEquals(turnPointCondition.getTurnPointDelayConfirmedCount(), 0);
+
+        turnPointCondition.clearDirty();
+
+        assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice("10.10")), Signals.none());
+        assertEquals(turnPointCondition.getTurnPointDelayConfirmedCount(), 1);
+
+        assertEquals(turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice("10.10")), Signals.none());
+        assertEquals(turnPointCondition.getTurnPointDelayConfirmedCount(), 2);
+
+        TradeSignal tradeSignal = turnPointCondition.onMarketTick(MockMarkets.withCurrentPrice("10.10"));
+        assertEquals(tradeSignal, Signals.buyOrSell());
+        assertEquals(turnPointCondition.getTurnPointDelayConfirmedCount(), 3);
     }
 }

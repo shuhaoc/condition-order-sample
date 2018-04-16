@@ -20,7 +20,6 @@ import java.util.Objects;
 
 /**
  * 拐点条件包装类
- * TODO: 实现极值点更新时累计确认重置
  *
  * @author caosh/caoshuhao@touker.com
  * @date 2018/3/21
