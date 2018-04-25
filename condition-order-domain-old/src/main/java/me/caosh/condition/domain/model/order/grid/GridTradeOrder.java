@@ -10,14 +10,16 @@ import hbec.intellitrade.conditionorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.conditionorder.domain.tradeplan.DoubleDirectionTradePlan;
 import hbec.intellitrade.conditionorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.conditionorder.domain.trigger.TriggerTradingContext;
-import hbec.intellitrade.strategy.domain.condition.market.MarketCondition;
 import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by caosh on 2017/8/23.
+ * 网格交易
+ *
+ * @author caosh/caoshuhao@touker.com
+ * @date 2017/8/23
  */
 public class GridTradeOrder extends AbstractMarketConditionOrder {
     private static final Logger logger = LoggerFactory.getLogger(GridTradeOrder.class);
@@ -45,11 +47,7 @@ public class GridTradeOrder extends AbstractMarketConditionOrder {
     }
 
     @Override
-    public MarketCondition getCondition() {
-        return getGridCondition();
-    }
-
-    public GridCondition getGridCondition() {
+    public GridCondition getCondition() {
         return gridCondition;
     }
 

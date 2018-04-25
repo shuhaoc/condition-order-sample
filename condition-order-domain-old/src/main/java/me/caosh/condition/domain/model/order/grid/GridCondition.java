@@ -12,7 +12,8 @@ import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 
 /**
- * Created by caosh on 2017/8/26.
+ * @author caosh/caoshuhao@touker.com
+ * @date 2017/8/26
  */
 public class GridCondition implements MarketCondition {
     private static final Logger logger = LoggerFactory.getLogger(GridCondition.class);

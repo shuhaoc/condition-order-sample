@@ -71,7 +71,7 @@ public class GridOrderTest {
         gridTradeOrder.onTradeSignal(triggerTradingContext);
         gridTradeOrder.afterEntrustCommandsExecuted(triggerTradingContext);
         assertEquals(gridTradeOrder.getOrderState(), OrderState.ACTIVE);
-        assertEquals(gridTradeOrder.getGridCondition().getBasePrice(), new BigDecimal("14.00"));
+        assertEquals(gridTradeOrder.getCondition().getBasePrice(), new BigDecimal("14.00"));
 
        RealTimeMarket realTimeMarket2 = MockMarkets.withCurrentPrice(new BigDecimal("13.00"));
         signal = gridTradeOrder.getCondition().onMarketTick(realTimeMarket2);
@@ -81,6 +81,6 @@ public class GridOrderTest {
 
         gridTradeOrder.onTradeSignal(triggerTradingContext);
         assertEquals(gridTradeOrder.getOrderState(), OrderState.ACTIVE);
-        assertEquals(gridTradeOrder.getGridCondition().getBasePrice(), new BigDecimal("13.00"));
+        assertEquals(gridTradeOrder.getCondition().getBasePrice(), new BigDecimal("13.00"));
     }
 }
