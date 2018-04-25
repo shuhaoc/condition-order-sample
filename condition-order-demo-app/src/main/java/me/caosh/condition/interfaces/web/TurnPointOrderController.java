@@ -3,7 +3,6 @@ package me.caosh.condition.interfaces.web;
 import com.google.common.base.Optional;
 import hbec.intellitrade.conditionorder.domain.ConditionOrder;
 import hbec.intellitrade.conditionorder.domain.ConditionOrderRepository;
-import hbec.intellitrade.conditionorder.domain.OrderState;
 import hbec.intellitrade.conditionorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.conditionorder.domain.orders.turnpoint.TurnPointOrder;
 import me.caosh.condition.application.order.OrderCommandService;
@@ -22,7 +21,6 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/turnpoint")
-@Deprecated
 public class TurnPointOrderController {
 
     private final ConditionOrderIdGenerator idGenerator;
@@ -46,6 +44,7 @@ public class TurnPointOrderController {
         orderCommandService.save(turnPointOrder);
         return orderId;
     }
+
     @RequestMapping("/update")
     public Long update(@Valid TurnPointOrderUpdateCommand command) {
         Long orderId = command.getOrderId();
@@ -54,7 +53,7 @@ public class TurnPointOrderController {
             return -1L;
         }
         ConditionOrder conditionOrder = conditionOrderOptional.get();
-        if (conditionOrder.getOrderState() != OrderState.ACTIVE && conditionOrder.getOrderState() != OrderState.PAUSED) {
+        if (!conditionOrder.isMonitoringState()) {
             return -2L;
         }
         TurnPointOrder oldOrder = (TurnPointOrder) conditionOrder;

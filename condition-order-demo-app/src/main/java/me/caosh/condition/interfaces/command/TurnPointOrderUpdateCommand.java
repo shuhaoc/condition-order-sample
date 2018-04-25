@@ -1,13 +1,19 @@
 package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
-import org.hibernate.validator.constraints.Range;
+import hbec.commons.domain.intellitrade.conditionorder.DelayConfirmDTO;
+import hbec.commons.domain.intellitrade.conditionorder.DeviationCtrlDTO;
+import hbec.commons.domain.intellitrade.conditionorder.MonitorTimeRangeDTO;
+import hbec.commons.domain.intellitrade.conditionorder.TradePlanDTO;
+import hbec.commons.domain.intellitrade.market.TrackedIndexDTO;
+import me.caosh.autoasm.FieldMapping;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Min;
+import javax.validation.Valid;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created by caosh on 2017/8/9.
@@ -17,22 +23,31 @@ public class TurnPointOrderUpdateCommand implements Serializable {
 
     @NotNull
     private Long orderId;
+
+    @Valid
+    private TrackedIndexDTO trackedIndex;
+
+    @Valid
+    private TurnPointConditionCommandDTO condition;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Future
+    private Date expireTime;
+
     @NotNull
-    @DecimalMin("0")
-    private BigDecimal breakPrice;
-    @NotNull
-    @DecimalMin("0")
-    private BigDecimal turnUpPercent;
-    @NotNull
-    @Range(min = 1, max = 11)
-    private Integer entrustStrategy;
-    @NotNull
-    @Range(min = 0, max = 1)
-    private Integer entrustMethod;
-    @Min(100)
-    private Integer entrustNumber;
-    @DecimalMin("1")
-    private BigDecimal entrustAmount;
+    @Valid
+    private TradePlanDTO tradePlan;
+
+    @Valid
+    private MonitorTimeRangeDTO monitorTimeRange;
+
+    @Valid
+    @FieldMapping(mappedProperty = "condition.delayConfirm")
+    private DelayConfirmDTO delayConfirm;
+
+    @Valid
+    @FieldMapping(mappedProperty = "condition.deviationCtrl")
+    private DeviationCtrlDTO deviationCtrl;
 
     public Long getOrderId() {
         return orderId;
@@ -42,64 +57,73 @@ public class TurnPointOrderUpdateCommand implements Serializable {
         this.orderId = orderId;
     }
 
-    public BigDecimal getBreakPrice() {
-        return breakPrice;
+    public TrackedIndexDTO getTrackedIndex() {
+        return trackedIndex;
     }
 
-    public void setBreakPrice(BigDecimal breakPrice) {
-        this.breakPrice = breakPrice;
+    public void setTrackedIndex(TrackedIndexDTO trackedIndex) {
+        this.trackedIndex = trackedIndex;
     }
 
-    public BigDecimal getTurnUpPercent() {
-        return turnUpPercent;
+    public TurnPointConditionCommandDTO getCondition() {
+        return condition;
     }
 
-    public void setTurnUpPercent(BigDecimal turnUpPercent) {
-        this.turnUpPercent = turnUpPercent;
+    public void setCondition(TurnPointConditionCommandDTO condition) {
+        this.condition = condition;
     }
 
-    public Integer getEntrustMethod() {
-        return entrustMethod;
+    public Date getExpireTime() {
+        return expireTime;
     }
 
-    public void setEntrustMethod(Integer entrustMethod) {
-        this.entrustMethod = entrustMethod;
+    public void setExpireTime(Date expireTime) {
+        this.expireTime = expireTime;
     }
 
-    public Integer getEntrustStrategy() {
-        return entrustStrategy;
+    public TradePlanDTO getTradePlan() {
+        return tradePlan;
     }
 
-    public void setEntrustStrategy(Integer entrustStrategy) {
-        this.entrustStrategy = entrustStrategy;
+    public void setTradePlan(TradePlanDTO tradePlan) {
+        this.tradePlan = tradePlan;
     }
 
-    public Integer getEntrustNumber() {
-        return entrustNumber;
+    public MonitorTimeRangeDTO getMonitorTimeRange() {
+        return monitorTimeRange;
     }
 
-    public void setEntrustNumber(Integer entrustNumber) {
-        this.entrustNumber = entrustNumber;
+    public void setMonitorTimeRange(MonitorTimeRangeDTO monitorTimeRange) {
+        this.monitorTimeRange = monitorTimeRange;
     }
 
-    public BigDecimal getEntrustAmount() {
-        return entrustAmount;
+    public DelayConfirmDTO getDelayConfirm() {
+        return delayConfirm;
     }
 
-    public void setEntrustAmount(BigDecimal entrustAmount) {
-        this.entrustAmount = entrustAmount;
+    public void setDelayConfirm(DelayConfirmDTO delayConfirm) {
+        this.delayConfirm = delayConfirm;
+    }
+
+    public DeviationCtrlDTO getDeviationCtrl() {
+        return deviationCtrl;
+    }
+
+    public void setDeviationCtrl(DeviationCtrlDTO deviationCtrl) {
+        this.deviationCtrl = deviationCtrl;
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects.toStringHelper(TurnPointOrderUpdateCommand.class).omitNullValues()
                 .add("orderId", orderId)
-                .add("breakPrice", breakPrice)
-                .add("turnUpPercent", turnUpPercent)
-                .add("entrustStrategy", entrustStrategy)
-                .add("entrustMethod", entrustMethod)
-                .add("entrustNumber", entrustNumber)
-                .add("entrustAmount", entrustAmount)
+                .add("trackedIndex", trackedIndex)
+                .add("condition", condition)
+                .add("expireTime", expireTime)
+                .add("tradePlan", tradePlan)
+                .add("monitorTimeRange", monitorTimeRange)
+                .add("delayConfirm", delayConfirm)
+                .add("deviationCtrl", deviationCtrl)
                 .toString();
     }
 }

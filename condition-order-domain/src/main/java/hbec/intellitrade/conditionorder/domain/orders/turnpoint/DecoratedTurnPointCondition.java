@@ -32,9 +32,9 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
     private final DeviationCtrl deviationCtrl;
 
     public DecoratedTurnPointCondition(TurnPointCondition turnPointCondition,
-                                       BigDecimal baselinePrice,
-                                       DelayConfirm delayConfirm,
-                                       DeviationCtrl deviationCtrl) {
+            BigDecimal baselinePrice,
+            DelayConfirm delayConfirm,
+            DeviationCtrl deviationCtrl) {
         this(turnPointCondition, baselinePrice, delayConfirm, deviationCtrl, 0, 0);
     }
 
@@ -49,11 +49,11 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
      * @param crossDelayConfirmedCount     穿越底线当前延迟确认次数
      */
     public DecoratedTurnPointCondition(TurnPointCondition turnPointCondition,
-                                       BigDecimal baselinePrice,
-                                       DelayConfirm delayConfirm,
-                                       DeviationCtrl deviationCtrl,
-                                       int turnPointDelayConfirmedCount,
-                                       int crossDelayConfirmedCount) {
+            BigDecimal baselinePrice,
+            DelayConfirm delayConfirm,
+            DeviationCtrl deviationCtrl,
+            int turnPointDelayConfirmedCount,
+            int crossDelayConfirmedCount) {
         Preconditions.checkNotNull(turnPointCondition, "turnPointCondition cannot be null");
         Preconditions.checkNotNull(delayConfirm, "delayConfirm cannot be null");
         Preconditions.checkNotNull(deviationCtrl, "deviationCtrl cannot be null");
@@ -61,14 +61,14 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
         if (baselinePrice != null) {
             CompareOperator breakCompareOperator = turnPointCondition.getCompareOperator().withoutEquals();
             Preconditions.checkArgument(breakCompareOperator.apply(baselinePrice, turnPointCondition.getBreakPrice()),
-                                        "Baseline price must be more faraway than break price");
+                    "Baseline price must be more faraway than break price");
         }
 
         this.rawTurnPointCondition = turnPointCondition;
         this.turnPointCondition = new DecoratedMarketCondition<>(turnPointCondition,
-                                                                 delayConfirm,
-                                                                 deviationCtrl,
-                                                                 turnPointDelayConfirmedCount);
+                delayConfirm,
+                deviationCtrl,
+                turnPointDelayConfirmedCount);
 
         // 踩线条件是可选的
         if (baselinePrice != null) {
@@ -79,9 +79,9 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
                     baselinePrice);
             // 穿越底线条件仅支持延迟确认
             this.crossBaselineCondition = new DecoratedMarketCondition<>(rawCrossBaselineCondition,
-                                                                         delayConfirm,
-                                                                         DisabledDeviationCtrl.DISABLED,
-                                                                         crossDelayConfirmedCount);
+                    delayConfirm,
+                    DisabledDeviationCtrl.DISABLED,
+                    crossDelayConfirmedCount);
         } else {
             crossBaselineCondition = null;
         }
@@ -150,6 +150,9 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
     }
 
     public int getCrossDelayConfirmedCount() {
+        if (crossBaselineCondition == null) {
+            return 0;
+        }
         return crossBaselineCondition.getDelayConfirmedCount();
     }
 
@@ -199,7 +202,7 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
         }
         DecoratedTurnPointCondition that = (DecoratedTurnPointCondition) o;
         return Objects.equals(turnPointCondition, that.turnPointCondition) &&
-               Objects.equals(crossBaselineCondition, that.crossBaselineCondition);
+                Objects.equals(crossBaselineCondition, that.crossBaselineCondition);
     }
 
     @Override
@@ -210,8 +213,8 @@ public class DecoratedTurnPointCondition implements MarketCondition, DynamicCond
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(DecoratedTurnPointCondition.class).omitNullValues()
-                          .add("turnPointCondition", turnPointCondition)
-                          .add("crossBaselineCondition", crossBaselineCondition)
-                          .toString();
+                .add("turnPointCondition", turnPointCondition)
+                .add("crossBaselineCondition", crossBaselineCondition)
+                .toString();
     }
 }

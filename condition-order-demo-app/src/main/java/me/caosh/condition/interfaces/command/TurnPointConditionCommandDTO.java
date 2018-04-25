@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 import hbec.commons.domain.intellitrade.condition.ConditionDTO;
 import hbec.intellitrade.conditionorder.domain.orders.turnpoint.DecoratedTurnPointCondition;
 import hbec.intellitrade.conditionorder.domain.orders.turnpoint.DecoratedTurnPointConditionBuilder;
+import me.caosh.autoasm.FieldMapping;
 import me.caosh.autoasm.MappedClass;
 import org.hibernate.validator.constraints.Range;
 
@@ -26,10 +27,13 @@ public class TurnPointConditionCommandDTO implements ConditionDTO {
     @NotNull
     @DecimalMin("0")
     private BigDecimal breakPrice;
+    @FieldMapping(mappedProperty = "turnBackBinaryPriceFactor.binaryFactorType")
     @NotNull
     @Range(min = 0, max = 1)
     private Integer binaryFactorType;
+    @FieldMapping(mappedProperty = "turnBackBinaryPriceFactor.percent")
     private BigDecimal turnBackPercent;
+    @FieldMapping(mappedProperty = "turnBackBinaryPriceFactor.increment")
     private BigDecimal turnBackIncrement;
     @NotNull
     private Boolean useGuaranteedPrice;
