@@ -9,7 +9,7 @@ import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
 @RuntimeType({
         PriceConditionDO.class,
         TurnPointConditionDO.class,
-        SimpleTimeConditionDO.class,
+        TimeReachedConditionDO.class,
         GridConditionDO.class,
         NewStockPurchaseCondition.class
 })

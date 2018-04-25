@@ -11,6 +11,7 @@ import java.io.Serializable;
  */
 @RuntimeType({
         PriceConditionDTO.class,
+        TimeReachedConditionDTO.class,
         TurnPointConditionDTO.class
 })
 public interface ConditionDTO extends Serializable {

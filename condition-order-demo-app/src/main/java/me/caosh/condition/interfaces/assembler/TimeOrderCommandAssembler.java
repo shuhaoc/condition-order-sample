@@ -1,59 +1,49 @@
 package me.caosh.condition.interfaces.assembler;
 
-import hbec.intellitrade.common.security.SecurityExchange;
-import hbec.intellitrade.common.security.SecurityInfo;
-import hbec.intellitrade.common.security.SecurityType;
+import hbec.intellitrade.common.security.SecurityInfoBuilder;
 import hbec.intellitrade.conditionorder.domain.OrderState;
 import hbec.intellitrade.conditionorder.domain.TradeCustomerInfo;
-import hbec.intellitrade.conditionorder.domain.tradeplan.BaseTradePlan;
-import hbec.intellitrade.conditionorder.domain.tradeplan.EntrustStrategy;
-import hbec.intellitrade.conditionorder.domain.tradeplan.OfferedPriceTradePlan;
-import hbec.intellitrade.conditionorder.domain.tradeplan.TradeNumber;
-import hbec.intellitrade.conditionorder.domain.tradeplan.TradeNumberFactory;
-import hbec.intellitrade.trade.domain.ExchangeType;
+import hbec.intellitrade.conditionorder.domain.TradeCustomerInfoBuilder;
+import hbec.intellitrade.conditionorder.domain.orders.time.TimeOrder;
+import hbec.intellitrade.conditionorder.domain.orders.time.TimeOrderBuilder;
 import me.caosh.autoasm.AutoAssemblers;
-import me.caosh.condition.domain.model.condition.TimeReachedCondition;
-import me.caosh.condition.domain.model.order.time.TimeOrder;
 import me.caosh.condition.interfaces.command.TimeOrderCreateCommand;
 import me.caosh.condition.interfaces.command.TimeOrderUpdateCommand;
-import me.caosh.util.InstantUtils;
 
 /**
  * Created by caosh on 2017/8/9.
  */
 public class TimeOrderCommandAssembler {
-    public static TimeOrder assemble(Long orderId, TradeCustomerInfo tradeCustomerInfo, TimeOrderCreateCommand command) {
-        OrderState orderState = OrderState.ACTIVE;
-        SecurityType securityType = AutoAssemblers.getDefault()
-                                                  .disassemble(command.getSecurityType(), SecurityType.class);
-        SecurityExchange securityExchange = SecurityExchange.valueOf(command.getSecurityExchange());
-        SecurityInfo securityInfo = new SecurityInfo(securityType, command.getSecurityCode(), securityExchange,
-                command.getSecurityName());
-        TimeReachedCondition timeReachedCondition = new TimeReachedCondition(InstantUtils.toLocalDateTime(command.getTargetTime()));
-        ExchangeType exchangeType = AutoAssemblers.getDefault()
-                                                  .disassemble(command.getExchangeType(), ExchangeType.class);
-        EntrustStrategy entrustStrategy = AutoAssemblers.getDefault()
-                                                        .disassemble(command.getEntrustStrategy(),
-                                                                     EntrustStrategy.class);
-        TradeNumber tradeNumber = TradeNumberFactory.getInstance()
-                .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        BaseTradePlan tradePlan = new OfferedPriceTradePlan(exchangeType, entrustStrategy, tradeNumber);
-        return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, timeReachedCondition, null, tradePlan, orderState);
+    public static TimeOrder assemble(Long orderId,
+            TradeCustomerInfo tradeCustomerInfo,
+            TimeOrderCreateCommand command) {
+        TradeCustomerInfoBuilder customerInfoBuilder = AutoAssemblers.getDefault()
+                .disassemble(tradeCustomerInfo, TradeCustomerInfoBuilder.class);
+
+        return (TimeOrder) AutoAssemblers.getDefault()
+                .useBuilder(new TimeOrderBuilder())
+                .disassemble(command)
+                .getConvertibleBuilder()
+                .setOrderId(orderId)
+                .setCustomer(customerInfoBuilder)
+                .setOrderState(OrderState.ACTIVE)
+                .build();
     }
 
     public static TimeOrder merge(TimeOrder oldOrder, TimeOrderUpdateCommand command) {
-        OrderState orderState = OrderState.ACTIVE;
-        TimeReachedCondition timeReachedCondition = new TimeReachedCondition(InstantUtils.toLocalDateTime(command.getTargetTime()));
-        ExchangeType exchangeType = AutoAssemblers.getDefault()
-                                                  .disassemble(command.getExchangeType(), ExchangeType.class);
-        EntrustStrategy entrustStrategy = AutoAssemblers.getDefault()
-                                                        .disassemble(command.getEntrustStrategy(),
-                                                                     EntrustStrategy.class);
-        TradeNumber tradeNumber = TradeNumberFactory.getInstance()
-                .create(command.getEntrustMethod(), command.getEntrustNumber(), command.getEntrustAmount());
-        BaseTradePlan tradePlan = new OfferedPriceTradePlan(exchangeType, entrustStrategy, tradeNumber);
-        return new TimeOrder(oldOrder.getOrderId(), oldOrder.getCustomer(),
-                oldOrder.getSecurityInfo(), timeReachedCondition, null, tradePlan, orderState);
+        TradeCustomerInfoBuilder customerInfoBuilder = AutoAssemblers.getDefault()
+                .disassemble(oldOrder.getCustomer(), TradeCustomerInfoBuilder.class);
+        SecurityInfoBuilder securityInfoBuilder = AutoAssemblers.getDefault()
+                .disassemble(oldOrder.getSecurityInfo(), SecurityInfoBuilder.class);
+
+        return (TimeOrder) AutoAssemblers.getDefault().useBuilder(new TimeOrderBuilder())
+                .disassemble(command)
+                .getConvertibleBuilder()
+                .setOrderId(oldOrder.getOrderId())
+                .setCustomer(customerInfoBuilder)
+                .setSecurityInfo(securityInfoBuilder)
+                .setOrderState(OrderState.ACTIVE)
+                .build();
     }
 
     private TimeOrderCommandAssembler() {

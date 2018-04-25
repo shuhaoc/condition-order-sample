@@ -1,4 +1,4 @@
-package me.caosh.condition.domain.model.condition;
+package hbec.intellitrade.conditionorder.domain.orders.time;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.strategy.domain.condition.AbstractBasicTimeCondition;

@@ -1,6 +1,7 @@
 package me.caosh.condition.domain.dto.order;
 
 import hbec.commons.domain.intellitrade.condition.PriceConditionDTO;
+import hbec.commons.domain.intellitrade.condition.TimeReachedConditionDTO;
 import hbec.commons.domain.intellitrade.condition.TurnPointConditionDTO;
 import hbec.commons.domain.intellitrade.conditionorder.ConditionOrderDTO;
 import hbec.commons.domain.intellitrade.conditionorder.DelayConfirmDTO;
@@ -22,12 +23,15 @@ import hbec.intellitrade.conditionorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.conditionorder.domain.orders.price.DecoratedPriceCondition;
 import hbec.intellitrade.conditionorder.domain.orders.price.PriceCondition;
 import hbec.intellitrade.conditionorder.domain.orders.price.PriceOrder;
+import hbec.intellitrade.conditionorder.domain.orders.time.TimeOrder;
+import hbec.intellitrade.conditionorder.domain.orders.time.TimeReachedCondition;
 import hbec.intellitrade.conditionorder.domain.orders.turnpoint.DecoratedTurnPointCondition;
 import hbec.intellitrade.conditionorder.domain.orders.turnpoint.TurnPointCondition;
 import hbec.intellitrade.conditionorder.domain.orders.turnpoint.TurnPointOrder;
 import hbec.intellitrade.conditionorder.domain.trackindex.TrackedIndexInfo;
 import hbec.intellitrade.conditionorder.domain.tradeplan.EntrustStrategy;
 import hbec.intellitrade.conditionorder.domain.tradeplan.OfferedPriceTradePlan;
+import hbec.intellitrade.conditionorder.domain.tradeplan.TradeNumberByAmount;
 import hbec.intellitrade.conditionorder.domain.tradeplan.TradeNumberDirect;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmInfo;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmOption;
@@ -261,4 +265,60 @@ public class ConditionOrderDtoAssemblerTest {
         assertEquals(disassemble, turnPointOrder);
     }
 
+    @Test
+    public void testTimeOrder() throws Exception {
+        TimeOrder timeOrder = new TimeOrder(123L,
+                new TradeCustomerInfo(303348, "010000061086"),
+                OrderState.ACTIVE,
+                new SecurityInfo(SecurityType.STOCK, "600000", SecurityExchange.SH, "浦发银行"),
+                new TimeReachedCondition(LocalDateTime.parse("2018-04-29T10:00:00")),
+                LocalDateTime.parse("2018-04-29T15:00:00"),
+                new OfferedPriceTradePlan(ExchangeType.BUY,
+                        EntrustStrategy.CURRENT_PRICE,
+                        new TradeNumberByAmount(new BigDecimal("10000.00"))));
+
+        ConditionOrderDTO assemble = ConditionOrderAssemblers.dtoSupported()
+                .assemble(timeOrder, ConditionOrderDTO.class);
+
+        ConditionOrderDTO conditionOrderDTO = new ConditionOrderDTO();
+        conditionOrderDTO.setOrderId(123L);
+
+        TradeCustomerInfoDTO tradeCustomerInfoDTO = new TradeCustomerInfoDTO();
+        tradeCustomerInfoDTO.setUserId(303348);
+        tradeCustomerInfoDTO.setCustomerNo("010000061086");
+        conditionOrderDTO.setCustomer(tradeCustomerInfoDTO);
+
+        conditionOrderDTO.setDeleted(false);
+        conditionOrderDTO.setOrderState(1);
+
+        SecurityInfoDTO securityInfo = new SecurityInfoDTO();
+        securityInfo.setType(4);
+        securityInfo.setCode("600000");
+        securityInfo.setName("浦发银行");
+        securityInfo.setExchange("SH");
+        conditionOrderDTO.setSecurityInfo(securityInfo);
+
+        conditionOrderDTO.setStrategyType(5);
+
+        TimeReachedConditionDTO condition = new TimeReachedConditionDTO();
+        condition.setTargetTime("2018-04-29 10:00:00");
+
+        conditionOrderDTO.setCondition(condition);
+
+        conditionOrderDTO.setExpireTime("2018-04-29 15:00:00");
+
+        TradePlanDTO tradePlan = new TradePlanDTO();
+        tradePlan.setExchangeType(1);
+        tradePlan.setEntrustStrategy(1);
+        tradePlan.setEntrustMethod(1);
+        tradePlan.setEntrustAmount(new BigDecimal("10000.00"));
+        tradePlan.setOrderType(0);
+        conditionOrderDTO.setTradePlan(tradePlan);
+
+        assertEquals(assemble.toString(), conditionOrderDTO.toString());
+
+        ConditionOrder disassemble = ConditionOrderAssemblers.dtoSupported()
+                .disassemble(conditionOrderDTO, ConditionOrder.class);
+        assertEquals(disassemble, timeOrder);
+    }
 }

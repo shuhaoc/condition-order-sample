@@ -1,5 +1,6 @@
 package hbec.intellitrade.strategy.domain.factor;
 
+import com.google.common.base.Preconditions;
 import org.joda.time.Duration;
 import org.joda.time.LocalDateTime;
 
@@ -17,6 +18,7 @@ public class JustAfterTargetTimeFactor implements TimeFactor {
     private final LocalDateTime targetTime;
 
     public JustAfterTargetTimeFactor(LocalDateTime targetTime) {
+        Preconditions.checkNotNull(targetTime, "targetTime cannot be null");
         this.targetTime = targetTime;
     }
 

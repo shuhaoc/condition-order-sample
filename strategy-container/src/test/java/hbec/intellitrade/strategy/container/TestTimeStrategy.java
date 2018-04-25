@@ -2,9 +2,9 @@ package hbec.intellitrade.strategy.container;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.conditionorder.domain.OrderState;
+import hbec.intellitrade.conditionorder.domain.orders.time.TimeReachedCondition;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
 import hbec.intellitrade.strategy.domain.signal.Signal;
-import me.caosh.condition.domain.model.condition.TimeReachedCondition;
 import org.joda.time.LocalDateTime;
 
 /**

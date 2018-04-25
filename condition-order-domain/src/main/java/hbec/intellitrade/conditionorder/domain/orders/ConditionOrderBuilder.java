@@ -6,6 +6,8 @@ import hbec.intellitrade.conditionorder.domain.OrderState;
 import hbec.intellitrade.conditionorder.domain.TradeCustomerInfoBuilder;
 import hbec.intellitrade.conditionorder.domain.orders.price.DecoratedPriceCondition;
 import hbec.intellitrade.conditionorder.domain.orders.price.PriceOrder;
+import hbec.intellitrade.conditionorder.domain.orders.time.TimeOrder;
+import hbec.intellitrade.conditionorder.domain.orders.time.TimeReachedCondition;
 import hbec.intellitrade.conditionorder.domain.orders.turnpoint.DecoratedTurnPointCondition;
 import hbec.intellitrade.conditionorder.domain.orders.turnpoint.TurnPointOrder;
 import hbec.intellitrade.conditionorder.domain.strategyinfo.NativeStrategyInfo;
@@ -155,9 +157,14 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
                                       (BaseTradePlan) tradePlan.build(),
                                       trackedIndex.build(),
                                       monitorTimeRange.build());
-//        } else if (strategyInfo == NativeStrategyInfo.TIME) {
-//            return new TimeOrder(orderId, tradeCustomerInfo, securityInfo, (TimeReachedCondition) condition, expireTime,
-//                                 (BaseTradePlan) tradePlan, orderState);
+        } else if (strategyInfo == NativeStrategyInfo.TIME) {
+            return new TimeOrder(orderId,
+                    customer.build(),
+                    orderState,
+                    securityInfo.build(),
+                    (TimeReachedCondition) condition.build(),
+                    expireTime,
+                    (BaseTradePlan) tradePlan.build());
 //        } else if (strategyInfo == NativeStrategyInfo.GRID) {
 //            return new GridTradeOrder(orderId, tradeCustomerInfo, securityInfo, (GridCondition) condition,
 //                                      null, (DoubleDirectionTradePlan) tradePlan, orderState);

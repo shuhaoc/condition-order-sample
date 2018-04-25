@@ -11,6 +11,8 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
+
 /**
  * {@link ExplicitTradingSecurityOrder}骨架类
  *
@@ -66,4 +68,18 @@ public abstract class AbstractExplicitTradingSecurityOrder extends AbstractCondi
      * @param triggerTradingContext 触发交易上下文
      */
     protected abstract void afterEntrustCommandsExecuted(TriggerTradingContext triggerTradingContext);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
+        if (!super.equals(o)) { return false; }
+        AbstractExplicitTradingSecurityOrder that = (AbstractExplicitTradingSecurityOrder) o;
+        return Objects.equals(securityInfo, that.securityInfo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), securityInfo);
+    }
 }

@@ -1,11 +1,10 @@
-package me.caosh.condition.domain.model.condition;
+package hbec.intellitrade.conditionorder.domain.orders.time;
 
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import org.joda.time.LocalDateTime;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 /**

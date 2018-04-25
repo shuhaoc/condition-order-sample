@@ -76,12 +76,13 @@ public class BasicTriggerTradingContext implements TriggerTradingContext {
 
     @Override
     public RealTimeMarket getTradingMarket() {
+        // 缓存交易证券行情
         if (tradingMarket != null) {
             return tradingMarket;
         }
 
         MarketID tradingMarketID = conditionOrder.getSecurityInfo().getMarketID();
-        if (triggerMarket.getMarketID().equals(tradingMarketID)) {
+        if (triggerMarket != null && triggerMarket.getMarketID().equals(tradingMarketID)) {
             return triggerMarket;
         }
 
