@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 import hbec.commons.domain.intellitrade.condition.ConditionDTO;
+import hbec.commons.domain.intellitrade.condition.NewStockPurchaseConditionDTO;
 import hbec.commons.domain.intellitrade.condition.PriceConditionDTO;
 import hbec.commons.domain.intellitrade.condition.TimeReachedConditionDTO;
 import hbec.commons.domain.intellitrade.condition.TurnPointConditionDTO;
+import hbec.commons.domain.intellitrade.signal.AutoPurchaseSignalDTO;
 import hbec.commons.domain.intellitrade.signal.BsSignalDTO;
 import hbec.commons.domain.intellitrade.signal.BuySignalDTO;
 import hbec.commons.domain.intellitrade.signal.CacheSyncSignalDTO;
@@ -14,7 +16,6 @@ import hbec.commons.domain.intellitrade.signal.ExpireSignalDTO;
 import hbec.commons.domain.intellitrade.signal.SellSignalDTO;
 import hbec.commons.domain.intellitrade.signal.SignalDTO;
 import me.caosh.condition.domain.dto.order.GridConditionDTO;
-import me.caosh.condition.domain.dto.order.NewStockPurchaseConditionDTO;
 
 
 /**
@@ -37,17 +38,18 @@ public class ConditionOrderDTOGSONUtils {
         return new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(ConditionDTO.class)
-                                                                     .registerSubtype(PriceConditionDTO.class)
-                                                                     .registerSubtype(TurnPointConditionDTO.class)
+                        .registerSubtype(PriceConditionDTO.class)
+                        .registerSubtype(TurnPointConditionDTO.class)
                         .registerSubtype(TimeReachedConditionDTO.class)
-                                                                     .registerSubtype(GridConditionDTO.class)
-                                                                     .registerSubtype(NewStockPurchaseConditionDTO.class))
+                        .registerSubtype(GridConditionDTO.class)
+                        .registerSubtype(NewStockPurchaseConditionDTO.class))
                 .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(SignalDTO.class)
                         .registerSubtype(BsSignalDTO.class)
                         .registerSubtype(CacheSyncSignalDTO.class)
                         .registerSubtype(BuySignalDTO.class)
                         .registerSubtype(SellSignalDTO.class)
-                        .registerSubtype(ExpireSignalDTO.class))
+                        .registerSubtype(ExpireSignalDTO.class)
+                        .registerSubtype(AutoPurchaseSignalDTO.class))
                 .create();
     }
 

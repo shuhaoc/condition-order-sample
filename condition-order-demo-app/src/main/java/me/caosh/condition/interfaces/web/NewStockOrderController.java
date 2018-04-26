@@ -3,10 +3,9 @@ package me.caosh.condition.interfaces.web;
 import com.google.common.base.Optional;
 import hbec.intellitrade.conditionorder.domain.ConditionOrder;
 import hbec.intellitrade.conditionorder.domain.ConditionOrderRepository;
-import hbec.intellitrade.conditionorder.domain.OrderState;
 import hbec.intellitrade.conditionorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.conditionorder.domain.orders.newstock.NewStockOrder;
 import me.caosh.condition.application.order.OrderCommandService;
-import me.caosh.condition.domain.model.order.newstock.NewStockOrder;
 import me.caosh.condition.infrastructure.tunnel.impl.ConditionOrderIdGenerator;
 import me.caosh.condition.interfaces.assembler.NewStockOrderCommandAssembler;
 import me.caosh.condition.interfaces.command.NewStockOrderCreateCommand;
@@ -22,7 +21,6 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/newstock")
-@Deprecated
 public class NewStockOrderController {
 
     private final ConditionOrderIdGenerator idGenerator;
@@ -51,12 +49,11 @@ public class NewStockOrderController {
     public Long update(@Valid NewStockOrderUpdateCommand command) {
         Long orderId = command.getOrderId();
         Optional<ConditionOrder> conditionOrderOptional = conditionOrderRepository.findOne(orderId);
-        // TODO: duplicated codes
         if (!conditionOrderOptional.isPresent()) {
             return -1L;
         }
         ConditionOrder conditionOrder = conditionOrderOptional.get();
-        if (conditionOrder.getOrderState() != OrderState.ACTIVE && conditionOrder.getOrderState() != OrderState.PAUSED) {
+        if (!conditionOrder.isMonitoringState()) {
             return -2L;
         }
         NewStockOrder oldOrder = (NewStockOrder) conditionOrder;

@@ -4,6 +4,8 @@ import hbec.intellitrade.common.security.SecurityInfoBuilder;
 import hbec.intellitrade.conditionorder.domain.ConditionOrder;
 import hbec.intellitrade.conditionorder.domain.OrderState;
 import hbec.intellitrade.conditionorder.domain.TradeCustomerInfoBuilder;
+import hbec.intellitrade.conditionorder.domain.orders.newstock.NewStockOrder;
+import hbec.intellitrade.conditionorder.domain.orders.newstock.NewStockPurchaseCondition;
 import hbec.intellitrade.conditionorder.domain.orders.price.DecoratedPriceCondition;
 import hbec.intellitrade.conditionorder.domain.orders.price.PriceOrder;
 import hbec.intellitrade.conditionorder.domain.orders.time.TimeOrder;
@@ -168,12 +170,12 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
 //        } else if (strategyInfo == NativeStrategyInfo.GRID) {
 //            return new GridTradeOrder(orderId, tradeCustomerInfo, securityInfo, (GridCondition) condition,
 //                                      null, (DoubleDirectionTradePlan) tradePlan, orderState);
-//        } else if (strategyInfo == NativeStrategyInfo.NEW_STOCK) {
-//            return new NewStockOrder(orderId,
-//                                     tradeCustomerInfo,
-//                                     (NewStockPurchaseCondition) condition,
-//                                     expireTime,
-//                                     orderState);
+        } else if (strategyInfo == NativeStrategyInfo.NEW_STOCK) {
+            return new NewStockOrder(orderId,
+                    customer.build(),
+                    orderState,
+                    (NewStockPurchaseCondition) condition.build(),
+                    expireTime);
         }
         throw new IllegalArgumentException("strategyInfo=" + strategyInfo);
     }

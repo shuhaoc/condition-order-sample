@@ -4,7 +4,12 @@ import com.google.common.base.MoreObjects;
 import me.caosh.autoasm.FieldMapping;
 import org.joda.time.LocalTime;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -50,17 +55,17 @@ public class ConditionOrderDO {
     @FieldMapping(mappedProperty = "tradePlan.exchangeType")
     private Integer exchangeType;
     @FieldMapping(mappedProperty = "tradePlan.entrustStrategy")
-    private Integer entrustStrategy;
+    private Integer entrustStrategy = 0;
     @FieldMapping(mappedProperty = "tradePlan.entrustPrice")
     private BigDecimal entrustPrice;
     @FieldMapping(mappedProperty = "tradePlan.tradeNumber.entrustMethod")
-    private Integer entrustMethod;
+    private Integer entrustMethod = 0;
     @FieldMapping(mappedProperty = "tradePlan.tradeNumber.number")
     private Integer entrustNumber = 0;
     @FieldMapping(mappedProperty = "tradePlan.tradeNumber.amount")
     private BigDecimal entrustAmount = BigDecimal.ZERO;
     @FieldMapping(mappedProperty = "tradePlan.orderType")
-    private Integer orderType;
+    private Integer orderType = 0;
     @FieldMapping(mappedProperty = "condition.delayConfirm.option")
     private Integer delayConfirmOption = 0;
     @FieldMapping(mappedProperty = "condition.delayConfirm.confirmTimes")

@@ -7,6 +7,8 @@ import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.conditionorder.domain.ConditionOrder;
 import hbec.intellitrade.conditionorder.domain.OrderState;
 import hbec.intellitrade.conditionorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.conditionorder.domain.orders.newstock.NewStockOrder;
+import hbec.intellitrade.conditionorder.domain.orders.newstock.NewStockPurchaseCondition;
 import hbec.intellitrade.conditionorder.domain.orders.price.DecoratedPriceCondition;
 import hbec.intellitrade.conditionorder.domain.orders.price.PriceCondition;
 import hbec.intellitrade.conditionorder.domain.orders.price.PriceOrder;
@@ -39,6 +41,7 @@ import me.caosh.autoasm.util.DateConvertUtils;
 import me.caosh.condition.infrastructure.repository.assembler.ConditionOrderDoAssembler;
 import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;
 import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDOGSONUtils;
+import me.caosh.condition.infrastructure.tunnel.model.NewStockPurchaseConditionDO;
 import me.caosh.condition.infrastructure.tunnel.model.TimeReachedConditionDO;
 import me.caosh.condition.infrastructure.tunnel.model.TurnPointConditionDO;
 import org.joda.time.LocalDateTime;
@@ -230,6 +233,30 @@ public class ConditionOrderDoAssemblerTest {
     }
 
     @Test
+    public void testNewStockOrder() throws Exception {
+        NewStockOrder conditionOrder = new NewStockOrder(ORDER_ID,
+                new TradeCustomerInfo(USER_ID, CUSTOMER_NO),
+                OrderState.ACTIVE,
+                new NewStockPurchaseCondition(LocalTime.parse("09:30:00"), true, 1),
+                new LocalDateTime("2018-04-29T15:00:00"));
+
+        ConditionOrderDO conditionOrderDO = ConditionOrderDoAssembler.assemble(conditionOrder);
+
+        assertEquals(conditionOrderDO.getOrderId().longValue(), ORDER_ID);
+        assertEquals(conditionOrderDO.getUserId().intValue(), USER_ID);
+        assertEquals(conditionOrderDO.getCustomerNo(), CUSTOMER_NO);
+        assertEquals(conditionOrderDO.getDeleted(), Boolean.FALSE);
+        assertEquals(conditionOrderDO.getOrderState(), OrderState.ACTIVE.getValue());
+        assertEquals(conditionOrderDO.getConditionProperties(),
+                "{\"type\":\"NewStockPurchaseConditionDO\",\"purchaseTime\":\"09:30:00\",\"todayTriggered\":true,\"purchasedCount\":1}");
+        assertEquals(conditionOrderDO.getExpireTime(), LocalDateTime.parse("2018-04-29T15:00:00").toDate());
+        assertEquals(conditionOrderDO.getExchangeType(), ExchangeType.QUOTA_PURCHASE.getValue());
+
+        ConditionOrder conditionOrder1 = ConditionOrderDoAssembler.disassemble(conditionOrderDO);
+        assertEquals(conditionOrder1, conditionOrder);
+    }
+
+    @Test
     public void testTurnPointConditionDOToJson() throws Exception {
         TurnPointConditionDO condition = new TurnPointConditionDO();
         condition.setCompareOperator(0);
@@ -248,6 +275,15 @@ public class ConditionOrderDoAssemblerTest {
         TimeReachedConditionDO conditionDO = new TimeReachedConditionDO();
         conditionDO.setTargetTime(DateConvertUtils.YYYY_MM_DD_HH_MM_SS.parseLocalDateTime("2018-04-29 10:00:00")
                 .toDate());
+        System.out.println(ConditionOrderDOGSONUtils.getGSON().toJson(conditionDO));
+    }
+
+    @Test
+    public void testNewStockPurchaseConditionDOToJson() throws Exception {
+        NewStockPurchaseConditionDO conditionDO = new NewStockPurchaseConditionDO();
+        conditionDO.setPurchaseTime("09:30:00");
+        conditionDO.setTodayTriggered(true);
+        conditionDO.setPurchasedCount(1);
         System.out.println(ConditionOrderDOGSONUtils.getGSON().toJson(conditionDO));
     }
 }

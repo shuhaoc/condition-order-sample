@@ -1,5 +1,6 @@
 package me.caosh.condition.domain.dto.order;
 
+import hbec.commons.domain.intellitrade.condition.NewStockPurchaseConditionDTO;
 import hbec.commons.domain.intellitrade.condition.PriceConditionDTO;
 import hbec.commons.domain.intellitrade.condition.TimeReachedConditionDTO;
 import hbec.commons.domain.intellitrade.condition.TurnPointConditionDTO;
@@ -20,6 +21,8 @@ import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.conditionorder.domain.ConditionOrder;
 import hbec.intellitrade.conditionorder.domain.OrderState;
 import hbec.intellitrade.conditionorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.conditionorder.domain.orders.newstock.NewStockOrder;
+import hbec.intellitrade.conditionorder.domain.orders.newstock.NewStockPurchaseCondition;
 import hbec.intellitrade.conditionorder.domain.orders.price.DecoratedPriceCondition;
 import hbec.intellitrade.conditionorder.domain.orders.price.PriceCondition;
 import hbec.intellitrade.conditionorder.domain.orders.price.PriceOrder;
@@ -56,6 +59,11 @@ import static org.testng.Assert.assertEquals;
  * @date 2018/3/15
  */
 public class ConditionOrderDtoAssemblerTest {
+
+    private static final long ORDER_ID = 123L;
+    private static final int USER_ID = 34;
+    private static final String CUSTOMER_NO = "012345";
+
     @Test
     public void testPriceOrder() throws Exception {
         PriceOrder priceOrder = new PriceOrder(123L,
@@ -320,5 +328,49 @@ public class ConditionOrderDtoAssemblerTest {
         ConditionOrder disassemble = ConditionOrderAssemblers.dtoSupported()
                 .disassemble(conditionOrderDTO, ConditionOrder.class);
         assertEquals(disassemble, timeOrder);
+    }
+
+    @Test
+    public void testNewStockOrder() throws Exception {
+        NewStockOrder newStockOrder = new NewStockOrder(ORDER_ID,
+                new TradeCustomerInfo(USER_ID, CUSTOMER_NO),
+                OrderState.ACTIVE,
+                new NewStockPurchaseCondition(LocalTime.parse("09:30:00"), true, 1),
+                new LocalDateTime("2018-04-29T15:00:00"));
+
+        ConditionOrderDTO assemble = ConditionOrderAssemblers.dtoSupported()
+                .assemble(newStockOrder, ConditionOrderDTO.class);
+
+        ConditionOrderDTO conditionOrderDTO = new ConditionOrderDTO();
+        conditionOrderDTO.setOrderId(ORDER_ID);
+
+        TradeCustomerInfoDTO tradeCustomerInfoDTO = new TradeCustomerInfoDTO();
+        tradeCustomerInfoDTO.setUserId(USER_ID);
+        tradeCustomerInfoDTO.setCustomerNo(CUSTOMER_NO);
+        conditionOrderDTO.setCustomer(tradeCustomerInfoDTO);
+
+        conditionOrderDTO.setDeleted(false);
+        conditionOrderDTO.setOrderState(1);
+
+        conditionOrderDTO.setStrategyType(10);
+
+        NewStockPurchaseConditionDTO condition = new NewStockPurchaseConditionDTO();
+        condition.setPurchaseTime("09:30:00");
+        condition.setTodayTriggered(true);
+        condition.setPurchasedCount(1);
+
+        conditionOrderDTO.setCondition(condition);
+
+        conditionOrderDTO.setExpireTime("2018-04-29 15:00:00");
+
+        TradePlanDTO tradePlan = new TradePlanDTO();
+        tradePlan.setExchangeType(14);
+        conditionOrderDTO.setTradePlan(tradePlan);
+
+        assertEquals(assemble.toString(), conditionOrderDTO.toString());
+
+        ConditionOrder disassemble = ConditionOrderAssemblers.dtoSupported()
+                .disassemble(conditionOrderDTO, ConditionOrder.class);
+        assertEquals(disassemble, newStockOrder);
     }
 }

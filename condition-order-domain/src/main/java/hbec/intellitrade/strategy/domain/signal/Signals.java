@@ -14,6 +14,7 @@ public class Signals {
     private static final Sell SELL = new Sell();
     private static final Expire EXPIRE = new Expire();
     private static final CrossBaseline CROSS_BASELINE = new CrossBaseline();
+    private static final AutoPurchase AUTO_PURCHASE = new AutoPurchase();
 
     public static BS buyOrSell() {
         return BS;
@@ -41,6 +42,10 @@ public class Signals {
 
     public static CrossBaseline crossBaseline() {
         return CROSS_BASELINE;
+    }
+
+    public static AutoPurchase autoPurchase() {
+        return AUTO_PURCHASE;
     }
 
     private Signals() {

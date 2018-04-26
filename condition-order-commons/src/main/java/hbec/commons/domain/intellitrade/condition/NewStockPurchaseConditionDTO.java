@@ -1,4 +1,4 @@
-package me.caosh.condition.infrastructure.tunnel.model;
+package hbec.commons.domain.intellitrade.condition;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.conditionorder.domain.orders.newstock.NewStockPurchaseCondition;
@@ -9,7 +9,10 @@ import me.caosh.autoasm.MappedClass;
  * Created by caosh on 2017/9/3.
  */
 @MappedClass(value = NewStockPurchaseCondition.class, builderClass = NewStockPurchaseConditionBuilder.class)
-public class NewStockPurchaseConditionDO implements ConditionDO {
+public class NewStockPurchaseConditionDTO implements ConditionDTO {
+    /**
+     * HH:mm:ss
+     */
     private String purchaseTime;
     private Boolean todayTriggered;
     private Integer purchasedCount;
@@ -40,7 +43,7 @@ public class NewStockPurchaseConditionDO implements ConditionDO {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(NewStockPurchaseConditionDO.class).omitNullValues()
+        return MoreObjects.toStringHelper(NewStockPurchaseConditionDTO.class).omitNullValues()
                 .add("purchaseTime", purchaseTime)
                 .add("todayTriggered", todayTriggered)
                 .add("purchasedCount", purchasedCount)

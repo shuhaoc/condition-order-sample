@@ -45,29 +45,6 @@ public class TradePlanDTO implements Serializable {
     @NotBlank
     private String nodeInfo;
 
-    public TradePlanDTO() {
-    }
-
-    public TradePlanDTO(String stockHolderNo,
-                        Integer exchangeType,
-                        Integer entrustStrategy,
-                        BigDecimal entrustPrice,
-                        Integer entrustMethod,
-                        Integer entrustNumber,
-                        BigDecimal entrustAmount,
-                        Integer orderType,
-                        String nodeInfo) {
-        this.stockHolderNo = stockHolderNo;
-        this.exchangeType = exchangeType;
-        this.entrustStrategy = entrustStrategy;
-        this.entrustPrice = entrustPrice;
-        this.entrustMethod = entrustMethod;
-        this.entrustNumber = entrustNumber;
-        this.entrustAmount = entrustAmount;
-        this.orderType = orderType;
-        this.nodeInfo = nodeInfo;
-    }
-
     public String getStockHolderNo() {
         return stockHolderNo;
     }

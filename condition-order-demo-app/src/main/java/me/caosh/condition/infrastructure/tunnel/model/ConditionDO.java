@@ -1,7 +1,6 @@
 package me.caosh.condition.infrastructure.tunnel.model;
 
 import me.caosh.autoasm.RuntimeType;
-import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
 
 /**
  * Created by caosh on 2017/8/15.
@@ -10,8 +9,8 @@ import me.caosh.condition.domain.model.order.newstock.NewStockPurchaseCondition;
         PriceConditionDO.class,
         TurnPointConditionDO.class,
         TimeReachedConditionDO.class,
-        GridConditionDO.class,
-        NewStockPurchaseCondition.class
+//        GridConditionDO.class,
+        NewStockPurchaseConditionDO.class
 })
 public interface ConditionDO {
 }

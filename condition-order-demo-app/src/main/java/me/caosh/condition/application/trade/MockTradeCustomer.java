@@ -46,8 +46,8 @@ public class MockTradeCustomer implements TradeCustomer {
             } else {
                 throw new InsufficientPositionException("超出证券可用数量");
             }
-        } else if (mod == 2) {
-            throw new RuntimeException("获取数据超时");
+//        } else if (mod == 2) {
+//            throw new RuntimeException("获取数据超时");
         } else {
             throw new TradeException("其他错误");
         }

@@ -8,7 +8,7 @@ import com.google.common.base.MoreObjects;
 public class BS extends AbstractSignal implements TradeSignal {
     private final Boolean deviationExceeded;
 
-    public BS() {
+    BS() {
         this.deviationExceeded = null;
     }
 

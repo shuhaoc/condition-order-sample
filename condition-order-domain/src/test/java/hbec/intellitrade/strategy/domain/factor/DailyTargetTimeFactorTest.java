@@ -1,6 +1,5 @@
 package hbec.intellitrade.strategy.domain.factor;
 
-import com.google.common.base.Optional;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.testng.annotations.Test;
@@ -30,9 +29,7 @@ public class DailyTargetTimeFactorTest {
         assertTrue(factor.apply(localDate.toLocalDateTime(new LocalTime(10, 0, 0))));
 
         factor = factor.setTodayTriggered();
-        assertEquals(factor.getLastTriggerDate(), Optional.of(LocalDate.now()));
+        assertTrue(factor.isTodayTriggered());
         assertFalse(factor.apply(localDate.toLocalDateTime(new LocalTime(10, 0, 1))));
-
-        assertTrue(factor.apply(localDate.plusDays(1).toLocalDateTime(new LocalTime(10, 0, 0))));
     }
 }

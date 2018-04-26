@@ -14,7 +14,8 @@ import java.io.Serializable;
         BuySignalDTO.class,
         SellSignalDTO.class,
         ExpireSignalDTO.class,
-        CacheSyncSignalDTO.class
+        CacheSyncSignalDTO.class,
+        AutoPurchaseSignalDTO.class
 })
 public interface SignalDTO extends Serializable {
 }
