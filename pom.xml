@@ -21,7 +21,6 @@
         <module>strategy-container</module>
         <module>condition-order-demo-app</module>
         <module>condition-order-demo-monitor</module>
-        <module>condition-order-domain-old</module>
     </modules>
     <dependencyManagement>
         <dependencies>

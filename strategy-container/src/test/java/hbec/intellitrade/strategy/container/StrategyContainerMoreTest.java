@@ -5,11 +5,11 @@ import hbec.intellitrade.common.market.MarketType;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.conditionorder.domain.orders.price.PriceCondition;
 import hbec.intellitrade.conditionorder.domain.orders.turnpoint.TurnPointCondition;
+import hbec.intellitrade.mock.MockMarkets;
 import hbec.intellitrade.strategy.domain.factor.BinaryFactorType;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
-import me.caosh.condition.mock.MockMarkets;
 import org.joda.time.LocalDateTime;
 import org.testng.annotations.Test;
 

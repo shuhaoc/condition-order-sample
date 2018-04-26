@@ -1,7 +1,11 @@
 package hbec.intellitrade.mock;
 
 import com.google.common.collect.Lists;
-import hbec.intellitrade.common.market.*;
+import hbec.intellitrade.common.market.MarketID;
+import hbec.intellitrade.common.market.MarketIDBuilder;
+import hbec.intellitrade.common.market.MarketType;
+import hbec.intellitrade.common.market.RealTimeMarket;
+import hbec.intellitrade.common.market.RealTimeMarketBuilder;
 import org.joda.time.LocalDateTime;
 
 import java.math.BigDecimal;
@@ -18,13 +22,17 @@ public class MockMarkets {
         return withCurrentPrice(new BigDecimal(currentPrice));
     }
 
+    public static RealTimeMarket withCurrentPrice(MarketID marketID, BigDecimal currentPrice) {
+        return new RealTimeMarket(marketID,
+                currentPrice,
+                currentPrice.add(new BigDecimal("-0.10")),
+                makeOfferedPrices(currentPrice),
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMillis(10));
+    }
+
     public static RealTimeMarket withCurrentPrice(BigDecimal currentPrice) {
-        return new RealTimeMarket(DEFAULT_MARKET_ID,
-                                  currentPrice,
-                                  currentPrice.add(new BigDecimal("-0.10")),
-                                  makeOfferedPrices(currentPrice),
-                                  LocalDateTime.now(),
-                                  LocalDateTime.now().plusMillis(10));
+        return withCurrentPrice(DEFAULT_MARKET_ID, currentPrice);
     }
 
     private static ArrayList<BigDecimal> makeOfferedPrices(BigDecimal currentPrice) {

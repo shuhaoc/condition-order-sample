@@ -3,13 +3,14 @@ package hbec.intellitrade.strategy.container;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.MarketType;
 import hbec.intellitrade.common.market.RealTimeMarket;
+import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.conditionorder.domain.OrderState;
 import hbec.intellitrade.conditionorder.domain.orders.price.PriceCondition;
 import hbec.intellitrade.conditionorder.domain.orders.time.TimeReachedCondition;
+import hbec.intellitrade.mock.MockMarkets;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.signal.Signals;
 import hbec.intellitrade.strategy.domain.signalpayload.SignalPayload;
-import me.caosh.condition.mock.MockMarkets;
 import org.joda.time.LocalDateTime;
 import org.testng.annotations.Test;
 
@@ -70,8 +71,8 @@ public class StrategyContainerTest {
         TestPriceStrategy testPriceStrategy = new TestPriceStrategy(1, MARKET_ID, PRICE_CONDITION);
         container.add(testPriceStrategy);
 
-        RealTimeMarket realTimeMarket1 = MockMarkets.withCurrentPrice(new MarketID(MarketType.STOCK, "600012"),
-                                                                      new BigDecimal("10.99"));
+        RealTimeMarket realTimeMarket1 = MockMarkets.withCurrentPrice(new MarketID(SecurityType.STOCK, "600012"),
+                new BigDecimal("10.99"));
         assertTrue(container.onMarketTicks(Collections.singleton(realTimeMarket1)).isEmpty());
 
         RealTimeMarket realTimeMarket2 = MockMarkets.withCurrentPrice(new BigDecimal("10.00"));

@@ -57,6 +57,7 @@ public class MarketPriceTradePlan extends BaseTradePlan {
                                       ((TradeNumberDirect) tradeNumber).getNumber(),
                                       orderType);
         } else if (tradeNumber.getEntrustMethod() == EntrustMethod.AMOUNT) {
+            // 市价委托、金额下单时，使用当前价估算委托数量
             RealTimeMarket realTimeMarket = tradingMarketSupplier.getTradingMarket();
             BigDecimal currentPrice = realTimeMarket.getCurrentPrice();
             return new EntrustCommand(securityInfo,
