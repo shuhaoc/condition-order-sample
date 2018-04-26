@@ -3,6 +3,7 @@ package hbec.intellitrade.conditionorder.domain;
 import com.google.common.base.Preconditions;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.conditionorder.domain.tradeplan.SingleEntrustTradePlan;
+import hbec.intellitrade.conditionorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.conditionorder.domain.trigger.TradingMarketSupplier;
 import hbec.intellitrade.conditionorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.signal.TradeSignal;
@@ -38,6 +39,13 @@ public abstract class AbstractExplicitTradingSecurityOrder extends AbstractCondi
     public SecurityInfo getSecurityInfo() {
         return securityInfo;
     }
+
+    /**
+     * 获取交易计划
+     *
+     * @return 交易计划
+     */
+    public abstract TradePlan getTradePlan();
 
     @Override
     public void onTradeSignal(TriggerTradingContext triggerTradingContext) {

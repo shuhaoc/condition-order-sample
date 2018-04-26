@@ -1,7 +1,6 @@
 package hbec.intellitrade.conditionorder.domain;
 
 import hbec.intellitrade.conditionorder.domain.strategyinfo.StrategyInfo;
-import hbec.intellitrade.conditionorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.conditionorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.Strategy;
 import hbec.intellitrade.strategy.domain.condition.Condition;
@@ -56,13 +55,6 @@ public interface ConditionOrder extends Strategy {
      * @return 策略描述信息
      */
     StrategyInfo getStrategyInfo();
-
-    /**
-     * 获取交易计划
-     *
-     * @return 交易计划
-     */
-    TradePlan getTradePlan();
 
     /**
      * 响应交易信号

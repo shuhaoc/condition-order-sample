@@ -363,10 +363,6 @@ public class ConditionOrderDtoAssemblerTest {
 
         conditionOrderDTO.setExpireTime("2018-04-29 15:00:00");
 
-        TradePlanDTO tradePlan = new TradePlanDTO();
-        tradePlan.setExchangeType(14);
-        conditionOrderDTO.setTradePlan(tradePlan);
-
         assertEquals(assemble.toString(), conditionOrderDTO.toString());
 
         ConditionOrder disassemble = ConditionOrderAssemblers.dtoSupported()

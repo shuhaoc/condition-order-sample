@@ -10,7 +10,6 @@ import hbec.intellitrade.conditionorder.domain.OrderState;
 import hbec.intellitrade.conditionorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.conditionorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.conditionorder.domain.strategyinfo.StrategyInfo;
-import hbec.intellitrade.conditionorder.domain.tradeplan.TradePlan;
 import hbec.intellitrade.conditionorder.domain.trigger.AutoPurchaseContext;
 import hbec.intellitrade.conditionorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.TimeDrivenStrategy;
@@ -107,25 +106,6 @@ public class NewStockOrder extends AbstractConditionOrder implements TimeDrivenS
             EntrustCommand entrustCommand,
             EntrustSuccessResult entrustSuccessResult) {
         newStockPurchaseCondition.increasePurchasedCount();
-    }
-
-    @Override
-    public TradePlan getTradePlan() {
-        return AutoPurchaseTradePlan.INSTANCE;
-    }
-
-    /**
-     * 自动申购新股交易计划，仅用于DB字段占位
-     */
-    public enum AutoPurchaseTradePlan implements TradePlan {
-        /**
-         * 单例
-         */
-        INSTANCE;
-
-        public int getExchangeType() {
-            return ExchangeType.QUOTA_PURCHASE.getValue();
-        }
     }
 
     @Override

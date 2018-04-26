@@ -250,7 +250,6 @@ public class ConditionOrderDoAssemblerTest {
         assertEquals(conditionOrderDO.getConditionProperties(),
                 "{\"type\":\"NewStockPurchaseConditionDO\",\"purchaseTime\":\"09:30:00\",\"todayTriggered\":true,\"purchasedCount\":1}");
         assertEquals(conditionOrderDO.getExpireTime(), LocalDateTime.parse("2018-04-29T15:00:00").toDate());
-        assertEquals(conditionOrderDO.getExchangeType(), ExchangeType.QUOTA_PURCHASE.getValue());
 
         ConditionOrder conditionOrder1 = ConditionOrderDoAssembler.disassemble(conditionOrderDO);
         assertEquals(conditionOrder1, conditionOrder);
