@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 import hbec.commons.domain.intellitrade.condition.ConditionDTO;
+import hbec.commons.domain.intellitrade.condition.GridConditionDTO;
 import hbec.commons.domain.intellitrade.condition.NewStockPurchaseConditionDTO;
 import hbec.commons.domain.intellitrade.condition.PriceConditionDTO;
 import hbec.commons.domain.intellitrade.condition.TimeReachedConditionDTO;
@@ -15,7 +16,6 @@ import hbec.commons.domain.intellitrade.signal.CacheSyncSignalDTO;
 import hbec.commons.domain.intellitrade.signal.ExpireSignalDTO;
 import hbec.commons.domain.intellitrade.signal.SellSignalDTO;
 import hbec.commons.domain.intellitrade.signal.SignalDTO;
-import me.caosh.condition.domain.dto.order.GridConditionDTO;
 
 
 /**

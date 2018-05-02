@@ -1,7 +1,6 @@
-package me.caosh.condition.domain.dto.order;
+package hbec.commons.domain.intellitrade.condition;
 
 import com.google.common.base.MoreObjects;
-import hbec.commons.domain.intellitrade.condition.ConditionDTO;
 
 import java.math.BigDecimal;
 

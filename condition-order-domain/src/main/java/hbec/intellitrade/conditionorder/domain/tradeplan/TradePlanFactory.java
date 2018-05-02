@@ -18,7 +18,7 @@ public class TradePlanFactory {
         return INSTANCE;
     }
 
-    public BaseTradePlan create(ExchangeType exchangeType,
+    public BaseTradePlan createSingle(ExchangeType exchangeType,
             EntrustStrategy entrustStrategy,
             BigDecimal entrustPrice,
             TradeNumber tradeNumber,

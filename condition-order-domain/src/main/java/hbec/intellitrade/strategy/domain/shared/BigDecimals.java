@@ -15,6 +15,10 @@ public class BigDecimals {
         return a.compareTo(b) <= 0 ? a : b;
     }
 
+    public static boolean nullOrZero(BigDecimal x) {
+        return x == null || x.compareTo(BigDecimal.ZERO) == 0;
+    }
+
     private BigDecimals() {
     }
 

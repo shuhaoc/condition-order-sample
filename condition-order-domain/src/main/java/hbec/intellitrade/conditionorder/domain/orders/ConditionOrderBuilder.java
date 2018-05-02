@@ -4,6 +4,8 @@ import hbec.intellitrade.common.security.SecurityInfoBuilder;
 import hbec.intellitrade.conditionorder.domain.ConditionOrder;
 import hbec.intellitrade.conditionorder.domain.OrderState;
 import hbec.intellitrade.conditionorder.domain.TradeCustomerInfoBuilder;
+import hbec.intellitrade.conditionorder.domain.orders.grid.DecoratedGridCondition;
+import hbec.intellitrade.conditionorder.domain.orders.grid.GridTradeOrder;
 import hbec.intellitrade.conditionorder.domain.orders.newstock.NewStockOrder;
 import hbec.intellitrade.conditionorder.domain.orders.newstock.NewStockPurchaseCondition;
 import hbec.intellitrade.conditionorder.domain.orders.price.DecoratedPriceCondition;
@@ -15,6 +17,7 @@ import hbec.intellitrade.conditionorder.domain.orders.turnpoint.TurnPointOrder;
 import hbec.intellitrade.conditionorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.conditionorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.conditionorder.domain.trackindex.TrackedIndexInfoBuilder;
+import hbec.intellitrade.conditionorder.domain.tradeplan.BaseBidirectionalTradePlan;
 import hbec.intellitrade.conditionorder.domain.tradeplan.BaseTradePlan;
 import hbec.intellitrade.conditionorder.domain.tradeplan.TradePlanBuilder;
 import hbec.intellitrade.strategy.domain.condition.Condition;
@@ -141,24 +144,24 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
         StrategyInfo strategyInfo = this.strategyInfo.getStrategyType();
         if (strategyInfo == NativeStrategyInfo.PRICE) {
             return new PriceOrder(orderId,
-                                  customer.build(),
-                                  orderState,
-                                  securityInfo.build(),
-                                  (DecoratedPriceCondition) condition.build(),
-                                  expireTime,
-                                  (BaseTradePlan) tradePlan.build(),
-                                  trackedIndex.build(),
-                                  monitorTimeRange.build());
+                    customer.build(),
+                    orderState,
+                    securityInfo.build(),
+                    (DecoratedPriceCondition) condition.build(),
+                    expireTime,
+                    (BaseTradePlan) tradePlan.build(),
+                    trackedIndex.build(),
+                    monitorTimeRange.build());
         } else if (strategyInfo == NativeStrategyInfo.TURN_POINT) {
             return new TurnPointOrder(orderId,
-                                      customer.build(),
-                                      orderState,
-                                      securityInfo.build(),
-                                      (DecoratedTurnPointCondition) condition.build(),
-                                      expireTime,
-                                      (BaseTradePlan) tradePlan.build(),
-                                      trackedIndex.build(),
-                                      monitorTimeRange.build());
+                    customer.build(),
+                    orderState,
+                    securityInfo.build(),
+                    (DecoratedTurnPointCondition) condition.build(),
+                    expireTime,
+                    (BaseTradePlan) tradePlan.build(),
+                    trackedIndex.build(),
+                    monitorTimeRange.build());
         } else if (strategyInfo == NativeStrategyInfo.TIME) {
             return new TimeOrder(orderId,
                     customer.build(),
@@ -167,9 +170,15 @@ public class ConditionOrderBuilder implements ConvertibleBuilder<ConditionOrder>
                     (TimeReachedCondition) condition.build(),
                     expireTime,
                     (BaseTradePlan) tradePlan.build());
-//        } else if (strategyInfo == NativeStrategyInfo.GRID) {
-//            return new GridTradeOrder(orderId, tradeCustomerInfo, securityInfo, (GridCondition) condition,
-//                                      null, (DoubleDirectionTradePlan) tradePlan, orderState);
+        } else if (strategyInfo == NativeStrategyInfo.GRID) {
+            return new GridTradeOrder(orderId,
+                    customer.build(),
+                    orderState,
+                    securityInfo.build(),
+                    (DecoratedGridCondition) condition.build(),
+                    expireTime,
+                    (BaseBidirectionalTradePlan) tradePlan.build(),
+                    monitorTimeRange.build());
         } else if (strategyInfo == NativeStrategyInfo.NEW_STOCK) {
             return new NewStockOrder(orderId,
                     customer.build(),

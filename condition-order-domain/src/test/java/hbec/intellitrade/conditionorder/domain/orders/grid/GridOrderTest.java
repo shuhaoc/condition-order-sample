@@ -20,6 +20,7 @@ import hbec.intellitrade.strategy.domain.factor.CompareOperator;
 import hbec.intellitrade.strategy.domain.factor.PercentBinaryTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.signal.Signal;
 import hbec.intellitrade.strategy.domain.signal.Signals;
+import hbec.intellitrade.strategy.domain.timerange.NoneMonitorTimeRange;
 import hbec.intellitrade.trade.domain.EntrustOrderWriter;
 import hbec.intellitrade.trade.domain.TradeCustomer;
 import org.mockito.Mock;
@@ -73,8 +74,8 @@ public class GridOrderTest {
                 new TradeNumberByAmount(new BigDecimal("4500")),
                 EntrustStrategy.CURRENT_PRICE,
                 EntrustStrategy.CURRENT_PRICE);
-        GridTradeOrder gridTradeOrder = new GridTradeOrder(123L, tradeCustomerInfo, pfyh, gridCondition,
-                null, tradePlan, OrderState.ACTIVE);
+        GridTradeOrder gridTradeOrder = new GridTradeOrder(123L, tradeCustomerInfo,
+                OrderState.ACTIVE, pfyh, gridCondition, null, tradePlan, NoneMonitorTimeRange.NONE);
 
         assertEquals(gridTradeOrder.getCondition().onMarketTick(MockMarkets.withCurrentPrice(new BigDecimal("10.00"))),
                 Signals.none());
