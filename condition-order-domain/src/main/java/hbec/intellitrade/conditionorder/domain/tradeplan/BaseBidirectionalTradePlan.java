@@ -15,26 +15,12 @@ import java.util.Objects;
  * @author caosh/caoshuhao@touker.com
  * @date 2018/5/2
  */
-public abstract class BaseBidirectionalTradePlan implements SingleEntrustTradePlan {
+public abstract class BaseBidirectionalTradePlan implements BidirectionalTradePlan {
     private final TradeNumber tradeNumber;
 
-    protected BaseBidirectionalTradePlan(TradeNumber tradeNumber) {
+    BaseBidirectionalTradePlan(TradeNumber tradeNumber) {
         this.tradeNumber = tradeNumber;
     }
-
-    /**
-     * 获取买入计划
-     *
-     * @return 买入计划
-     */
-    public abstract SingleEntrustTradePlan getBuyPlan();
-
-    /**
-     * 获取卖出计划
-     *
-     * @return 卖出计划
-     */
-    public abstract SingleEntrustTradePlan getSellPlan();
 
     @Override
     public EntrustCommand createEntrustCommand(TradeSignal tradeSignal,

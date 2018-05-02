@@ -4,12 +4,13 @@ import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.security.SecurityInfo;
 import hbec.intellitrade.conditionorder.domain.AbstractMarketConditionOrder;
+import hbec.intellitrade.conditionorder.domain.BidirectionalConditionOrder;
 import hbec.intellitrade.conditionorder.domain.OrderState;
 import hbec.intellitrade.conditionorder.domain.TradeCustomerInfo;
 import hbec.intellitrade.conditionorder.domain.strategyinfo.NativeStrategyInfo;
 import hbec.intellitrade.conditionorder.domain.strategyinfo.StrategyInfo;
 import hbec.intellitrade.conditionorder.domain.tradeplan.BaseBidirectionalTradePlan;
-import hbec.intellitrade.conditionorder.domain.tradeplan.TradePlan;
+import hbec.intellitrade.conditionorder.domain.tradeplan.BidirectionalTradePlan;
 import hbec.intellitrade.conditionorder.domain.trigger.TriggerTradingContext;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRange;
 import org.joda.time.LocalDateTime;
@@ -24,7 +25,7 @@ import java.util.Objects;
  * @author caosh/caoshuhao@touker.com
  * @date 2017/8/23
  */
-public class GridTradeOrder extends AbstractMarketConditionOrder {
+public class GridTradeOrder extends AbstractMarketConditionOrder implements BidirectionalConditionOrder {
     private static final Logger logger = LoggerFactory.getLogger(GridTradeOrder.class);
 
     private final DecoratedGridCondition gridCondition;
@@ -61,7 +62,7 @@ public class GridTradeOrder extends AbstractMarketConditionOrder {
     }
 
     @Override
-    public TradePlan getTradePlan() {
+    public BidirectionalTradePlan getTradePlan() {
         return tradePlan;
     }
 
