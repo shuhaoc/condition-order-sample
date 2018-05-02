@@ -1,5 +1,6 @@
 package hbec.intellitrade.conditionorder.domain.tradeplan;
 
+import com.google.common.base.MoreObjects;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import hbec.intellitrade.trade.domain.OrderType;
 import me.caosh.autoasm.ConvertibleBuilder;
@@ -63,7 +64,7 @@ public class TradePlanBuilder implements ConvertibleBuilder<TradePlan> {
                     orderType);
         } else {
             return TradePlanFactory.getInstance().createBidirectional(tradeNumber.build(),
-                    buyStrategy, sellStrategy, orderType);
+                    MoreObjects.firstNonNull(buyStrategy, entrustStrategy), sellStrategy, orderType);
         }
     }
 

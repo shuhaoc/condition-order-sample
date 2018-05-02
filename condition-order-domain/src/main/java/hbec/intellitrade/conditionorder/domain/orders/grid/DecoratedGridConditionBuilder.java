@@ -46,8 +46,16 @@ public class DecoratedGridConditionBuilder implements ConvertibleBuilder<Decorat
         this.useGuaranteedPrice = useGuaranteedPrice;
     }
 
+    public DelayConfirmBuilder getDelayConfirm() {
+        return delayConfirm;
+    }
+
     public void setDelayConfirm(DelayConfirmBuilder delayConfirm) {
         this.delayConfirm = delayConfirm;
+    }
+
+    public DeviationCtrlBuilder getDeviationCtrl() {
+        return deviationCtrl;
     }
 
     public void setDeviationCtrl(DeviationCtrlBuilder deviationCtrl) {
