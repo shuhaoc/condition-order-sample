@@ -7,6 +7,9 @@ import hbec.intellitrade.common.security.SecurityType;
 import hbec.intellitrade.conditionorder.domain.ConditionOrder;
 import hbec.intellitrade.conditionorder.domain.OrderState;
 import hbec.intellitrade.conditionorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.conditionorder.domain.orders.grid.DecoratedGridCondition;
+import hbec.intellitrade.conditionorder.domain.orders.grid.GridTradeOrder;
+import hbec.intellitrade.conditionorder.domain.orders.grid.InflexionSubCondition;
 import hbec.intellitrade.conditionorder.domain.orders.newstock.NewStockOrder;
 import hbec.intellitrade.conditionorder.domain.orders.newstock.NewStockPurchaseCondition;
 import hbec.intellitrade.conditionorder.domain.orders.price.DecoratedPriceCondition;
@@ -22,6 +25,7 @@ import hbec.intellitrade.conditionorder.domain.trackindex.TrackIndexOption;
 import hbec.intellitrade.conditionorder.domain.trackindex.TrackedIndexInfo;
 import hbec.intellitrade.conditionorder.domain.tradeplan.EntrustMethod;
 import hbec.intellitrade.conditionorder.domain.tradeplan.EntrustStrategy;
+import hbec.intellitrade.conditionorder.domain.tradeplan.OfferedPriceBidirectionalTradePlan;
 import hbec.intellitrade.conditionorder.domain.tradeplan.OfferedPriceTradePlan;
 import hbec.intellitrade.conditionorder.domain.tradeplan.TradeNumberByAmount;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirmInfo;
@@ -30,6 +34,7 @@ import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlInfo;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrlOption;
 import hbec.intellitrade.strategy.domain.factor.BinaryFactorType;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
+import hbec.intellitrade.strategy.domain.factor.PercentBinaryTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.shared.Week;
 import hbec.intellitrade.strategy.domain.timerange.LocalTimeRange;
 import hbec.intellitrade.strategy.domain.timerange.MonitorTimeRangeOption;
@@ -41,6 +46,7 @@ import me.caosh.autoasm.util.DateConvertUtils;
 import me.caosh.condition.infrastructure.repository.assembler.ConditionOrderDoAssembler;
 import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDO;
 import me.caosh.condition.infrastructure.tunnel.model.ConditionOrderDOGSONUtils;
+import me.caosh.condition.infrastructure.tunnel.model.GridConditionDO;
 import me.caosh.condition.infrastructure.tunnel.model.NewStockPurchaseConditionDO;
 import me.caosh.condition.infrastructure.tunnel.model.TimeReachedConditionDO;
 import me.caosh.condition.infrastructure.tunnel.model.TurnPointConditionDO;
@@ -256,6 +262,76 @@ public class ConditionOrderDoAssemblerTest {
     }
 
     @Test
+    public void testGridTradeOrder() throws Exception {
+        BigDecimal basePrice = new BigDecimal("10.00");
+        GridTradeOrder conditionOrder = new GridTradeOrder(ORDER_ID,
+                new TradeCustomerInfo(USER_ID, CUSTOMER_NO),
+                OrderState.ACTIVE,
+                new SecurityInfo(SecurityType.STOCK,
+                        "600000",
+                        SecurityExchange.SH,
+                        "浦发银行"),
+                new DecoratedGridCondition(basePrice,
+                        BinaryFactorType.PERCENT,
+                        new InflexionSubCondition(new PercentBinaryTargetPriceFactor(CompareOperator.LE,
+                                new BigDecimal("-2.00")),
+                                new PercentBinaryTargetPriceFactor(CompareOperator.GE, new BigDecimal("0.75")),
+                                basePrice,
+                                true),
+                        new InflexionSubCondition(new PercentBinaryTargetPriceFactor(CompareOperator.GE,
+                                new BigDecimal("1.00")),
+                                new PercentBinaryTargetPriceFactor(CompareOperator.LE, new BigDecimal("-0.50")),
+                                basePrice,
+                                true),
+                        true,
+                        new DelayConfirmInfo(DelayConfirmOption.ACCUMULATE, 3),
+                        new DeviationCtrlInfo(new BigDecimal("1.00")),
+                        1,
+                        2),
+                LocalDateTime.parse("2018-03-12T15:00:00"),
+                new OfferedPriceBidirectionalTradePlan(new TradeNumberByAmount(new BigDecimal("10000.00")),
+                        EntrustStrategy.SELL3, EntrustStrategy.BUY3),
+                new WeekTimeRange(new WeekRange(Week.TUE, Week.THU),
+                        new LocalTimeRange(LocalTime.parse("10:00:00"), LocalTime.parse("14:00:00"))));
+
+        ConditionOrderDO conditionOrderDO = ConditionOrderDoAssembler.assemble(conditionOrder);
+
+        assertEquals(conditionOrderDO.getOrderId().longValue(), ORDER_ID);
+        assertEquals(conditionOrderDO.getUserId().intValue(), USER_ID);
+        assertEquals(conditionOrderDO.getCustomerNo(), CUSTOMER_NO);
+        assertEquals(conditionOrderDO.getDeleted(), Boolean.FALSE);
+        assertEquals(conditionOrderDO.getOrderState(), OrderState.ACTIVE.getValue());
+        assertEquals(conditionOrderDO.getSecurityType(), SecurityType.STOCK.getValue());
+        assertEquals(conditionOrderDO.getSecurityCode(), SECURITY_CODE);
+        assertEquals(conditionOrderDO.getSecurityExchange(), SecurityExchange.SH.name());
+        assertEquals(conditionOrderDO.getSecurityName(), SECURITY_NAME);
+        assertEquals(conditionOrderDO.getStrategyType().intValue(), NativeStrategyInfo.GRID.getStrategyType());
+        assertEquals(conditionOrderDO.getTrackedIndexOption(), TrackIndexOption.DISABLED.getValue());
+        assertEquals(conditionOrderDO.getConditionProperties(),
+                "{\"type\":\"GridConditionDO\",\"basePrice\":10.00,\"binaryFactorType\":0,\"increasePercent\":1.00,\"fallPercent\":-0.50,\"decreasePercent\":-2.00,\"reboundPercent\":0.75,\"useGuaranteedPrice\":true}");
+        assertEquals(conditionOrderDO.getExpireTime(), LocalDateTime.parse("2018-03-12T15:00:00").toDate());
+        assertNull(conditionOrderDO.getExchangeType());
+        assertEquals(conditionOrderDO.getEntrustStrategy(), EntrustStrategy.BUY3.getValue());
+//        assertEquals(conditionOrderDO.get(), EntrustStrategy.BUY3.getValue());
+        assertNull(conditionOrderDO.getEntrustPrice());
+        assertEquals(conditionOrderDO.getEntrustMethod(), EntrustMethod.AMOUNT.getValue());
+        assertEquals(conditionOrderDO.getEntrustAmount(), new BigDecimal("10000.00"));
+        assertEquals(conditionOrderDO.getOrderType(), OrderType.LIMITED.getValue());
+        assertEquals(conditionOrderDO.getDelayConfirmOption(), DelayConfirmOption.ACCUMULATE.getValue());
+        assertEquals(conditionOrderDO.getDelayConfirmTimes().intValue(), 3);
+        assertEquals(conditionOrderDO.getMonitorTimeRangeOption(), MonitorTimeRangeOption.ENABLED.getValue());
+        assertEquals(conditionOrderDO.getBeginWeek(), Week.TUE.getValue());
+        assertEquals(conditionOrderDO.getEndWeek(), Week.THU.getValue());
+        assertEquals(conditionOrderDO.getBeginTime(), LocalTime.parse("10:00:00").toDateTimeToday().toDate());
+        assertEquals(conditionOrderDO.getEndTime(), LocalTime.parse("10:30:00").toDateTimeToday().toDate());
+        assertEquals(conditionOrderDO.getDeviationCtrlOption(), DeviationCtrlOption.ENABLED.getValue());
+        assertEquals(conditionOrderDO.getDeviationLimitPercent(), new BigDecimal("1.00"));
+
+        ConditionOrder conditionOrder1 = ConditionOrderDoAssembler.disassemble(conditionOrderDO);
+        assertEquals(conditionOrder1, conditionOrder);
+    }
+
+    @Test
     public void testTurnPointConditionDOToJson() throws Exception {
         TurnPointConditionDO condition = new TurnPointConditionDO();
         condition.setCompareOperator(0);
@@ -283,6 +359,19 @@ public class ConditionOrderDoAssemblerTest {
         conditionDO.setPurchaseTime("09:30:00");
         conditionDO.setTodayTriggered(true);
         conditionDO.setPurchasedCount(1);
+        System.out.println(ConditionOrderDOGSONUtils.getGSON().toJson(conditionDO));
+    }
+
+    @Test
+    public void testGridConditionDOToJson() throws Exception {
+        GridConditionDO conditionDO = new GridConditionDO();
+        conditionDO.setBasePrice(new BigDecimal("10.00"));
+        conditionDO.setBinaryFactorType(0);
+        conditionDO.setIncreasePercent(new BigDecimal("1.00"));
+        conditionDO.setFallPercent(new BigDecimal("-0.50"));
+        conditionDO.setDecreasePercent(new BigDecimal("-2.00"));
+        conditionDO.setReboundPercent(new BigDecimal("0.75"));
+        conditionDO.setUseGuaranteedPrice(true);
         System.out.println(ConditionOrderDOGSONUtils.getGSON().toJson(conditionDO));
     }
 }
