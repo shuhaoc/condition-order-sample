@@ -1,32 +1,52 @@
 package hbec.commons.domain.intellitrade.condition;
 
 import com.google.common.base.MoreObjects;
+import hbec.intellitrade.conditionorder.domain.orders.grid.DecoratedGridCondition;
+import hbec.intellitrade.conditionorder.domain.orders.grid.DecoratedGridConditionBuilder;
+import me.caosh.autoasm.FieldMapping;
+import me.caosh.autoasm.MappedClass;
 
 import java.math.BigDecimal;
 
 /**
  * Created by caosh on 2017/8/26.
  */
+@MappedClass(value = DecoratedGridCondition.class, builderClass = DecoratedGridConditionBuilder.class)
 public class GridConditionDTO implements ConditionDTO {
+    private static final long serialVersionUID = 1L;
 
-    private BigDecimal gridLength;
     private BigDecimal basePrice;
 
-    public GridConditionDTO() {
-    }
+    private Integer binaryFactorType;
 
-    public GridConditionDTO(BigDecimal gridLength, BigDecimal basePrice) {
-        this.gridLength = gridLength;
-        this.basePrice = basePrice;
-    }
+    @FieldMapping(mappedProperty = "sellCondition.mainFactor.percent")
+    private BigDecimal increasePercent;
 
-    public BigDecimal getGridLength() {
-        return gridLength;
-    }
+    @FieldMapping(mappedProperty = "sellCondition.turnBackFactor.percent")
+    private BigDecimal fallPercent;
 
-    public void setGridLength(BigDecimal gridLength) {
-        this.gridLength = gridLength;
-    }
+    @FieldMapping(mappedProperty = "sellCondition.mainFactor.increment")
+    private BigDecimal increaseIncrement;
+
+    @FieldMapping(mappedProperty = "sellCondition.turnBackFactor.increment")
+    private BigDecimal fallIncrement;
+
+    @FieldMapping(mappedProperty = "buyCondition.mainFactor.percent")
+    private BigDecimal decreasePercent;
+
+    @FieldMapping(mappedProperty = "buyCondition.turnBackFactor.percent")
+    private BigDecimal reboundPercent;
+
+    @FieldMapping(mappedProperty = "buyCondition.mainFactor.increment")
+    private BigDecimal decreaseIncrement;
+
+    @FieldMapping(mappedProperty = "buyCondition.turnBackFactor.increment")
+    private BigDecimal reboundIncrement;
+
+    private Boolean useGuaranteedPrice;
+
+    private Integer buyDelayConfirmedCount;
+    private Integer sellDelayConfirmedCount;
 
     public BigDecimal getBasePrice() {
         return basePrice;
@@ -36,11 +56,118 @@ public class GridConditionDTO implements ConditionDTO {
         this.basePrice = basePrice;
     }
 
+    public Integer getBinaryFactorType() {
+        return binaryFactorType;
+    }
+
+    public void setBinaryFactorType(Integer binaryFactorType) {
+        this.binaryFactorType = binaryFactorType;
+    }
+
+    public BigDecimal getIncreasePercent() {
+        return increasePercent;
+    }
+
+    public void setIncreasePercent(BigDecimal increasePercent) {
+        this.increasePercent = increasePercent;
+    }
+
+    public BigDecimal getFallPercent() {
+        return fallPercent;
+    }
+
+    public void setFallPercent(BigDecimal fallPercent) {
+        this.fallPercent = fallPercent;
+    }
+
+    public BigDecimal getIncreaseIncrement() {
+        return increaseIncrement;
+    }
+
+    public void setIncreaseIncrement(BigDecimal increaseIncrement) {
+        this.increaseIncrement = increaseIncrement;
+    }
+
+    public BigDecimal getFallIncrement() {
+        return fallIncrement;
+    }
+
+    public void setFallIncrement(BigDecimal fallIncrement) {
+        this.fallIncrement = fallIncrement;
+    }
+
+    public BigDecimal getDecreasePercent() {
+        return decreasePercent;
+    }
+
+    public void setDecreasePercent(BigDecimal decreasePercent) {
+        this.decreasePercent = decreasePercent;
+    }
+
+    public BigDecimal getReboundPercent() {
+        return reboundPercent;
+    }
+
+    public void setReboundPercent(BigDecimal reboundPercent) {
+        this.reboundPercent = reboundPercent;
+    }
+
+    public BigDecimal getDecreaseIncrement() {
+        return decreaseIncrement;
+    }
+
+    public void setDecreaseIncrement(BigDecimal decreaseIncrement) {
+        this.decreaseIncrement = decreaseIncrement;
+    }
+
+    public BigDecimal getReboundIncrement() {
+        return reboundIncrement;
+    }
+
+    public void setReboundIncrement(BigDecimal reboundIncrement) {
+        this.reboundIncrement = reboundIncrement;
+    }
+
+    public Boolean getUseGuaranteedPrice() {
+        return useGuaranteedPrice;
+    }
+
+    public void setUseGuaranteedPrice(Boolean useGuaranteedPrice) {
+        this.useGuaranteedPrice = useGuaranteedPrice;
+    }
+
+    public Integer getBuyDelayConfirmedCount() {
+        return buyDelayConfirmedCount;
+    }
+
+    public void setBuyDelayConfirmedCount(Integer buyDelayConfirmedCount) {
+        this.buyDelayConfirmedCount = buyDelayConfirmedCount;
+    }
+
+    public Integer getSellDelayConfirmedCount() {
+        return sellDelayConfirmedCount;
+    }
+
+    public void setSellDelayConfirmedCount(Integer sellDelayConfirmedCount) {
+        this.sellDelayConfirmedCount = sellDelayConfirmedCount;
+    }
+
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("gridLength", gridLength)
+        return MoreObjects.toStringHelper(GridConditionDTO.class).omitNullValues()
                 .add("basePrice", basePrice)
+                .add("binaryFactorType", binaryFactorType)
+                .add("increasePercent", increasePercent)
+                .add("fallPercent", fallPercent)
+                .add("increaseIncrement", increaseIncrement)
+                .add("fallIncrement", fallIncrement)
+                .add("decreasePercent", decreasePercent)
+                .add("reboundPercent", reboundPercent)
+                .add("decreaseIncrement", decreaseIncrement)
+                .add("reboundIncrement", reboundIncrement)
+                .add("useGuaranteedPrice", useGuaranteedPrice)
+                .add("buyDelayConfirmedCount", buyDelayConfirmedCount)
+                .add("sellDelayConfirmedCount", sellDelayConfirmedCount)
                 .toString();
     }
 }

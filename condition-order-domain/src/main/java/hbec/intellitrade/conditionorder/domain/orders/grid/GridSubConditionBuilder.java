@@ -13,42 +13,57 @@ import java.math.BigDecimal;
  * @date 2018/5/2
  */
 public class GridSubConditionBuilder {
-    private BigDecimal breakPercent;
-    private BigDecimal turnBackPercent;
-    private BigDecimal breakIncrement;
-    private BigDecimal turnBackIncrement;
+    private BinaryPriceFactorBuilder mainFactor = new BinaryPriceFactorBuilder();
+    private BinaryPriceFactorBuilder turnBackFactor = new BinaryPriceFactorBuilder();
 
-    public void setBreakPercent(BigDecimal breakPercent) {
-        this.breakPercent = breakPercent;
+    public BinaryPriceFactorBuilder getMainFactor() {
+        return mainFactor;
     }
 
-    public void setTurnBackPercent(BigDecimal turnBackPercent) {
-        this.turnBackPercent = turnBackPercent;
+    public BinaryPriceFactorBuilder getTurnBackFactor() {
+        return turnBackFactor;
     }
 
-    public void setBreakIncrement(BigDecimal breakIncrement) {
-        this.breakIncrement = breakIncrement;
-    }
+    public static class BinaryPriceFactorBuilder {
+        private BigDecimal percent;
+        private BigDecimal increment;
 
-    public void setTurnBackIncrement(BigDecimal turnBackIncrement) {
-        this.turnBackIncrement = turnBackIncrement;
+        public boolean isValid() {
+            return !BigDecimals.nullOrZero(percent) || !BigDecimals.nullOrZero(increment);
+        }
+
+        public BigDecimal getPercent() {
+            return percent;
+        }
+
+        public void setPercent(BigDecimal percent) {
+            this.percent = percent;
+        }
+
+        public BigDecimal getIncrement() {
+            return increment;
+        }
+
+        public void setIncrement(BigDecimal increment) {
+            this.increment = increment;
+        }
     }
 
     public GridSubCondition build(BigDecimal basePrice,
             CompareOperator compareOperator,
             BinaryFactorType binaryFactorType,
             boolean useGuaranteedPrice) {
-        BinaryTargetPriceFactor mainFactor = BinaryTargetPriceFactorFactory.INSTANCE.create(compareOperator,
+        BinaryTargetPriceFactor theMainFactor = BinaryTargetPriceFactorFactory.INSTANCE.create(compareOperator,
                 binaryFactorType,
-                breakPercent,
-                breakIncrement);
-        if (!BigDecimals.nullOrZero(turnBackPercent) || !BigDecimals.nullOrZero(turnBackIncrement)) {
-            BinaryTargetPriceFactor turnBackFactor = BinaryTargetPriceFactorFactory.INSTANCE.create(compareOperator.reverse(),
+                mainFactor.getPercent(),
+                mainFactor.getIncrement());
+        if (turnBackFactor.isValid()) {
+            BinaryTargetPriceFactor theTurnBackFactor = BinaryTargetPriceFactorFactory.INSTANCE.create(compareOperator.reverse(),
                     binaryFactorType,
-                    turnBackPercent,
-                    turnBackIncrement);
-            return new InflexionSubCondition(mainFactor, turnBackFactor, basePrice, useGuaranteedPrice);
+                    turnBackFactor.getPercent(),
+                    turnBackFactor.getIncrement());
+            return new InflexionSubCondition(theMainFactor, theTurnBackFactor, basePrice, useGuaranteedPrice);
         }
-        return new SimpleSubCondition(mainFactor, basePrice);
+        return new SimpleSubCondition(theMainFactor, basePrice);
     }
 }

@@ -13,7 +13,8 @@ import java.io.Serializable;
         PriceConditionDTO.class,
         TimeReachedConditionDTO.class,
         TurnPointConditionDTO.class,
-        NewStockPurchaseConditionDTO.class
+        NewStockPurchaseConditionDTO.class,
+        GridConditionDTO.class
 })
 public interface ConditionDTO extends Serializable {
 }

@@ -23,6 +23,9 @@ public class DecoratedGridConditionBuilder implements ConvertibleBuilder<Decorat
     private DelayConfirmBuilder delayConfirm = new DelayConfirmBuilder();
     private DeviationCtrlBuilder deviationCtrl = new DeviationCtrlBuilder();
 
+    private int buyDelayConfirmedCount;
+    private int sellDelayConfirmedCount;
+
     public void setBasePrice(BigDecimal basePrice) {
         this.basePrice = basePrice;
     }
@@ -51,6 +54,14 @@ public class DecoratedGridConditionBuilder implements ConvertibleBuilder<Decorat
         this.deviationCtrl = deviationCtrl;
     }
 
+    public void setBuyDelayConfirmedCount(int buyDelayConfirmedCount) {
+        this.buyDelayConfirmedCount = buyDelayConfirmedCount;
+    }
+
+    public void setSellDelayConfirmedCount(int sellDelayConfirmedCount) {
+        this.sellDelayConfirmedCount = sellDelayConfirmedCount;
+    }
+
     @Override
     public DecoratedGridCondition build() {
         return new DecoratedGridCondition(basePrice,
@@ -60,7 +71,7 @@ public class DecoratedGridConditionBuilder implements ConvertibleBuilder<Decorat
                 useGuaranteedPrice,
                 delayConfirm.build(),
                 deviationCtrl.build(),
-                0,
-                0);
+                buyDelayConfirmedCount,
+                sellDelayConfirmedCount);
     }
 }

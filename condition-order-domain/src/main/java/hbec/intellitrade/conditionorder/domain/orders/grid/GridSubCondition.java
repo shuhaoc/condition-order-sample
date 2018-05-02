@@ -1,6 +1,7 @@
 package hbec.intellitrade.conditionorder.domain.orders.grid;
 
 import hbec.intellitrade.strategy.domain.condition.market.PredictableMarketCondition;
+import hbec.intellitrade.strategy.domain.factor.BinaryTargetPriceFactor;
 
 import java.math.BigDecimal;
 
@@ -18,4 +19,18 @@ public interface GridSubCondition extends PredictableMarketCondition {
      * @return 变更基准价后的条件对象
      */
     GridSubCondition changeBasePrice(BigDecimal basePrice);
+
+    /**
+     * 获取主因子
+     *
+     * @return 主因子
+     */
+    BinaryTargetPriceFactor getMainFactor();
+
+    /**
+     * 获取折返因子
+     *
+     * @return 折返因子，可能为空
+     */
+    BinaryTargetPriceFactor getTurnBackFactor();
 }

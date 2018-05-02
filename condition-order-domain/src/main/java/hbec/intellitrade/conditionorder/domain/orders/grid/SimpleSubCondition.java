@@ -34,8 +34,14 @@ public class SimpleSubCondition extends AbstractMarketCondition implements GridS
         return targetPriceFactor;
     }
 
-    public BinaryTargetPriceFactor getBinaryTargetPriceFactor() {
+    @Override
+    public BinaryTargetPriceFactor getMainFactor() {
         return binaryTargetPriceFactor;
+    }
+
+    @Override
+    public BinaryTargetPriceFactor getTurnBackFactor() {
+        return null;
     }
 
     @Override

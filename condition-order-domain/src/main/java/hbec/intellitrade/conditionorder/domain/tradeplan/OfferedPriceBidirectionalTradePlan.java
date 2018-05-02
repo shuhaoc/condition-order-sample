@@ -30,7 +30,7 @@ public class OfferedPriceBidirectionalTradePlan extends BaseBidirectionalTradePl
         this.sellStrategy = sellStrategy;
     }
 
-    public EntrustStrategy getEntrustStrategy() {
+    public EntrustStrategy getBuyStrategy() {
         return buyStrategy;
     }
 

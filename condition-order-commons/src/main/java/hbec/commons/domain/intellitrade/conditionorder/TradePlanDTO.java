@@ -45,6 +45,11 @@ public class TradePlanDTO implements Serializable {
     @NotBlank
     private String nodeInfo;
 
+    // -------------------------- bidirectional only --------------------------
+
+    private Integer buyStrategy;
+    private Integer sellStrategy;
+
     public String getStockHolderNo() {
         return stockHolderNo;
     }
@@ -117,18 +122,36 @@ public class TradePlanDTO implements Serializable {
         this.nodeInfo = nodeInfo;
     }
 
+    public Integer getBuyStrategy() {
+        return buyStrategy;
+    }
+
+    public void setBuyStrategy(Integer buyStrategy) {
+        this.buyStrategy = buyStrategy;
+    }
+
+    public Integer getSellStrategy() {
+        return sellStrategy;
+    }
+
+    public void setSellStrategy(Integer sellStrategy) {
+        this.sellStrategy = sellStrategy;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(TradePlanDTO.class).omitNullValues()
-                          .add("stockHolderNo", stockHolderNo)
-                          .add("exchangeType", exchangeType)
-                          .add("entrustStrategy", entrustStrategy)
-                          .add("entrustPrice", entrustPrice)
-                          .add("entrustMethod", entrustMethod)
-                          .add("entrustNumber", entrustNumber)
-                          .add("entrustAmount", entrustAmount)
-                          .add("orderType", orderType)
-                          .add("nodeInfo", nodeInfo)
-                          .toString();
+                .add("stockHolderNo", stockHolderNo)
+                .add("exchangeType", exchangeType)
+                .add("entrustStrategy", entrustStrategy)
+                .add("entrustPrice", entrustPrice)
+                .add("entrustMethod", entrustMethod)
+                .add("entrustNumber", entrustNumber)
+                .add("entrustAmount", entrustAmount)
+                .add("orderType", orderType)
+                .add("nodeInfo", nodeInfo)
+                .add("buyStrategy", buyStrategy)
+                .add("sellStrategy", sellStrategy)
+                .toString();
     }
 }

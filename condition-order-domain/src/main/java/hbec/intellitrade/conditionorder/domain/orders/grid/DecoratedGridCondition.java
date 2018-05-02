@@ -2,7 +2,6 @@ package hbec.intellitrade.conditionorder.domain.orders.grid;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.common.market.RealTimeMarket;
-import hbec.intellitrade.conditionorder.domain.orders.DecoratedMarketCondition;
 import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
 import hbec.intellitrade.strategy.domain.condition.delayconfirm.DelayConfirm;
 import hbec.intellitrade.strategy.domain.condition.deviation.DeviationCtrl;
@@ -25,8 +24,8 @@ public class DecoratedGridCondition implements MarketCondition, DynamicCondition
      */
     private BigDecimal basePrice;
 
-    private DecoratedMarketCondition<? extends GridSubCondition> buyCondition;
-    private DecoratedMarketCondition<? extends GridSubCondition> sellCondition;
+    private DecoratedGridSubCondition buyCondition;
+    private DecoratedGridSubCondition sellCondition;
 
     private final BinaryFactorType binaryFactorType;
     private final boolean useGuaranteedPrice;
@@ -44,11 +43,11 @@ public class DecoratedGridCondition implements MarketCondition, DynamicCondition
             int sellDelayConfirmedCount) {
         this.basePrice = basePrice;
         this.binaryFactorType = binaryFactorType;
-        this.buyCondition = new DecoratedMarketCondition<>(rawBuyCondition,
+        this.buyCondition = new DecoratedGridSubCondition(rawBuyCondition,
                 delayConfirm,
                 deviationCtrl,
                 buyDelayConfirmedCount);
-        this.sellCondition = new DecoratedMarketCondition<>(rawSellCondition,
+        this.sellCondition = new DecoratedGridSubCondition(rawSellCondition,
                 delayConfirm,
                 deviationCtrl,
                 sellDelayConfirmedCount);
@@ -65,19 +64,19 @@ public class DecoratedGridCondition implements MarketCondition, DynamicCondition
         this.basePrice = basePrice;
 
         GridSubCondition rawBuyCondition = buyCondition.getRawCondition().changeBasePrice(basePrice);
-        this.buyCondition = new DecoratedMarketCondition<>(rawBuyCondition,
+        this.buyCondition = new DecoratedGridSubCondition(rawBuyCondition,
                 delayConfirm, deviationCtrl, 0);
 
         GridSubCondition rawSellCondition = sellCondition.getRawCondition().changeBasePrice(basePrice);
-        this.sellCondition = new DecoratedMarketCondition<>(rawSellCondition,
+        this.sellCondition = new DecoratedGridSubCondition(rawSellCondition,
                 delayConfirm, deviationCtrl, 0);
     }
 
-    DecoratedMarketCondition<? extends GridSubCondition> getBuyCondition() {
+    public DecoratedGridSubCondition getBuyCondition() {
         return buyCondition;
     }
 
-    DecoratedMarketCondition<? extends GridSubCondition> getSellCondition() {
+    public DecoratedGridSubCondition getSellCondition() {
         return sellCondition;
     }
 
@@ -126,6 +125,14 @@ public class DecoratedGridCondition implements MarketCondition, DynamicCondition
     public void resetCounter() {
         buyCondition.resetCounter();
         sellCondition.resetCounter();
+    }
+
+    public Integer getBuyDelayConfirmedCount() {
+        return buyCondition.getDelayConfirmedCount();
+    }
+
+    public Integer getSellDelayConfirmedCount() {
+        return sellCondition.getDelayConfirmedCount();
     }
 
     @Override

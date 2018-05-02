@@ -50,7 +50,6 @@ public class InflexionSubCondition extends AbstractMarketCondition implements Gr
 
     @Override
     public GridSubCondition changeBasePrice(BigDecimal basePrice) {
-        InflexionFactor inflexionFactor = getInflexionFactor();
         return new InflexionSubCondition(mainFactor,
                 turnBackFactor,
                 basePrice,
@@ -59,26 +58,28 @@ public class InflexionSubCondition extends AbstractMarketCondition implements Gr
 
     @Override
     public TargetPriceFactor getTargetPriceFactor() {
-        return getInflexionFactor();
-    }
-
-    public InflexionFactor getInflexionFactor() {
         return inflexionFactor;
     }
 
+    @Override
     public BinaryTargetPriceFactor getMainFactor() {
         return mainFactor;
     }
 
+    @Override
     public BinaryTargetPriceFactor getTurnBackFactor() {
         return turnBackFactor;
     }
 
     @Override
-    public boolean isDirty() {return inflexionFactor.isDirty();}
+    public boolean isDirty() {
+        return inflexionFactor.isDirty();
+    }
 
     @Override
-    public void clearDirty() {inflexionFactor.clearDirty();}
+    public void clearDirty() {
+        inflexionFactor.clearDirty();
+    }
 
     @Override
     public boolean equals(Object o) {

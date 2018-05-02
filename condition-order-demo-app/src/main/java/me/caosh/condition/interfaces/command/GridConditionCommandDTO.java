@@ -28,35 +28,35 @@ public class GridConditionCommandDTO implements ConditionDTO {
     private Integer binaryFactorType;
 
     @DecimalMin("0.01")
-    @FieldMapping(mappedProperty = "sellCondition.breakPercent")
+    @FieldMapping(mappedProperty = "sellCondition.mainFactor.percent")
     private BigDecimal increasePercent;
 
     @DecimalMax("0")
-    @FieldMapping(mappedProperty = "sellCondition.turnBackPercent")
+    @FieldMapping(mappedProperty = "sellCondition.turnBackFactor.percent")
     private BigDecimal fallPercent;
 
     @DecimalMin("0.001")
-    @FieldMapping(mappedProperty = "sellCondition.breakIncrement")
+    @FieldMapping(mappedProperty = "sellCondition.mainFactor.increment")
     private BigDecimal increaseIncrement;
 
     @DecimalMax("0")
-    @FieldMapping(mappedProperty = "sellCondition.turnBackIncrement")
+    @FieldMapping(mappedProperty = "sellCondition.turnBackFactor.increment")
     private BigDecimal fallIncrement;
 
     @DecimalMax("-0.01")
-    @FieldMapping(mappedProperty = "buyCondition.breakPercent")
+    @FieldMapping(mappedProperty = "buyCondition.mainFactor.percent")
     private BigDecimal decreasePercent;
 
     @DecimalMin("0")
-    @FieldMapping(mappedProperty = "buyCondition.turnBackPercent")
+    @FieldMapping(mappedProperty = "buyCondition.turnBackFactor.percent")
     private BigDecimal reboundPercent;
 
     @DecimalMax("-0.001")
-    @FieldMapping(mappedProperty = "buyCondition.breakIncrement")
+    @FieldMapping(mappedProperty = "buyCondition.mainFactor.increment")
     private BigDecimal decreaseIncrement;
 
     @DecimalMin("0")
-    @FieldMapping(mappedProperty = "buyCondition.turnBackIncrement")
+    @FieldMapping(mappedProperty = "buyCondition.turnBackFactor.increment")
     private BigDecimal reboundIncrement;
 
     @NotNull
