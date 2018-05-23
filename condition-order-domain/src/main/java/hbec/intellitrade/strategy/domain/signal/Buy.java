@@ -7,7 +7,7 @@ public class Buy extends BS {
     Buy() {
     }
 
-    private Buy(boolean deviationExceeded) {
+    Buy(boolean deviationExceeded) {
         super(deviationExceeded);
     }
 

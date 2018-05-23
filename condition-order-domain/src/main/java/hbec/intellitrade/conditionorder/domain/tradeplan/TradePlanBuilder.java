@@ -1,5 +1,6 @@
 package hbec.intellitrade.conditionorder.domain.tradeplan;
 
+import com.google.common.base.MoreObjects;
 import hbec.intellitrade.trade.domain.ExchangeType;
 import hbec.intellitrade.trade.domain.OrderType;
 import me.caosh.autoasm.ConvertibleBuilder;
@@ -13,9 +14,11 @@ import java.math.BigDecimal;
 public class TradePlanBuilder implements ConvertibleBuilder<TradePlan> {
     private ExchangeType exchangeType;
     private EntrustStrategy entrustStrategy;
+    private EntrustStrategy buyStrategy;
+    private EntrustStrategy sellStrategy;
     private BigDecimal entrustPrice;
     private TradeNumberBuilder tradeNumber = new TradeNumberBuilder();
-    private OrderType orderType;
+    private OrderType orderType = OrderType.LIMITED;
 
     public void setExchangeType(ExchangeType exchangeType) {
         this.exchangeType = exchangeType;
@@ -23,6 +26,14 @@ public class TradePlanBuilder implements ConvertibleBuilder<TradePlan> {
 
     public void setEntrustStrategy(EntrustStrategy entrustStrategy) {
         this.entrustStrategy = entrustStrategy;
+    }
+
+    public void setBuyStrategy(EntrustStrategy buyStrategy) {
+        this.buyStrategy = buyStrategy;
+    }
+
+    public void setSellStrategy(EntrustStrategy sellStrategy) {
+        this.sellStrategy = sellStrategy;
     }
 
     public void setEntrustPrice(BigDecimal entrustPrice) {
@@ -44,12 +55,17 @@ public class TradePlanBuilder implements ConvertibleBuilder<TradePlan> {
 
     @Override
     public TradePlan build() {
-        return TradePlanFactory.getInstance().create(
-                exchangeType,
-                entrustStrategy,
-                entrustPrice,
-                tradeNumber.build(),
-                orderType);
+        if (exchangeType != null && entrustStrategy != null) {
+            return TradePlanFactory.getInstance().createSingle(
+                    exchangeType,
+                    entrustStrategy,
+                    entrustPrice,
+                    tradeNumber.build(),
+                    orderType);
+        } else {
+            return TradePlanFactory.getInstance().createBidirectional(tradeNumber.build(),
+                    MoreObjects.firstNonNull(buyStrategy, entrustStrategy), sellStrategy, orderType);
+        }
     }
 
     public static class TradeNumberBuilder implements ConvertibleBuilder<TradeNumber> {

@@ -1,13 +1,17 @@
 package me.caosh.condition.interfaces.command;
 
 import com.google.common.base.MoreObjects;
-import org.hibernate.validator.constraints.Range;
+import hbec.commons.domain.intellitrade.conditionorder.DelayConfirmDTO;
+import hbec.commons.domain.intellitrade.conditionorder.DeviationCtrlDTO;
+import hbec.commons.domain.intellitrade.conditionorder.MonitorTimeRangeDTO;
+import me.caosh.autoasm.FieldMapping;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Min;
+import javax.validation.Valid;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created by caosh on 2017/8/9.
@@ -17,22 +21,25 @@ public class GridTradeOrderUpdateCommand implements Serializable {
 
     @NotNull
     private Long orderId;
+
     @NotNull
-    @DecimalMin("0")
-    private BigDecimal gridLength;
-    @NotNull
-    @DecimalMin("0")
-    private BigDecimal basePrice;
-    @NotNull
-    @Range(min = 1, max = 11)
-    private Integer entrustStrategy;
-    @NotNull
-    @Range(min = 0, max = 1)
-    private Integer entrustMethod;
-    @Min(100)
-    private Integer entrustNumber;
-    @DecimalMin("1")
-    private BigDecimal entrustAmount;
+    @Valid
+    private GridConditionCommandDTO condition;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Future
+    private Date expireTime;
+
+    @Valid
+    private MonitorTimeRangeDTO monitorTimeRange;
+
+    @Valid
+    @FieldMapping(mappedProperty = "condition.delayConfirm")
+    private DelayConfirmDTO delayConfirm;
+
+    @Valid
+    @FieldMapping(mappedProperty = "condition.deviationCtrl")
+    private DeviationCtrlDTO deviationCtrl;
 
     public Long getOrderId() {
         return orderId;
@@ -42,64 +49,55 @@ public class GridTradeOrderUpdateCommand implements Serializable {
         this.orderId = orderId;
     }
 
-    public BigDecimal getBasePrice() {
-        return basePrice;
+    public GridConditionCommandDTO getCondition() {
+        return condition;
     }
 
-    public void setBasePrice(BigDecimal basePrice) {
-        this.basePrice = basePrice;
+    public void setCondition(GridConditionCommandDTO condition) {
+        this.condition = condition;
     }
 
-    public BigDecimal getGridLength() {
-        return gridLength;
+    public Date getExpireTime() {
+        return expireTime;
     }
 
-    public void setGridLength(BigDecimal gridLength) {
-        this.gridLength = gridLength;
+    public void setExpireTime(Date expireTime) {
+        this.expireTime = expireTime;
     }
 
-    public Integer getEntrustMethod() {
-        return entrustMethod;
+    public MonitorTimeRangeDTO getMonitorTimeRange() {
+        return monitorTimeRange;
     }
 
-    public void setEntrustMethod(Integer entrustMethod) {
-        this.entrustMethod = entrustMethod;
+    public void setMonitorTimeRange(MonitorTimeRangeDTO monitorTimeRange) {
+        this.monitorTimeRange = monitorTimeRange;
     }
 
-    public Integer getEntrustStrategy() {
-        return entrustStrategy;
+    public DelayConfirmDTO getDelayConfirm() {
+        return delayConfirm;
     }
 
-    public void setEntrustStrategy(Integer entrustStrategy) {
-        this.entrustStrategy = entrustStrategy;
+    public void setDelayConfirm(DelayConfirmDTO delayConfirm) {
+        this.delayConfirm = delayConfirm;
     }
 
-    public Integer getEntrustNumber() {
-        return entrustNumber;
+    public DeviationCtrlDTO getDeviationCtrl() {
+        return deviationCtrl;
     }
 
-    public void setEntrustNumber(Integer entrustNumber) {
-        this.entrustNumber = entrustNumber;
-    }
-
-    public BigDecimal getEntrustAmount() {
-        return entrustAmount;
-    }
-
-    public void setEntrustAmount(BigDecimal entrustAmount) {
-        this.entrustAmount = entrustAmount;
+    public void setDeviationCtrl(DeviationCtrlDTO deviationCtrl) {
+        this.deviationCtrl = deviationCtrl;
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects.toStringHelper(GridTradeOrderUpdateCommand.class).omitNullValues()
                 .add("orderId", orderId)
-                .add("gridLength", gridLength)
-                .add("basePrice", basePrice)
-                .add("entrustStrategy", entrustStrategy)
-                .add("entrustMethod", entrustMethod)
-                .add("entrustNumber", entrustNumber)
-                .add("entrustAmount", entrustAmount)
+                .add("condition", condition)
+                .add("expireTime", expireTime)
+                .add("monitorTimeRange", monitorTimeRange)
+                .add("delayConfirm", delayConfirm)
+                .add("deviationCtrl", deviationCtrl)
                 .toString();
     }
 }

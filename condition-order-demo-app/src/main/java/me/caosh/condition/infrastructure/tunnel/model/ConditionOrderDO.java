@@ -56,6 +56,8 @@ public class ConditionOrderDO {
     private Integer exchangeType;
     @FieldMapping(mappedProperty = "tradePlan.entrustStrategy")
     private Integer entrustStrategy = 0;
+    @FieldMapping(mappedProperty = "tradePlan.sellStrategy")
+    private Integer sellEntrustStrategy;
     @FieldMapping(mappedProperty = "tradePlan.entrustPrice")
     private BigDecimal entrustPrice;
     @FieldMapping(mappedProperty = "tradePlan.tradeNumber.entrustMethod")
@@ -278,6 +280,16 @@ public class ConditionOrderDO {
     }
 
     @Basic
+    @Column(name = "sell_entrust_strategy")
+    public Integer getSellEntrustStrategy() {
+        return sellEntrustStrategy;
+    }
+
+    public void setSellEntrustStrategy(Integer sellEntrustStrategy) {
+        this.sellEntrustStrategy = sellEntrustStrategy;
+    }
+
+    @Basic
     @Column(name = "entrust_price")
     public BigDecimal getEntrustPrice() {
         return entrustPrice;
@@ -440,37 +452,42 @@ public class ConditionOrderDO {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(ConditionOrderDO.class).omitNullValues()
-                          .add("orderId", orderId)
-                          .add("userId", userId)
-                          .add("customerNo", customerNo)
-                          .add("deleted", deleted)
-                          .add("orderState", orderState)
-                          .add("securityType", securityType)
-                          .add("securityCode", securityCode)
-                          .add("securityExchange", securityExchange)
-                          .add("securityName", securityName)
-                          .add("trackedIndexOption", trackedIndexOption)
-                          .add("trackedIndexCode", trackedIndexCode)
-                          .add("trackedIndexSource", trackedIndexSource)
-                          .add("trackedIndexName", trackedIndexName)
-                          .add("strategyType", strategyType)
-                          .add("conditionPropertiesObj", conditionPropertiesObj)
-                          .add("expireTime", expireTime)
-                          .add("exchangeType", exchangeType)
-                          .add("entrustStrategy", entrustStrategy)
-                          .add("entrustMethod", entrustMethod)
-                          .add("entrustAmount", entrustAmount)
-                          .add("delayConfirmOption", delayConfirmOption)
-                          .add("delayConfirmTimes", delayConfirmTimes)
-                          .add("monitorTimeRangeOption", monitorTimeRangeOption)
-                          .add("beginWeek", beginWeek)
-                          .add("endWeek", endWeek)
-                          .add("beginTime", beginTime)
-                          .add("endTime", endTime)
-                          .add("deviationCtrlOption", deviationCtrlOption)
-                          .add("deviationLimitPercent", deviationLimitPercent)
-                          .add("createTime", createTime)
-                          .add("updateTime", updateTime)
-                          .toString();
+                .add("orderId", orderId)
+                .add("userId", userId)
+                .add("customerNo", customerNo)
+                .add("deleted", deleted)
+                .add("orderState", orderState)
+                .add("securityType", securityType)
+                .add("securityCode", securityCode)
+                .add("securityExchange", securityExchange)
+                .add("securityName", securityName)
+                .add("trackedIndexOption", trackedIndexOption)
+                .add("trackedIndexCode", trackedIndexCode)
+                .add("trackedIndexSource", trackedIndexSource)
+                .add("trackedIndexName", trackedIndexName)
+                .add("strategyType", strategyType)
+                .add("conditionPropertiesObj", conditionPropertiesObj)
+                .add("expireTime", expireTime)
+                .add("exchangeType", exchangeType)
+                .add("entrustStrategy", entrustStrategy)
+                .add("sellEntrustStrategy", sellEntrustStrategy)
+                .add("entrustPrice", entrustPrice)
+                .add("entrustMethod", entrustMethod)
+                .add("entrustNumber", entrustNumber)
+                .add("entrustAmount", entrustAmount)
+                .add("orderType", orderType)
+                .add("delayConfirmOption", delayConfirmOption)
+                .add("delayConfirmTimes", delayConfirmTimes)
+                .add("monitorTimeRangeOption", monitorTimeRangeOption)
+                .add("beginWeek", beginWeek)
+                .add("endWeek", endWeek)
+                .add("beginTime", beginTime)
+                .add("endTime", endTime)
+                .add("deviationCtrlOption", deviationCtrlOption)
+                .add("deviationLimitPercent", deviationLimitPercent)
+                .add("createTime", createTime)
+                .add("updateTime", updateTime)
+                .add("conditionProperties", getConditionProperties())
+                .toString();
     }
 }

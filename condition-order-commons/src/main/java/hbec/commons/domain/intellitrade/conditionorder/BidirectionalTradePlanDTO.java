@@ -6,30 +6,26 @@ import me.caosh.autoasm.FieldMapping;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * Created by caosh on 2017/8/11.
- *
- * @author caoshuhao@touker.com
+ * @author caosh/caoshuhao@touker.com
+ * @date 2018/5/2
  */
 @Convertible
-public class TradePlanDTO implements Serializable {
+public class BidirectionalTradePlanDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 股东号
-     */
     private String stockHolderNo;
     @NotNull
-    @Range(min = 1, max = 2)
-    private Integer exchangeType;
+    @Range(min = 1, max = 11)
+    private Integer buyStrategy;
     @NotNull
-    @Range(min = 0, max = 11)
-    private Integer entrustStrategy;
-    private BigDecimal entrustPrice;
+    @Range(min = 1, max = 11)
+    private Integer sellStrategy;
     @NotNull
     @Range(min = 0, max = 1)
     @FieldMapping(mappedProperty = "tradeNumber.entrustMethod")
@@ -38,17 +34,10 @@ public class TradePlanDTO implements Serializable {
     private Integer entrustNumber;
     @FieldMapping(mappedProperty = "tradeNumber.amount")
     private BigDecimal entrustAmount;
+    @Min(0)
     private Integer orderType;
-    /**
-     * 站点信息
-     */
     @NotBlank
     private String nodeInfo;
-
-    // -------------------------- bidirectional only --------------------------
-
-    private Integer buyStrategy;
-    private Integer sellStrategy;
 
     public String getStockHolderNo() {
         return stockHolderNo;
@@ -58,28 +47,20 @@ public class TradePlanDTO implements Serializable {
         this.stockHolderNo = stockHolderNo;
     }
 
-    public Integer getExchangeType() {
-        return exchangeType;
+    public Integer getBuyStrategy() {
+        return buyStrategy;
     }
 
-    public void setExchangeType(Integer exchangeType) {
-        this.exchangeType = exchangeType;
+    public void setBuyStrategy(Integer buyStrategy) {
+        this.buyStrategy = buyStrategy;
     }
 
-    public Integer getEntrustStrategy() {
-        return entrustStrategy;
+    public Integer getSellStrategy() {
+        return sellStrategy;
     }
 
-    public void setEntrustStrategy(Integer entrustStrategy) {
-        this.entrustStrategy = entrustStrategy;
-    }
-
-    public BigDecimal getEntrustPrice() {
-        return entrustPrice;
-    }
-
-    public void setEntrustPrice(BigDecimal entrustPrice) {
-        this.entrustPrice = entrustPrice;
+    public void setSellStrategy(Integer sellStrategy) {
+        this.sellStrategy = sellStrategy;
     }
 
     public Integer getEntrustMethod() {
@@ -122,36 +103,17 @@ public class TradePlanDTO implements Serializable {
         this.nodeInfo = nodeInfo;
     }
 
-    public Integer getBuyStrategy() {
-        return buyStrategy;
-    }
-
-    public void setBuyStrategy(Integer buyStrategy) {
-        this.buyStrategy = buyStrategy;
-    }
-
-    public Integer getSellStrategy() {
-        return sellStrategy;
-    }
-
-    public void setSellStrategy(Integer sellStrategy) {
-        this.sellStrategy = sellStrategy;
-    }
-
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(TradePlanDTO.class).omitNullValues()
+        return MoreObjects.toStringHelper(BidirectionalTradePlanDTO.class).omitNullValues()
                 .add("stockHolderNo", stockHolderNo)
-                .add("exchangeType", exchangeType)
-                .add("entrustStrategy", entrustStrategy)
-                .add("entrustPrice", entrustPrice)
+                .add("buyStrategy", buyStrategy)
+                .add("sellStrategy", sellStrategy)
                 .add("entrustMethod", entrustMethod)
                 .add("entrustNumber", entrustNumber)
                 .add("entrustAmount", entrustAmount)
                 .add("orderType", orderType)
                 .add("nodeInfo", nodeInfo)
-                .add("buyStrategy", buyStrategy)
-                .add("sellStrategy", sellStrategy)
                 .toString();
     }
 }

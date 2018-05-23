@@ -32,8 +32,22 @@ public class Signals {
         return BUY;
     }
 
+    public static Buy buy(boolean deviationExceeded) {
+        if (!deviationExceeded) {
+            return BUY;
+        }
+        return (Buy) BUY.withDeviationExceeded();
+    }
+
     public static Sell sell() {
         return SELL;
+    }
+
+    public static Sell sell(boolean deviationExceeded) {
+        if (!deviationExceeded) {
+            return SELL;
+        }
+        return (Sell) SELL.withDeviationExceeded();
     }
 
     public static Expire expire() {

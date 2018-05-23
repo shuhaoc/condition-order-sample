@@ -9,8 +9,8 @@ import me.caosh.autoasm.RuntimeType;
         PriceConditionDO.class,
         TurnPointConditionDO.class,
         TimeReachedConditionDO.class,
-//        GridConditionDO.class,
-        NewStockPurchaseConditionDO.class
+        NewStockPurchaseConditionDO.class,
+        GridConditionDO.class
 })
 public interface ConditionDO {
 }

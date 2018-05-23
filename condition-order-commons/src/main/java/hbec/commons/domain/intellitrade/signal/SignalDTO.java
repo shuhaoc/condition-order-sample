@@ -10,9 +10,9 @@ import java.io.Serializable;
  * @author caoshuhao@touker.com
  */
 @RuntimeType({
-        BsSignalDTO.class,
         BuySignalDTO.class,
         SellSignalDTO.class,
+        BsSignalDTO.class,
         ExpireSignalDTO.class,
         CacheSyncSignalDTO.class,
         AutoPurchaseSignalDTO.class

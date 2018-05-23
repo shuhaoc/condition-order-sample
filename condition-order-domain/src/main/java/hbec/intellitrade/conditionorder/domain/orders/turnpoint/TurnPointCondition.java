@@ -8,11 +8,10 @@ import hbec.intellitrade.strategy.domain.condition.DynamicCondition;
 import hbec.intellitrade.strategy.domain.factor.BasicTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.factor.BinaryFactorType;
 import hbec.intellitrade.strategy.domain.factor.BinaryTargetPriceFactor;
+import hbec.intellitrade.strategy.domain.factor.BinaryTargetPriceFactorFactory;
 import hbec.intellitrade.strategy.domain.factor.CompareOperator;
-import hbec.intellitrade.strategy.domain.factor.IncrementBinaryTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.factor.InflexionFactor;
 import hbec.intellitrade.strategy.domain.factor.NumericalDirection;
-import hbec.intellitrade.strategy.domain.factor.PercentBinaryTargetPriceFactor;
 import hbec.intellitrade.strategy.domain.factor.TargetPriceFactor;
 
 import java.math.BigDecimal;
@@ -67,7 +66,7 @@ public class TurnPointCondition extends AbstractMarketCondition implements Dynam
                                         "Turn down increment should be less than 0");
         }
 
-        BinaryTargetPriceFactor turnBackFactor = createTurnBackFactor(
+        BinaryTargetPriceFactor turnBackFactor = BinaryTargetPriceFactorFactory.INSTANCE.create(
                 compareOperator.reverse(),
                 binaryFactorType,
                 turnBackPercent,
@@ -78,21 +77,6 @@ public class TurnPointCondition extends AbstractMarketCondition implements Dynam
                 useGuaranteedPrice,
                 broken,
                 extremePrice);
-    }
-
-    private BinaryTargetPriceFactor createTurnBackFactor(CompareOperator compareOperator,
-                                                         BinaryFactorType binaryFactorType,
-                                                         BigDecimal turnBackPercent,
-                                                         BigDecimal turnBackIncrement) {
-        BinaryTargetPriceFactor turnBackFactor;
-        if (binaryFactorType == BinaryFactorType.PERCENT) {
-            turnBackFactor = new PercentBinaryTargetPriceFactor(compareOperator, turnBackPercent);
-        } else if (binaryFactorType == BinaryFactorType.INCREMENT) {
-            turnBackFactor = new IncrementBinaryTargetPriceFactor(compareOperator, turnBackIncrement);
-        } else {
-            throw new IllegalArgumentException("binaryFactorType=" + binaryFactorType);
-        }
-        return turnBackFactor;
     }
 
     public CompareOperator getCompareOperator() {

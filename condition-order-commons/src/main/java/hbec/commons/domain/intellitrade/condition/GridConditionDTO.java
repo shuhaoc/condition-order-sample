@@ -1,4 +1,4 @@
-package me.caosh.condition.infrastructure.tunnel.model;
+package hbec.commons.domain.intellitrade.condition;
 
 import com.google.common.base.MoreObjects;
 import hbec.intellitrade.conditionorder.domain.orders.grid.DecoratedGridCondition;
@@ -9,10 +9,11 @@ import me.caosh.autoasm.MappedClass;
 import java.math.BigDecimal;
 
 /**
- * Created by caosh on 2017/8/15.
+ * Created by caosh on 2017/8/26.
  */
 @MappedClass(value = DecoratedGridCondition.class, builderClass = DecoratedGridConditionBuilder.class)
-public class GridConditionDO implements ConditionDO {
+public class GridConditionDTO implements ConditionDTO {
+    private static final long serialVersionUID = 1L;
 
     private BigDecimal basePrice;
 
@@ -43,6 +44,9 @@ public class GridConditionDO implements ConditionDO {
     private BigDecimal reboundIncrement;
 
     private Boolean useGuaranteedPrice;
+
+    private Integer buyDelayConfirmedCount;
+    private Integer sellDelayConfirmedCount;
 
     public BigDecimal getBasePrice() {
         return basePrice;
@@ -132,9 +136,25 @@ public class GridConditionDO implements ConditionDO {
         this.useGuaranteedPrice = useGuaranteedPrice;
     }
 
+    public Integer getBuyDelayConfirmedCount() {
+        return buyDelayConfirmedCount;
+    }
+
+    public void setBuyDelayConfirmedCount(Integer buyDelayConfirmedCount) {
+        this.buyDelayConfirmedCount = buyDelayConfirmedCount;
+    }
+
+    public Integer getSellDelayConfirmedCount() {
+        return sellDelayConfirmedCount;
+    }
+
+    public void setSellDelayConfirmedCount(Integer sellDelayConfirmedCount) {
+        this.sellDelayConfirmedCount = sellDelayConfirmedCount;
+    }
+
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(GridConditionDO.class).omitNullValues()
+        return MoreObjects.toStringHelper(GridConditionDTO.class).omitNullValues()
                 .add("basePrice", basePrice)
                 .add("binaryFactorType", binaryFactorType)
                 .add("increasePercent", increasePercent)
@@ -146,6 +166,8 @@ public class GridConditionDO implements ConditionDO {
                 .add("decreaseIncrement", decreaseIncrement)
                 .add("reboundIncrement", reboundIncrement)
                 .add("useGuaranteedPrice", useGuaranteedPrice)
+                .add("buyDelayConfirmedCount", buyDelayConfirmedCount)
+                .add("sellDelayConfirmedCount", sellDelayConfirmedCount)
                 .toString();
     }
 }

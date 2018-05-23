@@ -3,10 +3,9 @@ package me.caosh.condition.interfaces.web;
 import com.google.common.base.Optional;
 import hbec.intellitrade.conditionorder.domain.ConditionOrder;
 import hbec.intellitrade.conditionorder.domain.ConditionOrderRepository;
-import hbec.intellitrade.conditionorder.domain.OrderState;
 import hbec.intellitrade.conditionorder.domain.TradeCustomerInfo;
+import hbec.intellitrade.conditionorder.domain.orders.grid.GridTradeOrder;
 import me.caosh.condition.application.order.OrderCommandService;
-import me.caosh.condition.domain.model.order.grid.GridTradeOrder;
 import me.caosh.condition.infrastructure.tunnel.impl.ConditionOrderIdGenerator;
 import me.caosh.condition.interfaces.assembler.GirdTradeOrderCommandAssembler;
 import me.caosh.condition.interfaces.command.GridTradeOrderCreateCommand;
@@ -54,7 +53,7 @@ public class GridTradeOrderController {
             return -1L;
         }
         ConditionOrder conditionOrder = conditionOrderOptional.get();
-        if (conditionOrder.getOrderState() != OrderState.ACTIVE && conditionOrder.getOrderState() != OrderState.PAUSED) {
+        if (!conditionOrder.isMonitoringState()) {
             return -2L;
         }
         GridTradeOrder oldOrder = (GridTradeOrder) conditionOrder;

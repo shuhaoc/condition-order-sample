@@ -3,7 +3,7 @@ package me.caosh.condition.infrastructure.market;
 import hbec.intellitrade.common.market.MarketID;
 import hbec.intellitrade.common.market.RealTimeMarket;
 import hbec.intellitrade.common.market.RealTimeMarketSupplier;
-import me.caosh.condition.mock.MockMarkets;
+import hbec.intellitrade.mock.MockMarkets;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
