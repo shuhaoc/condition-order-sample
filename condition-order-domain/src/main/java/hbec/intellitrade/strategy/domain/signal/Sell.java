@@ -7,7 +7,7 @@ public class Sell extends BS {
     Sell() {
     }
 
-    private Sell(boolean deviationExceeded) {
+    Sell(boolean deviationExceeded) {
         super(deviationExceeded);
     }
 

@@ -1,13 +1,14 @@
 package hbec.commons.domain.intellitrade.signal;
 
 import com.google.common.base.MoreObjects;
-import me.caosh.autoasm.MappedClass;
 import hbec.intellitrade.strategy.domain.signal.Sell;
+import hbec.intellitrade.strategy.domain.signal.SellBuilder;
+import me.caosh.autoasm.MappedClass;
 
 /**
  * Created by caosh on 2017/8/26.
  */
-@MappedClass(Sell.class)
+@MappedClass(value = Sell.class, builderClass = SellBuilder.class)
 public class SellSignalDTO implements SignalDTO {
     private static final long serialVersionUID = 1L;
 
